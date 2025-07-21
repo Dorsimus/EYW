@@ -121,7 +121,7 @@ body {
 }
 
 .redstone-subheading {
-  color: var(--redstone-gray);
+  color: #efefef;
   font-weight: 600;
 }
 
