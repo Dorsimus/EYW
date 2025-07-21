@@ -230,7 +230,128 @@ class TaskCompetencyAPITester:
         
         return success, response
 
-    def test_portfolio_operations(self):
+    def test_create_admin_user(self):
+        """Test creating admin user"""
+        admin_data = {
+            "email": "admin@earnwings.com",
+            "name": "Admin User",
+            "role": "admin",
+            "level": "navigator",
+            "is_admin": True,
+            "password": "admin123"
+        }
+        success, response = self.run_test("Create Admin User", "POST", "admin/create", 200, data=admin_data)
+        if success:
+            print(f"   Admin user created successfully")
+        return success, response
+
+    def test_admin_login(self):
+        """Test admin login - PRIORITY TEST"""
+        login_data = {
+            "email": "admin@earnwings.com",
+            "password": "admin123"
+        }
+        success, response = self.run_test("Admin Login", "POST", "admin/login", 200, data=login_data)
+        if success and 'access_token' in response:
+            self.admin_token = response['access_token']
+            self.admin_user = response.get('user')
+            print(f"   Admin login successful, token obtained")
+            print(f"   Admin user: {self.admin_user.get('name', 'Unknown') if self.admin_user else 'No user data'}")
+        return success, response
+
+    def test_admin_stats(self):
+        """Test admin statistics endpoint - PRIORITY TEST"""
+        success, response = self.run_test("Admin Stats", "GET", "admin/stats", 200, auth_required=True)
+        if success and isinstance(response, dict):
+            print(f"   Total Users: {response.get('total_users', 'N/A')}")
+            print(f"   Total Tasks: {response.get('total_tasks', 'N/A')}")
+            print(f"   Total Completions: {response.get('total_completions', 'N/A')}")
+            print(f"   Completion Rate: {response.get('completion_rate', 'N/A')}%")
+            print(f"   Active Competency Areas: {response.get('active_competency_areas', 'N/A')}")
+        return success, response
+
+    def test_admin_get_all_tasks(self):
+        """Test admin get all tasks endpoint - PRIORITY TEST"""
+        success, response = self.run_test("Admin Get All Tasks", "GET", "admin/tasks", 200, auth_required=True)
+        if success and isinstance(response, list):
+            print(f"   Found {len(response)} tasks (including inactive)")
+            # Show sample tasks
+            for i, task in enumerate(response[:3]):
+                active_status = "Active" if task.get('active', True) else "Inactive"
+                print(f"   Task {i+1}: {task.get('title', 'No title')} ({active_status})")
+        return success, response
+
+    def test_admin_get_all_users(self):
+        """Test admin get all users endpoint - PRIORITY TEST"""
+        success, response = self.run_test("Admin Get All Users", "GET", "admin/users", 200, auth_required=True)
+        if success and isinstance(response, list):
+            print(f"   Found {len(response)} users")
+            # Show sample users with progress
+            for i, user in enumerate(response[:3]):
+                completed_tasks = user.get('completed_tasks', 0)
+                overall_progress = user.get('overall_progress', 0)
+                print(f"   User {i+1}: {user.get('name', 'No name')} - {completed_tasks} tasks, {overall_progress}% progress")
+        return success, response
+
+    def test_admin_create_task(self):
+        """Test admin create task endpoint - PRIORITY TEST"""
+        task_data = {
+            "title": "Test Admin Created Task",
+            "description": "This is a test task created by admin API",
+            "task_type": "assessment",
+            "competency_area": "leadership_supervision",
+            "sub_competency": "team_motivation",
+            "order": 99,
+            "required": False,
+            "estimated_hours": 1.0,
+            "instructions": "Complete this test task for API validation"
+        }
+        success, response = self.run_test("Admin Create Task", "POST", "admin/tasks", 200, data=task_data, auth_required=True)
+        if success and 'id' in response:
+            self.created_task_id = response['id']
+            print(f"   Created task with ID: {self.created_task_id}")
+        return success, response
+
+    def test_admin_update_task(self):
+        """Test admin update task endpoint - PRIORITY TEST"""
+        if not hasattr(self, 'created_task_id'):
+            print("❌ No task ID available for update testing")
+            return False, {}
+        
+        update_data = {
+            "title": "Updated Test Task",
+            "description": "This task has been updated via admin API",
+            "estimated_hours": 2.0
+        }
+        success, response = self.run_test(
+            "Admin Update Task", 
+            "PUT", 
+            f"admin/tasks/{self.created_task_id}", 
+            200, 
+            data=update_data, 
+            auth_required=True
+        )
+        if success:
+            print(f"   Task updated successfully")
+            print(f"   New title: {response.get('title', 'N/A')}")
+        return success, response
+
+    def test_admin_delete_task(self):
+        """Test admin delete task endpoint - PRIORITY TEST"""
+        if not hasattr(self, 'created_task_id'):
+            print("❌ No task ID available for delete testing")
+            return False, {}
+        
+        success, response = self.run_test(
+            "Admin Delete Task", 
+            "DELETE", 
+            f"admin/tasks/{self.created_task_id}", 
+            200, 
+            auth_required=True
+        )
+        if success:
+            print(f"   Task deactivated successfully")
+        return success, response
         """Test portfolio operations (existing functionality)"""
         if not self.user_id:
             print("❌ No user ID available for testing")
