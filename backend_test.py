@@ -200,7 +200,7 @@ class TaskCompetencyAPITester:
         if success:
             print(f"   Completed task: {incomplete_task.get('title', 'Unknown')}")
         
-        return success, response
+        return success, response_data
 
     def test_get_user_competencies(self):
         """Test getting user competencies with progress - PRIORITY TEST"""
