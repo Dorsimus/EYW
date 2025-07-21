@@ -913,57 +913,72 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
 
       {/* Top Competencies */}
       <div className="competency-card fade-in" style={{ animationDelay: '0.4s' }}>
-        <div className="p-6">
-          <div className="flex items-center mb-6">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-400 to-red-600 flex items-center justify-center text-white text-xl font-bold mr-4">
+        <div className="p-8">
+          <div className="flex items-center mb-8">
+            <div className="pro-icon-xl pro-icon-bg-blue rounded-2xl mr-4">
               🎯
             </div>
-            <h3 className="gradient-text text-2xl font-bold">Top Competency Areas</h3>
+            <div>
+              <h3 className="gradient-text text-3xl font-bold">Top Competency Areas</h3>
+              <p className="text-gray-600 mt-1">Track your professional development progress</p>
+            </div>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-8">
             {getTopCompetencies().map(([key, area]) => (
               <div key={key} className="relative">
-                <div className="flex justify-between items-center mb-2">
-                  <h4 className="text-lg font-semibold text-gray-800">{area.name}</h4>
-                  <div className="text-right">
-                    <span className="text-2xl font-bold gradient-text">{Math.round(area.overall_progress || 0)}%</span>
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex-1">
+                    <div className="flex items-center mb-2">
+                      <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg mr-3"></div>
+                      <h4 className="text-xl font-bold text-gray-800">{area.name}</h4>
+                    </div>
+                    <p className="text-gray-600 text-base">{area.description}</p>
+                  </div>
+                  <div className="text-right ml-6">
+                    <div className="text-3xl font-bold gradient-text">{Math.round(area.overall_progress || 0)}%</div>
+                    <div className="text-sm text-gray-500 font-medium">Complete</div>
                   </div>
                 </div>
-                <p className="text-gray-600 text-sm mb-3">{area.description}</p>
                 
-                {/* Progress Ring Visualization */}
-                <div className="relative mb-4">
-                  <div className="progress-bar h-3 bg-gray-200 rounded-full overflow-hidden">
+                {/* Enhanced Progress Visualization */}
+                <div className="relative mb-6">
+                  <div className="progress-bar h-4 bg-gray-200 rounded-full overflow-hidden">
                     <div 
-                      className="progress-bar h-full rounded-full transition-all duration-1000"
+                      className="progress-bar h-full rounded-full transition-all duration-1500"
                       style={{ width: `${area.overall_progress || 0}%` }}
                     />
                   </div>
-                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full border-2 border-blue-500 flex items-center justify-center" 
+                  <div className="absolute -top-2 w-6 h-6 bg-white rounded-full border-3 border-blue-500 flex items-center justify-center shadow-lg" 
                        style={{ left: `${Math.min(area.overall_progress || 0, 95)}%` }}>
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {Object.entries(area.sub_competencies).slice(0, 4).map(([subKey, subData]) => (
                     <div
                       key={subKey}
                       onClick={() => onViewCompetencyTasks(key, subKey)}
-                      className="sub-competency-item cursor-pointer group"
+                      className="sub-competency-item cursor-pointer group border-l-4 border-transparent hover:border-blue-500"
                     >
                       <div className="flex justify-between items-center">
                         <div className="flex-1">
-                          <div className="font-medium text-gray-800 group-hover:text-blue-700 transition-colors">
-                            {typeof subData === 'string' ? subData : (subData?.name || subKey)}
+                          <div className="flex items-center mb-2">
+                            <div className="w-3 h-3 bg-gradient-to-r from-green-400 to-blue-500 rounded-full mr-2"></div>
+                            <div className="font-semibold text-gray-800 group-hover:text-blue-700 transition-colors">
+                              {typeof subData === 'string' ? subData : (subData?.name || subKey)}
+                            </div>
                           </div>
-                          <div className="text-sm text-gray-500 mt-1">
-                            {(subData?.completed_tasks || 0)}/{(subData?.total_tasks || 0)} tasks completed
+                          <div className="text-sm text-gray-600 ml-5">
+                            {(subData?.completed_tasks || 0)}/{(subData?.total_tasks || 0)} tasks • {Math.round(subData?.progress_percentage || 0)}% complete
                           </div>
                         </div>
-                        <div className="ml-2 text-sm font-bold gradient-text">
-                          {Math.round(subData?.progress_percentage || 0)}%
+                        <div className="ml-4 flex items-center">
+                          <div className="text-lg font-bold gradient-text">
+                            {Math.round(subData?.progress_percentage || 0)}%
+                          </div>
+                          <div className="ml-2 w-2 h-2 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                       </div>
                     </div>
