@@ -490,9 +490,13 @@ async def create_admin(user_data: UserCreate):
     
     return {"message": "Admin created successfully", "user_id": user.id}
 
+# User Management Routes
 @api_router.post("/users", response_model=User)
 async def create_user(user_data: UserCreate):
     user = User(**user_data.dict())
+    if user_data.password and user_data.is_admin:
+        user.password_hash = get_password_hash(user_data.password)
+    
     await db.users.insert_one(user.dict())
     
     # Initialize competency progress for new user
