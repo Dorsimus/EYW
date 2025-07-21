@@ -425,6 +425,10 @@ const App = () => {
             onDeleteTask={deleteTask}
             showCreateTask={showCreateTask}
             setShowCreateTask={setShowCreateTask}
+            editingTask={editingTask}
+            setEditingTask={setEditingTask}
+            newTask={newTask}
+            setNewTask={setNewTask}
           />
         )}
         
