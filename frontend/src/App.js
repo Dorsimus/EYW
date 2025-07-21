@@ -62,7 +62,7 @@ const App = () => {
     } else {
       initializeUser();
     }
-  }, [adminToken]);
+  }, []); // Empty dependency array to run only on component mount
 
   const loadAdminData = async () => {
     try {
