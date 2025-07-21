@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Depends
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -8,9 +9,11 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 from typing import List, Dict, Optional, Any
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 import shutil
 import json
+import jwt
+from passlib.context import CryptContext
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
