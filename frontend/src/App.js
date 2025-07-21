@@ -1184,7 +1184,7 @@ const TaskModal = ({ isOpen, onClose, tasks, competencyArea, subCompetency, comp
 };
 
 // Portfolio View Component  
-const PortfolioView = ({ portfolio }) => {
+const PortfolioView = ({ portfolio, setCurrentView }) => {
   return (
     <div className="space-y-6">
       <div className="text-center">
