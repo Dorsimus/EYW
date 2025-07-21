@@ -189,6 +189,42 @@ const App = () => {
     initializeUser();
   };
 
+  const createTask = async (taskData) => {
+    try {
+      const headers = { Authorization: `Bearer ${adminToken}` };
+      await axios.post(`${API}/admin/tasks`, taskData, { headers });
+      await loadAdminData(); // Reload admin data
+      return true;
+    } catch (error) {
+      console.error('Error creating task:', error);
+      return false;
+    }
+  };
+
+  const updateTask = async (taskId, taskData) => {
+    try {
+      const headers = { Authorization: `Bearer ${adminToken}` };
+      await axios.put(`${API}/admin/tasks/${taskId}`, taskData, { headers });
+      await loadAdminData(); // Reload admin data
+      return true;
+    } catch (error) {
+      console.error('Error updating task:', error);
+      return false;
+    }
+  };
+
+  const deleteTask = async (taskId) => {
+    try {
+      const headers = { Authorization: `Bearer ${adminToken}` };
+      await axios.delete(`${API}/admin/tasks/${taskId}`, { headers });
+      await loadAdminData(); // Reload admin data
+      return true;
+    } catch (error) {
+      console.error('Error deleting task:', error);
+      return false;
+    }
+  };
+
   const handlePortfolioSubmit = async (e) => {
     e.preventDefault();
     
