@@ -462,7 +462,7 @@ const App = () => {
         )}
         
         {currentView === 'portfolio' && !isAdmin && (
-          <PortfolioView portfolio={portfolio} />
+          <PortfolioView portfolio={portfolio} setCurrentView={setCurrentView} />
         )}
         
         {currentView === 'add-portfolio' && !isAdmin && (
