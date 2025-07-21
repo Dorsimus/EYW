@@ -827,47 +827,61 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
       </div>
 
       {/* Top Competencies */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h3 className="text-lg font-medium text-gray-900">🎯 Top Competency Areas</h3>
-        </div>
+      <div className="competency-card fade-in" style={{ animationDelay: '0.4s' }}>
         <div className="p-6">
+          <div className="flex items-center mb-6">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-400 to-red-600 flex items-center justify-center text-white text-xl font-bold mr-4">
+              🎯
+            </div>
+            <h3 className="gradient-text text-2xl font-bold">Top Competency Areas</h3>
+          </div>
+          
           <div className="space-y-4">
             {getTopCompetencies().map(([key, area]) => (
-              <div key={key} className="border rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex-1">
-                    <div className="font-medium text-gray-900">{area.name}</div>
-                    <div className="text-sm text-gray-500">{area.description}</div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-32 bg-gray-200 rounded-full h-2">
-                      <div 
-                        className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                        style={{ width: `${area.overall_progress || 0}%` }}
-                      />
-                    </div>
-                    <span className="text-sm font-medium text-gray-900 w-12">
-                      {area.overall_progress || 0}%
-                    </span>
+              <div key={key} className="relative">
+                <div className="flex justify-between items-center mb-2">
+                  <h4 className="text-lg font-semibold text-gray-800">{area.name}</h4>
+                  <div className="text-right">
+                    <span className="text-2xl font-bold gradient-text">{Math.round(area.overall_progress || 0)}%</span>
                   </div>
                 </div>
+                <p className="text-gray-600 text-sm mb-3">{area.description}</p>
                 
-                {/* Sub-competencies with task counts */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
+                {/* Progress Ring Visualization */}
+                <div className="relative mb-4">
+                  <div className="progress-bar h-3 bg-gray-200 rounded-full overflow-hidden">
+                    <div 
+                      className="progress-bar h-full rounded-full transition-all duration-1000"
+                      style={{ width: `${area.overall_progress || 0}%` }}
+                    />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full border-2 border-blue-500 flex items-center justify-center" 
+                       style={{ left: `${Math.min(area.overall_progress || 0, 95)}%` }}>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {Object.entries(area.sub_competencies).slice(0, 4).map(([subKey, subData]) => (
-                    <button
+                    <div
                       key={subKey}
                       onClick={() => onViewCompetencyTasks(key, subKey)}
-                      className="text-left p-2 rounded bg-gray-50 hover:bg-gray-100 transition-colors"
+                      className="sub-competency-item cursor-pointer group"
                     >
-                      <div className="text-sm font-medium text-gray-800">
-                        {typeof subData === 'string' ? subData : (subData?.name || subKey)}
+                      <div className="flex justify-between items-center">
+                        <div className="flex-1">
+                          <div className="font-medium text-gray-800 group-hover:text-blue-700 transition-colors">
+                            {typeof subData === 'string' ? subData : (subData?.name || subKey)}
+                          </div>
+                          <div className="text-sm text-gray-500 mt-1">
+                            {(subData?.completed_tasks || 0)}/{(subData?.total_tasks || 0)} tasks completed
+                          </div>
+                        </div>
+                        <div className="ml-2 text-sm font-bold gradient-text">
+                          {Math.round(subData?.progress_percentage || 0)}%
+                        </div>
                       </div>
-                      <div className="text-xs text-gray-600">
-                        {(subData?.completed_tasks || 0)}/{(subData?.total_tasks || 0)} tasks completed
-                      </div>
-                    </button>
+                    </div>
                   ))}
                 </div>
               </div>
