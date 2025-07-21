@@ -1526,4 +1526,192 @@ const AdminTasksView = ({ tasks, onCreateTask, onUpdateTask, onDeleteTask, showC
   );
 };
 
+// Admin Users View Component
+const AdminUsersView = ({ users }) => {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-3xl font-bold text-gray-900">👥 User Management</h2>
+        <p className="text-lg text-gray-600">Monitor user progress and engagement</p>
+      </div>
+
+      <div className="bg-white rounded-lg shadow">
+        <div className="px-6 py-4 border-b border-gray-200">
+          <h3 className="text-lg font-medium text-gray-900">All Users ({users.length})</h3>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  User
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Role
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Progress
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Tasks Completed
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Joined
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {users.map(user => (
+                <tr key={user.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div>
+                      <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                      <div className="text-sm text-gray-500">{user.email}</div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                      {user.role}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div className="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div 
+                          className="bg-green-500 h-2 rounded-full"
+                          style={{ width: `${user.overall_progress || 0}%` }}
+                        />
+                      </div>
+                      <span className="text-sm text-gray-900">{user.overall_progress || 0}%</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {user.completed_tasks || 0}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {new Date(user.created_at).toLocaleDateString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Admin Analytics Component
+const AdminAnalyticsView = ({ stats, tasks, users }) => {
+  const getTasksByType = () => {
+    const types = {};
+    tasks.forEach(task => {
+      types[task.task_type] = (types[task.task_type] || 0) + 1;
+    });
+    return types;
+  };
+
+  const getTasksByCompetency = () => {
+    const competencies = {};
+    tasks.forEach(task => {
+      competencies[task.competency_area] = (competencies[task.competency_area] || 0) + 1;
+    });
+    return competencies;
+  };
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-3xl font-bold text-gray-900">📈 Platform Analytics</h2>
+        <p className="text-lg text-gray-600">Insights and performance metrics</p>
+      </div>
+
+      {/* Task Distribution */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white rounded-lg shadow p-6">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Tasks by Type</h3>
+          <div className="space-y-3">
+            {Object.entries(getTasksByType()).map(([type, count]) => (
+              <div key={type} className="flex justify-between items-center">
+                <div className="flex items-center space-x-2">
+                  <span className="text-lg">
+                    {type === 'course_link' && '📚'}
+                    {type === 'document_upload' && '📄'}
+                    {type === 'assessment' && '📝'}
+                    {type === 'shadowing' && '👥'}
+                    {type === 'meeting' && '🤝'}
+                    {type === 'project' && '🎯'}
+                  </span>
+                  <span className="text-sm text-gray-600 capitalize">{type.replace('_', ' ')}</span>
+                </div>
+                <span className="text-sm font-medium text-gray-900">{count}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow p-6">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Tasks by Competency</h3>
+          <div className="space-y-3">
+            {Object.entries(getTasksByCompetency()).map(([competency, count]) => (
+              <div key={competency} className="flex justify-between items-center">
+                <span className="text-sm text-gray-600 capitalize">{competency.replace('_', ' ')}</span>
+                <span className="text-sm font-medium text-gray-900">{count}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* User Progress Distribution */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <h3 className="text-lg font-medium text-gray-900 mb-4">User Progress Distribution</h3>
+        <div className="space-y-4">
+          {users.slice(0, 10).map(user => (
+            <div key={user.id} className="flex items-center justify-between">
+              <div className="flex-1">
+                <div className="flex items-center space-x-3">
+                  <span className="text-sm font-medium text-gray-900">{user.name}</span>
+                  <div className="flex-1 bg-gray-200 rounded-full h-2 max-w-xs">
+                    <div 
+                      className="bg-blue-600 h-2 rounded-full"
+                      style={{ width: `${user.overall_progress || 0}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="text-sm text-gray-500">
+                {user.completed_tasks || 0} tasks • {user.overall_progress || 0}%
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Platform Summary */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <h3 className="text-lg font-medium text-gray-900 mb-4">Platform Summary</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-blue-600">{stats?.total_users || 0}</div>
+            <div className="text-sm text-gray-500">Active Learners</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-green-600">{stats?.total_tasks || 0}</div>
+            <div className="text-sm text-gray-500">Learning Tasks</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-purple-600">{stats?.total_completions || 0}</div>
+            <div className="text-sm text-gray-500">Total Completions</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-orange-600">{stats?.completion_rate || 0}%</div>
+            <div className="text-sm text-gray-500">Platform Engagement</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default App;
