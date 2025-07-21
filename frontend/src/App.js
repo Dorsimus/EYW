@@ -328,32 +328,32 @@ const App = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">EYW</span>
-                </div>
-                <h1 className="text-xl font-bold text-gray-900">Earn Your Wings</h1>
+      <header className="glass-card p-4 mb-8 fade-in">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg mr-4 shadow-lg">
+                EYW
               </div>
-              <span className="text-sm text-gray-500">
-                {isAdmin ? 'Admin Panel' : 'Navigator Level'}
-              </span>
+              <div>
+                <h1 className="hero-text text-2xl font-bold">Earn Your Wings</h1>
+                <span className="text-white opacity-75 font-medium">
+                  {isAdmin ? 'Admin Panel' : 'Navigator Level'}
+                </span>
+              </div>
             </div>
             
             <div className="flex items-center space-x-4">
               <div className="text-right">
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-white font-semibold">
                   {isAdmin ? 'Admin User' : user?.name}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-white opacity-75 text-sm">
                   {isAdmin ? 'System Administrator' : `Overall Progress: ${getOverallProgress()}%`}
                 </p>
               </div>
-              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                <span className="text-blue-600 font-semibold text-sm">
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
+                <span className="text-white font-bold text-sm">
                   {user?.name?.split(' ').map(n => n[0]).join('') || 'DN'}
                 </span>
               </div>
@@ -362,14 +362,14 @@ const App = () => {
               {isAdmin ? (
                 <button
                   onClick={adminLogout}
-                  className="text-sm text-red-600 hover:text-red-800"
+                  className="btn-secondary text-sm"
                 >
                   Logout
                 </button>
               ) : (
                 <button
                   onClick={() => setShowAdminLogin(true)}
-                  className="text-sm text-blue-600 hover:text-blue-800"
+                  className="btn-primary text-sm"
                 >
                   Admin
                 </button>
@@ -378,29 +378,39 @@ const App = () => {
           </div>
           
           {/* Navigation */}
-          <nav className="flex space-x-8 -mb-px">
-            {(isAdmin ? [
-              { key: 'admin-dashboard', label: 'Dashboard', icon: '📊' },
-              { key: 'admin-tasks', label: 'Manage Tasks', icon: '⚙️' },
-              { key: 'admin-users', label: 'Users', icon: '👥' },
-              { key: 'admin-analytics', label: 'Analytics', icon: '📈' }
-            ] : [
-              { key: 'dashboard', label: 'Dashboard', icon: '📊' },
-              { key: 'competencies', label: 'Competencies', icon: '🎯' },
-              { key: 'portfolio', label: 'Portfolio', icon: '📁' },
-              { key: 'add-portfolio', label: 'Add Evidence', icon: '➕' }
-            ]).map(item => (
+          <nav className="flex space-x-1">
+            {[
+              { key: 'dashboard', label: '📊 Dashboard', icon: '📊' },
+              { key: 'competencies', label: '🎯 Competencies', icon: '🎯' },
+              { key: 'portfolio', label: '📚 Portfolio', icon: '📚' },
+              { key: 'add-portfolio', label: '➕ Add Evidence', icon: '➕' }
+            ].filter(tab => !isAdmin || ['dashboard'].includes(tab.key)).map((tab) => (
               <button
-                key={item.key}
-                onClick={() => setCurrentView(item.key)}
-                className={`flex items-center space-x-2 py-2 px-3 border-b-2 font-medium text-sm ${
-                  currentView === item.key
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
+                key={tab.key}
+                onClick={() => setCurrentView(tab.key)}
+                className={`nav-tab ${currentView === tab.key ? 'active' : ''}`}
               >
-                <span>{item.icon}</span>
-                <span>{item.label}</span>
+                <span className="mr-2">{tab.icon}</span>
+                <span className="hidden sm:inline">{tab.label.split(' ')[1] || tab.label}</span>
+                <span className="sm:hidden">{tab.icon}</span>
+              </button>
+            ))}
+            
+            {/* Admin Navigation */}
+            {isAdmin && [
+              { key: 'admin-dashboard', label: '🎛️ Dashboard', icon: '🎛️' },
+              { key: 'admin-tasks', label: '⚙️ Tasks', icon: '⚙️' },
+              { key: 'admin-users', label: '👥 Users', icon: '👥' },
+              { key: 'admin-analytics', label: '📊 Analytics', icon: '📊' }
+            ].map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setCurrentView(tab.key)}
+                className={`nav-tab ${currentView === tab.key ? 'active' : ''}`}
+              >
+                <span className="mr-2">{tab.icon}</span>
+                <span className="hidden sm:inline">{tab.label.split(' ')[1] || tab.label}</span>
+                <span className="sm:hidden">{tab.icon}</span>
               </button>
             ))}
           </nav>
