@@ -554,7 +554,10 @@ const TaskModal = ({ isOpen, onClose, tasks, competencyArea, subCompetency, comp
 
   if (!isOpen) return null;
 
-  const competencyName = competencies[competencyArea]?.sub_competencies[subCompetency] || subCompetency;
+  const competencyData = competencies[competencyArea]?.sub_competencies[subCompetency];
+  const competencyName = typeof competencyData === 'object' && competencyData?.name 
+    ? competencyData.name 
+    : (subCompetency || 'Unknown Competency');
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
