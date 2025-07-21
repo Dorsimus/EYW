@@ -627,6 +627,11 @@ const TaskModal = ({ isOpen, onClose, tasks, competencyArea, subCompetency, comp
                         <strong>Evidence:</strong> {task.completion_data.evidence_description}
                       </p>
                     )}
+                    {task.completion_data.notes && (
+                      <p className="text-sm text-green-700 mt-1">
+                        <strong>Notes:</strong> {task.completion_data.notes}
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
