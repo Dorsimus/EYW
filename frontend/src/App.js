@@ -327,19 +327,19 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* FIXED HEADER - PROPER CONTRAST */}
-      <header className="enterprise-glass-card p-6 mb-8 fade-in">
+      {/* REDSTONE HEADER */}
+      <header className="redstone-glass-card p-6 mb-8 fade-in">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center text-white font-black text-xl mr-6 shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-br from-red-600 via-red-500 to-blue-800 rounded-2xl flex items-center justify-center text-white font-black text-xl mr-6 shadow-lg" style={{background: 'linear-gradient(135deg, #ff3443 0%, #0127a2 100%)'}}>
                 <span className="tracking-wider">EYW</span>
               </div>
               <div>
-                <h1 className="enterprise-heading text-3xl font-black">Earn Your Wings</h1>
+                <h1 className="redstone-heading text-3xl font-black">Earn Your Wings</h1>
                 <div className="flex items-center mt-2">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3 animate-pulse"></div>
-                  <span className="enterprise-subheading text-sm font-semibold">
+                  <span className="redstone-subheading text-sm font-semibold">
                     {isAdmin ? 'System Administrator' : 'Navigator Program'}
                   </span>
                 </div>
@@ -352,23 +352,23 @@ const App = () => {
                   {isAdmin ? 'Admin Control' : user?.name}
                 </p>
                 <div className="flex items-center justify-end mt-1">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
-                  <p className="enterprise-subheading text-sm font-medium">
+                  <div className="w-2 h-2 rounded-full mr-3" style={{backgroundColor: '#ff3443'}}></div>
+                  <p className="redstone-subheading text-sm font-medium">
                     {isAdmin ? 'Full Access' : `${getOverallProgress()}% Complete`}
                   </p>
                 </div>
               </div>
-              <div className="enterprise-avatar w-12 h-12 rounded-xl flex items-center justify-center">
+              <div className="redstone-avatar w-12 h-12 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-lg">
                   {isAdmin ? 'AD' : user?.name?.split(' ').map(n => n[0]).join('') || 'DN'}
                 </span>
               </div>
               
-              {/* PROFESSIONAL ADMIN BUTTON */}
+              {/* REDSTONE ADMIN BUTTON */}
               {isAdmin ? (
                 <button
                   onClick={adminLogout}
-                  className="enterprise-btn-primary flex items-center space-x-3"
+                  className="redstone-btn-primary flex items-center space-x-3"
                 >
                   <span>🚪</span>
                   <span>Logout</span>
@@ -376,7 +376,7 @@ const App = () => {
               ) : (
                 <button
                   onClick={() => setShowAdminLogin(true)}
-                  className="enterprise-btn-primary flex items-center space-x-3"
+                  className="redstone-btn-primary flex items-center space-x-3"
                 >
                   <span>👑</span>
                   <span>Admin</span>
