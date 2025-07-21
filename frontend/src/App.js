@@ -392,45 +392,49 @@ const App = () => {
             </div>
           </div>
           
-          {/* Navigation */}
-          <nav className="flex space-x-2">
+          {/* LUXURY NAVIGATION SYSTEM */}
+          <nav className="flex space-x-3">
             {[
-              { key: 'dashboard', label: 'Dashboard', icon: '📊', iconClass: 'pro-icon-bg-blue' },
-              { key: 'competencies', label: 'Competencies', icon: '🎯', iconClass: 'pro-icon-bg-green' },
-              { key: 'portfolio', label: 'Portfolio', icon: '📚', iconClass: 'pro-icon-bg-purple' },
-              { key: 'add-portfolio', label: 'Add Evidence', icon: '➕', iconClass: 'pro-icon-bg-orange' }
+              { key: 'dashboard', label: 'Dashboard', icon: 'DASH', iconClass: 'icon-dashboard' },
+              { key: 'competencies', label: 'Competencies', icon: 'COMP', iconClass: 'icon-target' },
+              { key: 'portfolio', label: 'Portfolio', icon: 'PORT', iconClass: 'icon-portfolio' },
+              { key: 'add-portfolio', label: 'Add Evidence', icon: 'ADD', iconClass: 'icon-plus' }
             ].filter(tab => !isAdmin || ['dashboard'].includes(tab.key)).map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key)}
-                className={`nav-tab ${currentView === tab.key ? 'active' : ''}`}
+                className={`luxury-nav-tab ${currentView === tab.key ? 'active' : ''}`}
               >
                 <div className="flex items-center space-x-3">
-                  <div className={`pro-icon ${tab.iconClass} rounded-lg`}>
+                  <div className={`luxury-icon ${tab.iconClass}`}>
                     {tab.icon}
                   </div>
-                  <span className="hidden sm:inline font-semibold">{tab.label}</span>
+                  <span className="hidden sm:inline luxury-text-primary font-bold text-sm">
+                    {tab.label}
+                  </span>
                 </div>
               </button>
             ))}
             
-            {/* Admin Navigation */}
+            {/* ADMIN LUXURY NAVIGATION */}
             {isAdmin && [
-              { key: 'admin-dashboard', label: 'Dashboard', icon: '🎛️', iconClass: 'pro-icon-bg-blue' },
-              { key: 'admin-tasks', label: 'Tasks', icon: '⚙️', iconClass: 'pro-icon-bg-green' },
-              { key: 'admin-users', label: 'Users', icon: '👥', iconClass: 'pro-icon-bg-purple' },
-              { key: 'admin-analytics', label: 'Analytics', icon: '📊', iconClass: 'pro-icon-bg-orange' }
+              { key: 'admin-dashboard', label: 'Dashboard', icon: 'CTRL', iconClass: 'icon-admin' },
+              { key: 'admin-tasks', label: 'Tasks', icon: 'TASK', iconClass: 'icon-settings' },
+              { key: 'admin-users', label: 'Users', icon: 'USER', iconClass: 'icon-users' },
+              { key: 'admin-analytics', label: 'Analytics', icon: 'STAT', iconClass: 'icon-analytics' }
             ].map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key)}
-                className={`nav-tab ${currentView === tab.key ? 'active' : ''}`}
+                className={`luxury-nav-tab ${currentView === tab.key ? 'active' : ''}`}
               >
                 <div className="flex items-center space-x-3">
-                  <div className={`pro-icon ${tab.iconClass} rounded-lg`}>
+                  <div className={`luxury-icon ${tab.iconClass}`}>
                     {tab.icon}
                   </div>
-                  <span className="hidden sm:inline font-semibold">{tab.label}</span>
+                  <span className="hidden sm:inline luxury-text-primary font-bold text-sm">
+                    {tab.label}
+                  </span>
                 </div>
               </button>
             ))}
