@@ -284,6 +284,30 @@ const App = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const success = editingTask 
+      ? await updateTask(editingTask.id, newTask)
+      : await createTask(newTask);
+    
+    if (success) {
+      setEditingTask(null);
+      setNewTask({
+        title: '',
+        description: '',
+        task_type: 'course_link',
+        competency_area: 'leadership_supervision',
+        sub_competency: 'team_motivation',
+        order: 1,
+        required: true,
+        estimated_hours: 1.0,
+        external_link: '',
+        instructions: ''
+      });
+    }
+  };
+
   const getOverallProgress = () => {
     if (Object.keys(competencies).length === 0) return 0;
     const totalProgress = Object.values(competencies).reduce((sum, area) => sum + (area.overall_progress || 0), 0);
