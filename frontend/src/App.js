@@ -16,6 +16,9 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCompetency, setSelectedCompetency] = useState(null);
   const [competencyTasks, setCompetencyTasks] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminToken, setAdminToken] = useState(localStorage.getItem('admin_token'));
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [newPortfolioItem, setNewPortfolioItem] = useState({
     title: '',
     description: '',
