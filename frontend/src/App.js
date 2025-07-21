@@ -1453,7 +1453,7 @@ const AdminDashboardView = ({ stats, onNavigate }) => {
 };
 
 // Admin Tasks Management Component
-const AdminTasksView = ({ tasks, onCreateTask, onUpdateTask, onDeleteTask, showCreateTask, setShowCreateTask }) => {
+const AdminTasksView = ({ tasks, onCreateTask, onUpdateTask, onDeleteTask, showCreateTask, setShowCreateTask, editingTask, setEditingTask, newTask, setNewTask }) => {
   const [editingTask, setEditingTask] = useState(null);
   const [newTask, setNewTask] = useState({
     title: '',
