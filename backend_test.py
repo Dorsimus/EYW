@@ -163,20 +163,39 @@ class TaskCompetencyAPITester:
             print("✅ All tasks already completed - creating test scenario")
             return True, {"message": "No incomplete tasks to test"}
 
-        # Complete the task
+        # Complete the task using form data (as expected by the API)
         task_data = {
             'task_id': incomplete_task['id'],
             'evidence_description': 'Test completion evidence',
             'notes': 'Automated test completion'
         }
 
-        success, response = self.run_test(
-            "Complete Task", 
-            "POST", 
-            f"users/{self.user_id}/task-completions", 
-            200,
-            data=task_data
-        )
+        # Use form data instead of JSON for this endpoint
+        url = f"{self.api_url}/users/{self.user_id}/task-completions"
+        headers = {}
+        
+        self.tests_run += 1
+        print(f"\n🔍 Testing Complete Task...")
+        print(f"   URL: {url}")
+        
+        try:
+            response = requests.post(url, data=task_data, headers=headers)
+            success = response.status_code == 200
+            if success:
+                self.tests_passed += 1
+                print(f"✅ Passed - Status: {response.status_code}")
+                try:
+                    response_data = response.json()
+                except:
+                    response_data = response.text
+            else:
+                print(f"❌ Failed - Expected 200, got {response.status_code}")
+                print(f"   Response: {response.text[:200]}...")
+                response_data = {}
+        except Exception as e:
+            print(f"❌ Failed - Error: {str(e)}")
+            success = False
+            response_data = {}
         
         if success:
             print(f"   Completed task: {incomplete_task.get('title', 'Unknown')}")
