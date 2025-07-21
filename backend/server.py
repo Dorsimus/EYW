@@ -658,17 +658,90 @@ async def complete_task(
     
     return completion
 
-# Task Management Routes
-@api_router.post("/tasks", response_model=Task)
-async def create_task(task_data: TaskCreate):
-    task = Task(**task_data.dict(), created_by="admin")  # TODO: Get actual admin user
+# Admin Task Management Routes
+@api_router.post("/admin/tasks", response_model=Task)
+async def admin_create_task(task_data: TaskCreate, admin_user = Depends(get_current_admin)):
+    task = Task(**task_data.dict(), created_by=admin_user["id"])
     await db.tasks.insert_one(task.dict())
     return task
 
-@api_router.get("/users/{user_id}/task-completions")
-async def get_user_task_completions(user_id: str):
-    completions = await db.task_completions.find({"user_id": user_id}).sort("completed_at", -1).to_list(1000)
-    return [serialize_doc(completion) for completion in completions]
+@api_router.put("/admin/tasks/{task_id}", response_model=Task)
+async def admin_update_task(task_id: str, task_update: TaskUpdate, admin_user = Depends(get_current_admin)):
+    # Get existing task
+    existing_task = await db.tasks.find_one({"id": task_id})
+    if not existing_task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    
+    # Update fields
+    update_data = {k: v for k, v in task_update.dict().items() if v is not None}
+    update_data["updated_at"] = datetime.utcnow()
+    
+    await db.tasks.update_one({"id": task_id}, {"$set": update_data})
+    
+    # Return updated task
+    updated_task = await db.tasks.find_one({"id": task_id})
+    return Task(**serialize_doc(updated_task))
+
+@api_router.delete("/admin/tasks/{task_id}")
+async def admin_delete_task(task_id: str, admin_user = Depends(get_current_admin)):
+    result = await db.tasks.update_one({"id": task_id}, {"$set": {"active": False}})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return {"message": "Task deactivated successfully"}
+
+@api_router.get("/admin/tasks")
+async def admin_get_all_tasks(admin_user = Depends(get_current_admin)):
+    tasks = await db.tasks.find().sort("created_at", -1).to_list(1000)
+    return [serialize_doc(task) for task in tasks]
+
+@api_router.get("/admin/stats")
+async def admin_get_stats(admin_user = Depends(get_current_admin)):
+    # Get total counts
+    total_users = await db.users.count_documents({"is_admin": False})
+    total_tasks = await db.tasks.count_documents({"active": True})
+    total_completions = await db.task_completions.count_documents({})
+    
+    # Calculate completion rate
+    completion_rate = 0.0
+    if total_tasks > 0 and total_users > 0:
+        possible_completions = total_tasks * total_users
+        completion_rate = (total_completions / possible_completions) * 100
+    
+    # Active competency areas
+    active_competency_areas = len(NAVIGATOR_COMPETENCIES)
+    
+    return AdminStats(
+        total_users=total_users,
+        total_tasks=total_tasks,
+        total_completions=total_completions,
+        completion_rate=round(completion_rate, 2),
+        active_competency_areas=active_competency_areas
+    )
+
+@api_router.get("/admin/users")
+async def admin_get_all_users(admin_user = Depends(get_current_admin)):
+    users = await db.users.find({"is_admin": False}).to_list(1000)
+    
+    # Add progress stats for each user
+    users_with_stats = []
+    for user in users:
+        user_data = serialize_doc(user)
+        
+        # Get completion count for this user
+        completions = await db.task_completions.count_documents({"user_id": user["id"]})
+        user_data["completed_tasks"] = completions
+        
+        # Get overall progress
+        progress_docs = await db.competency_progress.find({"user_id": user["id"]}).to_list(1000)
+        if progress_docs:
+            total_progress = sum(doc["completion_percentage"] for doc in progress_docs)
+            user_data["overall_progress"] = round(total_progress / len(progress_docs), 1)
+        else:
+            user_data["overall_progress"] = 0.0
+            
+        users_with_stats.append(user_data)
+    
+    return users_with_stats
 
 # Admin route to seed sample tasks
 @api_router.post("/admin/seed-tasks")
