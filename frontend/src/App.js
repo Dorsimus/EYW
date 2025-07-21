@@ -6,7 +6,9 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 // Mock current user - in real app this would come from authentication
-const CURRENT_USER_ID = "user123";
+// Use localStorage to persist the demo user ID across sessions
+const getStoredUserId = () => localStorage.getItem('demo_user_id');
+const setStoredUserId = (id) => localStorage.setItem('demo_user_id', id);
 
 const App = () => {
   const [currentView, setCurrentView] = useState('dashboard');
