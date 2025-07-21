@@ -385,7 +385,7 @@ const App = () => {
             </div>
           </div>
           
-          {/* PROFESSIONAL NAVIGATION */}
+          {/* REDSTONE NAVIGATION */}
           <nav className="flex space-x-3 flex-wrap">
             {[
               { key: 'dashboard', label: 'Dashboard', icon: '📊' },
@@ -396,10 +396,10 @@ const App = () => {
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key)}
-                className={`enterprise-nav-tab ${currentView === tab.key ? 'active' : ''}`}
+                className={`redstone-nav-tab ${currentView === tab.key ? 'active' : ''}`}
               >
                 <div className="flex items-center space-x-3">
-                  <div className="pro-icon">
+                  <div className="redstone-icon">
                     {tab.icon}
                   </div>
                   <span className="font-semibold text-sm">
@@ -419,10 +419,10 @@ const App = () => {
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key)}
-                className={`enterprise-nav-tab ${currentView === tab.key ? 'active' : ''}`}
+                className={`redstone-nav-tab ${currentView === tab.key ? 'active' : ''}`}
               >
                 <div className="flex items-center space-x-3">
-                  <div className="pro-icon">
+                  <div className="redstone-icon">
                     {tab.icon}
                   </div>
                   <span className="font-semibold text-sm">
