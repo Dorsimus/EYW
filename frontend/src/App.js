@@ -99,18 +99,24 @@ const App = () => {
   };
 
   const initializeUser = async () => {
+    console.log('initializeUser starting...');
     try {
       setLoading(true);
+      console.log('Loading set to true');
       
       // Try to get existing user from localStorage first
       let storedUserId = getStoredUserId();
+      console.log('Stored user ID:', storedUserId);
       let userData;
       
       if (storedUserId) {
         try {
+          console.log('Trying to get existing user...');
           const response = await axios.get(`${API}/users/${storedUserId}`);
           userData = response.data;
+          console.log('Found existing user:', userData);
         } catch (error) {
+          console.log('Stored user not found, creating new one');
           // Stored user doesn't exist anymore, clear localStorage
           localStorage.removeItem('demo_user_id');
           storedUserId = null;
@@ -119,6 +125,7 @@ const App = () => {
       
       // If no stored user or stored user doesn't exist, create new one
       if (!userData) {
+        console.log('Creating new user...');
         const createResponse = await axios.post(`${API}/users`, {
           email: "demo@earnwings.com",
           name: "Demo Navigator",
@@ -126,6 +133,7 @@ const App = () => {
           level: "navigator"
         });
         userData = createResponse.data;
+        console.log('Created new user:', userData);
         setStoredUserId(userData.id);
         
         // Seed sample tasks for demo
@@ -137,12 +145,16 @@ const App = () => {
         }
       }
       
+      console.log('Setting user data and loading user data...');
       setUser(userData);
       await loadUserData(userData.id);
+      console.log('User initialization completed successfully');
     } catch (error) {
       console.error('Error initializing user:', error);
     } finally {
+      console.log('Setting loading to false...');
       setLoading(false);
+      console.log('Loading set to false - initialization complete');
     }
   };
 
