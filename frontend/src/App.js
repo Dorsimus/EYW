@@ -293,13 +293,19 @@ const App = () => {
                 </div>
                 <h1 className="text-xl font-bold text-gray-900">Earn Your Wings</h1>
               </div>
-              <span className="text-sm text-gray-500">Navigator Level</span>
+              <span className="text-sm text-gray-500">
+                {isAdmin ? 'Admin Panel' : 'Navigator Level'}
+              </span>
             </div>
             
             <div className="flex items-center space-x-4">
               <div className="text-right">
-                <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-                <p className="text-xs text-gray-500">Overall Progress: {getOverallProgress()}%</p>
+                <p className="text-sm font-medium text-gray-900">
+                  {isAdmin ? 'Admin User' : user?.name}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {isAdmin ? 'System Administrator' : `Overall Progress: ${getOverallProgress()}%`}
+                </p>
               </div>
               <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                 <span className="text-blue-600 font-semibold text-sm">
