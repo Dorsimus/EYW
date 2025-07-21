@@ -912,15 +912,15 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
         </div>
       </div>
 
-      {/* Top Competencies */}
-      <div className="competency-card fade-in" style={{ animationDelay: '0.4s' }}>
+      {/* FIXED COMPETENCY SECTION */}
+      <div className="content-card fade-in" style={{ animationDelay: '0.4s' }}>
         <div className="p-8">
           <div className="flex items-center mb-8">
-            <div className="pro-icon-xl pro-icon-bg-blue rounded-2xl mr-4">
-              🎯
+            <div className="enterprise-icon icon-target w-12 h-12 text-xs mr-4">
+              COMP
             </div>
             <div>
-              <h3 className="gradient-text text-3xl font-bold">Top Competency Areas</h3>
+              <h3 className="text-3xl font-bold text-gray-800">Top Competency Areas</h3>
               <p className="text-gray-600 mt-1">Track your professional development progress</p>
             </div>
           </div>
@@ -931,28 +931,24 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
                     <div className="flex items-center mb-2">
-                      <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg mr-3"></div>
+                      <div className="w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg mr-3"></div>
                       <h4 className="text-xl font-bold text-gray-800">{area.name}</h4>
                     </div>
                     <p className="text-gray-600 text-base">{area.description}</p>
                   </div>
                   <div className="text-right ml-6">
-                    <div className="text-3xl font-bold gradient-text">{Math.round(area.overall_progress || 0)}%</div>
+                    <div className="text-3xl font-bold text-blue-600">{Math.round(area.overall_progress || 0)}%</div>
                     <div className="text-sm text-gray-500 font-medium">Complete</div>
                   </div>
                 </div>
                 
-                {/* Enhanced Progress Visualization */}
+                {/* Progress Visualization */}
                 <div className="relative mb-6">
-                  <div className="progress-bar h-4 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="enterprise-progress-bar h-4 bg-gray-200 rounded-full overflow-hidden">
                     <div 
-                      className="progress-bar h-full rounded-full transition-all duration-1500"
+                      className="enterprise-progress-bar h-full rounded-full transition-all duration-1000"
                       style={{ width: `${area.overall_progress || 0}%` }}
                     />
-                  </div>
-                  <div className="absolute -top-2 w-6 h-6 bg-white rounded-full border-3 border-blue-500 flex items-center justify-center shadow-lg" 
-                       style={{ left: `${Math.min(area.overall_progress || 0, 95)}%` }}>
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                   </div>
                 </div>
 
@@ -961,13 +957,13 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                     <div
                       key={subKey}
                       onClick={() => onViewCompetencyTasks(key, subKey)}
-                      className="sub-competency-item cursor-pointer group border-l-4 border-transparent hover:border-blue-500"
+                      className="p-4 bg-gray-50 hover:bg-blue-50 rounded-lg cursor-pointer transition-colors border-l-4 border-transparent hover:border-blue-500"
                     >
                       <div className="flex justify-between items-center">
                         <div className="flex-1">
                           <div className="flex items-center mb-2">
                             <div className="w-3 h-3 bg-gradient-to-r from-green-400 to-blue-500 rounded-full mr-2"></div>
-                            <div className="font-semibold text-gray-800 group-hover:text-blue-700 transition-colors">
+                            <div className="font-semibold text-gray-800">
                               {typeof subData === 'string' ? subData : (subData?.name || subKey)}
                             </div>
                           </div>
@@ -975,11 +971,8 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                             {(subData?.completed_tasks || 0)}/{(subData?.total_tasks || 0)} tasks • {Math.round(subData?.progress_percentage || 0)}% complete
                           </div>
                         </div>
-                        <div className="ml-4 flex items-center">
-                          <div className="text-lg font-bold gradient-text">
-                            {Math.round(subData?.progress_percentage || 0)}%
-                          </div>
-                          <div className="ml-2 w-2 h-2 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="ml-4 text-lg font-bold text-blue-600">
+                          {Math.round(subData?.progress_percentage || 0)}%
                         </div>
                       </div>
                     </div>
