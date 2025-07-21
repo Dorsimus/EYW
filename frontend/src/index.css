@@ -212,23 +212,129 @@ body {
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
 }
 
-/* Animations */
-.bounce-in {
-  animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+/* Enhanced Redstone Interactive Elements */
+
+/* Hover states for sub-competency items */
+.redstone-sub-competency {
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 4px solid transparent;
+  border: 1px solid #e5e7eb;
 }
 
-@keyframes bounceIn {
-  0% { transform: scale(0.3); opacity: 0; }
-  50% { transform: scale(1.05); opacity: 0.8; }
-  70% { transform: scale(0.9); opacity: 0.9; }
-  100% { transform: scale(1); opacity: 1; }
+.redstone-sub-competency:hover {
+  background: linear-gradient(135deg, rgba(255, 52, 67, 0.05) 0%, rgba(1, 39, 162, 0.05) 100%);
+  border-left-color: var(--redstone-red);
+  border-color: rgba(255, 52, 67, 0.2);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(255, 52, 67, 0.15);
 }
 
-.fade-in {
-  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+/* Enhanced modal styling */
+.redstone-modal-overlay {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
 }
 
-@keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
+.redstone-modal-content {
+  background: var(--redstone-gray);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced form inputs */
+.redstone-form-input {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+}
+
+.redstone-form-input:focus {
+  outline: none;
+  border-color: var(--redstone-blue);
+  box-shadow: 0 0 0 3px rgba(1, 39, 162, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Admin dashboard cards */
+.redstone-admin-card {
+  background: var(--redstone-gray);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-luxury);
+  position: relative;
+  overflow: hidden;
+}
+
+.redstone-admin-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-gradient);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.redstone-admin-card:hover::before {
+  transform: scaleX(1);
+}
+
+.redstone-admin-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(255, 52, 67, 0.15);
+  border-color: var(--redstone-red);
+}
+
+/* Enhanced quick action buttons */
+.redstone-quick-action {
+  background: var(--redstone-gray);
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.redstone-quick-action::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.redstone-quick-action:hover::before {
+  opacity: 0.05;
+}
+
+.redstone-quick-action:hover {
+  border-color: var(--redstone-red);
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(255, 52, 67, 0.2);
+}
+
+.redstone-quick-action > * {
+  position: relative;
+  z-index: 1;
 }
