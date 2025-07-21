@@ -847,19 +847,19 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
         </p>
       </div>
 
-      {/* PROFESSIONAL STATS OVERVIEW */}
+      {/* REDSTONE STATS OVERVIEW */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="enterprise-stat-card text-center bounce-in">
+        <div className="redstone-stat-card text-center bounce-in">
           <div className="flex justify-center mb-4">
-            <div className="pro-icon-xl">
+            <div className="redstone-icon-xl">
               📊
             </div>
           </div>
           <div className="stat-number text-4xl font-bold mb-2">{overallProgress}%</div>
           <div className="stat-label text-lg font-semibold mb-3">Overall Progress</div>
-          <div className="enterprise-progress-bar mt-3 h-3 bg-gray-200 rounded-full overflow-hidden">
+          <div className="redstone-progress-bar mt-3 h-3 bg-gray-200 rounded-full overflow-hidden">
             <div 
-              className="enterprise-progress-bar h-full rounded-full"
+              className="redstone-progress-bar h-full rounded-full"
               style={{ width: `${overallProgress}%` }}
             />
           </div>
@@ -868,9 +868,9 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
           </div>
         </div>
         
-        <div className="enterprise-stat-card text-center bounce-in" style={{ animationDelay: '0.1s' }}>
+        <div className="redstone-stat-card text-center bounce-in" style={{ animationDelay: '0.1s' }}>
           <div className="flex justify-center mb-4">
-            <div className="pro-icon-xl">
+            <div className="redstone-icon-xl">
               ✅
             </div>
           </div>
@@ -881,9 +881,9 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
           </div>
         </div>
         
-        <div className="enterprise-stat-card text-center bounce-in" style={{ animationDelay: '0.2s' }}>
+        <div className="redstone-stat-card text-center bounce-in" style={{ animationDelay: '0.2s' }}>
           <div className="flex justify-center mb-4">
-            <div className="pro-icon-xl">
+            <div className="redstone-icon-xl">
               📚
             </div>
           </div>
@@ -894,9 +894,9 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
           </div>
         </div>
         
-        <div className="enterprise-stat-card text-center bounce-in" style={{ animationDelay: '0.3s' }}>
+        <div className="redstone-stat-card text-center bounce-in" style={{ animationDelay: '0.3s' }}>
           <div className="flex justify-center mb-4">
-            <div className="pro-icon-xl">
+            <div className="redstone-icon-xl">
               🏆
             </div>
           </div>
