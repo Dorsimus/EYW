@@ -578,7 +578,7 @@ const TaskModal = ({ isOpen, onClose, tasks, competencyArea, subCompetency, comp
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-2">
                       <span className="text-xl">{getTaskTypeIcon(task.task_type)}</span>
-                      <h4 className="font-medium text-gray-900">{task.title}</h4>
+                      <h4 className="font-medium text-gray-900">{String(task.title || 'Untitled Task')}</h4>
                       {task.completed && <span className="text-green-600 text-sm font-medium">✓ Completed</span>}
                     </div>
                     
