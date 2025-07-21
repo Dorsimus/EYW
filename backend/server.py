@@ -143,6 +143,19 @@ class TaskCreate(BaseModel):
     external_link: Optional[str] = None
     instructions: Optional[str] = None
 
+class TaskUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    task_type: Optional[str] = None
+    competency_area: Optional[str] = None
+    sub_competency: Optional[str] = None
+    order: Optional[int] = None
+    required: Optional[bool] = None
+    estimated_hours: Optional[float] = None
+    external_link: Optional[str] = None
+    instructions: Optional[str] = None
+    active: Optional[bool] = None
+
 class TaskCompletion(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str
