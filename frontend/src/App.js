@@ -364,25 +364,21 @@ const App = () => {
                 </span>
               </div>
               
-              {/* FIXED ADMIN BUTTON */}
+              {/* PROFESSIONAL ADMIN BUTTON */}
               {isAdmin ? (
                 <button
                   onClick={adminLogout}
-                  className="enterprise-btn-primary flex items-center space-x-2"
+                  className="enterprise-btn-primary flex items-center space-x-3"
                 >
-                  <div className="enterprise-icon icon-admin">
-                    OUT
-                  </div>
+                  <span>🚪</span>
                   <span>Logout</span>
                 </button>
               ) : (
                 <button
                   onClick={() => setShowAdminLogin(true)}
-                  className="enterprise-btn-primary flex items-center space-x-2"
+                  className="enterprise-btn-primary flex items-center space-x-3"
                 >
-                  <div className="enterprise-icon icon-admin">
-                    ADM
-                  </div>
+                  <span>👑</span>
                   <span>Admin</span>
                 </button>
               )}
