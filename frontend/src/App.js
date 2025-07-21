@@ -848,10 +848,10 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
     <div className="space-y-8">
       {/* Hero Section */}
       <div className="text-center mb-8 fade-in">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{color: '#efefef'}}>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{color: '#0127a2'}}>
           Welcome back, {user?.name}! 🚀
         </h1>
-        <p className="text-lg md:text-xl font-medium" style={{color: '#efefef', opacity: 0.9}}>
+        <p className="text-lg md:text-xl font-medium" style={{color: '#333333'}}>
           Track your progress through task completion and portfolio building
         </p>
       </div>
