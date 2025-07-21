@@ -66,6 +66,8 @@ class User(BaseModel):
     name: str
     role: str = "participant"  # participant, mentor, manager, admin
     level: str = "navigator"   # navigator level for now
+    is_admin: bool = False
+    password_hash: Optional[str] = None  # For admin users
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
