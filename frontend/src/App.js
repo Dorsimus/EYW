@@ -348,12 +348,12 @@ const App = () => {
             
             <div className="flex items-center space-x-6">
               <div className="text-right">
-                <p className="text-white font-bold text-lg">
+                <p className="font-bold text-lg" style={{color: '#efefef'}}>
                   {isAdmin ? 'Admin Control' : user?.name}
                 </p>
                 <div className="flex items-center justify-end mt-1">
                   <div className="w-2 h-2 rounded-full mr-3" style={{backgroundColor: '#ff3443'}}></div>
-                  <p className="redstone-subheading text-sm font-medium">
+                  <p className="text-sm font-medium" style={{color: '#efefef'}}>
                     {isAdmin ? 'Full Access' : `${getOverallProgress()}% Complete`}
                   </p>
                 </div>
