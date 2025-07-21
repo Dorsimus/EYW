@@ -13,23 +13,34 @@ class TaskCompetencyAPITester:
         self.admin_token = None
         self.admin_user = None
 
-    def run_test(self, name, method, endpoint, expected_status, data=None, files=None):
+    def run_test(self, name, method, endpoint, expected_status, data=None, files=None, auth_required=False):
         """Run a single API test"""
         url = f"{self.api_url}/{endpoint}"
         headers = {'Content-Type': 'application/json'} if not files else {}
+        
+        # Add authorization header if admin token is available and auth is required
+        if auth_required and self.admin_token:
+            headers['Authorization'] = f'Bearer {self.admin_token}'
 
         self.tests_run += 1
         print(f"\n🔍 Testing {name}...")
         print(f"   URL: {url}")
+        if auth_required:
+            print(f"   Auth: {'✅ Token provided' if self.admin_token else '❌ No token'}")
         
         try:
             if method == 'GET':
                 response = requests.get(url, headers=headers)
             elif method == 'POST':
                 if files:
-                    response = requests.post(url, data=data, files=files)
+                    # Remove Content-Type for multipart/form-data
+                    if 'Content-Type' in headers:
+                        del headers['Content-Type']
+                    response = requests.post(url, data=data, files=files, headers=headers)
                 else:
                     response = requests.post(url, json=data, headers=headers)
+            elif method == 'PUT':
+                response = requests.put(url, json=data, headers=headers)
             elif method == 'DELETE':
                 response = requests.delete(url, headers=headers)
 
