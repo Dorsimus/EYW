@@ -940,9 +940,9 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                 
                 {/* Progress Visualization */}
                 <div className="relative mb-6">
-                  <div className="enterprise-progress-bar h-4 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="redstone-progress-bar h-4 bg-gray-200 rounded-full overflow-hidden">
                     <div 
-                      className="enterprise-progress-bar h-full rounded-full transition-all duration-1000"
+                      className="redstone-progress-bar h-full rounded-full transition-all duration-1000"
                       style={{ width: `${area.overall_progress || 0}%` }}
                     />
                   </div>
