@@ -127,6 +127,13 @@ class TaskCompletionCreate(BaseModel):
     evidence_description: Optional[str] = None
     notes: Optional[str] = None
 
+class AdminStats(BaseModel):
+    total_users: int
+    total_tasks: int
+    total_completions: int
+    completion_rate: float
+    active_competency_areas: int
+
 class CompetencyProgress(BaseModel):
     user_id: str
     competency_area: str
