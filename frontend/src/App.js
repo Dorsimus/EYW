@@ -1162,4 +1162,78 @@ const AddPortfolioView = ({ portfolioItem, setPortfolioItem, onSubmit, competenc
   );
 };
 
+// Admin Dashboard Component
+const AdminDashboardView = ({ stats, onNavigate }) => {
+  if (!stats) return <div>Loading stats...</div>;
+
+  return (
+    <div className="space-y-8">
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">🎛️ Admin Dashboard</h2>
+        <p className="text-lg text-gray-600">Manage your Earn Your Wings platform</p>
+      </div>
+
+      {/* Stats Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="bg-white rounded-lg shadow p-6 text-center">
+          <div className="text-3xl font-bold text-blue-600">{stats.total_users}</div>
+          <div className="text-sm text-gray-500">Total Users</div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow p-6 text-center">
+          <div className="text-3xl font-bold text-green-600">{stats.total_tasks}</div>
+          <div className="text-sm text-gray-500">Active Tasks</div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow p-6 text-center">
+          <div className="text-3xl font-bold text-purple-600">{stats.total_completions}</div>
+          <div className="text-sm text-gray-500">Task Completions</div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow p-6 text-center">
+          <div className="text-3xl font-bold text-orange-600">{stats.completion_rate}%</div>
+          <div className="text-sm text-gray-500">Completion Rate</div>
+        </div>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="bg-white rounded-lg shadow">
+        <div className="px-6 py-4 border-b border-gray-200">
+          <h3 className="text-lg font-medium text-gray-900">Quick Actions</h3>
+        </div>
+        <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <button 
+              onClick={() => onNavigate('admin-tasks')}
+              className="p-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-colors text-center"
+            >
+              <div className="text-3xl mb-2">⚙️</div>
+              <div className="font-medium text-gray-900">Manage Tasks</div>
+              <div className="text-sm text-gray-500">Create and edit learning tasks</div>
+            </button>
+            
+            <button 
+              onClick={() => onNavigate('admin-users')}
+              className="p-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-green-400 hover:bg-green-50 transition-colors text-center"
+            >
+              <div className="text-3xl mb-2">👥</div>
+              <div className="font-medium text-gray-900">View Users</div>
+              <div className="text-sm text-gray-500">Monitor user progress</div>
+            </button>
+            
+            <button 
+              onClick={() => onNavigate('admin-analytics')}
+              className="p-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-400 hover:bg-purple-50 transition-colors text-center"
+            >
+              <div className="text-3xl mb-2">📈</div>
+              <div className="font-medium text-gray-900">View Analytics</div>
+              <div className="text-sm text-gray-500">Platform performance metrics</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default App;
