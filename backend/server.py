@@ -460,17 +460,10 @@ async def get_user_competencies(user_id: str):
     
     return organized
 
-# Task Management Routes
-@api_router.post("/tasks", response_model=Task)
-async def create_task(task_data: TaskCreate):
-    task = Task(**task_data.dict(), created_by="admin")  # TODO: Get actual admin user
-    await db.tasks.insert_one(task.dict())
-    return task
-
 @api_router.get("/tasks")
 async def get_all_tasks():
     tasks = await db.tasks.find({"active": True}).sort("competency_area", 1).sort("sub_competency", 1).sort("order", 1).to_list(1000)
-    return tasks
+    return [serialize_doc(task) for task in tasks]
 
 @api_router.get("/tasks/{competency_area}/{sub_competency}")
 async def get_tasks_for_competency(competency_area: str, sub_competency: str):
@@ -479,7 +472,7 @@ async def get_tasks_for_competency(competency_area: str, sub_competency: str):
         "sub_competency": sub_competency,
         "active": True
     }).sort("order", 1).to_list(1000)
-    return tasks
+    return [serialize_doc(task) for task in tasks]
 
 @api_router.get("/users/{user_id}/tasks/{competency_area}/{sub_competency}")
 async def get_user_tasks_for_competency(user_id: str, competency_area: str, sub_competency: str):
@@ -497,15 +490,18 @@ async def get_user_tasks_for_competency(user_id: str, competency_area: str, sub_
         "task_id": {"$in": task_ids}
     }).to_list(1000)
     
-    completion_map = {comp["task_id"]: comp for comp in completions}
+    completion_map = {comp["task_id"]: serialize_doc(comp) for comp in completions}
     
     # Add completion status to tasks
+    serialized_tasks = []
     for task in tasks:
-        task["completed"] = task["id"] in completion_map
-        if task["completed"]:
-            task["completion_data"] = completion_map[task["id"]]
+        task_data = serialize_doc(task)
+        task_data["completed"] = task["id"] in completion_map
+        if task_data["completed"]:
+            task_data["completion_data"] = completion_map[task["id"]]
+        serialized_tasks.append(task_data)
     
-    return tasks
+    return serialized_tasks
 
 # Task Completion Routes
 @api_router.post("/users/{user_id}/task-completions")
