@@ -933,7 +933,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                     <p className="text-gray-600 text-base">{area.description}</p>
                   </div>
                   <div className="text-right ml-6">
-                    <div className="text-3xl font-bold text-blue-600">{Math.round(area.overall_progress || 0)}%</div>
+                    <div className="text-3xl font-bold" style={{color: '#0127a2'}}>{Math.round(area.overall_progress || 0)}%</div>
                     <div className="text-sm text-gray-500 font-medium">Complete</div>
                   </div>
                 </div>
