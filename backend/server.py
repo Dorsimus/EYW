@@ -413,6 +413,173 @@ SAMPLE_TASKS = [
         "required": True,
         "estimated_hours": 6.0,
         "instructions": "Include competitor analysis, pricing trends, and market opportunities."
+    },
+    
+    # Additional Leadership & Supervision Tasks
+    {
+        "title": "Performance Review Training Workshop",
+        "description": "Attend workshop on conducting effective performance reviews",
+        "task_type": "course_link",
+        "competency_area": "leadership_supervision", 
+        "sub_competency": "performance_management",
+        "order": 1,
+        "required": True,
+        "estimated_hours": 3.0,
+        "external_link": "https://your-lms.com/performance-reviews",
+        "instructions": "Learn techniques for giving constructive feedback and setting goals."
+    },
+    {
+        "title": "Conduct Monthly One-on-One Meetings",
+        "description": "Schedule and conduct monthly development meetings with each team member",
+        "task_type": "assessment",
+        "competency_area": "leadership_supervision",
+        "sub_competency": "coaching_development", 
+        "order": 1,
+        "required": True,
+        "estimated_hours": 2.0,
+        "instructions": "Focus on career development, goals, and skill building opportunities."
+    },
+    {
+        "title": "Conflict Resolution Simulation",
+        "description": "Complete interactive conflict resolution scenarios",
+        "task_type": "course_link",
+        "competency_area": "leadership_supervision",
+        "sub_competency": "conflict_resolution",
+        "order": 1,
+        "required": True,
+        "estimated_hours": 2.5,
+        "external_link": "https://your-lms.com/conflict-resolution",
+        "instructions": "Practice de-escalation techniques and mediation skills."
+    },
+    
+    # Additional Financial Management Tasks
+    {
+        "title": "Variance Analysis Deep Dive",
+        "description": "Analyze budget vs actual variances for your department",
+        "task_type": "document_upload",
+        "competency_area": "financial_management",
+        "sub_competency": "variance_analysis",
+        "order": 1,
+        "required": True,
+        "estimated_hours": 4.0,
+        "instructions": "Identify root causes of variances and propose corrective actions."
+    },
+    {
+        "title": "ROI Analysis for Capital Project",
+        "description": "Prepare ROI analysis for a proposed capital improvement project",
+        "task_type": "project",
+        "competency_area": "financial_management",
+        "sub_competency": "roi_decisions",
+        "order": 1,
+        "required": True,
+        "estimated_hours": 5.0,
+        "instructions": "Include initial investment, projected returns, payback period, and risk assessment."
+    },
+    {
+        "title": "Monthly P&L Review Presentation",
+        "description": "Present monthly P&L results and insights to management",
+        "task_type": "assessment",
+        "competency_area": "financial_management",
+        "sub_competency": "pl_understanding",
+        "order": 1,
+        "required": False,
+        "estimated_hours": 3.0,
+        "instructions": "Analyze trends, explain variances, and provide actionable recommendations."
+    },
+    
+    # Additional Operational Management Tasks
+    {
+        "title": "Technology Implementation Project",
+        "description": "Lead implementation of new property management software feature",
+        "task_type": "project",
+        "competency_area": "operational_management",
+        "sub_competency": "technology_utilization",
+        "order": 1,
+        "required": True,
+        "estimated_hours": 8.0,
+        "instructions": "Manage rollout, training, and adoption of new technology solution."
+    },
+    {
+        "title": "Standard Operating Procedures Audit",
+        "description": "Review and update department SOPs for current best practices",
+        "task_type": "document_upload",
+        "competency_area": "operational_management",
+        "sub_competency": "sop_management",
+        "order": 1,
+        "required": True,
+        "estimated_hours": 6.0,
+        "instructions": "Document gaps, update procedures, and ensure team training on changes."
+    },
+    {
+        "title": "Safety Compliance Assessment",
+        "description": "Complete comprehensive safety audit of your department area",
+        "task_type": "assessment",
+        "competency_area": "operational_management",
+        "sub_competency": "safety_management",
+        "order": 1,
+        "required": True,
+        "estimated_hours": 4.0,
+        "instructions": "Identify risks, document findings, and create improvement action plan."
+    },
+    
+    # Additional Cross-Functional Tasks
+    {
+        "title": "Resident Journey Mapping Workshop",
+        "description": "Map the complete resident experience across all departments",
+        "task_type": "project",
+        "competency_area": "cross_functional",
+        "sub_competency": "resident_journey",
+        "order": 1,
+        "required": True,
+        "estimated_hours": 6.0,
+        "instructions": "Collaborate with other departments to identify touchpoints and improvement opportunities."
+    },
+    {
+        "title": "Interdepartmental Communication Protocol",
+        "description": "Develop communication standards between departments",
+        "task_type": "document_upload",
+        "competency_area": "cross_functional",
+        "sub_competency": "communication_protocols",
+        "order": 1,
+        "required": False,
+        "estimated_hours": 3.0,
+        "instructions": "Create clear escalation paths and information sharing procedures."
+    },
+    
+    # Additional Strategic Thinking Tasks
+    {
+        "title": "Industry Trend Analysis",
+        "description": "Research and present on emerging property management trends",
+        "task_type": "document_upload",
+        "competency_area": "strategic_thinking",
+        "sub_competency": "trend_identification",
+        "order": 1,
+        "required": True,
+        "estimated_hours": 4.0,
+        "instructions": "Focus on technology, resident expectations, and market changes."
+    },
+    {
+        "title": "Long-term Department Planning Session",
+        "description": "Facilitate strategic planning session for department goals",
+        "task_type": "project",
+        "competency_area": "strategic_thinking",
+        "sub_competency": "longterm_planning",
+        "order": 1,
+        "required": True,
+        "estimated_hours": 8.0,
+        "instructions": "Set 3-year vision, identify key initiatives, and create implementation timeline."
+    },
+    {
+        "title": "Change Management Case Study",
+        "description": "Complete case study on successful change management in property management",
+        "task_type": "course_link",
+        "competency_area": "strategic_thinking",
+        "sub_competency": "change_leadership",
+        "order": 1,
+        "required": False,
+        "estimated_hours": 2.0,
+        "external_link": "https://your-lms.com/change-management",
+        "instructions": "Apply lessons learned to your current organizational context."
     }
 ]
 
