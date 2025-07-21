@@ -1299,7 +1299,7 @@ const AdminTasksView = ({ tasks, onCreateTask, onUpdateTask, onDeleteTask, showC
       external_link: task.external_link || '',
       instructions: task.instructions || ''
     });
-    setShowCreateTask(true);
+    // Don't set showCreateTask, we'll use a separate modal for editing
   };
 
   const handleDelete = async (taskId) => {
