@@ -432,6 +432,7 @@ async def get_user_competencies(user_id: str):
     # Organize by competency area
     organized = {}
     for comp in competencies:
+        comp = serialize_doc(comp)  # Serialize the document
         area = comp["competency_area"]
         if area not in organized:
             organized[area] = {
