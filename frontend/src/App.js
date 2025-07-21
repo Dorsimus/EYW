@@ -327,51 +327,50 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* LUXURY ENTERPRISE HEADER */}
-      <header className="luxury-glass-card p-6 mb-8 fade-in">
+      {/* FIXED HEADER - PROPER CONTRAST */}
+      <header className="enterprise-glass-card p-6 mb-8 fade-in">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-3xl flex items-center justify-center text-white font-black text-xl mr-6 shadow-2xl relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent"></div>
-                <span className="relative z-10 tracking-wider">EYW</span>
+              <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center text-white font-black text-xl mr-6 shadow-lg">
+                <span className="tracking-wider">EYW</span>
               </div>
               <div>
-                <h1 className="luxury-heading text-3xl font-black">Earn Your Wings</h1>
+                <h1 className="enterprise-heading text-3xl font-black">Earn Your Wings</h1>
                 <div className="flex items-center mt-2">
-                  <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3 shadow-lg shadow-emerald-400/50"></div>
-                  <span className="luxury-text-secondary text-sm font-semibold tracking-wide uppercase">
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3 animate-pulse"></div>
+                  <span className="enterprise-subheading text-sm font-semibold">
                     {isAdmin ? 'System Administrator' : 'Navigator Program'}
                   </span>
                 </div>
               </div>
             </div>
             
-            <div className="flex items-center space-x-8">
+            <div className="flex items-center space-x-6">
               <div className="text-right">
-                <p className="luxury-text-primary font-bold text-xl">
+                <p className="text-white font-bold text-lg">
                   {isAdmin ? 'Admin Control' : user?.name}
                 </p>
                 <div className="flex items-center justify-end mt-1">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-3 shadow-lg shadow-blue-400/50"></div>
-                  <p className="luxury-text-secondary text-sm font-medium">
-                    {isAdmin ? 'Full System Access' : `${getOverallProgress()}% Progress`}
+                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                  <p className="enterprise-subheading text-sm font-medium">
+                    {isAdmin ? 'Full Access' : `${getOverallProgress()}% Complete`}
                   </p>
                 </div>
               </div>
-              <div className="luxury-avatar w-14 h-14 rounded-2xl flex items-center justify-center">
-                <span className="text-white font-black text-lg tracking-wider">
-                  {isAdmin ? 'SYS' : user?.name?.split(' ').map(n => n[0]).join('') || 'USR'}
+              <div className="enterprise-avatar w-12 h-12 rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-lg">
+                  {isAdmin ? 'AD' : user?.name?.split(' ').map(n => n[0]).join('') || 'DN'}
                 </span>
               </div>
               
-              {/* LUXURY ADMIN BUTTON */}
+              {/* FIXED ADMIN BUTTON */}
               {isAdmin ? (
                 <button
                   onClick={adminLogout}
-                  className="luxury-btn-primary px-6 py-3 flex items-center space-x-3"
+                  className="enterprise-btn-primary flex items-center space-x-2"
                 >
-                  <div className="luxury-icon icon-admin">
+                  <div className="enterprise-icon icon-admin">
                     OUT
                   </div>
                   <span>Logout</span>
@@ -379,9 +378,9 @@ const App = () => {
               ) : (
                 <button
                   onClick={() => setShowAdminLogin(true)}
-                  className="luxury-btn-primary px-6 py-3 flex items-center space-x-3"
+                  className="enterprise-btn-primary flex items-center space-x-2"
                 >
-                  <div className="luxury-icon icon-admin">
+                  <div className="enterprise-icon icon-admin">
                     ADM
                   </div>
                   <span>Admin</span>
