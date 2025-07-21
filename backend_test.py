@@ -10,6 +10,8 @@ class TaskCompetencyAPITester:
         self.tests_run = 0
         self.tests_passed = 0
         self.user_id = None
+        self.admin_token = None
+        self.admin_user = None
 
     def run_test(self, name, method, endpoint, expected_status, data=None, files=None):
         """Run a single API test"""
