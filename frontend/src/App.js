@@ -290,7 +290,7 @@ const App = () => {
       });
       
       // Reload data
-      await loadUserData(userId);
+      await loadUserData(user.id);
       setCurrentView('portfolio');
     } catch (error) {
       console.error('Error adding portfolio item:', error);
