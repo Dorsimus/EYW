@@ -273,8 +273,8 @@ const App = () => {
         formData.append('file', newPortfolioItem.file);
       }
       
-      const userId = user?.id || CURRENT_USER_ID;
-      await axios.post(`${API}/users/${userId}/portfolio`, formData, {
+      if (!user?.id) return;
+      await axios.post(`${API}/users/${user.id}/portfolio`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
