@@ -378,39 +378,45 @@ const App = () => {
           </div>
           
           {/* Navigation */}
-          <nav className="flex space-x-1">
+          <nav className="flex space-x-2">
             {[
-              { key: 'dashboard', label: '📊 Dashboard', icon: '📊' },
-              { key: 'competencies', label: '🎯 Competencies', icon: '🎯' },
-              { key: 'portfolio', label: '📚 Portfolio', icon: '📚' },
-              { key: 'add-portfolio', label: '➕ Add Evidence', icon: '➕' }
+              { key: 'dashboard', label: 'Dashboard', icon: '📊', iconClass: 'pro-icon-bg-blue' },
+              { key: 'competencies', label: 'Competencies', icon: '🎯', iconClass: 'pro-icon-bg-green' },
+              { key: 'portfolio', label: 'Portfolio', icon: '📚', iconClass: 'pro-icon-bg-purple' },
+              { key: 'add-portfolio', label: 'Add Evidence', icon: '➕', iconClass: 'pro-icon-bg-orange' }
             ].filter(tab => !isAdmin || ['dashboard'].includes(tab.key)).map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key)}
                 className={`nav-tab ${currentView === tab.key ? 'active' : ''}`}
               >
-                <span className="mr-2">{tab.icon}</span>
-                <span className="hidden sm:inline">{tab.label.split(' ')[1] || tab.label}</span>
-                <span className="sm:hidden">{tab.icon}</span>
+                <div className="flex items-center space-x-3">
+                  <div className={`pro-icon ${tab.iconClass} rounded-lg`}>
+                    {tab.icon}
+                  </div>
+                  <span className="hidden sm:inline font-semibold">{tab.label}</span>
+                </div>
               </button>
             ))}
             
             {/* Admin Navigation */}
             {isAdmin && [
-              { key: 'admin-dashboard', label: '🎛️ Dashboard', icon: '🎛️' },
-              { key: 'admin-tasks', label: '⚙️ Tasks', icon: '⚙️' },
-              { key: 'admin-users', label: '👥 Users', icon: '👥' },
-              { key: 'admin-analytics', label: '📊 Analytics', icon: '📊' }
+              { key: 'admin-dashboard', label: 'Dashboard', icon: '🎛️', iconClass: 'pro-icon-bg-blue' },
+              { key: 'admin-tasks', label: 'Tasks', icon: '⚙️', iconClass: 'pro-icon-bg-green' },
+              { key: 'admin-users', label: 'Users', icon: '👥', iconClass: 'pro-icon-bg-purple' },
+              { key: 'admin-analytics', label: 'Analytics', icon: '📊', iconClass: 'pro-icon-bg-orange' }
             ].map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key)}
                 className={`nav-tab ${currentView === tab.key ? 'active' : ''}`}
               >
-                <span className="mr-2">{tab.icon}</span>
-                <span className="hidden sm:inline">{tab.label.split(' ')[1] || tab.label}</span>
-                <span className="sm:hidden">{tab.icon}</span>
+                <div className="flex items-center space-x-3">
+                  <div className={`pro-icon ${tab.iconClass} rounded-lg`}>
+                    {tab.icon}
+                  </div>
+                  <span className="hidden sm:inline font-semibold">{tab.label}</span>
+                </div>
               </button>
             ))}
           </nav>
