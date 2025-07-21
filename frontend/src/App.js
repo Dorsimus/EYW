@@ -179,14 +179,14 @@ const App = () => {
         formData.append('file', file);
       }
       
-      await axios.post(`${API}/users/${userId}/task-completions`, formData, {
+      await axios.post(`${API}/users/${user.id}/task-completions`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
       
       // Reload data
-      await loadUserData(userId);
+      await loadUserData(user.id);
       if (selectedCompetency) {
         await loadCompetencyTasks(selectedCompetency.area, selectedCompetency.sub);
       }
