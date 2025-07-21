@@ -386,6 +386,9 @@ async def update_all_competency_progress(user_id: str):
                         "completed_tasks": completed,
                         "total_tasks": total,
                         "last_updated": datetime.utcnow()
+                    },
+                    "$setOnInsert": {
+                        "evidence_items": []
                     }
                 },
                 upsert=True
