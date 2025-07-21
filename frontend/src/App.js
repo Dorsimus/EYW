@@ -473,7 +473,9 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                   {Object.entries(areaData.sub_competencies).map(([subKey, subData]) => (
                     <div key={subKey} className="bg-white rounded-lg p-4 shadow-sm">
                       <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-medium text-gray-900">{subData.name}</h4>
+                        <h4 className="font-medium text-gray-900">
+                          {typeof subData === 'object' && subData?.name ? subData.name : 'Unknown Competency'}
+                        </h4>
                         <button
                           onClick={() => handleViewTasks(areaKey, subKey)}
                           className="text-blue-600 hover:text-blue-800 text-sm font-medium"
