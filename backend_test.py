@@ -352,6 +352,39 @@ class TaskCompetencyAPITester:
         if success:
             print(f"   Task deactivated successfully")
         return success, response
+
+    def test_portfolio_operations(self):
+        """Test portfolio operations (existing functionality)"""
+        if not self.user_id:
+            print("❌ No user ID available for testing")
+            return False, {}
+
+        # Create portfolio item
+        portfolio_data = {
+            'title': 'Test Portfolio Item',
+            'description': 'Test portfolio description',
+            'competency_areas': '["leadership_supervision"]',
+            'tags': '["test", "automation"]'
+        }
+
+        success, response = self.run_test(
+            "Create Portfolio Item", 
+            "POST", 
+            f"users/{self.user_id}/portfolio", 
+            200,
+            data=portfolio_data
+        )
+        
+        if success:
+            # Get portfolio items
+            self.run_test(
+                "Get User Portfolio", 
+                "GET", 
+                f"users/{self.user_id}/portfolio", 
+                200
+            )
+        
+        return success, response
         """Test portfolio operations (existing functionality)"""
         if not self.user_id:
             print("❌ No user ID available for testing")
