@@ -88,6 +88,7 @@ const App = () => {
       setSelectedCompetency({ area: competencyArea, sub: subCompetency });
     } catch (error) {
       console.error('Error loading tasks:', error);
+      setCompetencyTasks([]);
     }
   };
 
