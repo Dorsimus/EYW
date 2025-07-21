@@ -97,13 +97,23 @@ const App = () => {
     try {
       setLoading(true);
       
-      // Try to get existing user first
+      // Try to get existing user from localStorage first
+      let storedUserId = getStoredUserId();
       let userData;
-      try {
-        const response = await axios.get(`${API}/users/${CURRENT_USER_ID}`);
-        userData = response.data;
-      } catch (error) {
-        // User doesn't exist, create new one
+      
+      if (storedUserId) {
+        try {
+          const response = await axios.get(`${API}/users/${storedUserId}`);
+          userData = response.data;
+        } catch (error) {
+          // Stored user doesn't exist anymore, clear localStorage
+          localStorage.removeItem('demo_user_id');
+          storedUserId = null;
+        }
+      }
+      
+      // If no stored user or stored user doesn't exist, create new one
+      if (!userData) {
         const createResponse = await axios.post(`${API}/users`, {
           email: "demo@earnwings.com",
           name: "Demo Navigator",
@@ -111,6 +121,7 @@ const App = () => {
           level: "navigator"
         });
         userData = createResponse.data;
+        setStoredUserId(userData.id);
         
         // Seed sample tasks for demo
         try {
