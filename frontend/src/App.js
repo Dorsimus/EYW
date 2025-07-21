@@ -620,16 +620,20 @@ const TaskModal = ({ isOpen, onClose, tasks, competencyArea, subCompetency, comp
                 {task.completed && task.completion_data && (
                   <div className="mt-3 pt-3 border-t border-green-200">
                     <p className="text-sm text-green-700">
-                      <strong>Completed:</strong> {new Date(task.completion_data.completed_at).toLocaleDateString()}
+                      <strong>Completed:</strong> {
+                        task.completion_data.completed_at 
+                          ? new Date(task.completion_data.completed_at).toLocaleDateString()
+                          : 'Date unavailable'
+                      }
                     </p>
                     {task.completion_data.evidence_description && (
                       <p className="text-sm text-green-700 mt-1">
-                        <strong>Evidence:</strong> {task.completion_data.evidence_description}
+                        <strong>Evidence:</strong> {String(task.completion_data.evidence_description)}
                       </p>
                     )}
                     {task.completion_data.notes && (
                       <p className="text-sm text-green-700 mt-1">
-                        <strong>Notes:</strong> {task.completion_data.notes}
+                        <strong>Notes:</strong> {String(task.completion_data.notes)}
                       </p>
                     )}
                   </div>
