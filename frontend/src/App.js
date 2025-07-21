@@ -360,9 +360,11 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                       onClick={() => onViewCompetencyTasks(key, subKey)}
                       className="text-left p-2 rounded bg-gray-50 hover:bg-gray-100 transition-colors"
                     >
-                      <div className="text-sm font-medium text-gray-800">{subData.name}</div>
+                      <div className="text-sm font-medium text-gray-800">
+                        {typeof subData === 'string' ? subData : (subData?.name || subKey)}
+                      </div>
                       <div className="text-xs text-gray-600">
-                        {subData.completed_tasks || 0}/{subData.total_tasks || 0} tasks completed
+                        {(subData?.completed_tasks || 0)}/{(subData?.total_tasks || 0)} tasks completed
                       </div>
                     </button>
                   ))}
