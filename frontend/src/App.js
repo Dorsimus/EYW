@@ -1236,4 +1236,294 @@ const AdminDashboardView = ({ stats, onNavigate }) => {
   );
 };
 
+// Admin Tasks Management Component
+const AdminTasksView = ({ tasks, onCreateTask, onUpdateTask, onDeleteTask, showCreateTask, setShowCreateTask }) => {
+  const [editingTask, setEditingTask] = useState(null);
+  const [newTask, setNewTask] = useState({
+    title: '',
+    description: '',
+    task_type: 'course_link',
+    competency_area: 'leadership_supervision',
+    sub_competency: 'team_motivation',
+    order: 1,
+    required: true,
+    estimated_hours: 1.0,
+    external_link: '',
+    instructions: ''
+  });
+
+  const COMPETENCY_OPTIONS = [
+    { area: 'leadership_supervision', subs: ['team_motivation', 'delegation', 'performance_management', 'coaching_development', 'team_building', 'conflict_resolution', 'difficult_conversations', 'cross_dept_communication', 'resident_resolution', 'crisis_leadership'] },
+    { area: 'financial_management', subs: ['budget_creation', 'variance_analysis', 'cost_control', 'roi_decisions', 'revenue_impact', 'pl_understanding', 'kpi_tracking', 'financial_forecasting', 'capex_planning', 'vendor_cost_mgmt'] },
+    { area: 'operational_management', subs: ['workflow_optimization', 'technology_utilization', 'quality_control', 'sop_management', 'innovation', 'safety_management', 'policy_enforcement', 'legal_compliance', 'emergency_preparedness', 'documentation'] },
+    { area: 'cross_functional', subs: ['interdept_understanding', 'resident_journey', 'revenue_awareness', 'collaborative_problem_solving', 'joint_planning', 'resource_sharing', 'communication_protocols', 'dept_conflict_resolution', 'success_metrics'] },
+    { area: 'strategic_thinking', subs: ['market_awareness', 'trend_identification', 'opportunity_recognition', 'problem_anticipation', 'longterm_planning', 'change_leadership', 'stakeholder_management', 'project_management', 'innovation_adoption', 'continuous_improvement'] }
+  ];
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const success = editingTask 
+      ? await onUpdateTask(editingTask.id, newTask)
+      : await onCreateTask(newTask);
+    
+    if (success) {
+      setShowCreateTask(false);
+      setEditingTask(null);
+      setNewTask({
+        title: '',
+        description: '',
+        task_type: 'course_link',
+        competency_area: 'leadership_supervision',
+        sub_competency: 'team_motivation',
+        order: 1,
+        required: true,
+        estimated_hours: 1.0,
+        external_link: '',
+        instructions: ''
+      });
+    }
+  };
+
+  const handleEdit = (task) => {
+    setEditingTask(task);
+    setNewTask({
+      title: task.title,
+      description: task.description,
+      task_type: task.task_type,
+      competency_area: task.competency_area,
+      sub_competency: task.sub_competency,
+      order: task.order,
+      required: task.required,
+      estimated_hours: task.estimated_hours,
+      external_link: task.external_link || '',
+      instructions: task.instructions || ''
+    });
+    setShowCreateTask(true);
+  };
+
+  const handleDelete = async (taskId) => {
+    if (window.confirm('Are you sure you want to delete this task?')) {
+      await onDeleteTask(taskId);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-3xl font-bold text-gray-900">⚙️ Manage Tasks</h2>
+          <p className="text-lg text-gray-600">Create and manage learning tasks</p>
+        </div>
+        <button
+          onClick={() => setShowCreateTask(true)}
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center space-x-2"
+        >
+          <span>➕</span>
+          <span>Add Task</span>
+        </button>
+      </div>
+
+      {/* Create/Edit Task Form */}
+      {showCreateTask && (
+        <div className="bg-white rounded-lg shadow p-6">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            {editingTask ? 'Edit Task' : 'Create New Task'}
+          </h3>
+          
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Title *</label>
+                <input
+                  type="text"
+                  required
+                  value={newTask.title}
+                  onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  placeholder="Task title"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Task Type</label>
+                <select
+                  value={newTask.task_type}
+                  onChange={(e) => setNewTask({ ...newTask, task_type: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                >
+                  <option value="course_link">📚 Course Link</option>
+                  <option value="document_upload">📄 Document Upload</option>
+                  <option value="assessment">📝 Assessment</option>
+                  <option value="shadowing">👥 Shadowing</option>
+                  <option value="meeting">🤝 Meeting</option>
+                  <option value="project">🎯 Project</option>
+                </select>
+              </div>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Description *</label>
+              <textarea
+                required
+                rows={3}
+                value={newTask.description}
+                onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                placeholder="Task description"
+              />
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Competency Area</label>
+                <select
+                  value={newTask.competency_area}
+                  onChange={(e) => setNewTask({ ...newTask, competency_area: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                >
+                  {COMPETENCY_OPTIONS.map(comp => (
+                    <option key={comp.area} value={comp.area}>{comp.area}</option>
+                  ))}
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Sub-Competency</label>
+                <select
+                  value={newTask.sub_competency}
+                  onChange={(e) => setNewTask({ ...newTask, sub_competency: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                >
+                  {COMPETENCY_OPTIONS.find(c => c.area === newTask.competency_area)?.subs.map(sub => (
+                    <option key={sub} value={sub}>{sub}</option>
+                  ))}
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Estimated Hours</label>
+                <input
+                  type="number"
+                  step="0.5"
+                  value={newTask.estimated_hours}
+                  onChange={(e) => setNewTask({ ...newTask, estimated_hours: parseFloat(e.target.value) })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">External Link (optional)</label>
+              <input
+                type="url"
+                value={newTask.external_link}
+                onChange={(e) => setNewTask({ ...newTask, external_link: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                placeholder="https://your-lms.com/course"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Instructions (optional)</label>
+              <textarea
+                rows={3}
+                value={newTask.instructions}
+                onChange={(e) => setNewTask({ ...newTask, instructions: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                placeholder="Detailed instructions for completing this task"
+              />
+            </div>
+            
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="required"
+                checked={newTask.required}
+                onChange={(e) => setNewTask({ ...newTask, required: e.target.checked })}
+                className="mr-2"
+              />
+              <label htmlFor="required" className="text-sm text-gray-700">Required Task</label>
+            </div>
+            
+            <div className="flex space-x-3">
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                {editingTask ? 'Update Task' : 'Create Task'}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowCreateTask(false);
+                  setEditingTask(null);
+                }}
+                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Tasks List */}
+      <div className="bg-white rounded-lg shadow">
+        <div className="px-6 py-4 border-b border-gray-200">
+          <h3 className="text-lg font-medium text-gray-900">All Tasks ({tasks.length})</h3>
+        </div>
+        <div className="divide-y divide-gray-200">
+          {tasks.map(task => (
+            <div key={task.id} className="p-6">
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="text-lg">
+                      {task.task_type === 'course_link' && '📚'}
+                      {task.task_type === 'document_upload' && '📄'}
+                      {task.task_type === 'assessment' && '📝'}
+                      {task.task_type === 'shadowing' && '👥'}
+                      {task.task_type === 'meeting' && '🤝'}
+                      {task.task_type === 'project' && '🎯'}
+                    </span>
+                    <h4 className="font-medium text-gray-900">{task.title}</h4>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-3">{task.description}</p>
+                  <div className="flex items-center space-x-4 text-xs text-gray-500">
+                    <span>Type: {task.task_type}</span>
+                    <span>Area: {task.competency_area}</span>
+                    <span>Sub: {task.sub_competency}</span>
+                    {task.estimated_hours && <span>Hours: {task.estimated_hours}</span>}
+                    <span className={task.required ? 'text-red-600' : 'text-gray-500'}>
+                      {task.required ? 'Required' : 'Optional'}
+                    </span>
+                    <span className={task.active ? 'text-green-600' : 'text-red-600'}>
+                      {task.active ? 'Active' : 'Inactive'}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => handleEdit(task)}
+                    className="text-blue-600 hover:text-blue-800 text-sm px-3 py-1 rounded border border-blue-300 hover:border-blue-500"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(task.id)}
+                    className="text-red-600 hover:text-red-800 text-sm px-3 py-1 rounded border border-red-300 hover:border-red-500"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default App;
