@@ -232,6 +232,23 @@ const App = () => {
                   {user?.name?.split(' ').map(n => n[0]).join('') || 'DN'}
                 </span>
               </div>
+              
+              {/* Admin Login/Logout Button */}
+              {isAdmin ? (
+                <button
+                  onClick={adminLogout}
+                  className="text-sm text-red-600 hover:text-red-800"
+                >
+                  Logout
+                </button>
+              ) : (
+                <button
+                  onClick={() => setShowAdminLogin(true)}
+                  className="text-sm text-blue-600 hover:text-blue-800"
+                >
+                  Admin
+                </button>
+              )}
             </div>
           </div>
           
