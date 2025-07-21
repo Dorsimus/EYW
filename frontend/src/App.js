@@ -19,6 +19,10 @@ const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminToken, setAdminToken] = useState(localStorage.getItem('admin_token'));
   const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [adminStats, setAdminStats] = useState(null);
+  const [allTasks, setAllTasks] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [showCreateTask, setShowCreateTask] = useState(false);
   const [newPortfolioItem, setNewPortfolioItem] = useState({
     title: '',
     description: '',
