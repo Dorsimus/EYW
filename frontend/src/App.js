@@ -720,7 +720,7 @@ const App = () => {
   );
 };
 
-// Admin Login Modal Component
+// Redstone Admin Login Modal Component
 const AdminLoginModal = ({ onLogin, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -741,23 +741,31 @@ const AdminLoginModal = ({ onLogin, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg max-w-md w-full mx-4">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Admin Login</h2>
+    <div className="redstone-modal-overlay fixed inset-0 flex items-center justify-center z-50">
+      <div className="redstone-modal-content max-w-md w-full mx-4 bounce-in">
+        <div className="p-8">
+          <div className="flex justify-between items-center mb-8">
+            <div className="flex items-center">
+              <div className="redstone-icon-xl mr-4">
+                👑
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold" style={{color: '#0127a2'}}>Admin Access</h2>
+                <p className="text-gray-600 text-sm">Secure administrator login</p>
+              </div>
+            </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="w-10 h-10 bg-gray-100 hover:bg-red-100 rounded-full flex items-center justify-center text-gray-500 hover:text-red-600 text-xl transition-all duration-200 hover:scale-110"
             >
               ✕
             </button>
           </div>
           
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="admin-email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email
+              <label htmlFor="admin-email" className="block text-sm font-semibold mb-3" style={{color: '#0127a2'}}>
+                Administrator Email
               </label>
               <input
                 type="email"
@@ -765,14 +773,14 @@ const AdminLoginModal = ({ onLogin, onClose }) => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="redstone-form-input w-full"
                 placeholder="admin@earnwings.com"
               />
             </div>
             
             <div>
-              <label htmlFor="admin-password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+              <label htmlFor="admin-password" className="block text-sm font-semibold mb-3" style={{color: '#0127a2'}}>
+                Security Password
               </label>
               <input
                 type="password"
@@ -780,23 +788,35 @@ const AdminLoginModal = ({ onLogin, onClose }) => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter admin password"
+                className="redstone-form-input w-full"
+                placeholder="Enter secure password"
               />
             </div>
             
             {error && (
-              <div className="text-red-600 text-sm">{error}</div>
+              <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg font-medium">{error}</div>
             )}
             
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              className="redstone-btn-primary w-full py-3 flex items-center justify-center space-x-3"
             >
-              {loading ? 'Logging in...' : 'Login'}
+              <span>🔐</span>
+              <span>{loading ? 'Authenticating...' : 'Access System'}</span>
             </button>
           </form>
+          
+          <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+            <p className="text-sm font-semibold" style={{color: '#0127a2'}}>Demo Access Credentials:</p>
+            <p className="text-sm text-gray-600">Email: admin@earnwings.com</p>
+            <p className="text-sm text-gray-600">Password: admin123</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
           
           <div className="mt-4 p-3 bg-blue-50 rounded-md">
             <p className="text-sm text-blue-700">
