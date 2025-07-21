@@ -76,6 +76,12 @@ class UserCreate(BaseModel):
     name: str
     role: str = "participant"
     level: str = "navigator"
+    is_admin: bool = False
+    password: Optional[str] = None
+
+class AdminLogin(BaseModel):
+    email: str
+    password: str
 
 class Task(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
