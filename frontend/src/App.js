@@ -169,7 +169,7 @@ const App = () => {
 
   const completeTask = async (taskId, evidenceDescription = "", file = null) => {
     try {
-      const userId = user?.id || CURRENT_USER_ID;
+      if (!user?.id) return;
       const formData = new FormData();
       formData.append('task_id', taskId);
       formData.append('evidence_description', evidenceDescription);
