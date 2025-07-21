@@ -364,7 +364,39 @@ const App = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {currentView === 'dashboard' && (
+        {/* Admin Views */}
+        {currentView === 'admin-dashboard' && isAdmin && (
+          <AdminDashboardView 
+            stats={adminStats} 
+            onNavigate={setCurrentView}
+          />
+        )}
+        
+        {currentView === 'admin-tasks' && isAdmin && (
+          <AdminTasksView 
+            tasks={allTasks}
+            onCreateTask={createTask}
+            onUpdateTask={updateTask}
+            onDeleteTask={deleteTask}
+            showCreateTask={showCreateTask}
+            setShowCreateTask={setShowCreateTask}
+          />
+        )}
+        
+        {currentView === 'admin-users' && isAdmin && (
+          <AdminUsersView users={allUsers} />
+        )}
+        
+        {currentView === 'admin-analytics' && isAdmin && (
+          <AdminAnalyticsView 
+            stats={adminStats} 
+            tasks={allTasks} 
+            users={allUsers} 
+          />
+        )}
+
+        {/* User Views */}
+        {currentView === 'dashboard' && !isAdmin && (
           <DashboardView 
             user={user}
             competencies={competencies}
@@ -374,7 +406,7 @@ const App = () => {
           />
         )}
         
-        {currentView === 'competencies' && (
+        {currentView === 'competencies' && !isAdmin && (
           <CompetenciesView 
             competencies={competencies}
             onViewTasks={loadCompetencyTasks}
@@ -384,11 +416,11 @@ const App = () => {
           />
         )}
         
-        {currentView === 'portfolio' && (
+        {currentView === 'portfolio' && !isAdmin && (
           <PortfolioView portfolio={portfolio} />
         )}
         
-        {currentView === 'add-portfolio' && (
+        {currentView === 'add-portfolio' && !isAdmin && (
           <AddPortfolioView 
             portfolioItem={newPortfolioItem}
             setPortfolioItem={setNewPortfolioItem}
