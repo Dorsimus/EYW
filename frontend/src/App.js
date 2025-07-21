@@ -14,6 +14,8 @@ const App = () => {
   const [competencies, setCompetencies] = useState({});
   const [portfolio, setPortfolio] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCompetency, setSelectedCompetency] = useState(null);
+  const [competencyTasks, setCompetencyTasks] = useState([]);
   const [newPortfolioItem, setNewPortfolioItem] = useState({
     title: '',
     description: '',
@@ -46,8 +48,13 @@ const App = () => {
         });
         userData = createResponse.data;
         
-        // Update the user ID to match created user
-        window.CURRENT_USER_ID = userData.id;
+        // Seed sample tasks for demo
+        try {
+          await axios.post(`${API}/admin/seed-tasks`);
+          console.log('Sample tasks seeded');
+        } catch (e) {
+          console.log('Tasks already seeded or error:', e);
+        }
       }
       
       setUser(userData);
@@ -73,13 +80,43 @@ const App = () => {
     }
   };
 
-  const updateCompetencyLevel = async (area, subCompetency, level) => {
+  const loadCompetencyTasks = async (competencyArea, subCompetency) => {
     try {
       const userId = user?.id || CURRENT_USER_ID;
-      await axios.put(`${API}/users/${userId}/competencies/${area}/${subCompetency}?proficiency_level=${level}`);
-      await loadUserData(userId);
+      const response = await axios.get(`${API}/users/${userId}/tasks/${competencyArea}/${subCompetency}`);
+      setCompetencyTasks(response.data);
+      setSelectedCompetency({ area: competencyArea, sub: subCompetency });
     } catch (error) {
-      console.error('Error updating competency:', error);
+      console.error('Error loading tasks:', error);
+    }
+  };
+
+  const completeTask = async (taskId, evidenceDescription = "", file = null) => {
+    try {
+      const userId = user?.id || CURRENT_USER_ID;
+      const formData = new FormData();
+      formData.append('task_id', taskId);
+      formData.append('evidence_description', evidenceDescription);
+      formData.append('notes', '');
+      
+      if (file) {
+        formData.append('file', file);
+      }
+      
+      await axios.post(`${API}/users/${userId}/task-completions`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      
+      // Reload data
+      await loadUserData(userId);
+      if (selectedCompetency) {
+        await loadCompetencyTasks(selectedCompetency.area, selectedCompetency.sub);
+      }
+    } catch (error) {
+      console.error('Error completing task:', error);
+      alert('Error completing task: ' + error.response?.data?.detail || error.message);
     }
   };
 
@@ -200,13 +237,17 @@ const App = () => {
             competencies={competencies}
             portfolio={portfolio}
             overallProgress={getOverallProgress()}
+            onViewCompetencyTasks={loadCompetencyTasks}
           />
         )}
         
         {currentView === 'competencies' && (
           <CompetenciesView 
             competencies={competencies}
-            onUpdateCompetency={updateCompetencyLevel}
+            onViewTasks={loadCompetencyTasks}
+            selectedCompetency={selectedCompetency}
+            competencyTasks={competencyTasks}
+            onCompleteTask={completeTask}
           />
         )}
         
@@ -228,11 +269,27 @@ const App = () => {
 };
 
 // Dashboard View Component
-const DashboardView = ({ user, competencies, portfolio, overallProgress }) => {
+const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewCompetencyTasks }) => {
   const getTopCompetencies = () => {
     return Object.entries(competencies)
       .sort(([,a], [,b]) => (b.overall_progress || 0) - (a.overall_progress || 0))
       .slice(0, 3);
+  };
+
+  const getTotalTasks = () => {
+    return Object.values(competencies).reduce((total, area) => {
+      return total + Object.values(area.sub_competencies).reduce((subTotal, sub) => {
+        return subTotal + (sub.total_tasks || 0);
+      }, 0);
+    }, 0);
+  };
+
+  const getCompletedTasks = () => {
+    return Object.values(competencies).reduce((total, area) => {
+      return total + Object.values(area.sub_competencies).reduce((subTotal, sub) => {
+        return subTotal + (sub.completed_tasks || 0);
+      }, 0);
+    }, 0);
   };
 
   const recentPortfolio = portfolio.slice(0, 3);
@@ -241,7 +298,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress }) => {
     <div className="space-y-8">
       <div className="text-center">
         <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, {user?.name}! 🚀</h2>
-        <p className="text-lg text-gray-600">You're on your journey to mastering property management leadership</p>
+        <p className="text-lg text-gray-600">Track your progress through task completion and portfolio building</p>
       </div>
 
       {/* Progress Overview */}
@@ -252,13 +309,13 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress }) => {
         </div>
         
         <div className="bg-white rounded-lg shadow p-6 text-center">
-          <div className="text-3xl font-bold text-green-600">{portfolio.length}</div>
-          <div className="text-sm text-gray-500">Portfolio Items</div>
+          <div className="text-3xl font-bold text-green-600">{getCompletedTasks()}/{getTotalTasks()}</div>
+          <div className="text-sm text-gray-500">Tasks Completed</div>
         </div>
         
         <div className="bg-white rounded-lg shadow p-6 text-center">
-          <div className="text-3xl font-bold text-purple-600">{Object.keys(competencies).length}</div>
-          <div className="text-sm text-gray-500">Competency Areas</div>
+          <div className="text-3xl font-bold text-purple-600">{portfolio.length}</div>
+          <div className="text-sm text-gray-500">Portfolio Items</div>
         </div>
         
         <div className="bg-white rounded-lg shadow p-6 text-center">
@@ -275,21 +332,39 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress }) => {
         <div className="p-6">
           <div className="space-y-4">
             {getTopCompetencies().map(([key, area]) => (
-              <div key={key} className="flex items-center justify-between">
-                <div>
-                  <div className="font-medium text-gray-900">{area.name}</div>
-                  <div className="text-sm text-gray-500">{area.description}</div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-32 bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${area.overall_progress || 0}%` }}
-                    />
+              <div key={key} className="border rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex-1">
+                    <div className="font-medium text-gray-900">{area.name}</div>
+                    <div className="text-sm text-gray-500">{area.description}</div>
                   </div>
-                  <span className="text-sm font-medium text-gray-900 w-12">
-                    {area.overall_progress || 0}%
-                  </span>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-32 bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                        style={{ width: `${area.overall_progress || 0}%` }}
+                      />
+                    </div>
+                    <span className="text-sm font-medium text-gray-900 w-12">
+                      {area.overall_progress || 0}%
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Sub-competencies with task counts */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
+                  {Object.entries(area.sub_competencies).slice(0, 4).map(([subKey, subData]) => (
+                    <button
+                      key={subKey}
+                      onClick={() => onViewCompetencyTasks(key, subKey)}
+                      className="text-left p-2 rounded bg-gray-50 hover:bg-gray-100 transition-colors"
+                    >
+                      <div className="text-sm font-medium text-gray-800">{subData.name}</div>
+                      <div className="text-xs text-gray-600">
+                        {subData.completed_tasks || 0}/{subData.total_tasks || 0} tasks completed
+                      </div>
+                    </button>
+                  ))}
                 </div>
               </div>
             ))}
@@ -341,15 +416,21 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress }) => {
   );
 };
 
-// Competencies View Component
-const CompetenciesView = ({ competencies, onUpdateCompetency }) => {
+// Enhanced Competencies View Component
+const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, competencyTasks, onCompleteTask }) => {
   const [expandedArea, setExpandedArea] = useState(null);
+  const [taskModal, setTaskModal] = useState(null);
+
+  const handleViewTasks = (areaKey, subKey) => {
+    onViewTasks(areaKey, subKey);
+    setTaskModal({ area: areaKey, sub: subKey });
+  };
 
   return (
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-3xl font-bold text-gray-900 mb-2">🎯 Navigator Competencies</h2>
-        <p className="text-lg text-gray-600">Track your progress across all leadership competency areas</p>
+        <p className="text-lg text-gray-600">Complete tasks to build competency mastery</p>
       </div>
 
       <div className="space-y-4">
@@ -388,39 +469,33 @@ const CompetenciesView = ({ competencies, onUpdateCompetency }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {Object.entries(areaData.sub_competencies).map(([subKey, subData]) => (
                     <div key={subKey} className="bg-white rounded-lg p-4 shadow-sm">
-                      <h4 className="font-medium text-gray-900 mb-2">{subData.name}</h4>
-                      <div className="space-y-3">
+                      <div className="flex items-start justify-between mb-2">
+                        <h4 className="font-medium text-gray-900">{subData.name}</h4>
+                        <button
+                          onClick={() => handleViewTasks(areaKey, subKey)}
+                          className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                        >
+                          View Tasks
+                        </button>
+                      </div>
+                      
+                      <div className="space-y-2">
                         <div className="flex items-center space-x-2">
-                          <span className="text-sm text-gray-600">Proficiency:</span>
                           <div className="flex-1 bg-gray-200 rounded-full h-2">
                             <div 
                               className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${subData.proficiency_level}%` }}
+                              style={{ width: `${subData.completion_percentage || 0}%` }}
                             />
                           </div>
-                          <span className="text-sm font-medium text-gray-900 w-10">
-                            {subData.proficiency_level}%
+                          <span className="text-sm font-medium text-gray-900 w-12">
+                            {Math.round(subData.completion_percentage || 0)}%
                           </span>
                         </div>
                         
-                        <div className="flex items-center space-x-2">
-                          <label className="text-sm text-gray-600">Update:</label>
-                          <input
-                            type="range"
-                            min="0"
-                            max="100"
-                            step="10"
-                            value={subData.proficiency_level}
-                            onChange={(e) => onUpdateCompetency(areaKey, subKey, parseInt(e.target.value))}
-                            className="flex-1"
-                          />
+                        <div className="flex justify-between text-sm text-gray-600">
+                          <span>{subData.completed_tasks || 0}/{subData.total_tasks || 0} tasks</span>
+                          <span>{subData.evidence_items?.length || 0} evidence items</span>
                         </div>
-                        
-                        {subData.evidence_items.length > 0 && (
-                          <div className="text-xs text-green-600">
-                            ✓ {subData.evidence_items.length} evidence item(s)
-                          </div>
-                        )}
                       </div>
                     </div>
                   ))}
@@ -430,6 +505,186 @@ const CompetenciesView = ({ competencies, onUpdateCompetency }) => {
           </div>
         ))}
       </div>
+
+      {/* Task Modal */}
+      {taskModal && (
+        <TaskModal
+          isOpen={!!taskModal}
+          onClose={() => setTaskModal(null)}
+          tasks={competencyTasks}
+          competencyArea={taskModal.area}
+          subCompetency={taskModal.sub}
+          competencies={competencies}
+          onCompleteTask={onCompleteTask}
+        />
+      )}
+    </div>
+  );
+};
+
+// Task Modal Component
+const TaskModal = ({ isOpen, onClose, tasks, competencyArea, subCompetency, competencies, onCompleteTask }) => {
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [evidenceDescription, setEvidenceDescription] = useState('');
+  const [evidenceFile, setEvidenceFile] = useState(null);
+
+  const handleCompleteTask = async (taskId) => {
+    await onCompleteTask(taskId, evidenceDescription, evidenceFile);
+    setSelectedTask(null);
+    setEvidenceDescription('');
+    setEvidenceFile(null);
+  };
+
+  const getTaskTypeIcon = (type) => {
+    switch(type) {
+      case 'course_link': return '📚';
+      case 'document_upload': return '📄';
+      case 'assessment': return '📝';
+      case 'shadowing': return '👥';
+      case 'meeting': return '🤝';
+      case 'project': return '🎯';
+      default: return '✅';
+    }
+  };
+
+  if (!isOpen) return null;
+
+  const competencyName = competencies[competencyArea]?.sub_competencies[subCompetency] || subCompetency;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="text-lg font-medium text-gray-900">Tasks for {competencyName}</h3>
+              <p className="text-sm text-gray-600 mt-1">Complete these tasks to build your competency</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <div className="p-6">
+          <div className="space-y-4">
+            {tasks.map(task => (
+              <div key={task.id} className={`border rounded-lg p-4 ${task.completed ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="text-xl">{getTaskTypeIcon(task.task_type)}</span>
+                      <h4 className="font-medium text-gray-900">{task.title}</h4>
+                      {task.completed && <span className="text-green-600 text-sm font-medium">✓ Completed</span>}
+                    </div>
+                    
+                    <p className="text-sm text-gray-600 mb-3">{task.description}</p>
+                    
+                    {task.instructions && (
+                      <div className="bg-blue-50 p-3 rounded mb-3">
+                        <p className="text-sm text-blue-800">📋 <strong>Instructions:</strong> {task.instructions}</p>
+                      </div>
+                    )}
+                    
+                    <div className="flex items-center space-x-4 text-sm text-gray-500">
+                      {task.estimated_hours && <span>⏱️ {task.estimated_hours}h</span>}
+                      {task.required && <span className="text-red-600">* Required</span>}
+                    </div>
+                    
+                    {task.external_link && (
+                      <a 
+                        href={task.external_link} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium mt-2"
+                      >
+                        🔗 Open External Link
+                      </a>
+                    )}
+                  </div>
+                  
+                  {!task.completed && (
+                    <button
+                      onClick={() => setSelectedTask(task.id)}
+                      className="ml-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm"
+                    >
+                      Mark Complete
+                    </button>
+                  )}
+                </div>
+                
+                {task.completed && task.completion_data && (
+                  <div className="mt-3 pt-3 border-t border-green-200">
+                    <p className="text-sm text-green-700">
+                      <strong>Completed:</strong> {new Date(task.completion_data.completed_at).toLocaleDateString()}
+                    </p>
+                    {task.completion_data.evidence_description && (
+                      <p className="text-sm text-green-700 mt-1">
+                        <strong>Evidence:</strong> {task.completion_data.evidence_description}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Complete Task Modal */}
+      {selectedTask && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-60">
+          <div className="bg-white rounded-lg max-w-md w-full mx-4">
+            <div className="p-6">
+              <h4 className="text-lg font-medium text-gray-900 mb-4">Complete Task</h4>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Evidence Description (Optional)
+                  </label>
+                  <textarea
+                    value={evidenceDescription}
+                    onChange={(e) => setEvidenceDescription(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                    rows={3}
+                    placeholder="Describe how you completed this task..."
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Upload Evidence (Optional)
+                  </label>
+                  <input
+                    type="file"
+                    onChange={(e) => setEvidenceFile(e.target.files[0])}
+                    className="w-full"
+                  />
+                </div>
+              </div>
+              
+              <div className="flex justify-end space-x-3 mt-6">
+                <button
+                  onClick={() => setSelectedTask(null)}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleCompleteTask(selectedTask)}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700"
+                >
+                  Mark as Complete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
