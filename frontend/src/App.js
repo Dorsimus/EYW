@@ -480,24 +480,24 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                         </button>
                       </div>
                       
-                      <div className="space-y-2">
-                        <div className="flex items-center space-x-2">
-                          <div className="flex-1 bg-gray-200 rounded-full h-2">
-                            <div 
-                              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${subData.completion_percentage || 0}%` }}
-                            />
+                        <div className="space-y-2">
+                          <div className="flex items-center space-x-2">
+                            <div className="flex-1 bg-gray-200 rounded-full h-2">
+                              <div 
+                                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                                style={{ width: `${subData.completion_percentage || 0}%` }}
+                              />
+                            </div>
+                            <span className="text-sm font-medium text-gray-900 w-12">
+                              {Math.round(subData.completion_percentage || 0)}%
+                            </span>
                           </div>
-                          <span className="text-sm font-medium text-gray-900 w-12">
-                            {Math.round(subData.completion_percentage || 0)}%
-                          </span>
+                          
+                          <div className="flex justify-between text-sm text-gray-600">
+                            <span>{subData.completed_tasks || 0}/{subData.total_tasks || 0} tasks</span>
+                            <span>{(subData.evidence_items && subData.evidence_items.length) || 0} evidence items</span>
+                          </div>
                         </div>
-                        
-                        <div className="flex justify-between text-sm text-gray-600">
-                          <span>{subData.completed_tasks || 0}/{subData.total_tasks || 0} tasks</span>
-                          <span>{subData.evidence_items?.length || 0} evidence items</span>
-                        </div>
-                      </div>
                     </div>
                   ))}
                 </div>
