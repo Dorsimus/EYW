@@ -157,8 +157,8 @@ const App = () => {
 
   const loadCompetencyTasks = async (competencyArea, subCompetency) => {
     try {
-      const userId = user?.id || CURRENT_USER_ID;
-      const response = await axios.get(`${API}/users/${userId}/tasks/${competencyArea}/${subCompetency}`);
+      if (!user?.id) return;
+      const response = await axios.get(`${API}/users/${user.id}/tasks/${competencyArea}/${subCompetency}`);
       setCompetencyTasks(response.data);
       setSelectedCompetency({ area: competencyArea, sub: subCompetency });
     } catch (error) {
