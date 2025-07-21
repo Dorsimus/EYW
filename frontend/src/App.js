@@ -33,8 +33,42 @@ const App = () => {
 
   // Initialize user if doesn't exist
   useEffect(() => {
-    initializeUser();
-  }, []);
+    if (adminToken) {
+      setIsAdmin(true);
+      loadAdminData();
+    } else {
+      initializeUser();
+    }
+  }, [adminToken]);
+
+  const loadAdminData = async () => {
+    try {
+      setLoading(true);
+      const headers = { Authorization: `Bearer ${adminToken}` };
+      
+      // Load admin stats
+      const statsResponse = await axios.get(`${API}/admin/stats`, { headers });
+      setAdminStats(statsResponse.data);
+      
+      // Load all tasks
+      const tasksResponse = await axios.get(`${API}/admin/tasks`, { headers });
+      setAllTasks(tasksResponse.data);
+      
+      // Load all users
+      const usersResponse = await axios.get(`${API}/admin/users`, { headers });
+      setAllUsers(usersResponse.data);
+      
+    } catch (error) {
+      console.error('Error loading admin data:', error);
+      if (error.response?.status === 401) {
+        localStorage.removeItem('admin_token');
+        setAdminToken(null);
+        setIsAdmin(false);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const initializeUser = async () => {
     try {
