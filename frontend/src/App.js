@@ -389,24 +389,24 @@ const App = () => {
             </div>
           </div>
           
-          {/* FIXED NAVIGATION - PROPER SIZING */}
-          <nav className="flex space-x-4 flex-wrap">
+          {/* PROFESSIONAL NAVIGATION */}
+          <nav className="flex space-x-3 flex-wrap">
             {[
-              { key: 'dashboard', label: 'Dashboard', icon: 'DASH', iconClass: 'icon-dashboard' },
-              { key: 'competencies', label: 'Competencies', icon: 'COMP', iconClass: 'icon-target' },
-              { key: 'portfolio', label: 'Portfolio', icon: 'PORT', iconClass: 'icon-portfolio' },
-              { key: 'add-portfolio', label: 'Add Evidence', icon: 'ADD', iconClass: 'icon-plus' }
+              { key: 'dashboard', label: 'Dashboard', icon: '📊' },
+              { key: 'competencies', label: 'Competencies', icon: '🎯' },
+              { key: 'portfolio', label: 'Portfolio', icon: '📁' },
+              { key: 'add-portfolio', label: 'Add Evidence', icon: '➕' }
             ].filter(tab => !isAdmin || ['dashboard'].includes(tab.key)).map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key)}
                 className={`enterprise-nav-tab ${currentView === tab.key ? 'active' : ''}`}
               >
-                <div className="flex items-center space-x-2">
-                  <div className={`enterprise-icon ${tab.iconClass}`}>
+                <div className="flex items-center space-x-3">
+                  <div className="pro-icon">
                     {tab.icon}
                   </div>
-                  <span className="font-semibold">
+                  <span className="font-semibold text-sm">
                     {tab.label}
                   </span>
                 </div>
@@ -415,21 +415,21 @@ const App = () => {
             
             {/* ADMIN NAVIGATION */}
             {isAdmin && [
-              { key: 'admin-dashboard', label: 'Dashboard', icon: 'CTRL', iconClass: 'icon-admin' },
-              { key: 'admin-tasks', label: 'Tasks', icon: 'TASK', iconClass: 'icon-settings' },
-              { key: 'admin-users', label: 'Users', icon: 'USER', iconClass: 'icon-users' },
-              { key: 'admin-analytics', label: 'Analytics', icon: 'DATA', iconClass: 'icon-analytics' }
+              { key: 'admin-dashboard', label: 'Dashboard', icon: '🎛️' },
+              { key: 'admin-tasks', label: 'Tasks', icon: '⚙️' },
+              { key: 'admin-users', label: 'Users', icon: '👥' },
+              { key: 'admin-analytics', label: 'Analytics', icon: '📈' }
             ].map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key)}
                 className={`enterprise-nav-tab ${currentView === tab.key ? 'active' : ''}`}
               >
-                <div className="flex items-center space-x-2">
-                  <div className={`enterprise-icon ${tab.iconClass}`}>
+                <div className="flex items-center space-x-3">
+                  <div className="pro-icon">
                     {tab.icon}
                   </div>
-                  <span className="font-semibold">
+                  <span className="font-semibold text-sm">
                     {tab.label}
                   </span>
                 </div>
