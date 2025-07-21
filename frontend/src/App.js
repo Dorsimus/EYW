@@ -499,170 +499,201 @@ const App = () => {
 
       {/* Edit Task Modal */}
       {editingTask && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-full max-w-4xl shadow-lg rounded-md bg-white">
-            <div className="mt-3">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900">
-                  📝 Edit Task: {editingTask.title}
-                </h3>
-                <button
-                  onClick={() => setEditingTask(null)}
-                  className="text-gray-400 hover:text-gray-600 text-xl"
-                >
-                  ×
-                </button>
-              </div>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Title *</label>
-                    <input
-                      type="text"
-                      required
-                      value={newTask.title}
-                      onChange={(e) => setNewTask({...newTask, title: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+        <div className="modal-overlay fixed inset-0 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 w-full max-w-4xl">
+            <div className="modal-content bounce-in">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <div className="flex items-center">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full flex items-center justify-center text-white text-xl font-bold mr-4">
+                      📝
+                    </div>
+                    <div>
+                      <h3 className="gradient-text text-2xl font-bold">Edit Task</h3>
+                      <p className="text-gray-600">{editingTask.title}</p>
+                    </div>
                   </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Task Type *</label>
-                    <select
-                      value={newTask.task_type}
-                      onChange={(e) => setNewTask({...newTask, task_type: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="course_link">📚 Course Link</option>
-                      <option value="document_upload">📄 Document Upload</option>
-                      <option value="assessment">📝 Assessment</option>
-                      <option value="shadowing">👥 Shadowing</option>
-                      <option value="meeting">🤝 Meeting</option>
-                      <option value="project">🎯 Project</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Description *</label>
-                  <textarea
-                    required
-                    rows="3"
-                    value={newTask.description}
-                    onChange={(e) => setNewTask({...newTask, description: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Competency Area *</label>
-                    <select
-                      value={newTask.competency_area}
-                      onChange={(e) => {
-                        setNewTask({...newTask, competency_area: e.target.value, sub_competency: competencyOptions.find(c => c.area === e.target.value)?.subs[0] || ''});
-                      }}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      {competencyOptions.map(option => (
-                        <option key={option.area} value={option.area}>
-                          {option.area.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Sub-Competency *</label>
-                    <select
-                      value={newTask.sub_competency}
-                      onChange={(e) => setNewTask({...newTask, sub_competency: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      {competencyOptions.find(c => c.area === newTask.competency_area)?.subs.map(sub => (
-                        <option key={sub} value={sub}>
-                          {sub.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Order</label>
-                    <input
-                      type="number"
-                      min="1"
-                      value={newTask.order}
-                      onChange={(e) => setNewTask({...newTask, order: parseInt(e.target.value)})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Estimated Hours</label>
-                    <input
-                      type="number"
-                      step="0.5"
-                      min="0"
-                      value={newTask.estimated_hours}
-                      onChange={(e) => setNewTask({...newTask, estimated_hours: parseFloat(e.target.value)})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">External Link</label>
-                  <input
-                    type="url"
-                    value={newTask.external_link}
-                    onChange={(e) => setNewTask({...newTask, external_link: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="https://your-lms.com/course"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Instructions</label>
-                  <textarea
-                    rows="3"
-                    value={newTask.instructions}
-                    onChange={(e) => setNewTask({...newTask, instructions: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Detailed instructions for completing this task..."
-                  />
-                </div>
-
-                <div>
-                  <input
-                    type="checkbox"
-                    id="required-edit"
-                    checked={newTask.required}
-                    onChange={(e) => setNewTask({...newTask, required: e.target.checked})}
-                    className="mr-2"
-                  />
-                  <label htmlFor="required-edit" className="text-sm text-gray-700">Required Task</label>
+                  <button
+                    onClick={() => setEditingTask(null)}
+                    className="w-10 h-10 bg-gray-100 hover:bg-red-100 rounded-full flex items-center justify-center text-gray-500 hover:text-red-600 text-xl transition-all duration-200 hover:scale-110"
+                  >
+                    ×
+                  </button>
                 </div>
                 
-                <div className="flex justify-end space-x-3 pt-4 border-t">
-                  <button
-                    type="button"
-                    onClick={() => setEditingTask(null)}
-                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                  >
-                    Update Task
-                  </button>
-                </div>
-              </form>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-3">
+                        <span className="gradient-text">Task Title *</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={newTask.title}
+                        onChange={(e) => setNewTask({...newTask, title: e.target.value})}
+                        className="form-input w-full"
+                        placeholder="Enter task title..."
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-3">
+                        <span className="gradient-text">Task Type *</span>
+                      </label>
+                      <select
+                        value={newTask.task_type}
+                        onChange={(e) => setNewTask({...newTask, task_type: e.target.value})}
+                        className="form-input w-full"
+                      >
+                        <option value="course_link">📚 Course Link</option>
+                        <option value="document_upload">📄 Document Upload</option>
+                        <option value="assessment">📝 Assessment</option>
+                        <option value="shadowing">👥 Shadowing</option>
+                        <option value="meeting">🤝 Meeting</option>
+                        <option value="project">🎯 Project</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-3">
+                      <span className="gradient-text">Description *</span>
+                    </label>
+                    <textarea
+                      required
+                      rows="3"
+                      value={newTask.description}
+                      onChange={(e) => setNewTask({...newTask, description: e.target.value})}
+                      className="form-input w-full resize-none"
+                      placeholder="Describe what this task involves..."
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-3">
+                        <span className="gradient-text">Competency Area *</span>
+                      </label>
+                      <select
+                        value={newTask.competency_area}
+                        onChange={(e) => {
+                          setNewTask({...newTask, competency_area: e.target.value, sub_competency: competencyOptions.find(c => c.area === e.target.value)?.subs[0] || ''});
+                        }}
+                        className="form-input w-full"
+                      >
+                        {competencyOptions.map(option => (
+                          <option key={option.area} value={option.area}>
+                            {option.area.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-3">
+                        <span className="gradient-text">Sub-Competency *</span>
+                      </label>
+                      <select
+                        value={newTask.sub_competency}
+                        onChange={(e) => setNewTask({...newTask, sub_competency: e.target.value})}
+                        className="form-input w-full"
+                      >
+                        {competencyOptions.find(c => c.area === newTask.competency_area)?.subs.map(sub => (
+                          <option key={sub} value={sub}>
+                            {sub.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-3">
+                        <span className="gradient-text">Order</span>
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        value={newTask.order}
+                        onChange={(e) => setNewTask({...newTask, order: parseInt(e.target.value)})}
+                        className="form-input w-full"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-3">
+                        <span className="gradient-text">Estimated Hours</span>
+                      </label>
+                      <input
+                        type="number"
+                        step="0.5"
+                        min="0"
+                        value={newTask.estimated_hours}
+                        onChange={(e) => setNewTask({...newTask, estimated_hours: parseFloat(e.target.value)})}
+                        className="form-input w-full"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-3">
+                      <span className="gradient-text">External Link</span>
+                    </label>
+                    <input
+                      type="url"
+                      value={newTask.external_link}
+                      onChange={(e) => setNewTask({...newTask, external_link: e.target.value})}
+                      className="form-input w-full"
+                      placeholder="https://your-lms.com/course"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-3">
+                      <span className="gradient-text">Instructions</span>
+                    </label>
+                    <textarea
+                      rows="4"
+                      value={newTask.instructions}
+                      onChange={(e) => setNewTask({...newTask, instructions: e.target.value})}
+                      className="form-input w-full resize-none"
+                      placeholder="Detailed instructions for completing this task..."
+                    />
+                  </div>
+
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id="required-edit"
+                      checked={newTask.required}
+                      onChange={(e) => setNewTask({...newTask, required: e.target.checked})}
+                      className="w-5 h-5 text-blue-600 border-2 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 mr-3"
+                    />
+                    <label htmlFor="required-edit" className="text-gray-700 font-medium">
+                      Required Task
+                    </label>
+                  </div>
+                  
+                  <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+                    <button
+                      type="button"
+                      onClick={() => setEditingTask(null)}
+                      className="btn-secondary px-6 py-3"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="btn-primary px-6 py-3 flex items-center"
+                    >
+                      <span className="mr-2">💾</span>
+                      Update Task
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
