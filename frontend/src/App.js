@@ -912,7 +912,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
       <div className="content-card fade-in" style={{ animationDelay: '0.4s' }}>
         <div className="p-8">
           <div className="flex items-center mb-8">
-            <div className="pro-icon-xl mr-4">
+            <div className="redstone-icon-xl mr-4">
               🎯
             </div>
             <div>
