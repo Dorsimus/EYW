@@ -817,17 +817,6 @@ const AdminLoginModal = ({ onLogin, onClose }) => {
     </div>
   );
 };
-          
-          <div className="mt-4 p-3 bg-blue-50 rounded-md">
-            <p className="text-sm text-blue-700">
-              <strong>Demo Admin:</strong> admin@earnwings.com / admin123
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 // Dashboard View Component
 const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewCompetencyTasks }) => {
