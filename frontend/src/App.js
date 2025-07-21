@@ -390,8 +390,8 @@ const App = () => {
             </div>
           </div>
           
-          {/* LUXURY NAVIGATION SYSTEM */}
-          <nav className="flex space-x-3">
+          {/* FIXED NAVIGATION - PROPER SIZING */}
+          <nav className="flex space-x-4 flex-wrap">
             {[
               { key: 'dashboard', label: 'Dashboard', icon: 'DASH', iconClass: 'icon-dashboard' },
               { key: 'competencies', label: 'Competencies', icon: 'COMP', iconClass: 'icon-target' },
@@ -401,36 +401,36 @@ const App = () => {
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key)}
-                className={`luxury-nav-tab ${currentView === tab.key ? 'active' : ''}`}
+                className={`enterprise-nav-tab ${currentView === tab.key ? 'active' : ''}`}
               >
-                <div className="flex items-center space-x-3">
-                  <div className={`luxury-icon ${tab.iconClass}`}>
+                <div className="flex items-center space-x-2">
+                  <div className={`enterprise-icon ${tab.iconClass}`}>
                     {tab.icon}
                   </div>
-                  <span className="hidden sm:inline luxury-text-primary font-bold text-sm">
+                  <span className="font-semibold">
                     {tab.label}
                   </span>
                 </div>
               </button>
             ))}
             
-            {/* ADMIN LUXURY NAVIGATION */}
+            {/* ADMIN NAVIGATION */}
             {isAdmin && [
               { key: 'admin-dashboard', label: 'Dashboard', icon: 'CTRL', iconClass: 'icon-admin' },
               { key: 'admin-tasks', label: 'Tasks', icon: 'TASK', iconClass: 'icon-settings' },
               { key: 'admin-users', label: 'Users', icon: 'USER', iconClass: 'icon-users' },
-              { key: 'admin-analytics', label: 'Analytics', icon: 'STAT', iconClass: 'icon-analytics' }
+              { key: 'admin-analytics', label: 'Analytics', icon: 'DATA', iconClass: 'icon-analytics' }
             ].map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key)}
-                className={`luxury-nav-tab ${currentView === tab.key ? 'active' : ''}`}
+                className={`enterprise-nav-tab ${currentView === tab.key ? 'active' : ''}`}
               >
-                <div className="flex items-center space-x-3">
-                  <div className={`luxury-icon ${tab.iconClass}`}>
+                <div className="flex items-center space-x-2">
+                  <div className={`enterprise-icon ${tab.iconClass}`}>
                     {tab.icon}
                   </div>
-                  <span className="hidden sm:inline luxury-text-primary font-bold text-sm">
+                  <span className="font-semibold">
                     {tab.label}
                   </span>
                 </div>
