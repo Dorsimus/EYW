@@ -334,12 +334,17 @@ const App = () => {
           
           {/* Navigation */}
           <nav className="flex space-x-8 -mb-px">
-            {[
+            {(isAdmin ? [
+              { key: 'admin-dashboard', label: 'Dashboard', icon: '📊' },
+              { key: 'admin-tasks', label: 'Manage Tasks', icon: '⚙️' },
+              { key: 'admin-users', label: 'Users', icon: '👥' },
+              { key: 'admin-analytics', label: 'Analytics', icon: '📈' }
+            ] : [
               { key: 'dashboard', label: 'Dashboard', icon: '📊' },
               { key: 'competencies', label: 'Competencies', icon: '🎯' },
               { key: 'portfolio', label: 'Portfolio', icon: '📁' },
               { key: 'add-portfolio', label: 'Add Evidence', icon: '➕' }
-            ].map(item => (
+            ]).map(item => (
               <button
                 key={item.key}
                 onClick={() => setCurrentView(item.key)}
