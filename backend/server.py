@@ -547,10 +547,17 @@ async def complete_task(
     
     return completion
 
+# Task Management Routes
+@api_router.post("/tasks", response_model=Task)
+async def create_task(task_data: TaskCreate):
+    task = Task(**task_data.dict(), created_by="admin")  # TODO: Get actual admin user
+    await db.tasks.insert_one(task.dict())
+    return task
+
 @api_router.get("/users/{user_id}/task-completions")
 async def get_user_task_completions(user_id: str):
     completions = await db.task_completions.find({"user_id": user_id}).sort("completed_at", -1).to_list(1000)
-    return completions
+    return [serialize_doc(completion) for completion in completions]
 
 # Admin route to seed sample tasks
 @api_router.post("/admin/seed-tasks")
