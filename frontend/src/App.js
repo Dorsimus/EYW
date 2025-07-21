@@ -586,7 +586,7 @@ const TaskModal = ({ isOpen, onClose, tasks, competencyArea, subCompetency, comp
                     
                     {task.instructions && (
                       <div className="bg-blue-50 p-3 rounded mb-3">
-                        <p className="text-sm text-blue-800">📋 <strong>Instructions:</strong> {task.instructions}</p>
+                        <p className="text-sm text-blue-800">📋 <strong>Instructions:</strong> {String(task.instructions)}</p>
                       </div>
                     )}
                     
