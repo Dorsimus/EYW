@@ -9,7 +9,7 @@ import requests
 import sys
 
 # Configuration
-API_URL = "https://d9b7abb5-7d7f-4e14-bfb5-9f377e6dc4de.preview.emergentagent.com/api"
+API_URL = "https://46fc6863-0925-49d4-b7ee-1cce61881505.preview.emergentagent.com/api"
 
 async def create_admin():
     print("🔧 Creating Admin User for Earn Your Wings Platform")

@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 class TaskCompetencyAPITester:
-    def __init__(self, base_url="https://d9b7abb5-7d7f-4e14-bfb5-9f377e6dc4de.preview.emergentagent.com"):
+    def __init__(self, base_url="https://46fc6863-0925-49d4-b7ee-1cce61881505.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.tests_run = 0
