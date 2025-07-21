@@ -852,37 +852,60 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
 
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="stat-card text-center bounce-in">
+        <div className="pro-stat-card text-center bounce-in">
+          <div className="flex justify-center mb-4">
+            <div className="pro-icon-xl pro-icon-bg-blue rounded-2xl">
+              📊
+            </div>
+          </div>
           <div className="text-4xl font-bold gradient-text mb-2">{overallProgress}%</div>
-          <div className="text-gray-600 font-medium">Overall Progress</div>
-          <div className="progress-bar mt-3 h-2 bg-gray-200 rounded-full">
+          <div className="text-gray-700 font-semibold text-lg mb-2">Overall Progress</div>
+          <div className="progress-bar mt-3 h-3 bg-gray-200 rounded-full">
             <div 
               className="progress-bar h-full rounded-full"
               style={{ width: `${overallProgress}%` }}
             />
           </div>
+          <div className="mt-3 text-sm text-gray-600 font-medium">
+            🎯 Your learning journey
+          </div>
         </div>
         
-        <div className="stat-card text-center bounce-in" style={{ animationDelay: '0.1s' }}>
+        <div className="pro-stat-card text-center bounce-in" style={{ animationDelay: '0.1s' }}>
+          <div className="flex justify-center mb-4">
+            <div className="pro-icon-xl pro-icon-bg-green rounded-2xl">
+              ✅
+            </div>
+          </div>
           <div className="text-4xl font-bold gradient-text mb-2">{getCompletedTasks()}/{getTotalTasks()}</div>
-          <div className="text-gray-600 font-medium">Tasks Completed</div>
-          <div className="mt-3 text-sm text-gray-500">
-            🎯 {getTotalTasks() - getCompletedTasks()} remaining
+          <div className="text-gray-700 font-semibold text-lg mb-2">Tasks Completed</div>
+          <div className="mt-3 text-sm text-gray-600 font-medium">
+            🚀 {getTotalTasks() - getCompletedTasks()} remaining
           </div>
         </div>
         
-        <div className="stat-card text-center bounce-in" style={{ animationDelay: '0.2s' }}>
+        <div className="pro-stat-card text-center bounce-in" style={{ animationDelay: '0.2s' }}>
+          <div className="flex justify-center mb-4">
+            <div className="pro-icon-xl pro-icon-bg-purple rounded-2xl">
+              📚
+            </div>
+          </div>
           <div className="text-4xl font-bold gradient-text mb-2">{portfolio.length}</div>
-          <div className="text-gray-600 font-medium">Portfolio Items</div>
-          <div className="mt-3 text-sm text-gray-500">
-            📚 Evidence collection
+          <div className="text-gray-700 font-semibold text-lg mb-2">Portfolio Items</div>
+          <div className="mt-3 text-sm text-gray-600 font-medium">
+            💎 Evidence collection
           </div>
         </div>
         
-        <div className="stat-card text-center bounce-in" style={{ animationDelay: '0.3s' }}>
+        <div className="pro-stat-card text-center bounce-in" style={{ animationDelay: '0.3s' }}>
+          <div className="flex justify-center mb-4">
+            <div className="pro-icon-xl pro-icon-bg-orange rounded-2xl">
+              🏆
+            </div>
+          </div>
           <div className="text-4xl font-bold gradient-text mb-2">Navigator</div>
-          <div className="text-gray-600 font-medium">Current Level</div>
-          <div className="mt-3 text-sm text-gray-500">
+          <div className="text-gray-700 font-semibold text-lg mb-2">Current Level</div>
+          <div className="mt-3 text-sm text-gray-600 font-medium">
             ⭐ Property Management
           </div>
         </div>
