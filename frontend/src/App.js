@@ -851,63 +851,63 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
         </p>
       </div>
 
-      {/* LUXURY STATS OVERVIEW */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-        <div className="luxury-stat-card text-center bounce-in">
-          <div className="flex justify-center mb-6">
-            <div className="luxury-icon-xl icon-dashboard flex items-center justify-center">
-              <span className="font-black text-lg tracking-wider">PROG</span>
+      {/* FIXED STATS OVERVIEW */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="enterprise-stat-card text-center bounce-in">
+          <div className="flex justify-center mb-4">
+            <div className="enterprise-icon icon-dashboard w-12 h-12 text-xs">
+              PROG
             </div>
           </div>
-          <div className="text-5xl font-black luxury-text-primary mb-3">{overallProgress}%</div>
-          <div className="luxury-text-primary font-bold text-lg mb-4">Overall Progress</div>
-          <div className="luxury-progress-bar mt-4 h-4 bg-white/10 rounded-full overflow-hidden">
+          <div className="stat-number text-4xl font-bold mb-2">{overallProgress}%</div>
+          <div className="stat-label text-lg font-semibold mb-3">Overall Progress</div>
+          <div className="enterprise-progress-bar mt-3 h-3 bg-gray-200 rounded-full overflow-hidden">
             <div 
-              className="luxury-progress-bar h-full rounded-full"
+              className="enterprise-progress-bar h-full rounded-full"
               style={{ width: `${overallProgress}%` }}
             />
           </div>
-          <div className="mt-4 luxury-text-tertiary text-sm font-semibold">
-            Your learning trajectory
+          <div className="stat-detail mt-3 text-sm">
+            Your learning journey
           </div>
         </div>
         
-        <div className="luxury-stat-card text-center bounce-in" style={{ animationDelay: '0.15s' }}>
-          <div className="flex justify-center mb-6">
-            <div className="luxury-icon-xl icon-target flex items-center justify-center">
-              <span className="font-black text-lg tracking-wider">TASK</span>
+        <div className="enterprise-stat-card text-center bounce-in" style={{ animationDelay: '0.1s' }}>
+          <div className="flex justify-center mb-4">
+            <div className="enterprise-icon icon-target w-12 h-12 text-xs">
+              TASK
             </div>
           </div>
-          <div className="text-5xl font-black luxury-text-primary mb-3">{getCompletedTasks()}<span className="text-2xl">/{getTotalTasks()}</span></div>
-          <div className="luxury-text-primary font-bold text-lg mb-4">Tasks Completed</div>
-          <div className="mt-4 luxury-text-tertiary text-sm font-semibold">
-            {getTotalTasks() - getCompletedTasks()} objectives remaining
+          <div className="stat-number text-4xl font-bold mb-2">{getCompletedTasks()}/{getTotalTasks()}</div>
+          <div className="stat-label text-lg font-semibold mb-3">Tasks Completed</div>
+          <div className="stat-detail mt-3 text-sm">
+            {getTotalTasks() - getCompletedTasks()} remaining
           </div>
         </div>
         
-        <div className="luxury-stat-card text-center bounce-in" style={{ animationDelay: '0.3s' }}>
-          <div className="flex justify-center mb-6">
-            <div className="luxury-icon-xl icon-portfolio flex items-center justify-center">
-              <span className="font-black text-lg tracking-wider">DOCS</span>
+        <div className="enterprise-stat-card text-center bounce-in" style={{ animationDelay: '0.2s' }}>
+          <div className="flex justify-center mb-4">
+            <div className="enterprise-icon icon-portfolio w-12 h-12 text-xs">
+              DOCS
             </div>
           </div>
-          <div className="text-5xl font-black luxury-text-primary mb-3">{portfolio.length}</div>
-          <div className="luxury-text-primary font-bold text-lg mb-4">Portfolio Items</div>
-          <div className="mt-4 luxury-text-tertiary text-sm font-semibold">
-            Evidence artifacts collected
+          <div className="stat-number text-4xl font-bold mb-2">{portfolio.length}</div>
+          <div className="stat-label text-lg font-semibold mb-3">Portfolio Items</div>
+          <div className="stat-detail mt-3 text-sm">
+            Evidence collection
           </div>
         </div>
         
-        <div className="luxury-stat-card text-center bounce-in" style={{ animationDelay: '0.45s' }}>
-          <div className="flex justify-center mb-6">
-            <div className="luxury-icon-xl icon-plus flex items-center justify-center">
-              <span className="font-black text-lg tracking-wider">NAV</span>
+        <div className="enterprise-stat-card text-center bounce-in" style={{ animationDelay: '0.3s' }}>
+          <div className="flex justify-center mb-4">
+            <div className="enterprise-icon icon-plus w-12 h-12 text-xs">
+              NAV
             </div>
           </div>
-          <div className="text-5xl font-black luxury-text-primary mb-3">L1</div>
-          <div className="luxury-text-primary font-bold text-lg mb-4">Navigator Level</div>
-          <div className="mt-4 luxury-text-tertiary text-sm font-semibold">
-            Property Management Track
+          <div className="stat-number text-4xl font-bold mb-2">Navigator</div>
+          <div className="stat-label text-lg font-semibold mb-3">Current Level</div>
+          <div className="stat-detail mt-3 text-sm">
+            Property Management
           </div>
         </div>
       </div>
