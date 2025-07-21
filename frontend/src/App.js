@@ -330,31 +330,44 @@ const App = () => {
       {/* Header */}
       <header className="glass-card p-4 mb-8 fade-in">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg mr-4 shadow-lg">
+              <div className="pro-logo w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-xl mr-4">
                 EYW
               </div>
               <div>
                 <h1 className="hero-text text-2xl font-bold">Earn Your Wings</h1>
-                <span className="text-white opacity-75 font-medium">
-                  {isAdmin ? 'Admin Panel' : 'Navigator Level'}
-                </span>
+                <div className="flex items-center mt-1">
+                  <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                  <span className="text-white opacity-90 text-sm font-medium">
+                    {isAdmin ? 'Admin Panel' : 'Navigator Level'}
+                  </span>
+                </div>
               </div>
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-6">
               <div className="text-right">
-                <p className="text-white font-semibold">
-                  {isAdmin ? 'Admin User' : user?.name}
+                <p className="text-white font-bold text-lg">
+                  {isAdmin ? 'System Administrator' : user?.name}
                 </p>
-                <p className="text-white opacity-75 text-sm">
-                  {isAdmin ? 'System Administrator' : `Overall Progress: ${getOverallProgress()}%`}
+                <p className="text-white opacity-75 text-sm flex items-center">
+                  {isAdmin ? (
+                    <>
+                      <div className="w-2 h-2 bg-blue-400 rounded-full mr-2"></div>
+                      Full Access
+                    </>
+                  ) : (
+                    <>
+                      <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                      {getOverallProgress()}% Complete
+                    </>
+                  )}
                 </p>
               </div>
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-sm">
-                  {user?.name?.split(' ').map(n => n[0]).join('') || 'DN'}
+              <div className="pro-avatar w-12 h-12 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">
+                  {isAdmin ? 'AD' : user?.name?.split(' ').map(n => n[0]).join('') || 'DN'}
                 </span>
               </div>
               
@@ -362,16 +375,18 @@ const App = () => {
               {isAdmin ? (
                 <button
                   onClick={adminLogout}
-                  className="btn-secondary text-sm"
+                  className="btn-secondary text-sm px-4 py-2 flex items-center space-x-2"
                 >
-                  Logout
+                  <span>🚪</span>
+                  <span>Logout</span>
                 </button>
               ) : (
                 <button
                   onClick={() => setShowAdminLogin(true)}
-                  className="btn-primary text-sm"
+                  className="btn-primary text-sm px-4 py-2 flex items-center space-x-2"
                 >
-                  Admin
+                  <span>👑</span>
+                  <span>Admin</span>
                 </button>
               )}
             </div>
