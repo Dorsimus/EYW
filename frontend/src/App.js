@@ -912,8 +912,8 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
       <div className="content-card fade-in" style={{ animationDelay: '0.4s' }}>
         <div className="p-8">
           <div className="flex items-center mb-8">
-            <div className="enterprise-icon icon-target w-12 h-12 text-xs mr-4">
-              COMP
+            <div className="pro-icon-xl mr-4">
+              🎯
             </div>
             <div>
               <h3 className="text-3xl font-bold text-gray-800">Top Competency Areas</h3>
