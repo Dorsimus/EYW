@@ -482,6 +482,177 @@ const App = () => {
           onClose={() => setShowAdminLogin(false)}
         />
       )}
+
+      {/* Edit Task Modal */}
+      {editingTask && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-full max-w-4xl shadow-lg rounded-md bg-white">
+            <div className="mt-3">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-medium text-gray-900">
+                  📝 Edit Task: {editingTask.title}
+                </h3>
+                <button
+                  onClick={() => setEditingTask(null)}
+                  className="text-gray-400 hover:text-gray-600 text-xl"
+                >
+                  ×
+                </button>
+              </div>
+              
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Title *</label>
+                    <input
+                      type="text"
+                      required
+                      value={newTask.title}
+                      onChange={(e) => setNewTask({...newTask, title: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Task Type *</label>
+                    <select
+                      value={newTask.task_type}
+                      onChange={(e) => setNewTask({...newTask, task_type: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="course_link">📚 Course Link</option>
+                      <option value="document_upload">📄 Document Upload</option>
+                      <option value="assessment">📝 Assessment</option>
+                      <option value="shadowing">👥 Shadowing</option>
+                      <option value="meeting">🤝 Meeting</option>
+                      <option value="project">🎯 Project</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Description *</label>
+                  <textarea
+                    required
+                    rows="3"
+                    value={newTask.description}
+                    onChange={(e) => setNewTask({...newTask, description: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Competency Area *</label>
+                    <select
+                      value={newTask.competency_area}
+                      onChange={(e) => {
+                        setNewTask({...newTask, competency_area: e.target.value, sub_competency: competencyOptions.find(c => c.area === e.target.value)?.subs[0] || ''});
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      {competencyOptions.map(option => (
+                        <option key={option.area} value={option.area}>
+                          {option.area.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Sub-Competency *</label>
+                    <select
+                      value={newTask.sub_competency}
+                      onChange={(e) => setNewTask({...newTask, sub_competency: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      {competencyOptions.find(c => c.area === newTask.competency_area)?.subs.map(sub => (
+                        <option key={sub} value={sub}>
+                          {sub.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Order</label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={newTask.order}
+                      onChange={(e) => setNewTask({...newTask, order: parseInt(e.target.value)})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Estimated Hours</label>
+                    <input
+                      type="number"
+                      step="0.5"
+                      min="0"
+                      value={newTask.estimated_hours}
+                      onChange={(e) => setNewTask({...newTask, estimated_hours: parseFloat(e.target.value)})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">External Link</label>
+                  <input
+                    type="url"
+                    value={newTask.external_link}
+                    onChange={(e) => setNewTask({...newTask, external_link: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://your-lms.com/course"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Instructions</label>
+                  <textarea
+                    rows="3"
+                    value={newTask.instructions}
+                    onChange={(e) => setNewTask({...newTask, instructions: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Detailed instructions for completing this task..."
+                  />
+                </div>
+
+                <div>
+                  <input
+                    type="checkbox"
+                    id="required-edit"
+                    checked={newTask.required}
+                    onChange={(e) => setNewTask({...newTask, required: e.target.checked})}
+                    className="mr-2"
+                  />
+                  <label htmlFor="required-edit" className="text-sm text-gray-700">Required Task</label>
+                </div>
+                
+                <div className="flex justify-end space-x-3 pt-4 border-t">
+                  <button
+                    type="button"
+                    onClick={() => setEditingTask(null)}
+                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  >
+                    Update Task
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
