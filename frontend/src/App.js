@@ -967,7 +967,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                             {(subData?.completed_tasks || 0)}/{(subData?.total_tasks || 0)} tasks • {Math.round(subData?.progress_percentage || 0)}% complete
                           </div>
                         </div>
-                        <div className="ml-4 text-lg font-bold text-blue-600">
+                        <div className="ml-4 text-lg font-bold" style={{color: '#0127a2'}}>
                           {Math.round(subData?.progress_percentage || 0)}%
                         </div>
                       </div>
