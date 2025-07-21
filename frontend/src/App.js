@@ -124,6 +124,33 @@ const App = () => {
     }
   };
 
+  const adminLogin = async (email, password) => {
+    try {
+      const response = await axios.post(`${API}/admin/login`, { email, password });
+      const token = response.data.access_token;
+      
+      localStorage.setItem('admin_token', token);
+      setAdminToken(token);
+      setIsAdmin(true);
+      setShowAdminLogin(false);
+      setCurrentView('admin-dashboard');
+      
+      return true;
+    } catch (error) {
+      console.error('Admin login failed:', error);
+      return false;
+    }
+  };
+
+  const adminLogout = () => {
+    localStorage.removeItem('admin_token');
+    setAdminToken(null);
+    setIsAdmin(false);
+    setShowAdminLogin(false);
+    setCurrentView('dashboard');
+    initializeUser();
+  };
+
   const handlePortfolioSubmit = async (e) => {
     e.preventDefault();
     
