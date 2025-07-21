@@ -327,65 +327,63 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="glass-card p-4 mb-8 fade-in">
+      {/* LUXURY ENTERPRISE HEADER */}
+      <header className="luxury-glass-card p-6 mb-8 fade-in">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
-              <div className="pro-logo w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-xl mr-4">
-                EYW
+              <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-3xl flex items-center justify-center text-white font-black text-xl mr-6 shadow-2xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent"></div>
+                <span className="relative z-10 tracking-wider">EYW</span>
               </div>
               <div>
-                <h1 className="hero-text text-2xl font-bold">Earn Your Wings</h1>
-                <div className="flex items-center mt-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
-                  <span className="text-white opacity-90 text-sm font-medium">
-                    {isAdmin ? 'Admin Panel' : 'Navigator Level'}
+                <h1 className="luxury-heading text-3xl font-black">Earn Your Wings</h1>
+                <div className="flex items-center mt-2">
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3 shadow-lg shadow-emerald-400/50"></div>
+                  <span className="luxury-text-secondary text-sm font-semibold tracking-wide uppercase">
+                    {isAdmin ? 'System Administrator' : 'Navigator Program'}
                   </span>
                 </div>
               </div>
             </div>
             
-            <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-8">
               <div className="text-right">
-                <p className="text-white font-bold text-lg">
-                  {isAdmin ? 'System Administrator' : user?.name}
+                <p className="luxury-text-primary font-bold text-xl">
+                  {isAdmin ? 'Admin Control' : user?.name}
                 </p>
-                <p className="text-white opacity-75 text-sm flex items-center">
-                  {isAdmin ? (
-                    <>
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mr-2"></div>
-                      Full Access
-                    </>
-                  ) : (
-                    <>
-                      <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-                      {getOverallProgress()}% Complete
-                    </>
-                  )}
-                </p>
+                <div className="flex items-center justify-end mt-1">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full mr-3 shadow-lg shadow-blue-400/50"></div>
+                  <p className="luxury-text-secondary text-sm font-medium">
+                    {isAdmin ? 'Full System Access' : `${getOverallProgress()}% Progress`}
+                  </p>
+                </div>
               </div>
-              <div className="pro-avatar w-12 h-12 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">
-                  {isAdmin ? 'AD' : user?.name?.split(' ').map(n => n[0]).join('') || 'DN'}
+              <div className="luxury-avatar w-14 h-14 rounded-2xl flex items-center justify-center">
+                <span className="text-white font-black text-lg tracking-wider">
+                  {isAdmin ? 'SYS' : user?.name?.split(' ').map(n => n[0]).join('') || 'USR'}
                 </span>
               </div>
               
-              {/* Admin Login/Logout Button */}
+              {/* LUXURY ADMIN BUTTON */}
               {isAdmin ? (
                 <button
                   onClick={adminLogout}
-                  className="btn-secondary text-sm px-4 py-2 flex items-center space-x-2"
+                  className="luxury-btn-primary px-6 py-3 flex items-center space-x-3"
                 >
-                  <span>🚪</span>
+                  <div className="luxury-icon icon-admin">
+                    OUT
+                  </div>
                   <span>Logout</span>
                 </button>
               ) : (
                 <button
                   onClick={() => setShowAdminLogin(true)}
-                  className="btn-primary text-sm px-4 py-2 flex items-center space-x-2"
+                  className="luxury-btn-primary px-6 py-3 flex items-center space-x-3"
                 >
-                  <span>👑</span>
+                  <div className="luxury-icon icon-admin">
+                    ADM
+                  </div>
                   <span>Admin</span>
                 </button>
               )}
