@@ -1454,20 +1454,6 @@ const AdminDashboardView = ({ stats, onNavigate }) => {
 
 // Admin Tasks Management Component
 const AdminTasksView = ({ tasks, onCreateTask, onUpdateTask, onDeleteTask, showCreateTask, setShowCreateTask, editingTask, setEditingTask, newTask, setNewTask }) => {
-  const [editingTask, setEditingTask] = useState(null);
-  const [newTask, setNewTask] = useState({
-    title: '',
-    description: '',
-    task_type: 'course_link',
-    competency_area: 'leadership_supervision',
-    sub_competency: 'team_motivation',
-    order: 1,
-    required: true,
-    estimated_hours: 1.0,
-    external_link: '',
-    instructions: ''
-  });
-
   const COMPETENCY_OPTIONS = [
     { area: 'leadership_supervision', subs: ['team_motivation', 'delegation', 'performance_management', 'coaching_development', 'team_building', 'conflict_resolution', 'difficult_conversations', 'cross_dept_communication', 'resident_resolution', 'crisis_leadership'] },
     { area: 'financial_management', subs: ['budget_creation', 'variance_analysis', 'cost_control', 'roi_decisions', 'revenue_impact', 'pl_understanding', 'kpi_tracking', 'financial_forecasting', 'capex_planning', 'vendor_cost_mgmt'] },
