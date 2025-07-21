@@ -743,6 +743,12 @@ async def admin_get_all_users(admin_user = Depends(get_current_admin)):
     
     return users_with_stats
 
+# Task Completion Routes
+@api_router.get("/users/{user_id}/task-completions")
+async def get_user_task_completions(user_id: str):
+    completions = await db.task_completions.find({"user_id": user_id}).sort("completed_at", -1).to_list(1000)
+    return [serialize_doc(completion) for completion in completions]
+
 # Admin route to seed sample tasks
 @api_router.post("/admin/seed-tasks")
 async def seed_sample_tasks():
