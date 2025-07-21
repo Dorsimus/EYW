@@ -847,12 +847,12 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
         </p>
       </div>
 
-      {/* FIXED STATS OVERVIEW */}
+      {/* PROFESSIONAL STATS OVERVIEW */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div className="enterprise-stat-card text-center bounce-in">
           <div className="flex justify-center mb-4">
-            <div className="enterprise-icon icon-dashboard w-12 h-12 text-xs">
-              PROG
+            <div className="pro-icon-xl">
+              📊
             </div>
           </div>
           <div className="stat-number text-4xl font-bold mb-2">{overallProgress}%</div>
@@ -870,8 +870,8 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
         
         <div className="enterprise-stat-card text-center bounce-in" style={{ animationDelay: '0.1s' }}>
           <div className="flex justify-center mb-4">
-            <div className="enterprise-icon icon-target w-12 h-12 text-xs">
-              TASK
+            <div className="pro-icon-xl">
+              ✅
             </div>
           </div>
           <div className="stat-number text-4xl font-bold mb-2">{getCompletedTasks()}/{getTotalTasks()}</div>
@@ -883,8 +883,8 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
         
         <div className="enterprise-stat-card text-center bounce-in" style={{ animationDelay: '0.2s' }}>
           <div className="flex justify-center mb-4">
-            <div className="enterprise-icon icon-portfolio w-12 h-12 text-xs">
-              DOCS
+            <div className="pro-icon-xl">
+              📚
             </div>
           </div>
           <div className="stat-number text-4xl font-bold mb-2">{portfolio.length}</div>
@@ -896,8 +896,8 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
         
         <div className="enterprise-stat-card text-center bounce-in" style={{ animationDelay: '0.3s' }}>
           <div className="flex justify-center mb-4">
-            <div className="enterprise-icon icon-plus w-12 h-12 text-xs">
-              NAV
+            <div className="pro-icon-xl">
+              🏆
             </div>
           </div>
           <div className="stat-number text-4xl font-bold mb-2">Navigator</div>
