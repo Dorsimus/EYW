@@ -1,38 +1,262 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Custom styles for the Earn Your Wings platform */
+
 .App {
-    text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Smooth transitions for all interactive elements */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+/* Custom progress bar animations */
+@keyframes progressFill {
+  from {
+    width: 0%;
+  }
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.progress-bar {
+  animation: progressFill 1s ease-out;
 }
 
-.App-link {
-    color: #61dafb;
+/* Custom gradient backgrounds for competency areas */
+.competency-leadership {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.competency-financial {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.competency-operational {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.competency-cross-functional {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.competency-strategic {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+/* Portfolio card hover effects */
+.portfolio-card {
+  @apply transform transition-all duration-300 hover:scale-105 hover:shadow-xl;
+}
+
+/* Skills matrix styling */
+.skills-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* Achievement badge styling */
+.achievement-badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .8;
+  }
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Responsive text truncation */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* File upload styling */
+input[type="file"] {
+  @apply file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100;
+}
+
+/* Form focus states */
+input:focus, textarea:focus, select:focus {
+  @apply ring-2 ring-blue-500 ring-opacity-50 border-blue-500;
+}
+
+/* Dashboard stats cards */
+.stats-card {
+  @apply bg-white rounded-lg shadow-sm p-6 text-center border border-gray-100 hover:border-blue-200 hover:shadow-md;
+  transition: all 0.3s ease;
+}
+
+.stats-number {
+  @apply text-3xl font-bold mb-1;
+}
+
+.stats-label {
+  @apply text-sm text-gray-500 font-medium;
+}
+
+/* Navigation active states */
+.nav-active {
+  @apply border-blue-500 text-blue-600 bg-blue-50;
+}
+
+.nav-inactive {
+  @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300;
+}
+
+/* Competency progress indicators */
+.progress-excellent {
+  @apply bg-green-500;
+}
+
+.progress-good {
+  @apply bg-blue-500;
+}
+
+.progress-developing {
+  @apply bg-yellow-500;
+}
+
+.progress-beginner {
+  @apply bg-red-500;
+}
+
+/* Mobile responsiveness helpers */
+@media (max-width: 768px) {
+  .mobile-full {
+    @apply w-full;
+  }
+  
+  .mobile-stack {
+    @apply flex-col space-x-0 space-y-4;
+  }
+  
+  .mobile-text-sm {
+    @apply text-sm;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-page-break {
+    page-break-after: always;
+  }
+}
+
+/* Loading states */
+.loading-skeleton {
+  @apply animate-pulse bg-gray-200 rounded;
+}
+
+.loading-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Accessibility improvements */
+.focus-visible:focus {
+  @apply ring-2 ring-offset-2 ring-blue-500;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Error states */
+.error-state {
+  @apply bg-red-50 border-red-200 text-red-700;
+}
+
+.success-state {
+  @apply bg-green-50 border-green-200 text-green-700;
+}
+
+.warning-state {
+  @apply bg-yellow-50 border-yellow-200 text-yellow-700;
+}
+
+/* Custom button variants */
+.btn-primary {
+  @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+}
+
+.btn-success {
+  @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500;
+}
+
+/* Enhanced visual hierarchy */
+.section-header {
+  @apply text-lg font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200;
+}
+
+.card-header {
+  @apply px-6 py-4 border-b border-gray-200 bg-gray-50;
+}
+
+.card-body {
+  @apply px-6 py-4;
+}
+
+.card-footer {
+  @apply px-6 py-3 bg-gray-50 border-t border-gray-200;
 }
