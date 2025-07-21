@@ -385,28 +385,42 @@ class TaskCompetencyAPITester:
         return success, response
 
 def main():
-    print("🚀 Starting Task-Based Competency System API Tests")
+    print("🚀 Starting COMPREHENSIVE Admin System API Tests")
     print("=" * 60)
     
     tester = TaskCompetencyAPITester()
     
     # Test sequence following the priority order from review request
-    print("\n📋 PRIORITY BACKEND API TESTING SEQUENCE:")
+    print("\n📋 BASIC SETUP TESTS:")
     
     # 1. Basic setup tests
     tester.test_root_endpoint()
     tester.test_create_user()
     tester.test_get_user()
     
-    # 2. PRIORITY TESTS - Task Management System
-    print("\n🎯 PRIORITY TESTS - Task Management System:")
-    tester.test_seed_sample_tasks()  # GET /api/admin/seed-tasks
+    # 2. PRIORITY TESTS - Admin Authentication System
+    print("\n🔐 PRIORITY TESTS - Admin Authentication System:")
+    tester.test_create_admin_user()  # Create admin if doesn't exist
+    tester.test_admin_login()        # POST /api/admin/login
+    
+    # 3. PRIORITY TESTS - Admin API Endpoints (require authentication)
+    print("\n🎯 PRIORITY TESTS - Admin Management APIs:")
+    tester.test_admin_stats()        # GET /api/admin/stats
+    tester.test_admin_get_all_tasks()  # GET /api/admin/tasks
+    tester.test_admin_get_all_users()  # GET /api/admin/users
+    tester.test_admin_create_task()    # POST /api/admin/tasks
+    tester.test_admin_update_task()    # PUT /api/admin/tasks/{id}
+    tester.test_admin_delete_task()    # DELETE /api/admin/tasks/{id}
+    
+    # 4. PRIORITY TESTS - Task Management System (User Side)
+    print("\n📚 PRIORITY TESTS - Task Management System:")
+    tester.test_seed_sample_tasks()  # POST /api/admin/seed-tasks
     tester.test_get_all_tasks()      # GET /api/tasks
     tester.test_get_user_tasks_for_competency()  # GET /api/users/{id}/tasks/{area}/{sub}
     tester.test_complete_task()      # POST /api/users/{id}/task-completions
     tester.test_get_user_competencies()  # GET /api/users/{id}/competencies
     
-    # 3. Additional API tests
+    # 5. Additional API tests
     print("\n📊 Additional API Tests:")
     tester.test_get_competency_framework()
     tester.test_get_tasks_for_competency()
@@ -420,11 +434,25 @@ def main():
     print(f"   Tests Passed: {tester.tests_passed}")
     print(f"   Success Rate: {(tester.tests_passed/tester.tests_run)*100:.1f}%")
     
+    # Detailed admin test results
+    if tester.admin_token:
+        print(f"🔐 Admin Authentication: ✅ SUCCESS")
+        print(f"   Token obtained and admin APIs tested")
+    else:
+        print(f"🔐 Admin Authentication: ❌ FAILED")
+        print(f"   Admin functionality could not be tested")
+    
     if tester.tests_passed == tester.tests_run:
-        print("🎉 ALL TESTS PASSED! Task-based competency system is working correctly.")
+        print("🎉 ALL TESTS PASSED! Complete Admin System is working correctly.")
         return 0
     else:
-        print(f"⚠️  {tester.tests_run - tester.tests_passed} tests failed. Check the issues above.")
+        failed_tests = tester.tests_run - tester.tests_passed
+        print(f"⚠️  {failed_tests} tests failed. Check the issues above.")
+        
+        # Provide specific feedback for admin system
+        if not tester.admin_token:
+            print("🚨 CRITICAL: Admin authentication failed - admin features unavailable")
+        
         return 1
 
 if __name__ == "__main__":
