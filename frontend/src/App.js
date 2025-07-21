@@ -23,6 +23,19 @@ const App = () => {
   const [allTasks, setAllTasks] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [showCreateTask, setShowCreateTask] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+  const [newTask, setNewTask] = useState({
+    title: '',
+    description: '',
+    task_type: 'course_link',
+    competency_area: 'leadership_supervision',
+    sub_competency: 'team_motivation',
+    order: 1,
+    required: true,
+    estimated_hours: 1.0,
+    external_link: '',
+    instructions: ''
+  });
   const [newPortfolioItem, setNewPortfolioItem] = useState({
     title: '',
     description: '',
