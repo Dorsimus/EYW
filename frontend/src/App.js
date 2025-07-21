@@ -54,15 +54,20 @@ const App = () => {
     { area: 'strategic_thinking', subs: ['market_awareness', 'trend_identification', 'opportunity_recognition', 'problem_anticipation', 'longterm_planning', 'change_leadership', 'stakeholder_management', 'project_management', 'innovation_adoption', 'continuous_improvement'] }
   ];
 
-  // Initialize user if doesn't exist
+  // Initialize user on component mount
+  useEffect(() => {
+    initializeUser();
+  }, []);
+
+  // Handle admin token changes
   useEffect(() => {
     if (adminToken) {
       setIsAdmin(true);
       loadAdminData();
     } else {
-      initializeUser();
+      setIsAdmin(false);
     }
-  }, []); // Empty dependency array to run only on component mount
+  }, [adminToken]);
 
   const loadAdminData = async () => {
     try {
