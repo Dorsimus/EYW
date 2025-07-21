@@ -1506,7 +1506,7 @@ const AddPortfolioView = ({ portfolioItem, setPortfolioItem, onSubmit, competenc
   );
 };
 
-// Admin Dashboard Component
+// Redstone Admin Dashboard Component
 const AdminDashboardView = ({ stats, onNavigate }) => {
   if (!stats) return (
     <div className="flex justify-center items-center min-h-64">
@@ -1517,63 +1517,63 @@ const AdminDashboardView = ({ stats, onNavigate }) => {
   return (
     <div className="space-y-8 fade-in">
       <div className="text-center">
-        <h2 className="hero-text text-4xl md:text-5xl font-bold mb-4">🎛️ Admin Dashboard</h2>
+        <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{color: '#0127a2'}}>🎛️ Admin Dashboard</h2>
         <p className="text-white text-lg md:text-xl font-medium opacity-90">Manage your Earn Your Wings platform</p>
       </div>
 
-      {/* Stats Overview */}
+      {/* Redstone Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="stat-card text-center bounce-in">
-          <div className="text-4xl font-bold gradient-text mb-2">{stats.total_users}</div>
-          <div className="text-gray-600 font-medium">Total Users</div>
-          <div className="mt-3 text-sm text-gray-500">
+        <div className="redstone-admin-card text-center bounce-in">
+          <div className="text-4xl font-bold mb-2" style={{color: '#0127a2'}}>{stats.total_users}</div>
+          <div className="text-gray-800 font-medium">Total Users</div>
+          <div className="mt-3 text-sm text-gray-600">
             👥 Platform community
           </div>
         </div>
         
-        <div className="stat-card text-center bounce-in" style={{ animationDelay: '0.1s' }}>
-          <div className="text-4xl font-bold gradient-text mb-2">{stats.total_tasks}</div>
-          <div className="text-gray-600 font-medium">Active Tasks</div>
-          <div className="mt-3 text-sm text-gray-500">
+        <div className="redstone-admin-card text-center bounce-in" style={{ animationDelay: '0.1s' }}>
+          <div className="text-4xl font-bold mb-2" style={{color: '#ff3443'}}>{stats.total_tasks}</div>
+          <div className="text-gray-800 font-medium">Active Tasks</div>
+          <div className="mt-3 text-sm text-gray-600">
             ⚙️ Learning activities
           </div>
         </div>
         
-        <div className="stat-card text-center bounce-in" style={{ animationDelay: '0.2s' }}>
-          <div className="text-4xl font-bold gradient-text mb-2">{stats.total_completions}</div>
-          <div className="text-gray-600 font-medium">Task Completions</div>
-          <div className="mt-3 text-sm text-gray-500">
+        <div className="redstone-admin-card text-center bounce-in" style={{ animationDelay: '0.2s' }}>
+          <div className="text-4xl font-bold mb-2" style={{color: '#0127a2'}}>{stats.total_completions}</div>
+          <div className="text-gray-800 font-medium">Task Completions</div>
+          <div className="mt-3 text-sm text-gray-600">
             🎯 Progress achievements
           </div>
         </div>
         
-        <div className="stat-card text-center bounce-in" style={{ animationDelay: '0.3s' }}>
-          <div className="text-4xl font-bold gradient-text mb-2">{stats.completion_rate}%</div>
-          <div className="text-gray-600 font-medium">Completion Rate</div>
-          <div className="progress-bar mt-3 h-2 bg-gray-200 rounded-full">
+        <div className="redstone-admin-card text-center bounce-in" style={{ animationDelay: '0.3s' }}>
+          <div className="text-4xl font-bold mb-2" style={{color: '#ff3443'}}>{stats.completion_rate}%</div>
+          <div className="text-gray-800 font-medium">Completion Rate</div>
+          <div className="redstone-progress-bar mt-3 h-2 bg-gray-200 rounded-full">
             <div 
-              className="progress-bar h-full rounded-full"
+              className="redstone-progress-bar h-full rounded-full"
               style={{ width: `${stats.completion_rate}%` }}
             />
           </div>
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="glass-card fade-in" style={{ animationDelay: '0.4s' }}>
+      {/* Redstone Quick Actions */}
+      <div className="redstone-glass-card fade-in" style={{ animationDelay: '0.4s' }}>
         <div className="p-6">
           <div className="flex items-center mb-6">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-400 to-purple-600 flex items-center justify-center text-white text-xl font-bold mr-4">
+            <div className="redstone-icon-xl mr-4">
               ⚡
             </div>
-            <h3 className="gradient-text text-2xl font-bold">Quick Actions</h3>
+            <h3 className="text-2xl font-bold" style={{color: '#0127a2'}}>Quick Actions</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <button
               onClick={() => onNavigate('admin-tasks')}
-              className="glass-card p-6 text-center hover:scale-105 transition-all duration-300 group"
+              className="redstone-quick-action group"
             >
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform" style={{background: 'linear-gradient(135deg, #0127a2 0%, #ff3443 100%)', color: 'white'}}>
                 ⚙️
               </div>
               <div className="font-bold text-gray-800 mb-2 group-hover:text-blue-700 transition-colors">Manage Tasks</div>
@@ -1582,20 +1582,20 @@ const AdminDashboardView = ({ stats, onNavigate }) => {
             
             <button
               onClick={() => onNavigate('admin-users')}
-              className="glass-card p-6 text-center hover:scale-105 transition-all duration-300 group"
+              className="redstone-quick-action group"
             >
-              <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform" style={{background: 'linear-gradient(135deg, #ff3443 0%, #0127a2 100%)', color: 'white'}}>
                 👥
               </div>
-              <div className="font-bold text-gray-800 mb-2 group-hover:text-green-700 transition-colors">View Users</div>
+              <div className="font-bold text-gray-800 mb-2 group-hover:text-red-700 transition-colors">View Users</div>
               <div className="text-sm text-gray-500">Monitor user progress</div>
             </button>
             
             <button
               onClick={() => onNavigate('admin-analytics')}
-              className="glass-card p-6 text-center hover:scale-105 transition-all duration-300 group"
+              className="redstone-quick-action group"
             >
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform" style={{background: 'linear-gradient(135deg, #0127a2 0%, #ff3443 100%)', color: 'white'}}>
                 📊
               </div>
               <div className="font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors">View Analytics</div>
