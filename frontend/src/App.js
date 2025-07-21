@@ -1462,31 +1462,6 @@ const AdminTasksView = ({ tasks, onCreateTask, onUpdateTask, onDeleteTask, showC
     { area: 'strategic_thinking', subs: ['market_awareness', 'trend_identification', 'opportunity_recognition', 'problem_anticipation', 'longterm_planning', 'change_leadership', 'stakeholder_management', 'project_management', 'innovation_adoption', 'continuous_improvement'] }
   ];
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    const success = editingTask 
-      ? await onUpdateTask(editingTask.id, newTask)
-      : await onCreateTask(newTask);
-    
-    if (success) {
-      setShowCreateTask(false);
-      setEditingTask(null);
-      setNewTask({
-        title: '',
-        description: '',
-        task_type: 'course_link',
-        competency_area: 'leadership_supervision',
-        sub_competency: 'team_motivation',
-        order: 1,
-        required: true,
-        estimated_hours: 1.0,
-        external_link: '',
-        instructions: ''
-      });
-    }
-  };
-
   const handleEdit = (task) => {
     setEditingTask(task);
     setNewTask({
