@@ -1258,6 +1258,7 @@ const App = () => {
             setPortfolioItem={setNewPortfolioItem}
             onSubmit={handlePortfolioSubmit}
             competencies={competencies}
+            setCurrentView={setCurrentView}
           />
         )}
       </main>
