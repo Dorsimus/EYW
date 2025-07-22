@@ -2488,37 +2488,59 @@ const CulminatingTaskCompletionModal = ({ taskId, onComplete, onClose }) => {
   );
 };
 
-// Task Modal Component
-const TaskModal = ({ isOpen, onClose, tasks, competencyArea, subCompetency, competencies, onCompleteTask }) => {
-  const [selectedTask, setSelectedTask] = useState(null);
-  const [evidenceDescription, setEvidenceDescription] = useState('');
-  const [evidenceFile, setEvidenceFile] = useState(null);
+// Task Modal Component - Enhanced for both regular and culminating project tasks
+const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phaseName, phaseDescription, onCompleteProjectTask, culminatingProgress }) => {
+  const formatCompetencyName = (area, sub) => {
+    const areaNames = {
+      leadership_supervision: "Leadership & Supervision",
+      financial_management: "Financial Management", 
+      operational_management: "Operational Management",
+      cross_functional_collaboration: "Cross-Functional Collaboration",
+      strategic_thinking: "Strategic Thinking"
+    };
 
-  const handleCompleteTask = async (taskId) => {
-    await onCompleteTask(taskId, evidenceDescription, evidenceFile);
-    setSelectedTask(null);
-    setEvidenceDescription('');
-    setEvidenceFile(null);
+    const subNames = {
+      team_motivation: "Team Motivation",
+      delegation: "Delegation",
+      performance_management: "Performance Management",
+      budget_creation: "Budget Creation", 
+      variance_analysis: "Variance Analysis",
+      cost_control: "Cost Control",
+      workflow_optimization: "Workflow Optimization",
+      technology_utilization: "Technology Utilization",
+      stakeholder_management: "Stakeholder Management",
+      strategic_planning: "Strategic Planning"
+    };
+
+    return {
+      area: areaNames[area] || area,
+      sub: subNames[sub] || sub
+    };
   };
 
-  const getTaskTypeIcon = (type) => {
-    switch(type) {
-      case 'course_link': return '📚';
-      case 'document_upload': return '📄';
-      case 'assessment': return '📝';
-      case 'shadowing': return '👥';
-      case 'meeting': return '🤝';
-      case 'project': return '🎯';
-      default: return '✅';
+  const getTitle = () => {
+    if (isProjectPhase) {
+      return `${phaseName} Tasks`;
+    } else {
+      const names = formatCompetencyName(area, sub);
+      return `Tasks for ${names.sub}`;
     }
   };
 
-  if (!isOpen) return null;
+  const getDescription = () => {
+    if (isProjectPhase) {
+      return phaseDescription;
+    } else {
+      return "Complete these tasks to demonstrate your competency and earn points toward your portfolio.";
+    }
+  };
 
-  const competencyData = competencies[competencyArea]?.sub_competencies[subCompetency];
-  const competencyName = typeof competencyData === 'object' && competencyData?.name 
-    ? competencyData.name 
-    : (subCompetency || 'Unknown Competency');
+  const isTaskComplete = (taskId) => {
+    if (isProjectPhase) {
+      return culminatingProgress && culminatingProgress[taskId]?.completed;
+    }
+    return false; // Regular task completion would be handled differently
+  };
 
   return (
     <div 
