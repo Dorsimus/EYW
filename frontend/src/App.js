@@ -26,6 +26,7 @@ const App = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [isInitialized, setIsInitialized] = useState(false); // Add flag to prevent double initialization
   const [newTask, setNewTask] = useState({
     title: '',
     description: '',
