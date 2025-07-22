@@ -2630,7 +2630,7 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                     )}
                   </div>
                   
-                  {!task.completed && (
+                  {!(isTaskComplete(task.id) || task.completed) && (
                     <button
                       onClick={() => setSelectedTask(task.id)}
                       className="ml-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm"
