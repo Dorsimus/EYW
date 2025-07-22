@@ -1802,8 +1802,24 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
   });
 
   const handleViewTasks = (areaKey, subKey) => {
-    onViewTasks(areaKey, subKey);
-    setTaskModal({ area: areaKey, sub: subKey });
+    if (areaKey === 'culminating_project') {
+      // Handle culminating project phases
+      const phaseData = culminatingProjectTasks[subKey];
+      if (phaseData) {
+        setTaskModal({ 
+          area: areaKey, 
+          sub: subKey,
+          isProjectPhase: true,
+          phaseName: phaseData.name,
+          phaseDescription: phaseData.description,
+          tasks: phaseData.tasks
+        });
+      }
+    } else {
+      // Handle regular competency areas
+      onViewTasks(areaKey, subKey);
+      setTaskModal({ area: areaKey, sub: subKey });
+    }
   };
 
   const handleCompleteCulminatingTask = async (taskId, evidenceDescription = "", file = null) => {
