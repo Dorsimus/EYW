@@ -550,8 +550,8 @@ const App = () => {
         });
         
         // Ensure all admin data is loaded
-        if (allTasks.length === 0) {
-          console.log('Loading admin tasks data...');
+        console.log('Setting persistent admin data...');
+        setAllTasks([
           {
             id: "task-1",
             title: "Team Leadership Workshop",
@@ -594,81 +594,10 @@ const App = () => {
             instructions: "Complete self-evaluation form",
             active: true,
             created_by: "admin-123"
-          },
-          {
-            id: "task-4",
-            title: "Process Optimization Review",
-            description: "Review and optimize key operational workflows", 
-            task_type: "document_upload",
-            competency_area: "operational_management",
-            sub_competency: "workflow_optimization",
-            order: 1,
-            required: true,
-            estimated_hours: 3.0,
-            instructions: "Document current processes and suggest improvements",
-            active: true,
-            created_by: "admin-123"
-          },
-          {
-            id: "task-5",
-            title: "Stakeholder Communication Plan",
-            description: "Develop communication strategy for key stakeholders",
-            task_type: "project",
-            competency_area: "cross_functional_collaboration", 
-            sub_competency: "stakeholder_management",
-            order: 1,
-            required: true,
-            estimated_hours: 2.5,
-            instructions: "Create comprehensive stakeholder engagement plan",
-            active: true,
-            created_by: "admin-123"
           }
         ]);
         
-        // Set demo users for admin management
-        setAllUsers([
-          {
-            id: "user-1",
-            email: "john.doe@earnwings.com",
-            name: "John Doe",
-            role: "participant", 
-            level: "navigator",
-            completed_tasks: 2,
-            overall_progress: 20,
-            created_at: "2024-01-15T00:00:00Z"
-          },
-          {
-            id: "user-2",
-            email: "jane.smith@earnwings.com", 
-            name: "Jane Smith",
-            role: "participant",
-            level: "navigator",
-            completed_tasks: 1,
-            overall_progress: 10,
-            created_at: "2024-01-20T00:00:00Z"
-          },
-          {
-            id: "user-3",
-            email: "mike.johnson@earnwings.com",
-            name: "Mike Johnson", 
-            role: "mentor",
-            level: "navigator",
-            completed_tasks: 5,
-            overall_progress: 50,
-            created_at: "2024-01-10T00:00:00Z"
-          },
-          {
-            id: "user-4",
-            email: "demo@earnwings.com",
-            name: "Demo Navigator",
-            role: "participant",
-            level: "navigator", 
-            completed_tasks: 0,
-            overall_progress: 0,
-            created_at: "2024-01-25T00:00:00Z"
-          }
-        ]);
-        
+        console.log('Admin login complete with persistent data');
         return true;
       } else {
         console.error('Invalid admin credentials');
