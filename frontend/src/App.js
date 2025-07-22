@@ -1597,7 +1597,7 @@ const AddPortfolioView = ({ portfolioItem, setPortfolioItem, onSubmit, competenc
   return (
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">➕ Add Portfolio Evidence</h2>
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">➕ Add to My Portfolio</h2>
         <p className="text-lg text-gray-600">Document your competency development and achievements</p>
       </div>
 
