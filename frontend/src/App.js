@@ -1990,7 +1990,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                       <div className="flex-1 bg-gray-200 rounded-full h-2">
                         <div 
                           className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${getPhasePr ogress('planning') * 25}%` }}
+                          style={{ width: `${getPhaseProgress('planning') * 25}%` }}
                         />
                       </div>
                       <span className="text-sm font-medium text-gray-900 w-12">
