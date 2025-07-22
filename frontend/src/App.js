@@ -344,29 +344,29 @@ const App = () => {
     }
   }, []);
 
-  // Handle admin token changes - FIXED: Set proper admin view  
+  // Handle admin token changes - FIXED: Stable admin state management  
   useEffect(() => {
-    if (adminToken) {
+    if (adminToken && !isAdmin) {
+      // Only set admin state if we're not already admin
+      console.log('Setting admin state from token...');
       setIsAdmin(true);
-      // Set admin dashboard as default view for admins
       setCurrentView('admin-dashboard');
       
-      // Set demo admin data if we have a token
-      if (!adminStats) {
-        setAdminStats({
-          total_users: 45,
-          total_tasks: 10,
-          total_completions: 2,
-          completion_rate: 0.44,
-          active_competency_areas: 5
-        });
-      }
-    } else {
+      // Set demo admin data only once
+      setAdminStats({
+        total_users: 45,
+        total_tasks: 10,
+        total_completions: 2,
+        completion_rate: 0.44,
+        active_competency_areas: 5
+      });
+    } else if (!adminToken && isAdmin) {
+      // Only clear admin state if we were admin
+      console.log('Clearing admin state...');
       setIsAdmin(false);
-      // Return to regular dashboard when not admin
       setCurrentView('dashboard');
     }
-  }, [adminToken]);
+  }, [adminToken]); // Remove isAdmin from dependencies to prevent loops
 
   const loadAdminData = async () => {
     try {
