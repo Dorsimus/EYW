@@ -211,7 +211,16 @@ const App = () => {
   useEffect(() => {
     if (adminToken) {
       setIsAdmin(true);
-      // Skip loadAdminData for now to avoid API calls
+      // Set demo admin data if we have a token
+      if (!adminStats) {
+        setAdminStats({
+          total_users: 45,
+          total_tasks: 10,
+          total_completions: 2,
+          completion_rate: 0.44,
+          active_competency_areas: 5
+        });
+      }
     } else {
       setIsAdmin(false);
     }
