@@ -1870,13 +1870,313 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                             <span>{(subData?.evidence_items?.length || 0)} evidence items</span>
                           </div>
                         </div>
-                    </div>
-                  ))}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
             )}
           </div>
         ))}
+
+        {/* CULMINATING PROJECT - Navigator Level Capstone */}
+        <div className="bg-gradient-to-r from-red-50 to-blue-50 rounded-lg shadow-lg border-2 border-dashed border-red-200 overflow-hidden">
+          <div 
+            className="px-6 py-6 cursor-pointer hover:from-red-100 hover:to-blue-100 transition-all duration-300"
+            onClick={() => setExpandedArea(expandedArea === 'culminating_project' ? null : 'culminating_project')}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <div className="flex items-center space-x-3 mb-2">
+                  <span className="text-2xl">🏆</span>
+                  <h3 className="text-xl font-bold text-gray-900">Culminating Project</h3>
+                  <span className="px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">CAPSTONE</span>
+                </div>
+                <p className="text-sm text-gray-700 font-medium">Integrate all competencies in a real-world property operations improvement initiative</p>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div className="text-center">
+                  <div className="text-sm font-semibold text-gray-600">10 Subtasks</div>
+                  <div className="text-xs text-gray-500">6-12 weeks</div>
+                </div>
+                <span className="text-gray-400 text-xl">
+                  {expandedArea === 'culminating_project' ? '▼' : '▶'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {expandedArea === 'culminating_project' && (
+            <div className="px-6 py-6 bg-white border-t border-red-200">
+              {/* Overview Section */}
+              <div className="mb-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+                <h4 className="font-semibold text-blue-900 mb-2">📋 Project Overview</h4>
+                <p className="text-sm text-blue-800 leading-relaxed">
+                  This culminating project integrates all competencies developed throughout the Navigator level, requiring demonstration of leadership, financial acumen, operational excellence, and strategic thinking in a real-world property operations improvement initiative.
+                </p>
+              </div>
+
+              {/* Subtasks Grid */}
+              <div className="space-y-4">
+                {[
+                  {
+                    id: 1,
+                    title: "Opportunity Identification & Analysis",
+                    time: "1-2 weeks",
+                    type: "Analysis + Documentation",
+                    objective: "Identify and analyze potential improvement opportunities at your property",
+                    deliverable: "Opportunity Analysis Report (2-3 pages)",
+                    portfolioConnection: "Strategic Thinking evidence",
+                    tasks: [
+                      "Conduct property walkthrough and operations assessment",
+                      "Review property performance data (financial, operational, resident satisfaction)",
+                      "Interview team members from both leasing and maintenance departments",
+                      "Identify 3-5 potential improvement opportunities",
+                      "Document findings in Opportunity Analysis Template"
+                    ]
+                  },
+                  {
+                    id: 2,
+                    title: "Project Selection & Business Case Development", 
+                    time: "1 week",
+                    type: "Strategic Planning + Financial Analysis",
+                    objective: "Select one opportunity and build compelling business case",
+                    deliverable: "Business Case Proposal (3-4 pages)",
+                    portfolioConnection: "Financial Management + Strategic Thinking evidence",
+                    tasks: [
+                      "Evaluate opportunities against impact/effort matrix",
+                      "Select primary project focus",
+                      "Calculate current state costs/inefficiencies",
+                      "Estimate potential ROI and timeline for results",
+                      "Define success metrics and measurement plan",
+                      "Create preliminary resource requirements"
+                    ]
+                  },
+                  {
+                    id: 3,
+                    title: "Manager Review & Project Approval",
+                    time: "3-5 days", 
+                    type: "Presentation + Approval Gate",
+                    objective: "Present business case and gain manager approval to proceed",
+                    deliverable: "Signed Project Approval Form + Revised Scope (if applicable)",
+                    portfolioConnection: "Leadership & Communication evidence",
+                    tasks: [
+                      "Schedule approval meeting with direct manager",
+                      "Present business case with clear ROI and success metrics",
+                      "Address manager questions and concerns",
+                      "Incorporate feedback and adjust scope if needed",
+                      "Obtain formal written approval to proceed"
+                    ]
+                  },
+                  {
+                    id: 4,
+                    title: "Detailed Project Planning",
+                    time: "1 week",
+                    type: "Project Management + Stakeholder Planning", 
+                    objective: "Create comprehensive execution plan",
+                    deliverable: "Complete Project Plan Document",
+                    portfolioConnection: "Operational Management evidence",
+                    tasks: [
+                      "Develop detailed project timeline with milestones",
+                      "Identify all stakeholders and their roles/responsibilities",
+                      "Create communication plan and meeting schedule",
+                      "Define resource requirements and budget (if applicable)",
+                      "Identify potential risks and mitigation strategies",
+                      "Create implementation checklist"
+                    ]
+                  },
+                  {
+                    id: 5,
+                    title: "Stakeholder Alignment & Kickoff",
+                    time: "3-5 days",
+                    type: "Meeting + Communication",
+                    objective: "Align all stakeholders and officially launch project", 
+                    deliverable: "Kickoff Meeting Notes + Stakeholder Commitment Documentation",
+                    portfolioConnection: "Cross-Functional Collaboration evidence",
+                    tasks: [
+                      "Schedule and conduct project kickoff meeting",
+                      "Present project plan to all involved team members",
+                      "Confirm roles, responsibilities, and timeline commitments",
+                      "Address questions and concerns from team members", 
+                      "Document agreements and next steps",
+                      "Send kickoff summary to all participants"
+                    ]
+                  },
+                  {
+                    id: 6,
+                    title: "Project Execution & Management",
+                    time: "6-8 weeks",
+                    type: "Implementation + Ongoing Management",
+                    objective: "Execute project plan while managing progress and obstacles",
+                    deliverable: "Weekly Progress Reports + Implementation Documentation",
+                    portfolioConnection: "Leadership & Supervision + Operational Management evidence",
+                    tasks: [
+                      "Implement project activities according to timeline",
+                      "Conduct regular check-ins with team members",
+                      "Monitor progress against success metrics",
+                      "Document challenges and solutions",
+                      "Adjust approach as needed while staying true to objectives",
+                      "Maintain regular communication with manager/mentor"
+                    ]
+                  },
+                  {
+                    id: 7,
+                    title: "Results Measurement & Analysis",
+                    time: "1 week",
+                    type: "Data Analysis + Impact Assessment",
+                    objective: "Measure and analyze project outcomes against original goals",
+                    deliverable: "Results Analysis Report with quantified impact",
+                    portfolioConnection: "Financial Management + Strategic Thinking evidence",
+                    tasks: [
+                      "Collect data on all defined success metrics",
+                      "Compare results to baseline/target performance",
+                      "Calculate actual ROI and business impact",
+                      "Gather qualitative feedback from team members and residents (if applicable)",
+                      "Document lessons learned and unexpected outcomes",
+                      "Identify opportunities for further improvement"
+                    ]
+                  },
+                  {
+                    id: 8,
+                    title: "Project Documentation & Portfolio Development",
+                    time: "3-5 days",
+                    type: "Documentation + Portfolio Building",
+                    objective: "Create comprehensive project documentation for portfolio",
+                    deliverable: "Complete Project Portfolio Package",
+                    portfolioConnection: "Evidence for all competency areas",
+                    tasks: [
+                      "Compile all project materials into organized portfolio section",
+                      "Create project summary highlighting key achievements",
+                      "Document competencies demonstrated throughout project",
+                      "Gather testimonials from team members/stakeholders",
+                      "Prepare visual materials (charts, before/after photos, etc.)",
+                      "Write reflection on personal development and learning"
+                    ]
+                  },
+                  {
+                    id: 9,
+                    title: "Final Presentation Preparation",
+                    time: "1 week",
+                    type: "Presentation Development",
+                    objective: "Prepare compelling presentation for EYW Committee",
+                    deliverable: "Final Presentation Deck + Speaker Notes",
+                    portfolioConnection: "Leadership & Communication evidence",
+                    tasks: [
+                      "Create presentation slides following EYW template",
+                      "Structure narrative: Challenge → Solution → Results → Learning",
+                      "Include quantified business impact and ROI",
+                      "Prepare for potential committee questions",
+                      "Practice presentation delivery",
+                      "Gather any final supporting materials"
+                    ]
+                  },
+                  {
+                    id: 10,
+                    title: "EYW Committee Presentation",
+                    time: "1-2 hours",
+                    type: "Formal Presentation + Assessment",
+                    objective: "Present project results and demonstrate readiness for advancement",
+                    deliverable: "Completed Presentation + Committee Evaluation",
+                    portfolioConnection: "Culmination of all competency evidence",
+                    tasks: [
+                      "Deliver 15-20 minute presentation to EYW Committee",
+                      "Present project challenge, approach, and business results",
+                      "Demonstrate competencies developed and applied",
+                      "Share key learnings and insights gained",
+                      "Answer committee questions about project and development",
+                      "Receive feedback and advancement recommendation"
+                    ]
+                  }
+                ].map((subtask) => (
+                  <div key={subtask.id} className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow duration-200">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center space-x-3">
+                        <div className="flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-600 font-bold text-sm rounded-full">
+                          {subtask.id}
+                        </div>
+                        <div>
+                          <h5 className="font-semibold text-gray-900">{subtask.title}</h5>
+                          <div className="flex items-center space-x-4 mt-1">
+                            <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">⏱️ {subtask.time}</span>
+                            <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">📋 {subtask.type}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <p className="text-sm text-gray-700 font-medium">🎯 <strong>Objective:</strong> {subtask.objective}</p>
+                      
+                      <div>
+                        <p className="text-sm font-medium text-gray-900 mb-2">📝 Tasks:</p>
+                        <ul className="space-y-1">
+                          {subtask.tasks.map((task, index) => (
+                            <li key={index} className="text-xs text-gray-600 flex items-start">
+                              <span className="text-blue-500 mr-2">•</span>
+                              <span>{task}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                        <div>
+                          <p className="text-xs text-gray-500">📦 <strong>Deliverable:</strong> {subtask.deliverable}</p>
+                          <p className="text-xs text-blue-600 mt-1">🎯 <strong>Portfolio:</strong> {subtask.portfolioConnection}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Success Criteria & Project Examples */}
+              <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Success Criteria */}
+                <div className="bg-green-50 rounded-lg p-5 border border-green-200">
+                  <h4 className="font-semibold text-green-900 mb-3">✅ Success Criteria for Advancement</h4>
+                  <ul className="space-y-2">
+                    {[
+                      "Business Impact: Demonstrated measurable improvement to property operations",
+                      "Competency Integration: Evidence of applying all core competency areas", 
+                      "Leadership Growth: Clear examples of leading through influence and collaboration",
+                      "Financial Acumen: Understanding and quantification of business impact",
+                      "Learning Mindset: Thoughtful reflection on challenges and growth opportunities",
+                      "Presentation Quality: Professional delivery with compelling storytelling"
+                    ].map((criteria, index) => (
+                      <li key={index} className="text-sm text-green-800 flex items-start">
+                        <span className="text-green-500 mr-2 mt-0.5">✓</span>
+                        <span>{criteria}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Project Examples */}
+                <div className="bg-yellow-50 rounded-lg p-5 border border-yellow-200">
+                  <h4 className="font-semibold text-yellow-900 mb-3">💡 Project Examples (Navigator Level)</h4>
+                  <p className="text-sm text-yellow-800 mb-3">Previous Navigator projects have included:</p>
+                  <ul className="space-y-2">
+                    {[
+                      "Cross-departmental workflow optimization reducing unit turn time by 20%",
+                      "Resident retention program increasing renewal rates by 8%",
+                      "Preventative maintenance scheduling system reducing emergency work orders by 25%",
+                      "Team training program improving customer service scores by 15%",
+                      "Cost reduction initiative saving $12,000 annually while maintaining quality"
+                    ].map((example, index) => (
+                      <li key={index} className="text-sm text-yellow-800 flex items-start">
+                        <span className="text-yellow-500 mr-2">💡</span>
+                        <span>{example}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-xs text-yellow-700 mt-3 font-medium italic">
+                    Remember: The best projects address real property challenges while allowing you to demonstrate growth in all competency areas!
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Task Modal */}
