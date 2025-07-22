@@ -295,6 +295,21 @@ frontend:
         - agent: "testing"
         - comment: "✅ VERIFIED: Admin analytics UI working perfectly! Successfully displays comprehensive analytics dashboard with: 1) Tasks by Type breakdown (Document Upload: 3, Shadowing: 2, Course Link: 3, Project: 1, Assessment: 1), 2) Tasks by Competency distribution (Strategic Thinking: 1, Cross Functional: 1, Operational Management: 2, Financial Management: 3, Leadership Supervision: 3), 3) User Progress Distribution showing all users with detailed progress tracking, 4) Platform Summary with key metrics (39 total users, 10 tasks, 2 completions, 0.51% completion rate). All analytics data properly calculated and visualized."
 
+  - task: "Culminating Project Task Display Fix"
+    implemented: false
+    working: false
+    file: "frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+        - agent: "user"
+        - comment: "User reported 'undefined' text appearing where descriptors should be in Culminating Project sections (like 'Stakeholder Alignment and Kickoff')"
+        - working: false
+        - agent: "main"
+        - comment: "Identified root cause: TaskModal component trying to display task.description but culminating project tasks use task.objective instead. Need to modify TaskModal to handle different data structures for regular vs culminating project tasks."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
