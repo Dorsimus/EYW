@@ -2605,7 +2605,9 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                       {(isTaskComplete(task.id) || task.completed) && <span className="text-green-600 text-sm font-medium">✓ Completed</span>}
                     </div>
                     
-                    <p className="text-sm text-gray-600 mb-3">{String(task.description)}</p>
+                    <p className="text-sm text-gray-600 mb-3">
+                      {String(task.description || task.objective || 'No description available')}
+                    </p>
                     
                     {task.instructions && (
                       <div className="bg-blue-50 p-3 rounded mb-3">
