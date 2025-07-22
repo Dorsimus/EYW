@@ -2294,6 +2294,131 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
           onCompleteTask={onCompleteTask}
         />
       )}
+
+      {/* Culminating Project Task Completion Modal */}
+      {selectedCulminatingTask && (
+        <CulminatingTaskCompletionModal
+          taskId={selectedCulminatingTask}
+          onComplete={handleCompleteCulminatingTask}
+          onClose={() => setSelectedCulminatingTask(null)}
+        />
+      )}
+    </div>
+  );
+};
+
+// Culminating Project Task Completion Modal
+const CulminatingTaskCompletionModal = ({ taskId, onComplete, onClose }) => {
+  const [evidenceDescription, setEvidenceDescription] = useState('');
+  const [evidenceFile, setEvidenceFile] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const taskNames = {
+    1: "Opportunity Identification & Analysis",
+    2: "Project Selection & Business Case Development", 
+    3: "Manager Review & Project Approval",
+    4: "Detailed Project Planning",
+    5: "Stakeholder Alignment & Kickoff",
+    6: "Project Execution & Management",
+    7: "Results Measurement & Analysis",
+    8: "Project Documentation & Portfolio Development",
+    9: "Final Presentation Preparation",
+    10: "EYW Committee Presentation"
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      await onComplete(taskId, evidenceDescription, evidenceFile);
+      onClose();
+    } catch (error) {
+      console.error('Error completing task:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-60"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-white rounded-lg max-w-md w-full mx-4"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="p-6">
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="flex items-center justify-center w-10 h-10 bg-red-100 text-red-600 font-bold rounded-full">
+              🏆
+            </div>
+            <div>
+              <h4 className="text-lg font-medium text-gray-900">Complete Subtask {taskId}</h4>
+              <p className="text-sm text-gray-600">{taskNames[taskId]}</p>
+            </div>
+          </div>
+          
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Project Notes & Evidence Description
+              </label>
+              <textarea
+                value={evidenceDescription}
+                onChange={(e) => setEvidenceDescription(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                rows="4"
+                placeholder="Describe your progress, key outcomes, lessons learned, or attach relevant documentation..."
+                required
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Supporting Documentation (Optional)
+              </label>
+              <input
+                type="file"
+                onChange={(e) => setEvidenceFile(e.target.files[0])}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Upload project deliverables, screenshots, reports, or other evidence
+              </p>
+            </div>
+            
+            <div className="flex justify-end space-x-3 pt-4 border-t">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white rounded-md flex items-center space-x-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="animate-spin">⏳</span>
+                    <span>Completing...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>✅</span>
+                    <span>Mark Complete</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
