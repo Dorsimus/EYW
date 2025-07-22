@@ -108,6 +108,14 @@ const App = () => {
       setLoading(true);
       console.log('Loading set to true');
       
+      // Configure axios with timeout for this request
+      const axiosConfig = {
+        timeout: 10000, // 10 second timeout
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      
       // Try to get existing user from localStorage first
       let storedUserId = getStoredUserId();
       console.log('Stored user ID:', storedUserId);
@@ -116,11 +124,11 @@ const App = () => {
       if (storedUserId) {
         try {
           console.log('Trying to get existing user...');
-          const response = await axios.get(`${API}/users/${storedUserId}`);
+          const response = await axios.get(`${API}/users/${storedUserId}`, axiosConfig);
           userData = response.data;
           console.log('Found existing user:', userData);
         } catch (error) {
-          console.log('Stored user not found, creating new one');
+          console.log('Stored user not found, creating new one. Error:', error.message);
           // Stored user doesn't exist anymore, clear localStorage
           localStorage.removeItem('demo_user_id');
           storedUserId = null;
@@ -130,22 +138,25 @@ const App = () => {
       // If no stored user or stored user doesn't exist, create new one
       if (!userData) {
         console.log('Creating new user...');
-        const createResponse = await axios.post(`${API}/users`, {
+        const userPayload = {
           email: "demo@earnwings.com",
           name: "Demo Navigator",
           role: "participant",
           level: "navigator"
-        });
+        };
+        console.log('User payload:', userPayload);
+        
+        const createResponse = await axios.post(`${API}/users`, userPayload, axiosConfig);
         userData = createResponse.data;
         console.log('Created new user:', userData);
         setStoredUserId(userData.id);
         
         // Seed sample tasks for demo
         try {
-          await axios.post(`${API}/admin/seed-tasks`);
+          await axios.post(`${API}/admin/seed-tasks`, {}, axiosConfig);
           console.log('Sample tasks seeded');
         } catch (e) {
-          console.log('Tasks already seeded or error:', e);
+          console.log('Tasks already seeded or error:', e.message);
         }
       }
       
@@ -155,6 +166,9 @@ const App = () => {
       console.log('User initialization completed successfully');
     } catch (error) {
       console.error('Error initializing user:', error);
+      console.error('Full error:', error);
+      // Set loading to false even on error
+      setLoading(false);
     } finally {
       console.log('Setting loading to false...');
       setLoading(false);
