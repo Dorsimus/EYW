@@ -1794,10 +1794,47 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
 const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, competencyTasks, onCompleteTask }) => {
   const [expandedArea, setExpandedArea] = useState(null);
   const [taskModal, setTaskModal] = useState(null);
+  const [selectedCulminatingTask, setSelectedCulminatingTask] = useState(null);
+  const [culminatingProgress, setCulminatingProgress] = useState(() => {
+    // Initialize from localStorage or default to empty
+    const saved = localStorage.getItem('culminating_project_progress');
+    return saved ? JSON.parse(saved) : {};
+  });
 
   const handleViewTasks = (areaKey, subKey) => {
     onViewTasks(areaKey, subKey);
     setTaskModal({ area: areaKey, sub: subKey });
+  };
+
+  const handleCompleteCulminatingTask = async (taskId, evidenceDescription = "", file = null) => {
+    try {
+      // Mark task as complete
+      const updatedProgress = {
+        ...culminatingProgress,
+        [taskId]: {
+          completed: true,
+          completedAt: new Date().toISOString(),
+          evidenceDescription,
+          file: file ? file.name : null
+        }
+      };
+      
+      setCulminatingProgress(updatedProgress);
+      localStorage.setItem('culminating_project_progress', JSON.stringify(updatedProgress));
+      setSelectedCulminatingTask(null);
+      
+      console.log(`Culminating project task ${taskId} marked complete`);
+    } catch (error) {
+      console.error('Error completing culminating task:', error);
+    }
+  };
+
+  const getCompletedCulminatingTasks = () => {
+    return Object.values(culminatingProgress).filter(task => task.completed).length;
+  };
+
+  const isCulminatingTaskComplete = (taskId) => {
+    return culminatingProgress[taskId]?.completed || false;
   };
 
   return (
