@@ -520,8 +520,8 @@ class TaskCompetencyAPITester:
         return success, response
 
 def main():
-    print("🚀 Starting COMPREHENSIVE Admin System API Tests")
-    print("=" * 60)
+    print("🚀 Starting COMPREHENSIVE Backend API Tests - FOCUS: User Creation Hanging Issue")
+    print("=" * 80)
     
     tester = TaskCompetencyAPITester()
     
@@ -530,16 +530,27 @@ def main():
     
     # 1. Basic setup tests
     tester.test_root_endpoint()
-    tester.test_create_user()
+    
+    # 2. HIGH PRIORITY - User Creation API Testing (Main Issue)
+    print("\n🔥 HIGH PRIORITY - User Creation API Tests (Frontend Hanging Issue):")
+    tester.test_create_user_frontend_format()  # Exact frontend format
+    tester.test_create_user_variations()       # Different payload variations
+    tester.test_create_user()                  # Legacy test
     tester.test_get_user()
     
-    # 2. PRIORITY TESTS - Admin Authentication System
-    print("\n🔐 PRIORITY TESTS - Admin Authentication System:")
+    # 3. HIGH PRIORITY - User Data Loading Endpoints
+    print("\n📊 HIGH PRIORITY - User Data Loading Tests:")
+    tester.test_get_user_competencies()        # GET /api/users/{id}/competencies
+    tester.test_portfolio_operations()         # GET /api/users/{id}/portfolio
+    
+    # 4. MEDIUM PRIORITY - Admin Seed Tasks
+    print("\n🌱 MEDIUM PRIORITY - Admin Seed Tasks:")
     tester.test_create_admin_user()  # Create admin if doesn't exist
     tester.test_admin_login()        # POST /api/admin/login
+    tester.test_seed_sample_tasks()  # POST /api/admin/seed-tasks
     
-    # 3. PRIORITY TESTS - Admin API Endpoints (require authentication)
-    print("\n🎯 PRIORITY TESTS - Admin Management APIs:")
+    # 5. LOW PRIORITY - Admin API Verification
+    print("\n🔐 LOW PRIORITY - Admin API Verification:")
     tester.test_admin_stats()        # GET /api/admin/stats
     tester.test_admin_get_all_tasks()  # GET /api/admin/tasks
     tester.test_admin_get_all_users()  # GET /api/admin/users
@@ -547,27 +558,36 @@ def main():
     tester.test_admin_update_task()    # PUT /api/admin/tasks/{id}
     tester.test_admin_delete_task()    # DELETE /api/admin/tasks/{id}
     
-    # 4. PRIORITY TESTS - Task Management System (User Side)
-    print("\n📚 PRIORITY TESTS - Task Management System:")
-    tester.test_seed_sample_tasks()  # POST /api/admin/seed-tasks
+    # 6. Additional Task Management Tests
+    print("\n📚 Additional Task Management Tests:")
     tester.test_get_all_tasks()      # GET /api/tasks
     tester.test_get_user_tasks_for_competency()  # GET /api/users/{id}/tasks/{area}/{sub}
     tester.test_complete_task()      # POST /api/users/{id}/task-completions
-    tester.test_get_user_competencies()  # GET /api/users/{id}/competencies
     
-    # 5. Additional API tests
+    # 7. Additional API tests
     print("\n📊 Additional API Tests:")
     tester.test_get_competency_framework()
     tester.test_get_tasks_for_competency()
     tester.test_get_user_task_completions()
-    tester.test_portfolio_operations()
     
     # Print final results
-    print("\n" + "=" * 60)
+    print("\n" + "=" * 80)
     print(f"📊 FINAL TEST RESULTS:")
     print(f"   Tests Run: {tester.tests_run}")
     print(f"   Tests Passed: {tester.tests_passed}")
     print(f"   Success Rate: {(tester.tests_passed/tester.tests_run)*100:.1f}%")
+    
+    # Specific analysis for user creation hanging issue
+    print(f"\n🔍 USER CREATION ANALYSIS:")
+    if tester.user_id:
+        print(f"✅ User creation working - User ID: {tester.user_id}")
+        print(f"   Frontend hanging issue may be related to:")
+        print(f"   - Network/proxy issues between frontend and backend")
+        print(f"   - Frontend timeout settings")
+        print(f"   - React.StrictMode double initialization")
+        print(f"   - CORS preflight request handling")
+    else:
+        print(f"❌ User creation failed - This explains frontend hanging")
     
     # Detailed admin test results
     if tester.admin_token:
@@ -578,7 +598,8 @@ def main():
         print(f"   Admin functionality could not be tested")
     
     if tester.tests_passed == tester.tests_run:
-        print("🎉 ALL TESTS PASSED! Complete Admin System is working correctly.")
+        print("🎉 ALL TESTS PASSED! Backend APIs are working correctly.")
+        print("   If frontend still hangs, issue is likely in frontend/network layer.")
         return 0
     else:
         failed_tests = tester.tests_run - tester.tests_passed
