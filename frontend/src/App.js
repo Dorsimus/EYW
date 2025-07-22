@@ -2208,6 +2208,25 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                           <p className="text-xs text-blue-600 mt-1">🎯 <strong>Portfolio:</strong> {subtask.portfolioConnection}</p>
                         </div>
                       </div>
+
+                      {/* Completion Information */}
+                      {isCulminatingTaskComplete(subtask.id) && culminatingProgress[subtask.id] && (
+                        <div className="mt-3 pt-3 border-t border-green-200 bg-green-25">
+                          <p className="text-sm text-green-700 font-medium">
+                            ✅ <strong>Completed:</strong> {new Date(culminatingProgress[subtask.id].completedAt).toLocaleDateString()}
+                          </p>
+                          {culminatingProgress[subtask.id].evidenceDescription && (
+                            <p className="text-sm text-green-700 mt-1">
+                              <strong>Notes:</strong> {culminatingProgress[subtask.id].evidenceDescription}
+                            </p>
+                          )}
+                          {culminatingProgress[subtask.id].file && (
+                            <p className="text-sm text-green-700 mt-1">
+                              <strong>File:</strong> {culminatingProgress[subtask.id].file}
+                            </p>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
