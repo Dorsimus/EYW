@@ -2645,7 +2645,9 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                     )}
                     
                     <div className="flex items-center space-x-4 text-sm text-gray-500">
-                      {task.estimated_hours && <span>⏱️ {task.estimated_hours}h</span>}
+                      {(task.estimated_hours || task.time) && (
+                        <span>⏱️ {task.estimated_hours ? `${task.estimated_hours}h` : task.time}</span>
+                      )}
                       {task.required && <span className="text-red-600">* Required</span>}
                     </div>
                     
