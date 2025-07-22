@@ -54,18 +54,23 @@ const App = () => {
     { area: 'strategic_thinking', subs: ['market_awareness', 'trend_identification', 'opportunity_recognition', 'problem_anticipation', 'longterm_planning', 'change_leadership', 'stakeholder_management', 'project_management', 'innovation_adoption', 'continuous_improvement'] }
   ];
 
-  // Initialize user on component mount
+  // Initialize user on component mount only
   useEffect(() => {
-    initializeUser();
+    // Only initialize if we don't have an admin token
+    if (!adminToken) {
+      initializeUser();
+    }
   }, []);
 
-  // Handle admin token changes
+  // Handle admin token changes separately  
   useEffect(() => {
     if (adminToken) {
       setIsAdmin(true);
+      setLoading(true);
       loadAdminData();
     } else {
       setIsAdmin(false);
+      // Don't call initializeUser here - it should only run once on mount
     }
   }, [adminToken]);
 
