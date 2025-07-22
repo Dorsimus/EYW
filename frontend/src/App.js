@@ -1837,6 +1837,208 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
     return culminatingProgress[taskId]?.completed || false;
   };
 
+  const getPhaseProgress = (phase) => {
+    const phaseTaskIds = {
+      planning: [1, 2, 3, 4],
+      execution: [5, 6, 7], 
+      completion: [8, 9, 10]
+    };
+    
+    const taskIds = phaseTaskIds[phase] || [];
+    const completed = taskIds.filter(id => isCulminatingTaskComplete(id)).length;
+    return completed;
+  };
+
+  // Define the culminating project tasks data
+  const culminatingProjectTasks = {
+    planning_phase: {
+      name: "Planning Phase",
+      description: "Identify opportunities and develop business case",
+      tasks: [
+        {
+          id: 1,
+          title: "Opportunity Identification & Analysis",
+          time: "1-2 weeks",
+          type: "Analysis + Documentation",
+          objective: "Identify and analyze potential improvement opportunities at your property",
+          deliverable: "Opportunity Analysis Report (2-3 pages)",
+          portfolioConnection: "Strategic Thinking evidence",
+          tasks: [
+            "Conduct property walkthrough and operations assessment",
+            "Review property performance data (financial, operational, resident satisfaction)",
+            "Interview team members from both leasing and maintenance departments",
+            "Identify 3-5 potential improvement opportunities",
+            "Document findings in Opportunity Analysis Template"
+          ]
+        },
+        {
+          id: 2,
+          title: "Project Selection & Business Case Development", 
+          time: "1 week",
+          type: "Strategic Planning + Financial Analysis",
+          objective: "Select one opportunity and build compelling business case",
+          deliverable: "Business Case Proposal (3-4 pages)",
+          portfolioConnection: "Financial Management + Strategic Thinking evidence",
+          tasks: [
+            "Evaluate opportunities against impact/effort matrix",
+            "Select primary project focus",
+            "Calculate current state costs/inefficiencies",
+            "Estimate potential ROI and timeline for results",
+            "Define success metrics and measurement plan",
+            "Create preliminary resource requirements"
+          ]
+        },
+        {
+          id: 3,
+          title: "Manager Review & Project Approval",
+          time: "3-5 days", 
+          type: "Presentation + Approval Gate",
+          objective: "Present business case and gain manager approval to proceed",
+          deliverable: "Signed Project Approval Form + Revised Scope (if applicable)",
+          portfolioConnection: "Leadership & Communication evidence",
+          tasks: [
+            "Schedule approval meeting with direct manager",
+            "Present business case with clear ROI and success metrics",
+            "Address manager questions and concerns",
+            "Incorporate feedback and adjust scope if needed",
+            "Obtain formal written approval to proceed"
+          ]
+        },
+        {
+          id: 4,
+          title: "Detailed Project Planning",
+          time: "1 week",
+          type: "Project Management + Stakeholder Planning", 
+          objective: "Create comprehensive execution plan",
+          deliverable: "Complete Project Plan Document",
+          portfolioConnection: "Operational Management evidence",
+          tasks: [
+            "Develop detailed project timeline with milestones",
+            "Identify all stakeholders and their roles/responsibilities",
+            "Create communication plan and meeting schedule",
+            "Define resource requirements and budget (if applicable)",
+            "Identify potential risks and mitigation strategies",
+            "Create implementation checklist"
+          ]
+        }
+      ]
+    },
+    execution_phase: {
+      name: "Execution Phase", 
+      description: "Implement project and measure results",
+      tasks: [
+        {
+          id: 5,
+          title: "Stakeholder Alignment & Kickoff",
+          time: "3-5 days",
+          type: "Meeting + Communication",
+          objective: "Align all stakeholders and officially launch project", 
+          deliverable: "Kickoff Meeting Notes + Stakeholder Commitment Documentation",
+          portfolioConnection: "Cross-Functional Collaboration evidence",
+          tasks: [
+            "Schedule and conduct project kickoff meeting",
+            "Present project plan to all involved team members",
+            "Confirm roles, responsibilities, and timeline commitments",
+            "Address questions and concerns from team members", 
+            "Document agreements and next steps",
+            "Send kickoff summary to all participants"
+          ]
+        },
+        {
+          id: 6,
+          title: "Project Execution & Management",
+          time: "6-8 weeks",
+          type: "Implementation + Ongoing Management",
+          objective: "Execute project plan while managing progress and obstacles",
+          deliverable: "Weekly Progress Reports + Implementation Documentation",
+          portfolioConnection: "Leadership & Supervision + Operational Management evidence",
+          tasks: [
+            "Implement project activities according to timeline",
+            "Conduct regular check-ins with team members",
+            "Monitor progress against success metrics",
+            "Document challenges and solutions",
+            "Adjust approach as needed while staying true to objectives",
+            "Maintain regular communication with manager/mentor"
+          ]
+        },
+        {
+          id: 7,
+          title: "Results Measurement & Analysis",
+          time: "1 week",
+          type: "Data Analysis + Impact Assessment",
+          objective: "Measure and analyze project outcomes against original goals",
+          deliverable: "Results Analysis Report with quantified impact",
+          portfolioConnection: "Financial Management + Strategic Thinking evidence",
+          tasks: [
+            "Collect data on all defined success metrics",
+            "Compare results to baseline/target performance",
+            "Calculate actual ROI and business impact",
+            "Gather qualitative feedback from team members and residents (if applicable)",
+            "Document lessons learned and unexpected outcomes",
+            "Identify opportunities for further improvement"
+          ]
+        }
+      ]
+    },
+    completion_phase: {
+      name: "Completion Phase",
+      description: "Document results and present to committee", 
+      tasks: [
+        {
+          id: 8,
+          title: "Project Documentation & Portfolio Development",
+          time: "3-5 days",
+          type: "Documentation + Portfolio Building",
+          objective: "Create comprehensive project documentation for portfolio",
+          deliverable: "Complete Project Portfolio Package",
+          portfolioConnection: "Evidence for all competency areas",
+          tasks: [
+            "Compile all project materials into organized portfolio section",
+            "Create project summary highlighting key achievements",
+            "Document competencies demonstrated throughout project",
+            "Gather testimonials from team members/stakeholders",
+            "Prepare visual materials (charts, before/after photos, etc.)",
+            "Write reflection on personal development and learning"
+          ]
+        },
+        {
+          id: 9,
+          title: "Final Presentation Preparation",
+          time: "1 week",
+          type: "Presentation Development",
+          objective: "Prepare compelling presentation for EYW Committee",
+          deliverable: "Final Presentation Deck + Speaker Notes",
+          portfolioConnection: "Leadership & Communication evidence",
+          tasks: [
+            "Create presentation slides following EYW template",
+            "Structure narrative: Challenge → Solution → Results → Learning",
+            "Include quantified business impact and ROI",
+            "Prepare for potential committee questions",
+            "Practice presentation delivery",
+            "Gather any final supporting materials"
+          ]
+        },
+        {
+          id: 10,
+          title: "EYW Committee Presentation",
+          time: "1-2 hours",
+          type: "Formal Presentation + Assessment",
+          objective: "Present project results and demonstrate readiness for advancement",
+          deliverable: "Completed Presentation + Committee Evaluation",
+          portfolioConnection: "Culmination of all competency evidence",
+          tasks: [
+            "Deliver 15-20 minute presentation to EYW Committee",
+            "Present project challenge, approach, and business results",
+            "Demonstrate competencies developed and applied",
+            "Share key learnings and insights gained",
+            "Answer committee questions about project and development",
+            "Receive feedback and advancement recommendation"
+          ]
+        }
+      ]
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="text-center">
