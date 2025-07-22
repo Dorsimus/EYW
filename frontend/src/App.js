@@ -55,32 +55,23 @@ const App = () => {
     { area: 'strategic_thinking', subs: ['market_awareness', 'trend_identification', 'opportunity_recognition', 'problem_anticipation', 'longterm_planning', 'change_leadership', 'stakeholder_management', 'project_management', 'innovation_adoption', 'continuous_improvement'] }
   ];
 
-  // TEMPORARY FIX: Skip user initialization and use demo data for UI testing
+  // Initialize user on component mount
   useEffect(() => {
-    console.log('Setting demo data for UI testing...');
-    setLoading(false); // Skip loading state
-    
-    // Set demo user data
-    setUser({
-      id: "demo-user-123",
-      email: "demo@earnwings.com", 
-      name: "Demo Navigator",
-      role: "participant",
-      level: "navigator"
-    });
-    
-    // Set demo competencies
-    setCompetencies({
-      leadership_supervision: { completion_percentage: 0, completed_tasks: 0, total_tasks: 3 },
-      financial_management: { completion_percentage: 0, completed_tasks: 0, total_tasks: 3 },
-      operational_management: { completion_percentage: 0, completed_tasks: 0, total_tasks: 2 },
-      cross_functional_collaboration: { completion_percentage: 0, completed_tasks: 0, total_tasks: 1 },
-      strategic_thinking: { completion_percentage: 0, completed_tasks: 0, total_tasks: 1 }
-    });
-    
-    // Set empty portfolio
-    setPortfolio([]);
+    console.log('Starting app initialization...');
+    if (!adminToken) {
+      initializeUser();
+    }
   }, []);
+
+  // Handle admin token changes separately  
+  useEffect(() => {
+    if (adminToken) {
+      setIsAdmin(true);
+      loadAdminData();
+    } else {
+      setIsAdmin(false);
+    }
+  }, [adminToken]);
 
   const loadAdminData = async () => {
     try {
