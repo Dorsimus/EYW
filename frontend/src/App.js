@@ -55,23 +55,32 @@ const App = () => {
     { area: 'strategic_thinking', subs: ['market_awareness', 'trend_identification', 'opportunity_recognition', 'problem_anticipation', 'longterm_planning', 'change_leadership', 'stakeholder_management', 'project_management', 'innovation_adoption', 'continuous_improvement'] }
   ];
 
-  // Initialize user on component mount only
+  // Initialize user on component mount only (prevent double init in StrictMode)
   useEffect(() => {
-    // Only initialize if we don't have an admin token
-    if (!adminToken) {
+    if (!adminToken && !isInitialized) {
+      console.log('Initializing user for first time...');
+      setIsInitialized(true);
       initializeUser();
+    } else if (adminToken && !isInitialized) {
+      console.log('Initializing admin for first time...');
+      setIsInitialized(true);
+      setIsAdmin(true);
+      setLoading(true);
+      loadAdminData();
     }
   }, []);
 
   // Handle admin token changes separately  
   useEffect(() => {
-    if (adminToken) {
+    if (adminToken && isInitialized) {
+      console.log('Admin token changed, loading admin data...');
       setIsAdmin(true);
       setLoading(true);
       loadAdminData();
-    } else {
+    } else if (!adminToken && isInitialized) {
+      console.log('Admin token removed, switching to user mode...');
       setIsAdmin(false);
-      // Don't call initializeUser here - it should only run once on mount
+      // Don't re-initialize user if already initialized
     }
   }, [adminToken]);
 
