@@ -2449,7 +2449,7 @@ const PortfolioView = ({ portfolio, setCurrentView }) => {
 };
 
 // Add Portfolio View Component
-const AddPortfolioView = ({ portfolioItem, setPortfolioItem, onSubmit, competencies }) => {
+const AddPortfolioView = ({ portfolioItem, setPortfolioItem, onSubmit, competencies, setCurrentView }) => {
   const competencyOptions = Object.entries(competencies).map(([key, data]) => ({
     value: key,
     label: data.name
