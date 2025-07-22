@@ -1074,7 +1074,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                               {typeof subData === 'string' ? subData : (subData?.name || subKey)}
                             </div>
                           </div>
-                          <div className="text-sm text-gray-600 ml-5">
+                          <div className="text-sm ml-5" style={{color: '#333333'}}>
                             {(subData?.completed_tasks || 0)}/{(subData?.total_tasks || 0)} tasks • {Math.round(subData?.progress_percentage || 0)}% complete
                           </div>
                         </div>
