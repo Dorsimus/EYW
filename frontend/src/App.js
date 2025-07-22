@@ -723,12 +723,13 @@ const App = () => {
           
           {/* REDSTONE NAVIGATION */}
           <nav className="flex space-x-3 flex-wrap">
-            {[
+            {/* REGULAR USER NAVIGATION */}
+            {!isAdmin && [
               { key: 'dashboard', label: 'Dashboard', icon: '📊' },
               { key: 'competencies', label: 'Competencies', icon: '🎯' },
               { key: 'portfolio', label: 'Portfolio', icon: '📁' },
               { key: 'add-portfolio', label: '', icon: '➕' }
-            ].filter(tab => !isAdmin || ['dashboard'].includes(tab.key)).map((tab) => (
+            ].map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setCurrentView(tab.key)}
@@ -745,7 +746,7 @@ const App = () => {
               </button>
             ))}
             
-            {/* ADMIN NAVIGATION */}
+            {/* ADMIN NAVIGATION - FIXED: Only one dashboard */}
             {isAdmin && [
               { key: 'admin-dashboard', label: 'Dashboard', icon: '🎛️' },
               { key: 'admin-tasks', label: 'Tasks', icon: '⚙️' },
