@@ -14,8 +14,8 @@ class TaskCompetencyAPITester:
         self.admin_token = None
         self.admin_user = None
 
-    def run_test(self, name, method, endpoint, expected_status, data=None, files=None, auth_required=False):
-        """Run a single API test"""
+    def run_test(self, name, method, endpoint, expected_status, data=None, files=None, auth_required=False, timeout=30):
+        """Run a single API test with timeout and detailed response analysis"""
         url = f"{self.api_url}/{endpoint}"
         headers = {'Content-Type': 'application/json'} if not files else {}
         
@@ -29,21 +29,34 @@ class TaskCompetencyAPITester:
         if auth_required:
             print(f"   Auth: {'✅ Token provided' if self.admin_token else '❌ No token'}")
         
+        start_time = time.time()
         try:
             if method == 'GET':
-                response = requests.get(url, headers=headers)
+                response = requests.get(url, headers=headers, timeout=timeout)
             elif method == 'POST':
                 if files:
                     # Remove Content-Type for multipart/form-data
                     if 'Content-Type' in headers:
                         del headers['Content-Type']
-                    response = requests.post(url, data=data, files=files, headers=headers)
+                    response = requests.post(url, data=data, files=files, headers=headers, timeout=timeout)
                 else:
-                    response = requests.post(url, json=data, headers=headers)
+                    response = requests.post(url, json=data, headers=headers, timeout=timeout)
             elif method == 'PUT':
-                response = requests.put(url, json=data, headers=headers)
+                response = requests.put(url, json=data, headers=headers, timeout=timeout)
             elif method == 'DELETE':
-                response = requests.delete(url, headers=headers)
+                response = requests.delete(url, headers=headers, timeout=timeout)
+
+            response_time = time.time() - start_time
+            print(f"   Response Time: {response_time:.2f}s")
+            
+            # Check CORS headers
+            cors_headers = {
+                'Access-Control-Allow-Origin': response.headers.get('Access-Control-Allow-Origin'),
+                'Access-Control-Allow-Methods': response.headers.get('Access-Control-Allow-Methods'),
+                'Access-Control-Allow-Headers': response.headers.get('Access-Control-Allow-Headers'),
+                'Access-Control-Allow-Credentials': response.headers.get('Access-Control-Allow-Credentials')
+            }
+            print(f"   CORS Headers: {cors_headers}")
 
             success = response.status_code == expected_status
             if success:
@@ -58,9 +71,15 @@ class TaskCompetencyAPITester:
                 print(f"   Response: {response.text[:200]}...")
                 return False, {}
 
+        except requests.exceptions.Timeout:
+            response_time = time.time() - start_time
+            print(f"❌ Failed - TIMEOUT after {response_time:.2f}s (limit: {timeout}s)")
+            print(f"   This could explain frontend hanging issues!")
+            return False, {"error": "timeout"}
         except Exception as e:
-            print(f"❌ Failed - Error: {str(e)}")
-            return False, {}
+            response_time = time.time() - start_time
+            print(f"❌ Failed - Error after {response_time:.2f}s: {str(e)}")
+            return False, {"error": str(e)}
 
     def test_root_endpoint(self):
         """Test root API endpoint"""
