@@ -207,10 +207,13 @@ const App = () => {
     console.log('Demo environment ready - can now fix text visibility issues');
   }, []);
 
-  // Handle admin token changes  
+  // Handle admin token changes - FIXED: Set proper admin view  
   useEffect(() => {
     if (adminToken) {
       setIsAdmin(true);
+      // Set admin dashboard as default view for admins
+      setCurrentView('admin-dashboard');
+      
       // Set demo admin data if we have a token
       if (!adminStats) {
         setAdminStats({
@@ -223,6 +226,8 @@ const App = () => {
       }
     } else {
       setIsAdmin(false);
+      // Return to regular dashboard when not admin
+      setCurrentView('dashboard');
     }
   }, [adminToken]);
 
