@@ -545,7 +545,7 @@ const App = () => {
                 </p>
                 <div className="flex items-center justify-end mt-1">
                   <div className="w-2 h-2 rounded-full mr-3" style={{backgroundColor: '#ff3443'}}></div>
-                  <p className="text-sm font-medium" style={{color: '#efefef'}}>
+                  <p className="text-sm font-medium text-gray-800">
                     {isAdmin ? 'Full Access' : `${getOverallProgress()}% Complete`}
                   </p>
                 </div>
