@@ -2550,6 +2550,17 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
       case 'shadowing': return '👥';
       case 'meeting': return '🤝';
       case 'project': return '🎯';
+      // Culminating project task types
+      case 'Analysis + Documentation': return '🔍';
+      case 'Strategic Planning + Financial Analysis': return '💰';
+      case 'Presentation + Approval Gate': return '🎤';
+      case 'Project Management + Stakeholder Planning': return '📋';
+      case 'Meeting + Communication': return '🤝';
+      case 'Implementation + Ongoing Management': return '⚙️';
+      case 'Data Analysis + Impact Assessment': return '📊';
+      case 'Documentation + Portfolio Building': return '📁';
+      case 'Presentation Development': return '📽️';
+      case 'Formal Presentation + Assessment': return '🏆';
       default: return '✅';
     }
   };
