@@ -85,18 +85,81 @@ class TaskCompetencyAPITester:
         """Test root API endpoint"""
         return self.run_test("Root API Endpoint", "GET", "", 200)
 
+    def test_create_user_frontend_format(self):
+        """Test user creation with EXACT frontend format - HIGH PRIORITY"""
+        # This is the exact payload format that frontend sends
+        user_data = {
+            "email": "demo@earnwings.com",
+            "name": "Demo Navigator", 
+            "role": "participant",
+            "level": "navigator"
+        }
+        print(f"   Testing with EXACT frontend payload: {json.dumps(user_data)}")
+        success, response = self.run_test("Create User (Frontend Format)", "POST", "users", 200, data=user_data, timeout=10)
+        if success and 'id' in response:
+            self.user_id = response['id']
+            print(f"   Created user with ID: {self.user_id}")
+        return success, response
+
+    def test_create_user_variations(self):
+        """Test user creation with different payload variations - HIGH PRIORITY"""
+        test_cases = [
+            {
+                "name": "Minimal Required Fields",
+                "data": {
+                    "email": f"minimal_{datetime.now().strftime('%H%M%S')}@earnwings.com",
+                    "name": "Minimal User"
+                }
+            },
+            {
+                "name": "All Fields Specified",
+                "data": {
+                    "email": f"full_{datetime.now().strftime('%H%M%S')}@earnwings.com",
+                    "name": "Full User",
+                    "role": "participant",
+                    "level": "navigator",
+                    "is_admin": False
+                }
+            },
+            {
+                "name": "Different Role",
+                "data": {
+                    "email": f"mentor_{datetime.now().strftime('%H%M%S')}@earnwings.com",
+                    "name": "Mentor User",
+                    "role": "mentor",
+                    "level": "navigator"
+                }
+            }
+        ]
+        
+        results = []
+        for test_case in test_cases:
+            print(f"\n   Testing: {test_case['name']}")
+            success, response = self.run_test(
+                f"Create User - {test_case['name']}", 
+                "POST", 
+                "users", 
+                200, 
+                data=test_case['data'],
+                timeout=10
+            )
+            results.append((test_case['name'], success, response))
+            
+        return results
+
     def test_create_user(self):
-        """Test user creation"""
+        """Test user creation - LEGACY TEST"""
         user_data = {
             "email": f"test_user_{datetime.now().strftime('%H%M%S')}@earnwings.com",
             "name": "Test Navigator",
             "role": "participant",
             "level": "navigator"
         }
-        success, response = self.run_test("Create User", "POST", "users", 200, data=user_data)
+        success, response = self.run_test("Create User (Legacy)", "POST", "users", 200, data=user_data)
         if success and 'id' in response:
-            self.user_id = response['id']
-            print(f"   Created user with ID: {self.user_id}")
+            if not self.user_id:  # Only set if not already set by frontend format test
+                self.user_id = response['id']
+                print(f"   Created user with ID: {self.user_id}")
         return success, response
 
     def test_get_user(self):
