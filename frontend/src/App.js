@@ -528,19 +528,19 @@ const App = () => {
 
   const adminLogin = async (email, password) => {
     try {
-      // DEMO ADMIN LOGIN - bypass API call for now
+      // DEMO ADMIN LOGIN - Enhanced persistence
       if (email === "admin@earnwings.com" && password === "admin123") {
-        console.log('Demo admin login successful');
+        console.log('Demo admin login successful - setting persistent state');
         
-        // Set demo admin token
-        const demoToken = "demo-admin-token-12345";
+        // Set demo admin token with timestamp
+        const demoToken = `demo-admin-token-${Date.now()}`;
         localStorage.setItem('admin_token', demoToken);
         setAdminToken(demoToken);
         setIsAdmin(true);
         setShowAdminLogin(false);
         setCurrentView('admin-dashboard');
         
-        // Set demo admin data
+        // Force set admin data immediately to ensure persistence
         setAdminStats({
           total_users: 45,
           total_tasks: 10,
@@ -549,8 +549,9 @@ const App = () => {
           active_competency_areas: 5
         });
         
-        // Set demo tasks for admin management
-        setAllTasks([
+        // Ensure all admin data is loaded
+        if (allTasks.length === 0) {
+          console.log('Loading admin tasks data...');
           {
             id: "task-1",
             title: "Team Leadership Workshop",
