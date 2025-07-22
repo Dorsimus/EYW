@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 
 class TaskCompetencyAPITester:
-    def __init__(self, base_url="https://46fc6863-0925-49d4-b7ee-1cce61881505.preview.emergentagent.com"):
+    def __init__(self, base_url="https://5147f857-4f97-4c89-8f4d-299bdabf21cc.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.tests_run = 0
