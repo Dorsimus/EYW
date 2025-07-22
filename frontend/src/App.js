@@ -2640,7 +2640,7 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                   )}
                 </div>
                 
-                {task.completed && task.completion_data && (
+                {(task.completed || isTaskComplete(task.id)) && task.completion_data && (
                   <div className="mt-3 pt-3 border-t border-green-200">
                     <p className="text-sm text-green-700">
                       <strong>Completed:</strong> {
