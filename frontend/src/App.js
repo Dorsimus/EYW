@@ -2615,6 +2615,35 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                       </div>
                     )}
                     
+                    {/* Additional info for culminating project tasks */}
+                    {isProjectPhase && (
+                      <div className="space-y-2 mb-3">
+                        {task.deliverable && (
+                          <div className="bg-green-50 p-3 rounded">
+                            <p className="text-sm text-green-800">📦 <strong>Deliverable:</strong> {String(task.deliverable)}</p>
+                          </div>
+                        )}
+                        {task.portfolioConnection && (
+                          <div className="bg-purple-50 p-3 rounded">
+                            <p className="text-sm text-purple-800">📂 <strong>Portfolio Connection:</strong> {String(task.portfolioConnection)}</p>
+                          </div>
+                        )}
+                        {task.tasks && task.tasks.length > 0 && (
+                          <div className="bg-gray-50 p-3 rounded">
+                            <p className="text-sm text-gray-800 font-medium mb-2">📋 Subtasks:</p>
+                            <ul className="text-sm text-gray-700 space-y-1">
+                              {task.tasks.map((subtask, index) => (
+                                <li key={index} className="flex items-start">
+                                  <span className="text-gray-400 mr-2">•</span>
+                                  {String(subtask)}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    
                     <div className="flex items-center space-x-4 text-sm text-gray-500">
                       {task.estimated_hours && <span>⏱️ {task.estimated_hours}h</span>}
                       {task.required && <span className="text-red-600">* Required</span>}
