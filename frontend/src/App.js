@@ -55,23 +55,159 @@ const App = () => {
     { area: 'strategic_thinking', subs: ['market_awareness', 'trend_identification', 'opportunity_recognition', 'problem_anticipation', 'longterm_planning', 'change_leadership', 'stakeholder_management', 'project_management', 'innovation_adoption', 'continuous_improvement'] }
   ];
 
-  // TEMPORARY BYPASS: Set demo data to allow UI testing and text visibility fixes
+  // BYPASS DEMO ENVIRONMENT: Set admin on page load if token exists
   useEffect(() => {
-    console.log('Setting up demo environment for UI fixes...');
+    console.log('Setting up demo environment...');
     
-    // Set demo user data
-    setUser({
-      id: "demo-user-123",
-      email: "demo@earnwings.com", 
-      name: "Demo Navigator",
-      role: "participant",
-      level: "navigator",
-      is_admin: false,
-      created_at: new Date().toISOString()
-    });
-    
-    // Set demo competencies with PROPER structure matching what UI expects
-    setCompetencies({
+    // Check if we have admin token
+    const existingToken = localStorage.getItem('admin_token');
+    if (existingToken) {
+      console.log('Found existing admin token, setting admin state...');
+      setIsAdmin(true);
+      setCurrentView('admin-dashboard');
+      
+      // Set all admin demo data
+      setAdminStats({
+        total_users: 45,
+        total_tasks: 10,
+        total_completions: 2,
+        completion_rate: 0.44,
+        active_competency_areas: 5
+      });
+      
+      setAllTasks([
+        {
+          id: "task-1",
+          title: "Team Leadership Workshop",
+          description: "Complete leadership training focused on team motivation",
+          task_type: "course_link",
+          competency_area: "leadership_supervision",
+          sub_competency: "team_motivation",
+          order: 1,
+          required: true,
+          estimated_hours: 2.0,
+          external_link: "https://example.com/leadership",
+          instructions: "Complete the online workshop and submit reflection",
+          active: true,
+          created_by: "admin-123"
+        },
+        {
+          id: "task-2", 
+          title: "Budget Analysis Project",
+          description: "Analyze quarterly budget variance and create improvement plan",
+          task_type: "project",
+          competency_area: "financial_management",
+          sub_competency: "budget_creation",
+          order: 1,
+          required: true,
+          estimated_hours: 4.0,
+          instructions: "Use provided template to analyze Q3 budget data",
+          active: true,
+          created_by: "admin-123"
+        },
+        {
+          id: "task-3",
+          title: "Delegation Skills Assessment", 
+          description: "Self-assessment on delegation effectiveness",
+          task_type: "assessment",
+          competency_area: "leadership_supervision",
+          sub_competency: "delegation",
+          order: 2,
+          required: false,
+          estimated_hours: 1.0,
+          instructions: "Complete self-evaluation form",
+          active: true,
+          created_by: "admin-123"
+        },
+        {
+          id: "task-4",
+          title: "Process Optimization Review",
+          description: "Review and optimize key operational workflows", 
+          task_type: "document_upload",
+          competency_area: "operational_management",
+          sub_competency: "workflow_optimization",
+          order: 1,
+          required: true,
+          estimated_hours: 3.0,
+          instructions: "Document current processes and suggest improvements",
+          active: true,
+          created_by: "admin-123"
+        },
+        {
+          id: "task-5",
+          title: "Stakeholder Communication Plan",
+          description: "Develop communication strategy for key stakeholders",
+          task_type: "project",
+          competency_area: "cross_functional_collaboration", 
+          sub_competency: "stakeholder_management",
+          order: 1,
+          required: true,
+          estimated_hours: 2.5,
+          instructions: "Create comprehensive stakeholder engagement plan",
+          active: true,
+          created_by: "admin-123"
+        }
+      ]);
+      
+      setAllUsers([
+        {
+          id: "user-1",
+          email: "john.doe@earnwings.com",
+          name: "John Doe",
+          role: "participant", 
+          level: "navigator",
+          completed_tasks: 2,
+          overall_progress: 20,
+          created_at: "2024-01-15T00:00:00Z"
+        },
+        {
+          id: "user-2",
+          email: "jane.smith@earnwings.com", 
+          name: "Jane Smith",
+          role: "participant",
+          level: "navigator",
+          completed_tasks: 1,
+          overall_progress: 10,
+          created_at: "2024-01-20T00:00:00Z"
+        },
+        {
+          id: "user-3",
+          email: "mike.johnson@earnwings.com",
+          name: "Mike Johnson", 
+          role: "mentor",
+          level: "navigator",
+          completed_tasks: 5,
+          overall_progress: 50,
+          created_at: "2024-01-10T00:00:00Z"
+        },
+        {
+          id: "user-4",
+          email: "demo@earnwings.com",
+          name: "Demo Navigator",
+          role: "participant",
+          level: "navigator", 
+          completed_tasks: 0,
+          overall_progress: 0,
+          created_at: "2024-01-25T00:00:00Z"
+        }
+      ]);
+      
+      setLoading(false);
+      console.log('Admin demo environment ready with 5 tasks and 4 users');
+    } else {
+      // Regular user demo data
+      setUser({
+        id: "demo-user-123",
+        email: "demo@earnwings.com", 
+        name: "Demo Navigator",
+        role: "participant",
+        level: "navigator",
+        is_admin: false,
+        created_at: new Date().toISOString()
+      });
+      
+      // Set demo competencies with PROPER structure matching what UI expects
+      setCompetencies({
       leadership_supervision: {
         name: "Leadership & Supervision",
         description: "Lead teams effectively and supervise staff performance",
