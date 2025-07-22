@@ -2554,8 +2554,8 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
         <div className="p-6 border-b border-gray-200">
           <div className="flex justify-between items-start">
             <div>
-              <h3 className="text-lg font-medium text-gray-900">Tasks for {competencyName}</h3>
-              <p className="text-sm text-gray-600 mt-1">Complete these tasks to build your competency</p>
+              <h3 className="text-lg font-medium text-gray-900">{getTitle()}</h3>
+              <p className="text-sm text-gray-600 mt-1">{getDescription()}</p>
             </div>
             <button
               onClick={onClose}
