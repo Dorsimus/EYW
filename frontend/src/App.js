@@ -2140,20 +2140,51 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                     ]
                   }
                 ].map((subtask) => (
-                  <div key={subtask.id} className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow duration-200">
+                  <div key={subtask.id} className={`border rounded-lg p-5 transition-all duration-200 ${
+                    isCulminatingTaskComplete(subtask.id) 
+                      ? 'bg-green-50 border-green-200 shadow-sm' 
+                      : 'bg-white border-gray-200 hover:shadow-md'
+                  }`}>
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center space-x-3">
-                        <div className="flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-600 font-bold text-sm rounded-full">
-                          {subtask.id}
+                        <div className={`flex items-center justify-center w-8 h-8 font-bold text-sm rounded-full ${
+                          isCulminatingTaskComplete(subtask.id)
+                            ? 'bg-green-100 text-green-600'
+                            : 'bg-blue-100 text-blue-600'
+                        }`}>
+                          {isCulminatingTaskComplete(subtask.id) ? '✓' : subtask.id}
                         </div>
                         <div>
-                          <h5 className="font-semibold text-gray-900">{subtask.title}</h5>
+                          <h5 className={`font-semibold ${
+                            isCulminatingTaskComplete(subtask.id) ? 'text-green-900' : 'text-gray-900'
+                          }`}>
+                            {subtask.title}
+                            {isCulminatingTaskComplete(subtask.id) && (
+                              <span className="ml-2 text-green-600 text-sm font-medium">✓ Completed</span>
+                            )}
+                          </h5>
                           <div className="flex items-center space-x-4 mt-1">
                             <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">⏱️ {subtask.time}</span>
                             <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">📋 {subtask.type}</span>
                           </div>
                         </div>
                       </div>
+                      
+                      {/* Mark Complete Button */}
+                      {!isCulminatingTaskComplete(subtask.id) ? (
+                        <button
+                          onClick={() => setSelectedCulminatingTask(subtask.id)}
+                          className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition-colors duration-200 flex items-center space-x-2"
+                        >
+                          <span>✅</span>
+                          <span>Mark Complete</span>
+                        </button>
+                      ) : (
+                        <div className="px-4 py-2 bg-green-100 text-green-700 text-sm font-medium rounded-md flex items-center space-x-2">
+                          <span>✓</span>
+                          <span>Completed</span>
+                        </div>
+                      )}
                     </div>
                     
                     <div className="space-y-3">
