@@ -583,7 +583,7 @@ const App = () => {
               { key: 'dashboard', label: 'Dashboard', icon: '📊' },
               { key: 'competencies', label: 'Competencies', icon: '🎯' },
               { key: 'portfolio', label: 'Portfolio', icon: '📁' },
-              { key: 'add-portfolio', label: 'Add Evidence', icon: '➕' }
+              { key: 'add-portfolio', label: '', icon: '➕' }
             ].filter(tab => !isAdmin || ['dashboard'].includes(tab.key)).map((tab) => (
               <button
                 key={tab.key}
