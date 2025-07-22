@@ -66,12 +66,12 @@ const App = () => {
       setIsAdmin(true);
       setCurrentView('admin-dashboard');
       
-      // Set all admin demo data
+      // Set all admin demo data including COMPREHENSIVE TASK LIBRARY
       setAdminStats({
         total_users: 45,
-        total_tasks: 10,
-        total_completions: 2,
-        completion_rate: 0.44,
+        total_tasks: 26, // Updated for comprehensive library  
+        total_completions: 18,
+        completion_rate: 2.4,
         active_competency_areas: 5
       });
       
