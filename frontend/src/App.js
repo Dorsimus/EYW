@@ -540,7 +540,7 @@ const App = () => {
             
             <div className="flex items-center space-x-6">
               <div className="text-right">
-                <p className="font-bold text-lg" style={{color: '#efefef'}}>
+                <p className="font-bold text-lg text-gray-800">
                   {isAdmin ? 'Admin Control' : user?.name}
                 </p>
                 <div className="flex items-center justify-end mt-1">
