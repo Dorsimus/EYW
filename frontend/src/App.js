@@ -2554,6 +2554,21 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
     }
   };
 
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [evidenceDescription, setEvidenceDescription] = useState('');
+  const [evidenceFile, setEvidenceFile] = useState(null);
+
+  const handleCompleteTask = async (taskId) => {
+    if (isProjectPhase && onCompleteProjectTask) {
+      await onCompleteProjectTask(taskId, evidenceDescription, evidenceFile);
+    } else if (onComplete) {
+      await onComplete(taskId, evidenceDescription, evidenceFile);
+    }
+    setSelectedTask(null);
+    setEvidenceDescription('');
+    setEvidenceFile(null);
+  };
+
   return (
     <div 
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
