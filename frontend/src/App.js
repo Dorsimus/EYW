@@ -1573,7 +1573,7 @@ const AdminLoginModal = ({ onLogin, onClose }) => {
 };
 
 // Dashboard View Component
-const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewCompetencyTasks }) => {
+const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewCompetencyTasks, setCurrentView }) => {
   const getTopCompetencies = () => {
     return Object.entries(competencies)
       .sort(([,a], [,b]) => (b.overall_progress || 0) - (a.overall_progress || 0))
