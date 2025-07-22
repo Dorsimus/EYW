@@ -1935,8 +1935,21 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
               </div>
               <div className="flex items-center space-x-4">
                 <div className="text-center">
-                  <div className="text-sm font-semibold text-gray-600">10 Subtasks</div>
+                  <div className="text-sm font-semibold text-gray-600">
+                    {getCompletedCulminatingTasks()}/10 Subtasks
+                  </div>
                   <div className="text-xs text-gray-500">6-12 weeks</div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-24 bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-red-500 to-blue-500 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${(getCompletedCulminatingTasks() / 10) * 100}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-600">
+                    {Math.round((getCompletedCulminatingTasks() / 10) * 100)}%
+                  </span>
                 </div>
                 <span className="text-gray-400 text-xl">
                   {expandedArea === 'culminating_project' ? '▼' : '▶'}
