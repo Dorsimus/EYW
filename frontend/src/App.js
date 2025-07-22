@@ -2611,7 +2611,7 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-2">
-                      <span className="text-xl">{getTaskTypeIcon(task.task_type)}</span>
+                      <span className="text-xl">{getTaskTypeIcon(task.task_type || task.type)}</span>
                       <h4 className="font-medium text-gray-900">{String(task.title || 'Untitled Task')}</h4>
                       {(isTaskComplete(task.id) || task.completed) && <span className="text-green-600 text-sm font-medium">✓ Completed</span>}
                     </div>
