@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Admin needs to be able to add/edit/remove tasks from the various areas of the system. Validate and refine the admin system functionality, particularly focusing on task management capabilities."
+user_problem_statement: "Admin needs to be able to add/edit/remove tasks from the various areas of the system. Validate and refine the admin system functionality, particularly focusing on task management capabilities. Also fix text visibility issues: Navigator Program, Demo Navigator, 0% Complete need to be more visible."
 
 backend:
   - task: "Admin Authentication System"
