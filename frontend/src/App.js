@@ -2344,16 +2344,19 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
         </div>
       </div>
 
-      {/* Task Modal */}
+      {/* Task Modal - Updated to handle both regular and culminating project tasks */}
       {taskModal && (
         <TaskModal
-          isOpen={!!taskModal}
+          area={taskModal.area}
+          sub={taskModal.sub}
+          tasks={taskModal.isProjectPhase ? taskModal.tasks : competencyTasks}
           onClose={() => setTaskModal(null)}
-          tasks={competencyTasks}
-          competencyArea={taskModal.area}
-          subCompetency={taskModal.sub}
-          competencies={competencies}
-          onCompleteTask={onCompleteTask}
+          onComplete={onCompleteTask}
+          isProjectPhase={taskModal.isProjectPhase}
+          phaseName={taskModal.phaseName}
+          phaseDescription={taskModal.phaseDescription}
+          onCompleteProjectTask={handleCompleteCulminatingTask}
+          culminatingProgress={culminatingProgress}
         />
       )}
 
