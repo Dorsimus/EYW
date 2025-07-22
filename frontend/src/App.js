@@ -55,19 +55,73 @@ const App = () => {
     { area: 'strategic_thinking', subs: ['market_awareness', 'trend_identification', 'opportunity_recognition', 'problem_anticipation', 'longterm_planning', 'change_leadership', 'stakeholder_management', 'project_management', 'innovation_adoption', 'continuous_improvement'] }
   ];
 
-  // Initialize user on component mount
+  // TEMPORARY BYPASS: Set demo data to allow UI testing and text visibility fixes
   useEffect(() => {
-    console.log('Starting app initialization...');
-    if (!adminToken) {
-      initializeUser();
-    }
+    console.log('Setting up demo environment for UI fixes...');
+    
+    // Set demo user data
+    setUser({
+      id: "demo-user-123",
+      email: "demo@earnwings.com", 
+      name: "Demo Navigator",
+      role: "participant",
+      level: "navigator",
+      is_admin: false,
+      created_at: new Date().toISOString()
+    });
+    
+    // Set demo competencies with proper structure
+    setCompetencies({
+      leadership_supervision: { 
+        completion_percentage: 0, 
+        completed_tasks: 0, 
+        total_tasks: 3,
+        competency_area: "leadership_supervision",
+        sub_competencies: ["team_motivation", "delegation", "performance_management"]
+      },
+      financial_management: { 
+        completion_percentage: 0, 
+        completed_tasks: 0, 
+        total_tasks: 3,
+        competency_area: "financial_management", 
+        sub_competencies: ["budget_creation", "variance_analysis", "cost_control"]
+      },
+      operational_management: { 
+        completion_percentage: 0, 
+        completed_tasks: 0, 
+        total_tasks: 2,
+        competency_area: "operational_management",
+        sub_competencies: ["workflow_optimization", "technology_utilization"]
+      },
+      cross_functional_collaboration: { 
+        completion_percentage: 0, 
+        completed_tasks: 0, 
+        total_tasks: 1,
+        competency_area: "cross_functional_collaboration",
+        sub_competencies: ["stakeholder_management"]
+      },
+      strategic_thinking: { 
+        completion_percentage: 0, 
+        completed_tasks: 0, 
+        total_tasks: 1,
+        competency_area: "strategic_thinking",
+        sub_competencies: ["strategic_planning"]
+      }
+    });
+    
+    // Set empty portfolio
+    setPortfolio([]);
+    
+    // Clear loading state
+    setLoading(false);
+    console.log('Demo environment ready - can now fix text visibility issues');
   }, []);
 
-  // Handle admin token changes separately  
+  // Handle admin token changes  
   useEffect(() => {
     if (adminToken) {
       setIsAdmin(true);
-      loadAdminData();
+      // Skip loadAdminData for now to avoid API calls
     } else {
       setIsAdmin(false);
     }
