@@ -55,34 +55,32 @@ const App = () => {
     { area: 'strategic_thinking', subs: ['market_awareness', 'trend_identification', 'opportunity_recognition', 'problem_anticipation', 'longterm_planning', 'change_leadership', 'stakeholder_management', 'project_management', 'innovation_adoption', 'continuous_improvement'] }
   ];
 
-  // Initialize user on component mount only (prevent double init in StrictMode)
+  // TEMPORARY FIX: Skip user initialization and use demo data for UI testing
   useEffect(() => {
-    if (!adminToken && !isInitialized) {
-      console.log('Initializing user for first time...');
-      setIsInitialized(true);
-      initializeUser();
-    } else if (adminToken && !isInitialized) {
-      console.log('Initializing admin for first time...');
-      setIsInitialized(true);
-      setIsAdmin(true);
-      setLoading(true);
-      loadAdminData();
-    }
+    console.log('Setting demo data for UI testing...');
+    setLoading(false); // Skip loading state
+    
+    // Set demo user data
+    setUser({
+      id: "demo-user-123",
+      email: "demo@earnwings.com", 
+      name: "Demo Navigator",
+      role: "participant",
+      level: "navigator"
+    });
+    
+    // Set demo competencies
+    setCompetencies({
+      leadership_supervision: { completion_percentage: 0, completed_tasks: 0, total_tasks: 3 },
+      financial_management: { completion_percentage: 0, completed_tasks: 0, total_tasks: 3 },
+      operational_management: { completion_percentage: 0, completed_tasks: 0, total_tasks: 2 },
+      cross_functional_collaboration: { completion_percentage: 0, completed_tasks: 0, total_tasks: 1 },
+      strategic_thinking: { completion_percentage: 0, completed_tasks: 0, total_tasks: 1 }
+    });
+    
+    // Set empty portfolio
+    setPortfolio([]);
   }, []);
-
-  // Handle admin token changes separately  
-  useEffect(() => {
-    if (adminToken && isInitialized) {
-      console.log('Admin token changed, loading admin data...');
-      setIsAdmin(true);
-      setLoading(true);
-      loadAdminData();
-    } else if (!adminToken && isInitialized) {
-      console.log('Admin token removed, switching to user mode...');
-      setIsAdmin(false);
-      // Don't re-initialize user if already initialized
-    }
-  }, [adminToken]);
 
   const loadAdminData = async () => {
     try {
