@@ -531,7 +531,7 @@ const App = () => {
                 <h1 className="redstone-heading text-3xl font-black">Earn Your Wings</h1>
                 <div className="flex items-center mt-2">
                   <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3 animate-pulse"></div>
-                  <span className="text-sm font-semibold" style={{color: '#efefef'}}>
+                  <span className="text-sm font-semibold text-gray-800">
                     {isAdmin ? 'System Administrator' : 'Navigator Program'}
                   </span>
                 </div>
