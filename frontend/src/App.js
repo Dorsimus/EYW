@@ -1968,272 +1968,116 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                 </p>
               </div>
 
-              {/* Subtasks Grid */}
-              <div className="space-y-4">
-                {[
-                  {
-                    id: 1,
-                    title: "Opportunity Identification & Analysis",
-                    time: "1-2 weeks",
-                    type: "Analysis + Documentation",
-                    objective: "Identify and analyze potential improvement opportunities at your property",
-                    deliverable: "Opportunity Analysis Report (2-3 pages)",
-                    portfolioConnection: "Strategic Thinking evidence",
-                    tasks: [
-                      "Conduct property walkthrough and operations assessment",
-                      "Review property performance data (financial, operational, resident satisfaction)",
-                      "Interview team members from both leasing and maintenance departments",
-                      "Identify 3-5 potential improvement opportunities",
-                      "Document findings in Opportunity Analysis Template"
-                    ]
-                  },
-                  {
-                    id: 2,
-                    title: "Project Selection & Business Case Development", 
-                    time: "1 week",
-                    type: "Strategic Planning + Financial Analysis",
-                    objective: "Select one opportunity and build compelling business case",
-                    deliverable: "Business Case Proposal (3-4 pages)",
-                    portfolioConnection: "Financial Management + Strategic Thinking evidence",
-                    tasks: [
-                      "Evaluate opportunities against impact/effort matrix",
-                      "Select primary project focus",
-                      "Calculate current state costs/inefficiencies",
-                      "Estimate potential ROI and timeline for results",
-                      "Define success metrics and measurement plan",
-                      "Create preliminary resource requirements"
-                    ]
-                  },
-                  {
-                    id: 3,
-                    title: "Manager Review & Project Approval",
-                    time: "3-5 days", 
-                    type: "Presentation + Approval Gate",
-                    objective: "Present business case and gain manager approval to proceed",
-                    deliverable: "Signed Project Approval Form + Revised Scope (if applicable)",
-                    portfolioConnection: "Leadership & Communication evidence",
-                    tasks: [
-                      "Schedule approval meeting with direct manager",
-                      "Present business case with clear ROI and success metrics",
-                      "Address manager questions and concerns",
-                      "Incorporate feedback and adjust scope if needed",
-                      "Obtain formal written approval to proceed"
-                    ]
-                  },
-                  {
-                    id: 4,
-                    title: "Detailed Project Planning",
-                    time: "1 week",
-                    type: "Project Management + Stakeholder Planning", 
-                    objective: "Create comprehensive execution plan",
-                    deliverable: "Complete Project Plan Document",
-                    portfolioConnection: "Operational Management evidence",
-                    tasks: [
-                      "Develop detailed project timeline with milestones",
-                      "Identify all stakeholders and their roles/responsibilities",
-                      "Create communication plan and meeting schedule",
-                      "Define resource requirements and budget (if applicable)",
-                      "Identify potential risks and mitigation strategies",
-                      "Create implementation checklist"
-                    ]
-                  },
-                  {
-                    id: 5,
-                    title: "Stakeholder Alignment & Kickoff",
-                    time: "3-5 days",
-                    type: "Meeting + Communication",
-                    objective: "Align all stakeholders and officially launch project", 
-                    deliverable: "Kickoff Meeting Notes + Stakeholder Commitment Documentation",
-                    portfolioConnection: "Cross-Functional Collaboration evidence",
-                    tasks: [
-                      "Schedule and conduct project kickoff meeting",
-                      "Present project plan to all involved team members",
-                      "Confirm roles, responsibilities, and timeline commitments",
-                      "Address questions and concerns from team members", 
-                      "Document agreements and next steps",
-                      "Send kickoff summary to all participants"
-                    ]
-                  },
-                  {
-                    id: 6,
-                    title: "Project Execution & Management",
-                    time: "6-8 weeks",
-                    type: "Implementation + Ongoing Management",
-                    objective: "Execute project plan while managing progress and obstacles",
-                    deliverable: "Weekly Progress Reports + Implementation Documentation",
-                    portfolioConnection: "Leadership & Supervision + Operational Management evidence",
-                    tasks: [
-                      "Implement project activities according to timeline",
-                      "Conduct regular check-ins with team members",
-                      "Monitor progress against success metrics",
-                      "Document challenges and solutions",
-                      "Adjust approach as needed while staying true to objectives",
-                      "Maintain regular communication with manager/mentor"
-                    ]
-                  },
-                  {
-                    id: 7,
-                    title: "Results Measurement & Analysis",
-                    time: "1 week",
-                    type: "Data Analysis + Impact Assessment",
-                    objective: "Measure and analyze project outcomes against original goals",
-                    deliverable: "Results Analysis Report with quantified impact",
-                    portfolioConnection: "Financial Management + Strategic Thinking evidence",
-                    tasks: [
-                      "Collect data on all defined success metrics",
-                      "Compare results to baseline/target performance",
-                      "Calculate actual ROI and business impact",
-                      "Gather qualitative feedback from team members and residents (if applicable)",
-                      "Document lessons learned and unexpected outcomes",
-                      "Identify opportunities for further improvement"
-                    ]
-                  },
-                  {
-                    id: 8,
-                    title: "Project Documentation & Portfolio Development",
-                    time: "3-5 days",
-                    type: "Documentation + Portfolio Building",
-                    objective: "Create comprehensive project documentation for portfolio",
-                    deliverable: "Complete Project Portfolio Package",
-                    portfolioConnection: "Evidence for all competency areas",
-                    tasks: [
-                      "Compile all project materials into organized portfolio section",
-                      "Create project summary highlighting key achievements",
-                      "Document competencies demonstrated throughout project",
-                      "Gather testimonials from team members/stakeholders",
-                      "Prepare visual materials (charts, before/after photos, etc.)",
-                      "Write reflection on personal development and learning"
-                    ]
-                  },
-                  {
-                    id: 9,
-                    title: "Final Presentation Preparation",
-                    time: "1 week",
-                    type: "Presentation Development",
-                    objective: "Prepare compelling presentation for EYW Committee",
-                    deliverable: "Final Presentation Deck + Speaker Notes",
-                    portfolioConnection: "Leadership & Communication evidence",
-                    tasks: [
-                      "Create presentation slides following EYW template",
-                      "Structure narrative: Challenge → Solution → Results → Learning",
-                      "Include quantified business impact and ROI",
-                      "Prepare for potential committee questions",
-                      "Practice presentation delivery",
-                      "Gather any final supporting materials"
-                    ]
-                  },
-                  {
-                    id: 10,
-                    title: "EYW Committee Presentation",
-                    time: "1-2 hours",
-                    type: "Formal Presentation + Assessment",
-                    objective: "Present project results and demonstrate readiness for advancement",
-                    deliverable: "Completed Presentation + Committee Evaluation",
-                    portfolioConnection: "Culmination of all competency evidence",
-                    tasks: [
-                      "Deliver 15-20 minute presentation to EYW Committee",
-                      "Present project challenge, approach, and business results",
-                      "Demonstrate competencies developed and applied",
-                      "Share key learnings and insights gained",
-                      "Answer committee questions about project and development",
-                      "Receive feedback and advancement recommendation"
-                    ]
-                  }
-                ].map((subtask) => (
-                  <div key={subtask.id} className={`border rounded-lg p-5 transition-all duration-200 ${
-                    isCulminatingTaskComplete(subtask.id) 
-                      ? 'bg-green-50 border-green-200 shadow-sm' 
-                      : 'bg-white border-gray-200 hover:shadow-md'
-                  }`}>
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center space-x-3">
-                        <div className={`flex items-center justify-center w-8 h-8 font-bold text-sm rounded-full ${
-                          isCulminatingTaskComplete(subtask.id)
-                            ? 'bg-green-100 text-green-600'
-                            : 'bg-blue-100 text-blue-600'
-                        }`}>
-                          {isCulminatingTaskComplete(subtask.id) ? '✓' : subtask.id}
-                        </div>
-                        <div>
-                          <h5 className={`font-semibold ${
-                            isCulminatingTaskComplete(subtask.id) ? 'text-green-900' : 'text-gray-900'
-                          }`}>
-                            {subtask.title}
-                            {isCulminatingTaskComplete(subtask.id) && (
-                              <span className="ml-2 text-green-600 text-sm font-medium">✓ Completed</span>
-                            )}
-                          </h5>
-                          <div className="flex items-center space-x-4 mt-1">
-                            <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">⏱️ {subtask.time}</span>
-                            <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">📋 {subtask.type}</span>
-                          </div>
-                        </div>
+              {/* Project Phases - Matching other competency format */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                {/* Planning Phase */}
+                <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">📋 Planning Phase</h4>
+                      <p className="text-xs text-gray-600 mb-2">Identify opportunities and develop business case</p>
+                    </div>
+                    <button
+                      onClick={() => handleViewTasks('culminating_project', 'planning_phase')}
+                      className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                    >
+                      View Tasks
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex-1 bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${getPhasePr ogress('planning') * 25}%` }}
+                        />
                       </div>
-                      
-                      {/* Mark Complete Button */}
-                      {!isCulminatingTaskComplete(subtask.id) ? (
-                        <button
-                          onClick={() => setSelectedCulminatingTask(subtask.id)}
-                          className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition-colors duration-200 flex items-center space-x-2"
-                        >
-                          <span>✅</span>
-                          <span>Mark Complete</span>
-                        </button>
-                      ) : (
-                        <div className="px-4 py-2 bg-green-100 text-green-700 text-sm font-medium rounded-md flex items-center space-x-2">
-                          <span>✓</span>
-                          <span>Completed</span>
-                        </div>
-                      )}
+                      <span className="text-sm font-medium text-gray-900 w-12">
+                        {Math.round(getPhaseProgress('planning') * 25)}%
+                      </span>
                     </div>
                     
-                    <div className="space-y-3">
-                      <p className="text-sm text-gray-700 font-medium">🎯 <strong>Objective:</strong> {subtask.objective}</p>
-                      
-                      <div>
-                        <p className="text-sm font-medium text-gray-900 mb-2">📝 Tasks:</p>
-                        <ul className="space-y-1">
-                          {subtask.tasks.map((task, index) => (
-                            <li key={index} className="text-xs text-gray-600 flex items-start">
-                              <span className="text-blue-500 mr-2">•</span>
-                              <span>{task}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                        <div>
-                          <p className="text-xs text-gray-500">📦 <strong>Deliverable:</strong> {subtask.deliverable}</p>
-                          <p className="text-xs text-blue-600 mt-1">🎯 <strong>Portfolio:</strong> {subtask.portfolioConnection}</p>
-                        </div>
-                      </div>
-
-                      {/* Completion Information */}
-                      {isCulminatingTaskComplete(subtask.id) && culminatingProgress[subtask.id] && (
-                        <div className="mt-3 pt-3 border-t border-green-200 bg-green-25">
-                          <p className="text-sm text-green-700 font-medium">
-                            ✅ <strong>Completed:</strong> {new Date(culminatingProgress[subtask.id].completedAt).toLocaleDateString()}
-                          </p>
-                          {culminatingProgress[subtask.id].evidenceDescription && (
-                            <p className="text-sm text-green-700 mt-1">
-                              <strong>Notes:</strong> {culminatingProgress[subtask.id].evidenceDescription}
-                            </p>
-                          )}
-                          {culminatingProgress[subtask.id].file && (
-                            <p className="text-sm text-green-700 mt-1">
-                              <strong>File:</strong> {culminatingProgress[subtask.id].file}
-                            </p>
-                          )}
-                        </div>
-                      )}
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>{getPhaseProgress('planning')}/4 tasks</span>
+                      <span>3-4 weeks</span>
                     </div>
                   </div>
-                ))}
+                </div>
+
+                {/* Execution Phase */}
+                <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">⚡ Execution Phase</h4>
+                      <p className="text-xs text-gray-600 mb-2">Implement project and measure results</p>
+                    </div>
+                    <button
+                      onClick={() => handleViewTasks('culminating_project', 'execution_phase')}
+                      className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                    >
+                      View Tasks
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex-1 bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-green-600 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${getPhaseProgress('execution') * 33.33}%` }}
+                        />
+                      </div>
+                      <span className="text-sm font-medium text-gray-900 w-12">
+                        {Math.round(getPhaseProgress('execution') * 33.33)}%
+                      </span>
+                    </div>
+                    
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>{getPhaseProgress('execution')}/3 tasks</span>
+                      <span>7-9 weeks</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Completion Phase */}
+                <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h4 className="font-medium text-gray-900 mb-1">🎯 Completion Phase</h4>
+                      <p className="text-xs text-gray-600 mb-2">Document results and present to committee</p>
+                    </div>
+                    <button
+                      onClick={() => handleViewTasks('culminating_project', 'completion_phase')}
+                      className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                    >
+                      View Tasks
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex-1 bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-red-600 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${getPhaseProgress('completion') * 33.33}%` }}
+                        />
+                      </div>
+                      <span className="text-sm font-medium text-gray-900 w-12">
+                        {Math.round(getPhaseProgress('completion') * 33.33)}%
+                      </span>
+                    </div>
+                    
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>{getPhaseProgress('completion')}/3 tasks</span>
+                      <span>1-2 weeks</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Success Criteria & Project Examples */}
-              <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Success Criteria */}
                 <div className="bg-green-50 rounded-lg p-5 border border-green-200">
                   <h4 className="font-semibold text-green-900 mb-3">✅ Success Criteria for Advancement</h4>
