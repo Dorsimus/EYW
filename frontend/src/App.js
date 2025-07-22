@@ -1211,6 +1211,7 @@ const App = () => {
             setEditingTask={setEditingTask}
             newTask={newTask}
             setNewTask={setNewTask}
+            handleSubmit={handleSubmit}
           />
         )}
         
