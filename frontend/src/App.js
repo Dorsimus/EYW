@@ -2596,13 +2596,13 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
         <div className="p-6">
           <div className="space-y-4">
             {tasks.map(task => (
-              <div key={task.id} className={`border rounded-lg p-4 ${task.completed ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
+              <div key={task.id} className={`border rounded-lg p-4 ${isTaskComplete(task.id) || task.completed ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-2">
                       <span className="text-xl">{getTaskTypeIcon(task.task_type)}</span>
                       <h4 className="font-medium text-gray-900">{String(task.title || 'Untitled Task')}</h4>
-                      {task.completed && <span className="text-green-600 text-sm font-medium">✓ Completed</span>}
+                      {(isTaskComplete(task.id) || task.completed) && <span className="text-green-600 text-sm font-medium">✓ Completed</span>}
                     </div>
                     
                     <p className="text-sm text-gray-600 mb-3">{String(task.description)}</p>
