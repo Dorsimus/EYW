@@ -1013,7 +1013,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
           </div>
           <div className="stat-number text-4xl font-bold mb-2">Navigator</div>
           <div className="stat-label text-lg font-semibold mb-3">Current Level</div>
-          <div className="stat-detail mt-3 text-sm">
+          <div className="stat-detail mt-3 text-sm" style={{color: '#333333'}}>
             Property Management
           </div>
         </div>
