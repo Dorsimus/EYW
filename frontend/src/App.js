@@ -1234,6 +1234,7 @@ const App = () => {
             portfolio={portfolio}
             overallProgress={getOverallProgress()}
             onViewCompetencyTasks={loadCompetencyTasks}
+            setCurrentView={setCurrentView}
           />
         )}
         
