@@ -2542,6 +2542,18 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
     return false; // Regular task completion would be handled differently
   };
 
+  const getTaskTypeIcon = (type) => {
+    switch(type) {
+      case 'course_link': return '📚';
+      case 'document_upload': return '📄';
+      case 'assessment': return '📝';
+      case 'shadowing': return '👥';
+      case 'meeting': return '🤝';
+      case 'project': return '🎯';
+      default: return '✅';
+    }
+  };
+
   return (
     <div 
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
