@@ -70,42 +70,132 @@ const App = () => {
       created_at: new Date().toISOString()
     });
     
-    // Set demo competencies with proper structure
+    // Set demo competencies with PROPER structure matching what UI expects
     setCompetencies({
-      leadership_supervision: { 
-        completion_percentage: 0, 
-        completed_tasks: 0, 
+      leadership_supervision: {
+        name: "Leadership & Supervision",
+        description: "Lead teams effectively and supervise staff performance",
+        overall_progress: 0,
+        completion_percentage: 0,
+        completed_tasks: 0,
         total_tasks: 3,
         competency_area: "leadership_supervision",
-        sub_competencies: ["team_motivation", "delegation", "performance_management"]
+        sub_competencies: {
+          team_motivation: {
+            name: "Team Motivation",
+            description: "Motivate and inspire team members",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 1
+          },
+          delegation: {
+            name: "Delegation",
+            description: "Effectively delegate tasks and responsibilities",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 1
+          },
+          performance_management: {
+            name: "Performance Management", 
+            description: "Manage team performance and provide feedback",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 1
+          }
+        }
       },
-      financial_management: { 
-        completion_percentage: 0, 
-        completed_tasks: 0, 
+      financial_management: {
+        name: "Financial Management",
+        description: "Manage budgets, analyze costs, and make financial decisions", 
+        overall_progress: 0,
+        completion_percentage: 0,
+        completed_tasks: 0,
         total_tasks: 3,
-        competency_area: "financial_management", 
-        sub_competencies: ["budget_creation", "variance_analysis", "cost_control"]
+        competency_area: "financial_management",
+        sub_competencies: {
+          budget_creation: {
+            name: "Budget Creation",
+            description: "Create and manage operational budgets",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 1
+          },
+          variance_analysis: {
+            name: "Variance Analysis",
+            description: "Analyze budget vs actual performance",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 1
+          },
+          cost_control: {
+            name: "Cost Control",
+            description: "Monitor and control operational costs",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 1
+          }
+        }
       },
-      operational_management: { 
+      operational_management: {
+        name: "Operational Management",
+        description: "Optimize workflows and manage daily operations",
+        overall_progress: 0,
         completion_percentage: 0, 
-        completed_tasks: 0, 
+        completed_tasks: 0,
         total_tasks: 2,
         competency_area: "operational_management",
-        sub_competencies: ["workflow_optimization", "technology_utilization"]
+        sub_competencies: {
+          workflow_optimization: {
+            name: "Workflow Optimization",
+            description: "Streamline processes and improve efficiency",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 1
+          },
+          technology_utilization: {
+            name: "Technology Utilization",
+            description: "Leverage technology for operational improvements",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 1
+          }
+        }
       },
-      cross_functional_collaboration: { 
-        completion_percentage: 0, 
-        completed_tasks: 0, 
+      cross_functional_collaboration: {
+        name: "Cross-Functional Collaboration",
+        description: "Work effectively across departments and teams",
+        overall_progress: 0,
+        completion_percentage: 0,
+        completed_tasks: 0,
         total_tasks: 1,
-        competency_area: "cross_functional_collaboration",
-        sub_competencies: ["stakeholder_management"]
+        competency_area: "cross_functional_collaboration", 
+        sub_competencies: {
+          stakeholder_management: {
+            name: "Stakeholder Management",
+            description: "Build relationships with key stakeholders",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 1
+          }
+        }
       },
-      strategic_thinking: { 
-        completion_percentage: 0, 
-        completed_tasks: 0, 
+      strategic_thinking: {
+        name: "Strategic Thinking",
+        description: "Think strategically and plan for long-term success",
+        overall_progress: 0,
+        completion_percentage: 0,
+        completed_tasks: 0,
         total_tasks: 1,
         competency_area: "strategic_thinking",
-        sub_competencies: ["strategic_planning"]
+        sub_competencies: {
+          strategic_planning: {
+            name: "Strategic Planning", 
+            description: "Develop and execute strategic plans",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 1
+          }
+        }
       }
     });
     
