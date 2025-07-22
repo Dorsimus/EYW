@@ -37,52 +37,84 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* FIXED Navigation with Colored Backgrounds */
+/* ENHANCED Navigation with MORE depth and movement */
 .redstone-nav-tab {
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 10px 16px; /* Tightened from 12px 20px */
+  border-radius: 10px; /* Slightly tighter radius */
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px; /* Slightly smaller text */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: white;
-  background: rgba(1, 39, 162, 0.8);
+  background: rgba(1, 39, 162, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   min-width: fit-content;
   white-space: nowrap;
+  position: relative;
+  /* ADD MORE DEPTH */
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  /* SUBTLE 3D EFFECT */
+  background-image: linear-gradient(135deg, rgba(1, 39, 162, 0.9) 0%, rgba(1, 39, 162, 0.7) 100%);
 }
 
 .redstone-nav-tab.active {
-  background: var(--redstone-red);
+  background: linear-gradient(135deg, var(--redstone-red) 0%, #e12836 100%);
   border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: var(--shadow-luxury);
-  transform: translateY(-1px);
+  /* ENHANCED DEPTH for active state */
+  box-shadow: 
+    0 8px 25px -5px rgba(255, 52, 67, 0.25),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px); /* More movement */
+  scale: 1.02; /* Slight scale on active */
 }
 
-.redstone-nav-tab:hover {
-  background: var(--redstone-red);
+.redstone-nav-tab:hover:not(.active) {
+  background: linear-gradient(135deg, var(--redstone-red) 0%, #e12836 100%);
   border-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-1px);
+  /* ENHANCED MOVEMENT */
+  transform: translateY(-3px) scale(1.02);
+  /* GLOW EFFECT on hover */
+  box-shadow: 
+    0 10px 25px -5px rgba(255, 52, 67, 0.3),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Professional Icon System - Clean Emojis with Colored Backgrounds */
+/* BUTTON PRESS EFFECT */
+.redstone-nav-tab:active {
+  transform: translateY(0px) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* Enhanced Icon with more depth */
 .redstone-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-  font-size: 16px;
-  background: rgba(1, 39, 162, 0.9);
+  width: 28px; /* Slightly smaller */
+  height: 28px;
+  border-radius: 8px; /* Tighter radius */
+  font-size: 14px; /* Smaller emoji */
+  background: linear-gradient(135deg, rgba(1, 39, 162, 0.95) 0%, rgba(1, 39, 162, 0.8) 100%);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
+  /* ADD SUBTLE INSET SHADOW */
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .redstone-icon:hover {
-  background: var(--redstone-red);
-  transform: scale(1.05);
+  background: linear-gradient(135deg, var(--redstone-red) 0%, #e12836 100%);
+  transform: scale(1.08); /* More scale on hover */
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 8px rgba(255, 52, 67, 0.3);
 }
 
 .redstone-icon-xl {
