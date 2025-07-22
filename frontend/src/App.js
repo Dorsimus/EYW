@@ -341,6 +341,7 @@ const App = () => {
     // Clear loading state
     setLoading(false);
     console.log('Demo environment ready - can now fix text visibility issues');
+    }
   }, []);
 
   // Handle admin token changes - FIXED: Set proper admin view  
