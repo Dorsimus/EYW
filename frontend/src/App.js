@@ -2518,7 +2518,7 @@ const CulminatingTaskCompletionModal = ({ taskId, onComplete, onClose }) => {
                 accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
               />
               <p className="text-xs text-gray-500 mt-1">
-                Upload project deliverables, screenshots, reports, or other evidence
+                Upload project deliverables, screenshots, reports, or other supporting documentation
               </p>
             </div>
             
