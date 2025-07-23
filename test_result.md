@@ -352,8 +352,7 @@ metadata:
 test_plan:
   current_focus:
     - "Design Improvements & Color-Coding System"
-  stuck_tasks:
-    - "Design Improvements & Color-Coding System"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
