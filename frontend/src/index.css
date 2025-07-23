@@ -8,7 +8,7 @@
   --redstone-red: #ff3443;
   --redstone-blue: #0127a2;
   --redstone-gray: #efefef;
-  --primary-gradient: linear-gradient(135deg, rgba(1, 39, 162, 0.9) 0%, rgba(255, 52, 67, 0.85) 100%);
+  --primary-gradient: linear-gradient(135deg, rgba(1, 39, 162, 0.08) 0%, rgba(255, 52, 67, 0.06) 100%);
   --text-on-dark: rgba(255, 255, 255, 0.95);
   --text-on-light: rgba(17, 24, 39, 0.9);
   --text-secondary: rgba(255, 255, 255, 0.75);
