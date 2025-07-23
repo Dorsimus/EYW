@@ -2164,7 +2164,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
               <div className="px-6 py-4 bg-gray-50">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {Object.entries(areaData.sub_competencies).map(([subKey, subData]) => (
-                    <div key={subKey} className="bg-white rounded-lg p-4 shadow-sm">
+                    <div key={subKey} className="sub-competency-card bg-white rounded-lg p-4 shadow-sm">
                       <div className="flex items-start justify-between mb-2">
                         <h4 className="font-medium text-gray-900">
                           {typeof subData === 'object' && subData?.name ? subData.name : 'Unknown Competency'}
@@ -2181,7 +2181,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                           <div className="flex items-center space-x-2">
                             <div className="flex-1 bg-gray-200 rounded-full h-2">
                               <div 
-                                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                                className="progress-bar h-2 rounded-full transition-all duration-300"
                                 style={{ width: `${(subData?.completion_percentage || 0)}%` }}
                               />
                             </div>
