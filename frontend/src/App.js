@@ -1264,10 +1264,10 @@ const App = () => {
                 </div>
               </button>
             ))}
-          
+            
             {/* Navigator Program / Level Status - Right Side */}
             {!isAdmin && (
-              <div className="flex items-center bg-gray-50 rounded-lg px-4 py-2 border ml-auto">
+              <div className="flex items-center bg-gray-50 rounded-lg px-4 py-2 border">
                 <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3 animate-pulse"></div>
                 <span className="text-sm font-semibold text-gray-600">
                   {user?.current_level || 'Navigator Program'}
