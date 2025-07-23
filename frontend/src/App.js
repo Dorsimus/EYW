@@ -1172,7 +1172,7 @@ const App = () => {
                 />
               </div>
               <div>
-                <h1 className="text-5xl font-black text-gray-700">Earn Your Wings</h1>
+                <h1 className="text-4xl font-black text-gray-600">Earn Your Wings</h1>
               </div>
             </div>
             
