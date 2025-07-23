@@ -1854,15 +1854,34 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
   };
 
   const getPhaseProgress = (phase) => {
-    const phaseTaskIds = {
-      planning: [1, 2, 3, 4],
-      execution: [5, 6, 7], 
-      completion: [8, 9, 10]
-    };
+    const phaseData = culminatingProjectTasks[`${phase}_phase`];
+    if (!phaseData) return { completed: 0, total: 0 };
     
-    const taskIds = phaseTaskIds[phase] || [];
-    const completed = taskIds.filter(id => isCulminatingTaskComplete(id)).length;
-    return completed;
+    let totalSubtasks = 0;
+    let completedSubtasks = 0;
+    
+    phaseData.tasks.forEach(task => {
+      if (task.tasks && task.tasks.length > 0) {
+        // Count subtasks
+        totalSubtasks += task.tasks.length;
+        
+        // Count completed subtasks
+        task.tasks.forEach((subtask, index) => {
+          const subtaskId = `${task.id}-subtask-${index}`;
+          if (isCulminatingTaskComplete(subtaskId)) {
+            completedSubtasks++;
+          }
+        });
+      } else {
+        // If no subtasks, count the main task
+        totalSubtasks += 1;
+        if (isCulminatingTaskComplete(task.id)) {
+          completedSubtasks++;
+        }
+      }
+    });
+    
+    return { completed: completedSubtasks, total: totalSubtasks };
   };
 
   // Define the culminating project tasks data
