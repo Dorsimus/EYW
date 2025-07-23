@@ -2861,7 +2861,7 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                     onChange={(e) => setEvidenceDescription(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md"
                     rows={3}
-                    placeholder="Describe your key takeaways from this task..."
+                    placeholder={getTaskNotesPrompt()}
                     required
                   />
                 </div>
