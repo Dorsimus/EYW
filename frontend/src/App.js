@@ -3611,7 +3611,174 @@ const AdminUsersView = ({ users }) => {
   );
 };
 
-// Admin Analytics Component
+// Core Values View Component
+const CoreValuesView = ({ 
+  coreValues, 
+  coreValueEntries, 
+  expandedValue, 
+  setExpandedValue,
+  newEntry,
+  setNewEntry,
+  showNewEntryForm,
+  setShowNewEntryForm,
+  onAddEntry,
+  onDeleteEntry 
+}) => {
+  return (
+    <div className="max-w-6xl mx-auto p-6 space-y-6">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <div className="flex items-center justify-center mb-4">
+          <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white font-black text-2xl mr-6 shadow-lg">
+            💖
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Core Values</h1>
+            <p className="text-lg text-gray-600">Living our values through everyday actions</p>
+          </div>
+        </div>
+        
+        {/* Description */}
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 max-w-4xl mx-auto">
+          <p className="text-gray-700 text-lg leading-relaxed">
+            This is your space to reflect on and document how you've embodied our core values in your daily work and interactions. 
+            Think of this as a personal journal where you can capture meaningful moments, challenges overcome, and ways you've 
+            brought our values to life. Each story you share becomes part of your professional portfolio, showcasing your 
+            character and growth journey.
+          </p>
+          <p className="text-gray-600 mt-3 text-sm">
+            💡 <strong>How to use:</strong> Click on any value below to expand it, then share your stories about how you've lived that value. 
+            Multiple entries are encouraged – the more you reflect, the more you grow!
+          </p>
+        </div>
+      </div>
+
+      {/* Core Values List */}
+      <div className="space-y-4">
+        {Object.entries(coreValues).map(([valueKey, value]) => {
+          const entries = coreValueEntries[valueKey] || [];
+          const isExpanded = expandedValue === valueKey;
+          
+          return (
+            <div key={valueKey} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              {/* Value Header */}
+              <div 
+                className="p-6 cursor-pointer hover:bg-gray-50 transition-colors"
+                onClick={() => setExpandedValue(isExpanded ? null : valueKey)}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="text-3xl">{value.icon}</div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{value.title}</h3>
+                      <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
+                      {entries.length} {entries.length === 1 ? 'story' : 'stories'}
+                    </span>
+                    <div className={`transform transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
+                      ⬇️
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Expanded Content */}
+              {isExpanded && (
+                <div className="border-t border-gray-200 bg-gray-50">
+                  <div className="p-6 space-y-4">
+                    {/* Add New Entry Button */}
+                    <div className="flex justify-between items-center">
+                      <h4 className="text-lg font-medium text-gray-900">Your Stories</h4>
+                      <button
+                        onClick={() => setShowNewEntryForm(showNewEntryForm === valueKey ? null : valueKey)}
+                        className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 text-sm font-medium"
+                      >
+                        {showNewEntryForm === valueKey ? 'Cancel' : '+ Add Story'}
+                      </button>
+                    </div>
+
+                    {/* New Entry Form */}
+                    {showNewEntryForm === valueKey && (
+                      <div className="bg-white rounded-lg p-4 border border-purple-200">
+                        <h5 className="font-medium text-gray-900 mb-3">Share Your Story</h5>
+                        <textarea
+                          value={newEntry.story}
+                          onChange={(e) => setNewEntry({ ...newEntry, story: e.target.value })}
+                          placeholder="Tell us about a time you embodied this value... What was the situation? What actions did you take? What was the impact?"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          rows={4}
+                        />
+                        <div className="flex justify-end space-x-3 mt-3">
+                          <button
+                            onClick={() => setShowNewEntryForm(null)}
+                            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            onClick={() => onAddEntry(valueKey)}
+                            disabled={!newEntry.story.trim()}
+                            className={`px-4 py-2 rounded-md text-sm font-medium ${
+                              newEntry.story.trim() 
+                                ? 'bg-purple-600 text-white hover:bg-purple-700' 
+                                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            }`}
+                          >
+                            Save Story
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Existing Entries */}
+                    {entries.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500">
+                        <div className="text-4xl mb-3">📝</div>
+                        <p className="text-lg font-medium">No stories yet</p>
+                        <p className="text-sm">Share your first story about living this value!</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {entries.map((entry) => (
+                          <div key={entry.id} className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                            <div className="flex justify-between items-start mb-3">
+                              <div className="text-sm text-gray-500">
+                                📅 {new Date(entry.date).toLocaleDateString('en-US', { 
+                                  year: 'numeric', 
+                                  month: 'long', 
+                                  day: 'numeric' 
+                                })}
+                              </div>
+                              <button
+                                onClick={() => onDeleteEntry(valueKey, entry.id)}
+                                className="text-gray-400 hover:text-red-600 transition-colors"
+                                title="Delete story"
+                              >
+                                ❌
+                              </button>
+                            </div>
+                            <div className="text-gray-800 leading-relaxed whitespace-pre-wrap">
+                              {entry.story}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+// Admin Analytics View Component
 const AdminAnalyticsView = ({ stats, tasks, users }) => {
   const getTasksByType = () => {
     const types = {};
