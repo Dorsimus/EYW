@@ -1672,7 +1672,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
           <div className="stat-number text-4xl font-bold mb-2">{portfolio.length}</div>
           <div className="stat-label text-lg font-semibold mb-3">Portfolio Items</div>
           <div className="stat-detail mt-3 text-sm" style={{color: '#333333'}}>
-            Evidence collection
+            Your Work
           </div>
         </div>
         
