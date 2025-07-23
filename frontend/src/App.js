@@ -2297,16 +2297,16 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                       <div className="flex-1 bg-gray-200 rounded-full h-2">
                         <div 
                           className="bg-red-600 h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${getPhaseProgress('completion') * 33.33}%` }}
+                          style={{ width: `${getPhaseProgress('completion').total > 0 ? (getPhaseProgress('completion').completed / getPhaseProgress('completion').total) * 100 : 0}%` }}
                         />
                       </div>
                       <span className="text-sm font-medium text-gray-900 w-12">
-                        {Math.round(getPhaseProgress('completion') * 33.33)}%
+                        {getPhaseProgress('completion').total > 0 ? Math.round((getPhaseProgress('completion').completed / getPhaseProgress('completion').total) * 100) : 0}%
                       </span>
                     </div>
                     
                     <div className="flex justify-between text-sm text-gray-600">
-                      <span>{getPhaseProgress('completion')}/3 tasks</span>
+                      <span>{getPhaseProgress('completion').completed}/{getPhaseProgress('completion').total} tasks</span>
                       <span>1-2 weeks</span>
                     </div>
                   </div>
