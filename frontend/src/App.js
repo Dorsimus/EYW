@@ -1961,7 +1961,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
           type: "Strategic Planning + Financial Analysis",
           objective: "Select one opportunity and build compelling business case",
           deliverable: "Business Case Proposal (3-4 pages)",
-          portfolioConnection: "Financial Management + Strategic Thinking evidence",
+          portfolioConnection: "Financial Management + Strategic Thinking contributions",
           tasks: [
             "Evaluate opportunities against impact/effort matrix",
             "Select primary project focus",
