@@ -2369,7 +2369,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                   <ul className="space-y-2">
                     {[
                       "Business Impact: Demonstrated measurable improvement to property operations",
-                      "Competency Integration: Evidence of applying all core competency areas", 
+                      "Competency Integration: Demonstration of applying all core competency areas", 
                       "Leadership Growth: Clear examples of leading through influence and collaboration",
                       "Financial Acumen: Understanding and quantification of business impact",
                       "Learning Mindset: Thoughtful reflection on challenges and growth opportunities",
