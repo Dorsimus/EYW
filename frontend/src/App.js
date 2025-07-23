@@ -1978,7 +1978,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
           type: "Presentation + Approval Gate",
           objective: "Present business case and gain manager approval to proceed",
           deliverable: "Signed Project Approval Form + Revised Scope (if applicable)",
-          portfolioConnection: "Leadership & Communication evidence",
+          portfolioConnection: "Leadership & Communication achievements",
           tasks: [
             "Schedule approval meeting with direct manager",
             "Present business case with clear ROI and success metrics",
