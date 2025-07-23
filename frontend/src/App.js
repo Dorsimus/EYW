@@ -1164,25 +1164,26 @@ const App = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
-              <div className="mr-6">
+              <div className="mr-8">
                 <img 
                   src="https://customer-assets.emergentagent.com/job_navigator-platform/artifacts/0rr43l7c_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png" 
                   alt="Winged Emblem" 
-                  className="w-20 h-20 object-contain drop-shadow-md"
+                  className="w-28 h-28 object-contain drop-shadow-lg"
                 />
               </div>
               <div>
-                <h1 className="redstone-heading text-3xl font-black">Earn Your Wings</h1>
-                <div className="flex items-center mt-2">
-                  <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3 animate-pulse"></div>
-                  <span className="text-sm font-semibold text-gray-800">
-                    {isAdmin ? 'System Administrator' : 'Navigator Program'}
-                  </span>
-                </div>
+                <h1 className="text-5xl font-black text-gray-700">Earn Your Wings</h1>
               </div>
             </div>
             
             <div className="flex items-center space-x-6">
+              {/* Current Level/Program Status */}
+              <div className="flex items-center bg-gray-50 rounded-lg px-4 py-2 border">
+                <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3 animate-pulse"></div>
+                <span className="text-sm font-semibold text-gray-800">
+                  {isAdmin ? 'System Administrator' : user?.current_level || 'Navigator Program'}
+                </span>
+              </div>
               <div className="text-right">
                 <p className="font-bold text-lg text-gray-800">
                   {isAdmin ? 'Admin Control' : user?.name}
