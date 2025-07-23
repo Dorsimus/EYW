@@ -384,7 +384,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Supportive Language Improvements & Required Field Validation"
+    - "Core Values Journaling Section"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
