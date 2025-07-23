@@ -2192,7 +2192,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                           
                           <div className="flex justify-between text-sm text-gray-600">
                             <span>{(subData?.completed_tasks || 0)}/{(subData?.total_tasks || 0)} tasks</span>
-                            <span>{(subData?.evidence_items?.length || 0)} evidence items</span>
+                            <span>{(subData?.evidence_items?.length || 0)} work samples</span>
                           </div>
                         </div>
                       </div>
