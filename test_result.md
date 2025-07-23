@@ -315,6 +315,9 @@ frontend:
         - working: true
         - agent: "testing"
         - comment: "✅ VERIFIED: Culminating Project Task Display Fix working perfectly! Successfully tested all 3 phases (Planning, Execution, Completion). Found 4 tasks with proper titles: 'Opportunity Identification & Analysis', 'Project Selection & Business Case Development', 'Stakeholder Alignment & Kickoff', 'Final Presentation Preparation'. All task descriptions display properly using task.objective field (no 'undefined' text found). Verified all required elements: 27 deliverable sections (green boxes), 27 portfolio connection sections (purple boxes), 27 subtasks sections (gray boxes), 7 time estimates, 5 task type icons. TaskModal component successfully handles both regular tasks (task.description) and culminating project tasks (task.objective). Fix completely resolves the user-reported issue."
+        - working: true
+        - agent: "main"
+        - comment: "ENHANCED: Added individual subtask completion functionality. Each subtask within culminating project phases now has its own 'Mark Complete' button with evidence upload and notes capability. Updated progress calculation to track individual subtasks rather than main tasks. Each phase now shows accurate progress based on completed subtasks (e.g., '3/5 tasks' for Planning Phase subtasks). Subtasks display with numbered format and individual completion status. Progress bars and percentages updated to reflect granular subtask completion tracking."
 
 metadata:
   created_by: "main_agent"
