@@ -1264,6 +1264,7 @@ const App = () => {
                 </div>
               </button>
             ))}
+            </div>
             
             {/* Navigator Program / Level Status - Right Side */}
             {!isAdmin && (
@@ -1275,7 +1276,6 @@ const App = () => {
               </div>
             )}
           </nav>
-        </div>
       </header>
 
       {/* Main Content */}
