@@ -1216,7 +1216,8 @@ const App = () => {
           </div>
           
           {/* REDSTONE NAVIGATION */}
-          <nav className="flex space-x-3 flex-wrap">
+          <nav className="flex justify-between items-center">
+            <div className="flex space-x-3 flex-wrap">
             {/* REGULAR USER NAVIGATION */}
             {!isAdmin && [
               { key: 'dashboard', label: 'Dashboard', icon: '📊' },
