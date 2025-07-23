@@ -2641,15 +2641,49 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                         )}
                         {task.tasks && task.tasks.length > 0 && (
                           <div className="bg-gray-50 p-3 rounded">
-                            <p className="text-sm text-gray-800 font-medium mb-2">📋 Subtasks:</p>
-                            <ul className="text-sm text-gray-700 space-y-1">
-                              {task.tasks.map((subtask, index) => (
-                                <li key={index} className="flex items-start">
-                                  <span className="text-gray-400 mr-2">•</span>
-                                  {String(subtask)}
-                                </li>
-                              ))}
-                            </ul>
+                            <p className="text-sm text-gray-800 font-medium mb-3">📋 Subtasks:</p>
+                            <div className="space-y-3">
+                              {task.tasks.map((subtask, index) => {
+                                const subtaskId = `${task.id}-subtask-${index}`;
+                                const isSubtaskComplete = culminatingProgress && culminatingProgress[subtaskId]?.completed;
+                                
+                                return (
+                                  <div key={index} className={`border rounded p-3 ${isSubtaskComplete ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
+                                    <div className="flex items-start justify-between">
+                                      <div className="flex-1">
+                                        <div className="flex items-center space-x-2 mb-1">
+                                          <span className="text-gray-600 text-xs font-medium">#{index + 1}</span>
+                                          <p className="text-sm text-gray-800">{String(subtask)}</p>
+                                          {isSubtaskComplete && <span className="text-green-600 text-xs font-medium">✓ Completed</span>}
+                                        </div>
+                                        
+                                        {isSubtaskComplete && culminatingProgress[subtaskId] && (
+                                          <div className="mt-2 pt-2 border-t border-green-200">
+                                            <p className="text-xs text-green-700">
+                                              <strong>Completed:</strong> {new Date(culminatingProgress[subtaskId].completedAt).toLocaleDateString()}
+                                            </p>
+                                            {culminatingProgress[subtaskId].evidenceDescription && (
+                                              <p className="text-xs text-green-700 mt-1">
+                                                <strong>Evidence:</strong> {culminatingProgress[subtaskId].evidenceDescription}
+                                              </p>
+                                            )}
+                                          </div>
+                                        )}
+                                      </div>
+                                      
+                                      {!isSubtaskComplete && (
+                                        <button
+                                          onClick={() => setSelectedTask(subtaskId)}
+                                          className="ml-2 px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 text-xs"
+                                        >
+                                          Mark Complete
+                                        </button>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
                           </div>
                         )}
                       </div>
