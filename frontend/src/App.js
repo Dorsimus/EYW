@@ -1163,20 +1163,22 @@ const App = () => {
       <header className="redstone-glass-card p-6 mb-8 fade-in">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
-            <div className="flex items-center">
-              <div className="mr-8">
-                <img 
-                  src="https://customer-assets.emergentagent.com/job_navigator-platform/artifacts/0rr43l7c_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png" 
-                  alt="Winged Emblem" 
-                  className="w-28 h-28 object-contain drop-shadow-lg"
-                />
-              </div>
-              <div>
-                <h1 className="text-4xl font-black text-gray-600">Earn Your Wings</h1>
-              </div>
+            {/* Left - Winged Emblem (Even Bigger!) */}
+            <div className="flex-shrink-0">
+              <img 
+                src="https://customer-assets.emergentagent.com/job_navigator-platform/artifacts/0rr43l7c_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png" 
+                alt="Winged Emblem" 
+                className="w-32 h-32 object-contain drop-shadow-lg"
+              />
             </div>
             
-            <div className="flex items-center space-x-6">
+            {/* Center - Earn Your Wings Title */}
+            <div className="flex-grow text-center">
+              <h1 className="text-4xl font-black text-gray-600">Earn Your Wings</h1>
+            </div>
+            
+            {/* Right - User Info */}
+            <div className="flex items-center space-x-6 flex-shrink-0">
               <div className="text-right">
                 <p className="font-bold text-lg text-gray-800">
                   {isAdmin ? 'Admin Control' : user?.name}
