@@ -1846,7 +1846,27 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
   };
 
   const getCompletedCulminatingTasks = () => {
-    return Object.values(culminatingProgress).filter(task => task.completed).length;
+    const allPhases = ['planning', 'execution', 'completion'];
+    let totalCompleted = 0;
+    
+    allPhases.forEach(phase => {
+      const progress = getPhaseProgress(phase);
+      totalCompleted += progress.completed;
+    });
+    
+    return totalCompleted;
+  };
+
+  const getTotalCulminatingTasks = () => {
+    const allPhases = ['planning', 'execution', 'completion'];
+    let totalTasks = 0;
+    
+    allPhases.forEach(phase => {
+      const progress = getPhaseProgress(phase);
+      totalTasks += progress.total;
+    });
+    
+    return totalTasks;
   };
 
   const isCulminatingTaskComplete = (taskId) => {
