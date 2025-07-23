@@ -47,6 +47,39 @@ const App = () => {
     file: null
   });
 
+  // Core Values Data
+  const coreValues = {
+    believers: {
+      title: "WE ARE BELIEVERS",
+      description: "We believe in ourselves, our team members, our communities, and our company. By bringing an all-in attitude, we affect positive change through an adaptable mindset. Our belief drives us to embody the unwavering energy necessary to achieve our goals. Believers get things done and inspire others to achieve more than seems possible.",
+      icon: "🌟"
+    },
+    communicate: {
+      title: "WE COMMUNICATE AUTHENTICALLY WITH CARE", 
+      description: "We champion diverse ideas and contributions of our people and encourage curiosity in learning about others. We foster clear, honest, and transparent dialogue. We seek to understand, assume positive intent, treat people with respect, and respond in a timely manner. Care is at the heart of respectful communication.",
+      icon: "💬"
+    },
+    course: {
+      title: "WE STAY THE COURSE",
+      description: "We demonstrate relentless optimism, grit, and unyielding determination. In ever-changing market conditions, we recalibrate, sharpen our focus, foster alignment, and dig in together to win. Our purpose, values, and long-term goals define our \"True North,\" and inspire our course.",
+      icon: "🧭"
+    },
+    performance: {
+      title: "WE DRIVE PERFORMANCE", 
+      description: "We are goal driven, results oriented, and have a high bar of performance. We empower our teams, hold each other accountable, and achieve expected results. We value leadership mindsets, innovation, and continuous improvement. Our purpose, strategy, and culture drive performance through our relentless commitment to our people and world-class service.",
+      icon: "🚀"
+    }
+  };
+
+  // Core Values State
+  const [coreValueEntries, setCoreValueEntries] = useState(() => {
+    const saved = localStorage.getItem('core_value_entries');
+    return saved ? JSON.parse(saved) : {};
+  });
+  const [expandedValue, setExpandedValue] = useState(null);
+  const [newEntry, setNewEntry] = useState({ value: '', story: '', date: '' });
+  const [showNewEntryForm, setShowNewEntryForm] = useState(null);
+
   const competencyOptions = [
     { area: 'leadership_supervision', subs: ['team_motivation', 'delegation', 'performance_management', 'coaching_development', 'team_building', 'conflict_resolution', 'difficult_conversations', 'cross_dept_communication', 'resident_resolution', 'crisis_leadership'] },
     { area: 'financial_management', subs: ['budget_creation', 'variance_analysis', 'cost_control', 'roi_decisions', 'revenue_impact', 'pl_understanding', 'kpi_tracking', 'financial_forecasting', 'capex_planning', 'vendor_cost_mgmt'] },
