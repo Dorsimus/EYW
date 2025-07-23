@@ -1164,11 +1164,11 @@ const App = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
-              <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center text-white font-black text-xl mr-6 shadow-lg">
+              <div className="w-24 h-24 bg-gray-100 rounded-2xl flex items-center justify-center text-white font-black text-xl mr-6 shadow-lg">
                 <img 
                   src="https://customer-assets.emergentagent.com/job_navigator-platform/artifacts/0rr43l7c_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png" 
                   alt="Winged Emblem" 
-                  className="w-12 h-12 object-contain"
+                  className="w-20 h-20 object-contain"
                 />
               </div>
               <div>
