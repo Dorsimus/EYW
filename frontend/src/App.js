@@ -1177,13 +1177,6 @@ const App = () => {
             </div>
             
             <div className="flex items-center space-x-6">
-              {/* Current Level/Program Status */}
-              <div className="flex items-center bg-gray-50 rounded-lg px-4 py-2 border">
-                <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3 animate-pulse"></div>
-                <span className="text-sm font-semibold text-gray-800">
-                  {isAdmin ? 'System Administrator' : user?.current_level || 'Navigator Program'}
-                </span>
-              </div>
               <div className="text-right">
                 <p className="font-bold text-lg text-gray-800">
                   {isAdmin ? 'Admin Control' : user?.name}
