@@ -2648,6 +2648,18 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
   const [evidenceDescription, setEvidenceDescription] = useState('');
   const [evidenceFile, setEvidenceFile] = useState(null);
 
+  // Helper function to get varied task notes prompts
+  const getTaskNotesPrompt = () => {
+    const prompts = [
+      "Describe your key takeaways from this task...",
+      "What did you learn or accomplish with this task?",
+      "Share your insights and outcomes from completing this...",
+      "Reflect on your experience with this task...",
+      "What were the main results or learnings from this work?"
+    ];
+    return prompts[Math.floor(Math.random() * prompts.length)];
+  };
+
   const handleCompleteTask = async (taskId) => {
     if (isProjectPhase && onCompleteProjectTask) {
       await onCompleteProjectTask(taskId, evidenceDescription, evidenceFile);
