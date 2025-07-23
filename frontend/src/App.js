@@ -2875,7 +2875,12 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                 </button>
                 <button
                   onClick={() => handleCompleteTask(selectedTask)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700"
+                  disabled={!evidenceDescription.trim()}
+                  className={`px-4 py-2 rounded-md text-sm font-medium ${
+                    evidenceDescription.trim() 
+                      ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
                 >
                   Mark as Complete
                 </button>
