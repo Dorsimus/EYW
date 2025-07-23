@@ -1791,7 +1791,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
             </div>
           ) : (
             <div className="text-center py-8">
-              <p className="text-gray-500">No portfolio items yet. Start building your evidence!</p>
+              <p className="text-gray-500">No portfolio items yet. Start building your professional portfolio!</p>
               <button 
                 onClick={() => setCurrentView('add-portfolio')}
                 className="mt-3 text-blue-600 hover:text-blue-500 font-medium"
