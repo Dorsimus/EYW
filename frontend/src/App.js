@@ -2074,7 +2074,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
           type: "Documentation + Portfolio Building",
           objective: "Create comprehensive project documentation for portfolio",
           deliverable: "Complete Project Portfolio Package",
-          portfolioConnection: "Evidence for all competency areas",
+          portfolioConnection: "Work samples from all competency areas",
           tasks: [
             "Compile all project materials into organized portfolio section",
             "Create project summary highlighting key achievements",
