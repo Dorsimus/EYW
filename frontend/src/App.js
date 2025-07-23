@@ -2145,7 +2145,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                   <div className="flex items-center space-x-2">
                     <div className="w-32 bg-gray-200 rounded-full h-3">
                       <div 
-                        className="bg-green-500 h-3 rounded-full transition-all duration-500"
+                        className="progress-bar h-3 rounded-full transition-all duration-500"
                         style={{ width: `${areaData.overall_progress || 0}%` }}
                       />
                     </div>
