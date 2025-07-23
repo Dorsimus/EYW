@@ -347,8 +347,10 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus: []
-  stuck_tasks: []
+  current_focus:
+    - "Design Improvements & Color-Coding System"
+  stuck_tasks:
+    - "Design Improvements & Color-Coding System"
   test_all: false
   test_priority: "high_first"
 
