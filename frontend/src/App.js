@@ -1196,8 +1196,8 @@ const App = () => {
             </div>
           </div>
           
-          {/* REDSTONE NAVIGATION - Perfect spacing between emblem and content */}
-          <nav className="flex justify-between items-center -mt-4">
+          {/* REDSTONE NAVIGATION - Pushed up closer to emblem */}
+          <nav className="flex justify-between items-center -mt-8 mb-4">
             <div className="flex space-x-3 flex-wrap">
             {/* REGULAR USER NAVIGATION */}
             {!isAdmin && [
