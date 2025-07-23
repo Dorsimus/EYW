@@ -1337,6 +1337,21 @@ const App = () => {
           <PortfolioView portfolio={portfolio} setCurrentView={setCurrentView} />
         )}
         
+        {currentView === 'core-values' && !isAdmin && (
+          <CoreValuesView 
+            coreValues={coreValues}
+            coreValueEntries={coreValueEntries}
+            expandedValue={expandedValue}
+            setExpandedValue={setExpandedValue}
+            newEntry={newEntry}
+            setNewEntry={setNewEntry}
+            showNewEntryForm={showNewEntryForm}
+            setShowNewEntryForm={setShowNewEntryForm}
+            onAddEntry={handleAddCoreValueEntry}
+            onDeleteEntry={handleDeleteCoreValueEntry}
+          />
+        )}
+        
         {currentView === 'add-portfolio' && !isAdmin && (
           <AddPortfolioView 
             portfolioItem={newPortfolioItem}
