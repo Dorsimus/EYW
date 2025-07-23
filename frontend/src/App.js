@@ -1945,7 +1945,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
           type: "Analysis + Documentation",
           objective: "Identify and analyze potential improvement opportunities at your property",
           deliverable: "Opportunity Analysis Report (2-3 pages)",
-          portfolioConnection: "Strategic Thinking evidence",
+          portfolioConnection: "Strategic Thinking work samples",
           tasks: [
             "Conduct property walkthrough and operations assessment",
             "Review property performance data (financial, operational, resident satisfaction)",
