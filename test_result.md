@@ -324,9 +324,9 @@ frontend:
 
   - task: "Design Improvements & Color-Coding System"
     implemented: true
-    working: true
-    file: "frontend/src/App.js, frontend/src/index.css"
-    stuck_count: 0
+    working: false
+    file: "frontend/src/App.js, frontend/src/index.css, frontend/src/App.css"
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
@@ -336,6 +336,9 @@ frontend:
         - working: true
         - agent: "testing"
         - comment: "✅ COMPREHENSIVE DESIGN & COLOR-CODING VERIFICATION COMPLETED! Successfully tested all design improvements: 1) Red triangle emblem displayed in header (not 'EYW') ✅ - Found visible red triangle emblem image, 2) Navigation buttons use Redstone Gray background (rgba(239, 239, 239, 0.9)) for inactive buttons ✅, 3) Active button shows in red color ✅, 4) Navigation hover effects with wiggle animation ✅ - Detected transform matrix animations. COLOR-CODED COMPETENCY SYSTEM FULLY VERIFIED: Financial Management (Pink/Red gradient), Leadership & Supervision (Blue/Purple gradient), Operational Management (Blue/Cyan gradient), Cross-Functional Collaboration (Green gradient), Strategic Thinking (Pink/Yellow gradient). Each competency area has distinct colored visual elements, progress bars use competency-specific gradients, sub-competency cards maintain color theme consistency, task cards show appropriate color coding, and visual hierarchy creates clear distinction. Colors are professional and not harsh. All requirements met perfectly!"
+        - working: false
+        - agent: "testing"
+        - comment: "❌ CRITICAL ISSUE FOUND: Financial Management Green Fix FAILING! Comprehensive testing revealed: ✅ Logo background fix working (red triangle with light gray background), ✅ Softer color gradients working (professional, not harsh), ✅ Parent-child color consistency working (each area maintains color family), ❌ FINANCIAL MANAGEMENT CRITICAL ISSUE: Still displays PINK/PURPLE gradient instead of GREEN. Investigation shows: ✅ Correct CSS class 'competency-financial' applied, ✅ Correct CSS variables defined (#059669 green), ✅ Correct GREEN border-left color (rgb(5, 150, 105)), ❌ INCORRECT background gradient showing 'linear-gradient(135deg, rgb(240, 147, 251) 0%, rgb(245, 87, 108) 100%)' (pink/purple). ROOT CAUSE: App.css lines 38-40 contain old pink gradient for .competency-financial that overrides the correct green gradient in index.css. This is exactly the issue mentioned in review request - Financial Management shows pink/purple instead of green."
 
 metadata:
   created_by: "main_agent"
