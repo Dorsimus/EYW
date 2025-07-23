@@ -2842,14 +2842,15 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Evidence Description (Optional)
+                    Task Notes (Required)
                   </label>
                   <textarea
                     value={evidenceDescription}
                     onChange={(e) => setEvidenceDescription(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md"
                     rows={3}
-                    placeholder="Describe how you completed this task..."
+                    placeholder="Describe your key takeaways from this task..."
+                    required
                   />
                 </div>
                 
