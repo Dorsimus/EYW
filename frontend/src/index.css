@@ -250,17 +250,18 @@ body {
   box-shadow: 0 25px 50px rgba(255, 52, 67, 0.2);
 }
 
-/* FIXED Avatar - Redstone Colors */
+/* REFINED Avatar - Ultra Subtle */
 .redstone-avatar {
   background: var(--primary-gradient);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  box-shadow: var(--shadow-luxury);
+  color: #374151;
+  border: 1px solid rgba(255, 52, 67, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .redstone-avatar:hover {
-  transform: scale(1.05);
-  box-shadow: 0 20px 40px rgba(255, 52, 67, 0.15);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(255, 52, 67, 0.04);
 }
 
 /* Content Card with Proper Background */
