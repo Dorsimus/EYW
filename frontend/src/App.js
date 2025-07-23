@@ -1276,6 +1276,7 @@ const App = () => {
               </div>
             )}
           </nav>
+        </div>
       </header>
 
       {/* Main Content */}
