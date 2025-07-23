@@ -260,7 +260,7 @@ body {
 
 .redstone-avatar:hover {
   transform: scale(1.05);
-  box-shadow: 0 20px 40px rgba(255, 52, 67, 0.3);
+  box-shadow: 0 20px 40px rgba(255, 52, 67, 0.15);
 }
 
 /* Content Card with Proper Background */
