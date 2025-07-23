@@ -1176,6 +1176,7 @@ const App = () => {
                   </p>
                 </div>
               </div>
+            </div>
             
             {/* Center - HUGE Winged Emblem (Star of the Show!) */}
             <div className="flex-shrink-0">
