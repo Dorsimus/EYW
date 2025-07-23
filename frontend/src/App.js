@@ -2108,7 +2108,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
           type: "Formal Presentation + Assessment",
           objective: "Present project results and demonstrate readiness for advancement",
           deliverable: "Completed Presentation + Committee Evaluation",
-          portfolioConnection: "Culmination of all competency evidence",
+          portfolioConnection: "Culmination of all competency achievements",
           tasks: [
             "Deliver 15-20 minute presentation to EYW Committee",
             "Present project challenge, approach, and business results",
