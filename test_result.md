@@ -372,7 +372,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Design Improvements & Color-Coding System"
+    - "Supportive Language Improvements & Required Field Validation"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
