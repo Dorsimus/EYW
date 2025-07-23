@@ -1086,7 +1086,11 @@ const App = () => {
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
               <div className="w-16 h-16 bg-gradient-to-br from-red-600 via-red-500 to-blue-800 rounded-2xl flex items-center justify-center text-white font-black text-xl mr-6 shadow-lg" style={{background: 'linear-gradient(135deg, #ff3443 0%, #0127a2 100%)'}}>
-                <span className="tracking-wider">EYW</span>
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_navigator-platform/artifacts/6hbbx0pn_20250722_1548_Red%20Triangle%20Emblem_remix_01k0t1kk52fbvs6xn4fyjwqp26.png" 
+                  alt="Red Triangle Emblem" 
+                  className="w-12 h-12 object-contain"
+                />
               </div>
               <div>
                 <h1 className="redstone-heading text-3xl font-black">Earn Your Wings</h1>
