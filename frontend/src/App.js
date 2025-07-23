@@ -1177,10 +1177,13 @@ const App = () => {
                 </div>
               </div>
             
-            {/* Center - Earn Your Wings Title with Subtitle */}
-            <div className="flex-grow text-center">
-              <h1 className="text-4xl font-black text-gray-600">Earn Your Wings</h1>
-              <p className="text-lg font-medium text-gray-500 mt-1">Redstone Career Pathing Program</p>
+            {/* Center - HUGE Winged Emblem (Star of the Show!) */}
+            <div className="flex-shrink-0">
+              <img 
+                src="https://customer-assets.emergentagent.com/job_navigator-platform/artifacts/0rr43l7c_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png" 
+                alt="Winged Emblem" 
+                className="w-40 h-40 object-contain drop-shadow-xl"
+              />
             </div>
             
             {/* Right - User Info */}
