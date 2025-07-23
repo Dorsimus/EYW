@@ -2017,7 +2017,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
           type: "Meeting + Communication",
           objective: "Align all stakeholders and officially launch project", 
           deliverable: "Kickoff Meeting Notes + Stakeholder Commitment Documentation",
-          portfolioConnection: "Cross-Functional Collaboration evidence",
+          portfolioConnection: "Cross-Functional Collaboration outcomes",
           tasks: [
             "Schedule and conduct project kickoff meeting",
             "Present project plan to all involved team members",
