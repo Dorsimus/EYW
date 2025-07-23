@@ -2051,7 +2051,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
           type: "Data Analysis + Impact Assessment",
           objective: "Measure and analyze project outcomes against original goals",
           deliverable: "Results Analysis Report with quantified impact",
-          portfolioConnection: "Financial Management + Strategic Thinking evidence",
+          portfolioConnection: "Financial Management + Strategic Thinking contributions",
           tasks: [
             "Collect data on all defined success metrics",
             "Compare results to baseline/target performance",
