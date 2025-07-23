@@ -1166,8 +1166,8 @@ const App = () => {
             <div className="flex items-center">
               <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center text-white font-black text-xl mr-6 shadow-lg">
                 <img 
-                  src="https://customer-assets.emergentagent.com/job_navigator-platform/artifacts/6hbbx0pn_20250722_1548_Red%20Triangle%20Emblem_remix_01k0t1kk52fbvs6xn4fyjwqp26.png" 
-                  alt="Red Triangle Emblem" 
+                  src="https://customer-assets.emergentagent.com/job_navigator-platform/artifacts/0rr43l7c_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png" 
+                  alt="Winged Emblem" 
                   className="w-12 h-12 object-contain"
                 />
               </div>
