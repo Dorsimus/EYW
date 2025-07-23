@@ -2091,7 +2091,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
           type: "Presentation Development",
           objective: "Prepare compelling presentation for EYW Committee",
           deliverable: "Final Presentation Deck + Speaker Notes",
-          portfolioConnection: "Leadership & Communication evidence",
+          portfolioConnection: "Leadership & Communication achievements",
           tasks: [
             "Create presentation slides following EYW template",
             "Structure narrative: Challenge → Solution → Results → Learning",
