@@ -2502,7 +2502,7 @@ const CulminatingTaskCompletionModal = ({ taskId, onComplete, onClose }) => {
                 onChange={(e) => setEvidenceDescription(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 rows="4"
-                placeholder="Describe your progress, key outcomes, lessons learned, or attach relevant documentation..."
+                placeholder="Share your insights, key accomplishments, and learning outcomes from this project phase..."
                 required
               />
             </div>
