@@ -1163,14 +1163,19 @@ const App = () => {
       <header className="redstone-glass-card p-6 mb-8 fade-in">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
-            {/* Left - Winged Emblem (Even Bigger!) */}
-            <div className="flex-shrink-0">
-              <img 
-                src="https://customer-assets.emergentagent.com/job_navigator-platform/artifacts/0rr43l7c_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png" 
-                alt="Winged Emblem" 
-                className="w-32 h-32 object-contain drop-shadow-lg"
-              />
-            </div>
+            {/* Left - User Info */}
+            <div className="flex items-center space-x-6 flex-shrink-0">
+              <div className="text-left">
+                <p className="font-bold text-lg text-gray-800">
+                  {isAdmin ? 'Admin Control' : user?.name}
+                </p>
+                <div className="flex items-center mt-1">
+                  <div className="w-2 h-2 rounded-full mr-3" style={{backgroundColor: '#ff3443'}}></div>
+                  <p className="text-sm font-medium text-gray-800">
+                    {isAdmin ? 'Full Access' : `${getOverallProgress()}% Complete`}
+                  </p>
+                </div>
+              </div>
             
             {/* Center - Earn Your Wings Title with Subtitle */}
             <div className="flex-grow text-center">
