@@ -559,6 +559,40 @@ const App = () => {
     }
   };
 
+  // Core Values Functions
+  const handleAddCoreValueEntry = (valueKey) => {
+    if (!newEntry.story.trim()) return;
+    
+    const entry = {
+      id: Date.now(),
+      story: newEntry.story,
+      date: new Date().toISOString().split('T')[0],
+      createdAt: new Date().toISOString()
+    };
+    
+    const updatedEntries = {
+      ...coreValueEntries,
+      [valueKey]: [...(coreValueEntries[valueKey] || []), entry]
+    };
+    
+    setCoreValueEntries(updatedEntries);
+    localStorage.setItem('core_value_entries', JSON.stringify(updatedEntries));
+    
+    // Reset form
+    setNewEntry({ value: '', story: '', date: '' });
+    setShowNewEntryForm(null);
+  };
+
+  const handleDeleteCoreValueEntry = (valueKey, entryId) => {
+    const updatedEntries = {
+      ...coreValueEntries,
+      [valueKey]: coreValueEntries[valueKey].filter(entry => entry.id !== entryId)
+    };
+    
+    setCoreValueEntries(updatedEntries);
+    localStorage.setItem('core_value_entries', JSON.stringify(updatedEntries));
+  };
+
   const adminLogin = async (email, password) => {
     try {
       // DEMO ADMIN LOGIN - Enhanced persistence
