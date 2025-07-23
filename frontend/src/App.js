@@ -2686,7 +2686,7 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
         <div className="p-6">
           <div className="space-y-4">
             {tasks.map(task => (
-              <div key={task.id} className={`border rounded-lg p-4 ${isTaskComplete(task.id) || task.completed ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
+              <div key={task.id} className={`task-card border rounded-lg p-4 ${getTaskCompetencyClass(area)} ${isTaskComplete(task.id) || task.completed ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-2">
