@@ -1169,12 +1169,12 @@ const App = () => {
               <p className="text-base font-medium text-gray-500">Redstone Career Pathing Program</p>
             </div>
             
-            {/* Center - MASSIVE Winged Emblem (2x Bigger - True Center Stage!) */}
-            <div className="flex-shrink-0 flex items-center justify-center">
+            {/* Center - MASSIVE Winged Emblem (OVERDONE TIGHT!) */}
+            <div className="flex-shrink-0 flex items-center justify-center -my-4">
               <img 
                 src="https://customer-assets.emergentagent.com/job_navigator-platform/artifacts/0rr43l7c_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png" 
                 alt="Winged Emblem" 
-                className="w-80 h-80 object-contain drop-shadow-2xl"
+                className="w-80 h-80 object-contain drop-shadow-2xl -my-6"
               />
             </div>
             
