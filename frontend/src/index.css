@@ -16,31 +16,31 @@
   --glass-light: rgba(255, 255, 255, 0.1);
   --shadow-luxury: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   
-  /* Competency Area Colors - Softer, Light Gradients */
-  --financial-primary: #059669; /* Emerald 600 */
-  --financial-light: #ecfdf5; /* Emerald 50 */
-  --financial-medium: #6ee7b7; /* Emerald 300 */
-  --financial-subtle: #f0fdf4; /* Even lighter green */
+  /* Competency Area Colors - Ultra Subtle, Professional */
+  --financial-primary: rgba(5, 150, 105, 0.7); /* Emerald 600 - more subtle */
+  --financial-light: #fdfefd; /* Even lighter green */
+  --financial-medium: rgba(110, 231, 183, 0.4); /* Emerald 300 - more subtle */
+  --financial-subtle: #fdfffe; /* Ultra light green */
   
-  --leadership-primary: #2563eb; /* Blue 600 */
-  --leadership-light: #eff6ff; /* Blue 50 */
-  --leadership-medium: #93c5fd; /* Blue 300 */
-  --leadership-subtle: #f8faff; /* Even lighter blue */
+  --leadership-primary: rgba(37, 99, 235, 0.7); /* Blue 600 - more subtle */
+  --leadership-light: #fefeff; /* Even lighter blue */
+  --leadership-medium: rgba(147, 197, 253, 0.4); /* Blue 300 - more subtle */
+  --leadership-subtle: #fefeff; /* Ultra light blue */
   
-  --operational-primary: #ea580c; /* Orange 600 */
-  --operational-light: #fff7ed; /* Orange 50 */
-  --operational-medium: #fdba74; /* Orange 300 */
-  --operational-subtle: #fffbf5; /* Even lighter orange */
+  --operational-primary: rgba(234, 88, 12, 0.7); /* Orange 600 - more subtle */
+  --operational-light: #fffefe; /* Even lighter orange */
+  --operational-medium: rgba(253, 186, 116, 0.4); /* Orange 300 - more subtle */
+  --operational-subtle: #fffffe; /* Ultra light orange */
   
-  --cross-functional-primary: #7c3aed; /* Violet 600 */
-  --cross-functional-light: #f5f3ff; /* Violet 50 */
-  --cross-functional-medium: #c4b5fd; /* Violet 300 */
-  --cross-functional-subtle: #fafaf9; /* Even lighter violet */
+  --cross-functional-primary: rgba(124, 58, 237, 0.7); /* Violet 600 - more subtle */
+  --cross-functional-light: #fefefe; /* Even lighter violet */
+  --cross-functional-medium: rgba(196, 181, 253, 0.4); /* Violet 300 - more subtle */
+  --cross-functional-subtle: #fefdff; /* Ultra light violet */
   
-  --strategic-primary: #dc2626; /* Red 600 */
-  --strategic-light: #fef2f2; /* Red 50 */
-  --strategic-medium: #fca5a5; /* Red 300 */
-  --strategic-subtle: #fffafa; /* Even lighter red */
+  --strategic-primary: rgba(220, 38, 38, 0.7); /* Red 600 - more subtle */
+  --strategic-light: #fffefe; /* Even lighter red */
+  --strategic-medium: rgba(252, 165, 165, 0.4); /* Red 300 - more subtle */
+  --strategic-subtle: #fffefe; /* Ultra light red */
 }
 
 /* Premium Dark Background */
