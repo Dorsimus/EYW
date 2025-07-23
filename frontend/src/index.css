@@ -299,6 +299,108 @@ body {
   backdrop-filter: blur(8px);
 }
 
+/* Competency Area Color Scheme */
+
+/* Financial Management - Green Family */
+.competency-financial {
+  border-left: 4px solid var(--financial-primary);
+  background: linear-gradient(135deg, var(--financial-light) 0%, rgba(255, 255, 255, 0.9) 100%);
+}
+
+.competency-financial .progress-bar {
+  background: linear-gradient(90deg, var(--financial-primary) 0%, var(--financial-medium) 100%);
+}
+
+.competency-financial .sub-competency-card {
+  border-left: 3px solid var(--financial-medium);
+  background: linear-gradient(135deg, var(--financial-light) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.competency-financial .task-card {
+  border-left: 2px solid var(--financial-medium);
+  background: rgba(5, 150, 105, 0.05);
+}
+
+/* Leadership & Supervision - Blue Family */
+.competency-leadership {
+  border-left: 4px solid var(--leadership-primary);
+  background: linear-gradient(135deg, var(--leadership-light) 0%, rgba(255, 255, 255, 0.9) 100%);
+}
+
+.competency-leadership .progress-bar {
+  background: linear-gradient(90deg, var(--leadership-primary) 0%, var(--leadership-medium) 100%);
+}
+
+.competency-leadership .sub-competency-card {
+  border-left: 3px solid var(--leadership-medium);
+  background: linear-gradient(135deg, var(--leadership-light) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.competency-leadership .task-card {
+  border-left: 2px solid var(--leadership-medium);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+/* Operational Management - Orange Family */
+.competency-operational {
+  border-left: 4px solid var(--operational-primary);
+  background: linear-gradient(135deg, var(--operational-light) 0%, rgba(255, 255, 255, 0.9) 100%);
+}
+
+.competency-operational .progress-bar {
+  background: linear-gradient(90deg, var(--operational-primary) 0%, var(--operational-medium) 100%);
+}
+
+.competency-operational .sub-competency-card {
+  border-left: 3px solid var(--operational-medium);
+  background: linear-gradient(135deg, var(--operational-light) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.competency-operational .task-card {
+  border-left: 2px solid var(--operational-medium);
+  background: rgba(234, 88, 12, 0.05);
+}
+
+/* Cross-Functional Collaboration - Purple Family */
+.competency-cross-functional {
+  border-left: 4px solid var(--cross-functional-primary);
+  background: linear-gradient(135deg, var(--cross-functional-light) 0%, rgba(255, 255, 255, 0.9) 100%);
+}
+
+.competency-cross-functional .progress-bar {
+  background: linear-gradient(90deg, var(--cross-functional-primary) 0%, var(--cross-functional-medium) 100%);
+}
+
+.competency-cross-functional .sub-competency-card {
+  border-left: 3px solid var(--cross-functional-medium);
+  background: linear-gradient(135deg, var(--cross-functional-light) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.competency-cross-functional .task-card {
+  border-left: 2px solid var(--cross-functional-medium);
+  background: rgba(124, 58, 237, 0.05);
+}
+
+/* Strategic Thinking - Red Family */
+.competency-strategic {
+  border-left: 4px solid var(--strategic-primary);
+  background: linear-gradient(135deg, var(--strategic-light) 0%, rgba(255, 255, 255, 0.9) 100%);
+}
+
+.competency-strategic .progress-bar {
+  background: linear-gradient(90deg, var(--strategic-primary) 0%, var(--strategic-medium) 100%);
+}
+
+.competency-strategic .sub-competency-card {
+  border-left: 3px solid var(--strategic-medium);
+  background: linear-gradient(135deg, var(--strategic-light) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.competency-strategic .task-card {
+  border-left: 2px solid var(--strategic-medium);
+  background: rgba(220, 38, 38, 0.05);
+}
+
 .redstone-modal-content {
   background: var(--redstone-gray);
   backdrop-filter: blur(20px);
