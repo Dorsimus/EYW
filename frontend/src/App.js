@@ -1994,7 +1994,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
           type: "Project Management + Stakeholder Planning", 
           objective: "Create comprehensive execution plan",
           deliverable: "Complete Project Plan Document",
-          portfolioConnection: "Operational Management evidence",
+          portfolioConnection: "Operational Management deliverables",
           tasks: [
             "Develop detailed project timeline with milestones",
             "Identify all stakeholders and their roles/responsibilities",
