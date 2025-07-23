@@ -1167,7 +1167,7 @@ const App = () => {
             <div className="flex-1 flex justify-center items-center text-center">
               <div>
                 <h1 className="text-3xl font-black text-gray-600">Earn Your Wings</h1>
-                <p className="text-base font-medium text-gray-500">Redstone Employee Development Program</p>
+                <p className="text-base font-medium text-gray-500">Redstone Employee Development</p>
               </div>
             </div>
             
