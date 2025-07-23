@@ -1163,10 +1163,12 @@ const App = () => {
       <header className="redstone-glass-card py-1 fade-in">
         <div className="max-w-7xl mx-auto -my-2">
           <div className="flex justify-between items-center w-full -my-1">
-            {/* Left - Earn Your Wings Title (Smaller) */}
-            <div className="flex-shrink-0 text-left">
-              <h1 className="text-3xl font-black text-gray-600">Earn Your Wings</h1>
-              <p className="text-base font-medium text-gray-500">Redstone Career Pathing Program</p>
+            {/* Left - Earn Your Wings Title (Centered in left half) */}
+            <div className="flex-1 flex justify-center items-center text-center">
+              <div>
+                <h1 className="text-3xl font-black text-gray-600">Earn Your Wings</h1>
+                <p className="text-base font-medium text-gray-500">Redstone Career Pathing Program</p>
+              </div>
             </div>
             
             {/* Center - MASSIVE Winged Emblem (OVERDONE TIGHT!) */}
