@@ -30,27 +30,6 @@
   animation: progressFill 1s ease-out;
 }
 
-/* Custom gradient backgrounds for competency areas */
-.competency-leadership {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.competency-financial {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-.competency-operational {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-}
-
-.competency-cross-functional {
-  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-}
-
-.competency-strategic {
-  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-}
-
 /* Portfolio card hover effects */
 .portfolio-card {
   @apply transform transition-all duration-300 hover:scale-105 hover:shadow-xl;
