@@ -2808,7 +2808,7 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                     </p>
                     {task.completion_data.evidence_description && (
                       <p className="text-sm text-green-700 mt-1">
-                        <strong>Evidence:</strong> {String(task.completion_data.evidence_description)}
+                        <strong>Notes:</strong> {String(task.completion_data.evidence_description)}
                       </p>
                     )}
                     {task.completion_data.notes && (
