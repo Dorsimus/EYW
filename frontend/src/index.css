@@ -247,7 +247,7 @@ body {
 
 .redstone-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 25px 50px rgba(255, 52, 67, 0.4);
+  box-shadow: 0 25px 50px rgba(255, 52, 67, 0.2);
 }
 
 /* FIXED Avatar - Redstone Colors */
