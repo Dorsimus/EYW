@@ -1172,9 +1172,10 @@ const App = () => {
               />
             </div>
             
-            {/* Center - Earn Your Wings Title */}
+            {/* Center - Earn Your Wings Title with Subtitle */}
             <div className="flex-grow text-center">
               <h1 className="text-4xl font-black text-gray-600">Earn Your Wings</h1>
+              <p className="text-lg font-medium text-gray-500 mt-1">Redstone Career Pathing Program</p>
             </div>
             
             {/* Right - User Info */}
