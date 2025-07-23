@@ -1166,7 +1166,7 @@ const App = () => {
             {/* Left - Earn Your Wings Title (Smaller) */}
             <div className="flex-shrink-0 text-left">
               <h1 className="text-3xl font-black text-gray-600">Earn Your Wings</h1>
-              <p className="text-base font-medium text-gray-500 mt-1">Redstone Career Pathing Program</p>
+              <p className="text-base font-medium text-gray-500">Redstone Career Pathing Program</p>
             </div>
             
             {/* Center - MASSIVE Winged Emblem (2x Bigger - True Center Stage!) */}
