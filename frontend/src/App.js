@@ -2495,7 +2495,7 @@ const CulminatingTaskCompletionModal = ({ taskId, onComplete, onClose }) => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Project Notes & Evidence Description
+                Project Notes & Reflections (Required)
               </label>
               <textarea
                 value={evidenceDescription}
