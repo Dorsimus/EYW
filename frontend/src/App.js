@@ -1162,7 +1162,7 @@ const App = () => {
       {/* REDSTONE HEADER */}
       <header className="redstone-glass-card p-3 mb-4 fade-in">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-6 w-full">
+          <div className="flex justify-between items-center mb-2 w-full">
             {/* Left - Earn Your Wings Title (Smaller) */}
             <div className="flex-shrink-0 text-left">
               <h1 className="text-3xl font-black text-gray-600">Earn Your Wings</h1>
