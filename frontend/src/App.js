@@ -2034,7 +2034,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
           type: "Implementation + Ongoing Management",
           objective: "Execute project plan while managing progress and obstacles",
           deliverable: "Weekly Progress Reports + Implementation Documentation",
-          portfolioConnection: "Leadership & Supervision + Operational Management evidence",
+          portfolioConnection: "Leadership & Supervision + Operational Management accomplishments",
           tasks: [
             "Implement project activities according to timeline",
             "Conduct regular check-ins with team members",
