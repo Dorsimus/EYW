@@ -1161,8 +1161,8 @@ const App = () => {
     <div className="min-h-screen bg-gray-50">
       {/* REDSTONE HEADER */}
       <header className="redstone-glass-card py-1 fade-in">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center w-full">
+        <div className="max-w-7xl mx-auto -my-2">
+          <div className="flex justify-between items-center w-full -my-1">
             {/* Left - Earn Your Wings Title (Smaller) */}
             <div className="flex-shrink-0 text-left">
               <h1 className="text-3xl font-black text-gray-600">Earn Your Wings</h1>
