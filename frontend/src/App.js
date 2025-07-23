@@ -2557,6 +2557,18 @@ const CulminatingTaskCompletionModal = ({ taskId, onComplete, onClose }) => {
 
 // Task Modal Component - Enhanced for both regular and culminating project tasks
 const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phaseName, phaseDescription, onCompleteProjectTask, culminatingProgress }) => {
+  // Helper function to get competency color class for tasks
+  const getTaskCompetencyClass = (area) => {
+    const classMap = {
+      'financial_management': 'competency-financial',
+      'leadership_supervision': 'competency-leadership', 
+      'operational_management': 'competency-operational',
+      'cross_functional_collaboration': 'competency-cross-functional',
+      'strategic_thinking': 'competency-strategic'
+    };
+    return classMap[area] || '';
+  };
+
   const formatCompetencyName = (area, sub) => {
     const areaNames = {
       leadership_supervision: "Leadership & Supervision",
