@@ -1161,6 +1161,7 @@ const App = () => {
               { key: 'dashboard', label: 'Dashboard', icon: '📊' },
               { key: 'competencies', label: 'Competencies', icon: '🎯' },
               { key: 'portfolio', label: 'Portfolio', icon: '📁' },
+              { key: 'core-values', label: 'Core Values', icon: '💖' },
               { key: 'add-portfolio', label: '', icon: '➕' }
             ].map((tab) => (
               <button
