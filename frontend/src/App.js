@@ -1480,6 +1480,13 @@ const App = () => {
     return Math.round(totalProgress / Object.keys(competencies).length);
   };
 
+  // Local function to open task modal
+  const openTaskModal = (areaKey, subKey, task, taskType = 'course') => {
+    setShowTaskModal({ areaKey, subKey, task, taskType });
+    const existingNotes = getCompetencyTaskNotes(areaKey, subKey, task.id);
+    setTaskNotes(existingNotes);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
