@@ -2283,7 +2283,7 @@ const CompetenciesView = ({
   onCompleteCompetencyTask,
   isCompetencyTaskComplete,
   getCompetencyTaskNotes,
-  openTaskModal,
+
   showTaskModal,
   setShowTaskModal,
   taskNotes,
