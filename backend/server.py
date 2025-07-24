@@ -535,7 +535,7 @@ SAMPLE_TASKS = [
         "description": "Develop communication standards between departments",
         "task_type": "document_upload",
         "competency_area": "cross_functional",
-        "sub_competency": "communication_protocols",
+        "sub_competency": "conflict_resolution_collaboration",
         "order": 1,
         "required": False,
         "estimated_hours": 3.0,
