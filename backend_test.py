@@ -720,6 +720,71 @@ class TaskCompetencyAPITester:
         
         return valid_references, cross_functional_tasks
 
+    def test_strategic_thinking_competency_progress(self):
+        """Test competency progress calculation with new Strategic Thinking structure"""
+        print("\n📊 Strategic Thinking Competency Progress Calculation")
+        
+        if not self.user_id:
+            print("❌ No user ID available for testing")
+            return False, {}
+        
+        success, response = self.run_test(
+            "Get User Competencies", 
+            "GET", 
+            f"users/{self.user_id}/competencies", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Check strategic_thinking competency progress
+        if 'strategic_thinking' not in response:
+            print("❌ strategic_thinking competency missing from user progress")
+            return False, {}
+        
+        strategic_thinking_progress = response['strategic_thinking']
+        sub_competencies = strategic_thinking_progress.get('sub_competencies', {})
+        
+        expected_sub_competencies = {
+            "strategic_analysis_planning",
+            "data_driven_decisions",
+            "market_competitive_positioning", 
+            "innovation_continuous_improvement",
+            "vision_goal_achievement"
+        }
+        
+        print(f"   Strategic Thinking Overall Progress: {strategic_thinking_progress.get('overall_progress', 0)}%")
+        print(f"   Sub-Competencies Found: {len(sub_competencies)}")
+        
+        progress_calculation_valid = True
+        total_tasks = 0
+        total_completed = 0
+        
+        for sub_comp in expected_sub_competencies:
+            if sub_comp in sub_competencies:
+                sub_data = sub_competencies[sub_comp]
+                completed = sub_data.get('completed_tasks', 0)
+                total = sub_data.get('total_tasks', 0)
+                percentage = sub_data.get('completion_percentage', 0)
+                
+                print(f"   ✅ {sub_comp}: {completed}/{total} tasks ({percentage:.1f}%)")
+                total_tasks += total
+                total_completed += completed
+            else:
+                print(f"   ❌ {sub_comp}: MISSING from user progress")
+                progress_calculation_valid = False
+        
+        print(f"   Total Strategic Thinking Tasks: {total_tasks}")
+        print(f"   Total Completed: {total_completed}")
+        
+        if progress_calculation_valid:
+            print("   ✅ Strategic Thinking competency progress calculation working correctly")
+        else:
+            print("   ❌ Strategic Thinking competency progress calculation has issues")
+        
+        return progress_calculation_valid, response
+
     def test_cross_functional_competency_progress(self):
         """Test competency progress calculation with new Cross-Functional structure"""
         print("\n📊 Cross-Functional Competency Progress Calculation")
