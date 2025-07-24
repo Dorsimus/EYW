@@ -484,7 +484,57 @@ const App = () => {
             signature_activity: {
               title: "Communication Master Class",
               icon: "🗣️",
-              description: "Three-month development of communication systems, conflict resolution, and influence skills"
+              description: "Three-month development of communication systems, conflict resolution, and influence skills",
+              phases: [
+                {
+                  phase: 1,
+                  title: "Clear Communication Systems",
+                  duration: "Month 1",
+                  activities: [
+                    "Develop systems for consistent, clear communication with team",
+                    "CM Shadowing Focus: Observe how CM structures and leads various types of meetings",
+                    "Practice Implementation: Lead weekly team meetings and daily huddles for 4 weeks"
+                  ],
+                  deliverables: [
+                    "Team Communication Standards and Expectations",
+                    "Meeting Templates (team meetings, one-on-ones, huddles)",
+                    "Communication Tracking System (ensuring nothing falls through cracks)"
+                  ],
+                  journal_prompt: "How do I ensure my communication is clear, consistent, and actionable? What communication habits build trust vs. confusion?"
+                },
+                {
+                  phase: 2,
+                  title: "Conflict Resolution Mastery",
+                  duration: "Month 2",
+                  activities: [
+                    "Build expertise in resolving interpersonal conflicts and team disputes",
+                    "CM Shadowing Focus: Observe CM mediating conflicts and difficult team dynamics",
+                    "Skill Practice: Facilitate resolution of team conflicts (with CM oversight)"
+                  ],
+                  deliverables: [
+                    "Conflict Resolution Playbook (personal methodology)",
+                    "Conflict Case Studies (3+ real conflicts resolved)",
+                    "Team Harmony Improvement Evidence"
+                  ],
+                  journal_prompt: "How do I stay neutral and solution-focused during emotional conflicts? What techniques help me de-escalate while addressing root issues?"
+                },
+                {
+                  phase: 3,
+                  title: "Influencing Without Authority",
+                  duration: "Month 3",
+                  activities: [
+                    "Develop skills in motivating and influencing team members through inspiration rather than position power",
+                    "Cross-Property Learning: Observe different leadership styles at 2 other properties",
+                    "Practice advanced influence techniques with team member buy-in challenges"
+                  ],
+                  deliverables: [
+                    "Influence Strategy for each team member",
+                    "Examples of successful influence and motivation",
+                    "Team Buy-in Success Stories"
+                  ],
+                  journal_prompt: "How do I earn influence and respect rather than demanding it? What makes people want to follow my leadership?"
+                }
+              ]
             }
           },
           performance_management: {
