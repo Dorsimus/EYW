@@ -1275,7 +1275,7 @@ class TaskCompetencyAPITester:
             return False, {"regressions": True, "issues": regression_issues}
 
 def main():
-    print("🚀 Starting COMPREHENSIVE Backend API Tests - FOCUS: Cross-Functional Collaboration Framework")
+    print("🚀 Starting COMPREHENSIVE Backend API Tests - FOCUS: Strategic Thinking Framework Integration")
     print("=" * 80)
     
     tester = TaskCompetencyAPITester()
@@ -1293,11 +1293,11 @@ def main():
     tester.test_create_user()                  # Legacy test
     tester.test_get_user()
     
-    # 3. CRITICAL - Cross-Functional Collaboration Framework Tests
-    print("\n🎯 CRITICAL - Cross-Functional Collaboration Framework Tests:")
-    tester.test_cross_functional_framework_verification()
-    tester.test_cross_functional_task_references()
-    tester.test_cross_functional_competency_progress()
+    # 3. CRITICAL - Strategic Thinking Framework Tests
+    print("\n🎯 CRITICAL - Strategic Thinking Framework Tests:")
+    tester.test_strategic_thinking_framework_verification()
+    tester.test_strategic_thinking_task_references()
+    tester.test_strategic_thinking_competency_progress()
     
     # 4. HIGH PRIORITY - User Data Loading Endpoints
     print("\n📊 HIGH PRIORITY - User Data Loading Tests:")
@@ -1310,11 +1310,22 @@ def main():
     tester.test_admin_login()        # POST /api/admin/login
     tester.test_seed_sample_tasks()  # POST /api/admin/seed-tasks
     
-    # 6. CRITICAL - Admin Cross-Functional Task Management
-    print("\n🔐 CRITICAL - Admin Cross-Functional Task Management:")
+    # 6. CRITICAL - Admin Strategic Thinking Task Management
+    print("\n🔐 CRITICAL - Admin Strategic Thinking Task Management:")
+    tester.test_admin_strategic_thinking_task_management()
+    
+    # 7. CRITICAL - Cross-Functional Collaboration Framework Tests (Regression)
+    print("\n🎯 CRITICAL - Cross-Functional Framework Regression Tests:")
+    tester.test_cross_functional_framework_verification()
+    tester.test_cross_functional_task_references()
+    tester.test_cross_functional_competency_progress()
     tester.test_admin_cross_functional_task_management()
     
-    # 7. LOW PRIORITY - Admin API Verification
+    # 8. CRITICAL - Other Competency Areas Regression Testing
+    print("\n🔍 CRITICAL - Other Competency Areas Regression Testing:")
+    tester.test_other_competency_areas_regression()
+    
+    # 9. LOW PRIORITY - Admin API Verification
     print("\n🔐 LOW PRIORITY - Admin API Verification:")
     tester.test_admin_stats()        # GET /api/admin/stats
     tester.test_admin_get_all_tasks()  # GET /api/admin/tasks
@@ -1323,17 +1334,18 @@ def main():
     tester.test_admin_update_task()    # PUT /api/admin/tasks/{id}
     tester.test_admin_delete_task()    # DELETE /api/admin/tasks/{id}
     
-    # 8. Additional Task Management Tests
+    # 10. Additional Task Management Tests
     print("\n📚 Additional Task Management Tests:")
     tester.test_get_all_tasks()      # GET /api/tasks
     tester.test_get_user_tasks_for_competency()  # GET /api/users/{id}/tasks/{area}/{sub}
     tester.test_complete_task()      # POST /api/users/{id}/task-completions
     
-    # 9. CRITICAL - Backend-Frontend Alignment Verification
+    # 11. CRITICAL - Backend-Frontend Alignment Verification
     print("\n🔄 CRITICAL - Backend-Frontend Alignment:")
+    tester.test_strategic_thinking_backend_frontend_alignment()
     tester.test_backend_frontend_alignment()
     
-    # 10. Additional API tests
+    # 12. Additional API tests
     print("\n📊 Additional API Tests:")
     tester.test_get_competency_framework()
     tester.test_get_tasks_for_competency()
@@ -1346,15 +1358,15 @@ def main():
     print(f"   Tests Passed: {tester.tests_passed}")
     print(f"   Success Rate: {(tester.tests_passed/tester.tests_run)*100:.1f}%")
     
-    # Specific analysis for Cross-Functional Collaboration framework
-    print(f"\n🎯 CROSS-FUNCTIONAL COLLABORATION FRAMEWORK ANALYSIS:")
+    # Specific analysis for Strategic Thinking framework
+    print(f"\n🎯 STRATEGIC THINKING FRAMEWORK ANALYSIS:")
     print(f"   This test focused on verifying the backend has been updated to match")
     print(f"   the frontend integration with 5 specific focus areas:")
-    print(f"   1. interdepartmental_partnership")
-    print(f"   2. resident_experience_collaboration")
-    print(f"   3. property_team_culture")
-    print(f"   4. stakeholder_relationship_management")
-    print(f"   5. conflict_resolution_collaboration")
+    print(f"   1. strategic_analysis_planning: Property-Level Strategic Analysis & Planning")
+    print(f"   2. data_driven_decisions: Data-Driven Decision Making & Insights")
+    print(f"   3. market_competitive_positioning: Market Awareness & Competitive Positioning")
+    print(f"   4. innovation_continuous_improvement: Innovation & Continuous Improvement Leadership")
+    print(f"   5. vision_goal_achievement: Long-Term Vision & Goal Achievement")
     
     # Specific analysis for user creation hanging issue
     print(f"\n🔍 USER CREATION ANALYSIS:")
@@ -1378,7 +1390,7 @@ def main():
     
     if tester.tests_passed == tester.tests_run:
         print("🎉 ALL TESTS PASSED! Backend APIs are working correctly.")
-        print("   Cross-Functional Collaboration framework is properly aligned.")
+        print("   Strategic Thinking framework is properly aligned.")
         return 0
     else:
         failed_tests = tester.tests_run - tester.tests_passed
