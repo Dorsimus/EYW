@@ -554,7 +554,7 @@ SAMPLE_TASKS = [
         "description": "Facilitate strategic planning session for department goals",
         "task_type": "project",
         "competency_area": "strategic_thinking",
-        "sub_competency": "longterm_planning",
+        "sub_competency": "strategic_analysis_planning",
         "order": 1,
         "required": True,
         "estimated_hours": 8.0,
