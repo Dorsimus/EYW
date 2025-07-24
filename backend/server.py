@@ -524,7 +524,7 @@ SAMPLE_TASKS = [
         "description": "Map the complete resident experience across all departments",
         "task_type": "project",
         "competency_area": "cross_functional",
-        "sub_competency": "resident_journey",
+        "sub_competency": "resident_experience_collaboration",
         "order": 1,
         "required": True,
         "estimated_hours": 6.0,
