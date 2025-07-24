@@ -2876,18 +2876,15 @@ const CompetenciesView = ({
                                                           <div className="mt-2">
                                                             <button
                                                               onClick={() => {
-                                                                const currentNotes = parsedProgress[activityKey]?.notes || '';
-                                                                const newNotes = prompt(`Add notes for: ${activity}`, currentNotes);
-                                                                if (newNotes !== null) {
-                                                                  const newProgress = {
-                                                                    ...parsedProgress,
-                                                                    [activityKey]: {
-                                                                      ...parsedProgress[activityKey],
-                                                                      notes: newNotes
-                                                                    }
-                                                                  };
-                                                                  onCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_activity');
-                                                                }
+                                                                setShowTaskModal({ 
+                                                                  areaKey, 
+                                                                  subKey, 
+                                                                  task: { id: `phase_${phase.phase}_activity_${actIndex}`, title: activity }, 
+                                                                  taskType: 'phase_activity',
+                                                                  activityKey,
+                                                                  phase: phase.phase
+                                                                });
+                                                                setTaskNotes(activityNotes);
                                                               }}
                                                               className="text-xs px-2 py-1 bg-blue-50 text-blue-600 border border-blue-200 rounded hover:bg-blue-100 transition-colors"
                                                             >
