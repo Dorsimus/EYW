@@ -488,6 +488,69 @@ class TaskCompetencyAPITester:
         
         return success, response
 
+    def test_strategic_thinking_framework_verification(self):
+        """Test Strategic Thinking framework structure - CRITICAL TEST"""
+        print("\n🎯 CRITICAL: Strategic Thinking Framework Verification")
+        
+        success, response = self.run_test(
+            "Get Competency Framework", 
+            "GET", 
+            "competencies", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Check if strategic_thinking competency exists
+        if 'strategic_thinking' not in response:
+            print("❌ CRITICAL: strategic_thinking competency area missing from backend")
+            return False, {}
+        
+        strategic_thinking = response['strategic_thinking']
+        expected_sub_competencies = {
+            "strategic_analysis_planning": "Property-Level Strategic Analysis & Planning",
+            "data_driven_decisions": "Data-Driven Decision Making & Insights",
+            "market_competitive_positioning": "Market Awareness & Competitive Positioning",
+            "innovation_continuous_improvement": "Innovation & Continuous Improvement Leadership",
+            "vision_goal_achievement": "Long-Term Vision & Goal Achievement"
+        }
+        
+        print(f"   Strategic Thinking Name: {strategic_thinking.get('name', 'Missing')}")
+        print(f"   Strategic Thinking Description: {strategic_thinking.get('description', 'Missing')}")
+        
+        # Verify sub-competencies structure
+        backend_sub_competencies = strategic_thinking.get('sub_competencies', {})
+        print(f"   Backend Sub-Competencies Count: {len(backend_sub_competencies)}")
+        print(f"   Expected Sub-Competencies Count: {len(expected_sub_competencies)}")
+        
+        # Check each expected sub-competency
+        all_match = True
+        for key, expected_name in expected_sub_competencies.items():
+            if key in backend_sub_competencies:
+                actual_name = backend_sub_competencies[key]
+                if actual_name == expected_name:
+                    print(f"   ✅ {key}: '{actual_name}' - CORRECT")
+                else:
+                    print(f"   ❌ {key}: Expected '{expected_name}', got '{actual_name}' - MISMATCH")
+                    all_match = False
+            else:
+                print(f"   ❌ {key}: MISSING from backend")
+                all_match = False
+        
+        # Check for unexpected sub-competencies
+        for key in backend_sub_competencies:
+            if key not in expected_sub_competencies:
+                print(f"   ⚠️  {key}: UNEXPECTED sub-competency in backend")
+                all_match = False
+        
+        if all_match:
+            print("   🎯 SUCCESS: Backend Strategic Thinking framework matches frontend requirements!")
+            return True, response
+        else:
+            print("   ❌ CRITICAL FAILURE: Backend-Frontend Strategic Thinking framework mismatch!")
+            return False, response
+
     def test_cross_functional_framework_verification(self):
         """Test Cross-Functional Collaboration framework structure - CRITICAL TEST"""
         print("\n🎯 CRITICAL: Cross-Functional Framework Verification")
