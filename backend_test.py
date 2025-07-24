@@ -1028,6 +1028,93 @@ class TaskCompetencyAPITester:
         
         return all_successful, {"created_tasks": len(created_task_ids)}
 
+    def test_strategic_thinking_backend_frontend_alignment(self):
+        """Test that backend structure matches frontend Strategic Thinking framework"""
+        print("\n🔄 Strategic Thinking Backend-Frontend Alignment Verification")
+        
+        # Get competency framework from backend
+        success, framework = self.run_test(
+            "Get Competency Framework", 
+            "GET", 
+            "competencies", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Get user competencies to test the full data flow
+        if self.user_id:
+            success, user_competencies = self.run_test(
+                "Get User Competencies", 
+                "GET", 
+                f"users/{self.user_id}/competencies", 
+                200
+            )
+        else:
+            user_competencies = {}
+        
+        # Expected frontend structure
+        expected_structure = {
+            "name": "Strategic Thinking & Planning",
+            "description": "Think Like an Owner, Act Like a Leader, Plan Like a Strategist",
+            "sub_competencies": {
+                "strategic_analysis_planning": "Property-Level Strategic Analysis & Planning",
+                "data_driven_decisions": "Data-Driven Decision Making & Insights",
+                "market_competitive_positioning": "Market Awareness & Competitive Positioning",
+                "innovation_continuous_improvement": "Innovation & Continuous Improvement Leadership",
+                "vision_goal_achievement": "Long-Term Vision & Goal Achievement"
+            }
+        }
+        
+        # Verify framework structure
+        strategic_thinking = framework.get('strategic_thinking', {})
+        alignment_issues = []
+        
+        # Check name
+        if strategic_thinking.get('name') != expected_structure['name']:
+            alignment_issues.append(f"Name mismatch: expected '{expected_structure['name']}', got '{strategic_thinking.get('name')}'")
+        
+        # Check description
+        if strategic_thinking.get('description') != expected_structure['description']:
+            alignment_issues.append(f"Description mismatch: expected '{expected_structure['description']}', got '{strategic_thinking.get('description')}'")
+        
+        # Check sub-competencies
+        backend_sub_comps = strategic_thinking.get('sub_competencies', {})
+        expected_sub_comps = expected_structure['sub_competencies']
+        
+        if len(backend_sub_comps) != len(expected_sub_comps):
+            alignment_issues.append(f"Sub-competency count mismatch: expected {len(expected_sub_comps)}, got {len(backend_sub_comps)}")
+        
+        for key, expected_name in expected_sub_comps.items():
+            if key not in backend_sub_comps:
+                alignment_issues.append(f"Missing sub-competency: {key}")
+            elif backend_sub_comps[key] != expected_name:
+                alignment_issues.append(f"Sub-competency name mismatch for {key}: expected '{expected_name}', got '{backend_sub_comps[key]}'")
+        
+        # Check user competency data structure alignment
+        if user_competencies and 'strategic_thinking' in user_competencies:
+            user_strategic_thinking = user_competencies['strategic_thinking']
+            user_sub_comps = user_strategic_thinking.get('sub_competencies', {})
+            
+            for key in expected_sub_comps.keys():
+                if key not in user_sub_comps:
+                    alignment_issues.append(f"User competency missing sub-competency: {key}")
+        
+        # Report results
+        if not alignment_issues:
+            print("   ✅ PERFECT ALIGNMENT: Backend structure exactly matches frontend requirements!")
+            print(f"   - Competency name: ✅ '{strategic_thinking.get('name')}'")
+            print(f"   - Description: ✅ '{strategic_thinking.get('description')}'")
+            print(f"   - Sub-competencies: ✅ {len(backend_sub_comps)} areas correctly defined")
+            print(f"   - User progress structure: ✅ Aligned")
+            return True, {"alignment": "perfect", "issues": []}
+        else:
+            print("   ❌ ALIGNMENT ISSUES FOUND:")
+            for issue in alignment_issues:
+                print(f"     - {issue}")
+            return False, {"alignment": "issues", "issues": alignment_issues}
+
     def test_backend_frontend_alignment(self):
         """Test that backend structure matches frontend Cross-Functional Collaboration framework"""
         print("\n🔄 Backend-Frontend Alignment Verification")
