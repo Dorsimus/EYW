@@ -92,6 +92,14 @@ const App = () => {
   const [newEntry, setNewEntry] = useState({ value: '', story: '', date: '' });
   const [showNewEntryForm, setShowNewEntryForm] = useState(null);
 
+  // Competency Task Progress State
+  const [competencyTaskProgress, setCompetencyTaskProgress] = useState(() => {
+    const saved = localStorage.getItem('competency_task_progress');
+    return saved ? JSON.parse(saved) : {};
+  });
+  const [showTaskModal, setShowTaskModal] = useState(null);
+  const [taskNotes, setTaskNotes] = useState('');
+
   const competencyOptions = [
     { area: 'leadership_supervision', subs: ['team_motivation', 'delegation', 'performance_management', 'coaching_development', 'team_building', 'conflict_resolution', 'difficult_conversations', 'cross_dept_communication', 'resident_resolution', 'crisis_leadership'] },
     { area: 'financial_management', subs: ['budget_creation', 'variance_analysis', 'cost_control', 'roi_decisions', 'revenue_impact', 'pl_understanding', 'kpi_tracking', 'financial_forecasting', 'capex_planning', 'vendor_cost_mgmt'] },
