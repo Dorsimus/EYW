@@ -1468,12 +1468,6 @@ const App = () => {
     return competencyTaskProgress[taskKey]?.notes || '';
   };
 
-  const openTaskModal = (areaKey, subKey, task, taskType = 'course') => {
-    setShowTaskModal({ areaKey, subKey, task, taskType });
-    const existingNotes = getCompetencyTaskNotes(areaKey, subKey, task.id);
-    setTaskNotes(existingNotes);
-  };
-
   const getOverallProgress = () => {
     if (Object.keys(competencies).length === 0) return 0;
     const totalProgress = Object.values(competencies).reduce((sum, area) => sum + (area.overall_progress || 0), 0);
