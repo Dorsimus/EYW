@@ -654,7 +654,57 @@ const App = () => {
             signature_activity: {
               title: "Culture Champion Challenge",
               icon: "🌟",
-              description: "Three-month intensive on assessing, building, and sustaining positive team culture"
+              description: "Three-month intensive on assessing, building, and sustaining positive team culture",
+              phases: [
+                {
+                  phase: 1,
+                  title: "Culture Assessment & Vision Development",
+                  duration: "Month 1",
+                  activities: [
+                    "Conduct comprehensive team culture assessment using surveys and observations",
+                    "CM Shadowing Focus: Observe how CM identifies and addresses culture challenges",
+                    "Team Engagement: Facilitate team sessions to define desired culture and values"
+                  ],
+                  deliverables: [
+                    "Team Culture Assessment Report (current state analysis)",
+                    "Culture Vision Statement co-created with team",
+                    "Culture Gap Analysis (current vs. desired state)"
+                  ],
+                  journal_prompt: "What cultural elements make teams thrive vs. struggle? How do I assess culture objectively while leading change?"
+                },
+                {
+                  phase: 2,
+                  title: "Culture Building Initiatives Implementation",
+                  duration: "Month 2",
+                  activities: [
+                    "Launch targeted culture-building initiatives based on assessment findings",
+                    "CM Shadowing Focus: Observe CM reinforcing positive behaviors and addressing culture detractors",
+                    "Practice Implementation: Lead culture-building activities (team rituals, recognition programs, communication improvements)"
+                  ],
+                  deliverables: [
+                    "Culture Building Action Plan with specific initiatives",
+                    "Team Ritual and Recognition System Implementation",
+                    "Culture Metrics Tracking Dashboard"
+                  ],
+                  journal_prompt: "How do I balance authenticity with intentional culture change? What initiatives create lasting behavioral shifts vs. temporary enthusiasm?"
+                },
+                {
+                  phase: 3,
+                  title: "Culture Sustainability & Measurement",
+                  duration: "Month 3",
+                  activities: [
+                    "Develop systems for sustaining positive culture changes long-term",
+                    "Cross-Property Learning: Study high-performing team cultures at 2 other properties",
+                    "Culture Legacy: Create systems for onboarding new team members into the culture"
+                  ],
+                  deliverables: [
+                    "Culture Sustainability Playbook (maintaining positive changes)",
+                    "New Team Member Culture Integration Process",
+                    "Culture Success Measurement System (ongoing assessment tools)"
+                  ],
+                  journal_prompt: "How do I ensure culture changes outlast my direct involvement? What makes culture self-sustaining vs. dependent on constant reinforcement?"
+                }
+              ]
             }
           }
         },
