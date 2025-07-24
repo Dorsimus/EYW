@@ -1649,7 +1649,7 @@ const App = () => {
             onCompleteCompetencyTask={handleCompleteCompetencyTask}
             isCompetencyTaskComplete={isCompetencyTaskComplete}
             getCompetencyTaskNotes={getCompetencyTaskNotes}
-            openTaskModal={openTaskModal}
+
             showTaskModal={showTaskModal}
             setShowTaskModal={setShowTaskModal}
             taskNotes={taskNotes}
