@@ -1575,6 +1575,12 @@ const App = () => {
     }
   }, [competencyTaskProgress, competencies]);
 
+  const getOverallProgress = () => {
+    if (Object.keys(competencies).length === 0) return 0;
+    const totalProgress = Object.values(competencies).reduce((sum, area) => sum + (area.overall_progress || 0), 0);
+    return Math.round(totalProgress / Object.keys(competencies).length);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
