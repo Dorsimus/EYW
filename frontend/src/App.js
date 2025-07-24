@@ -744,25 +744,151 @@ const App = () => {
         competency_area: "financial_management",
         sub_competencies: {
           budget_creation: {
-            name: "Budget Creation",
-            description: "Create and manage operational budgets",
+            name: "Budget Planning & Management",
+            description: "Master the art of creating, managing, and optimizing department budgets",
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 1
+            total_tasks: 12,
+            foundation_courses: [
+              {
+                id: "fm-fc-01",
+                title: "Budget Fundamentals for Property Management",
+                duration: "2 hours",
+                platform: "PerformanceHQ",
+                description: "Understanding budget creation and management basics"
+              },
+              {
+                id: "fm-fc-02", 
+                title: "Variance Analysis and Financial Controls",
+                duration: "1.5 hours",
+                platform: "PerformanceHQ",
+                description: "Monitoring budget performance and implementing controls"
+              },
+              {
+                id: "fm-fc-03",
+                title: "Cost Management Strategies",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Effective approaches to controlling operational costs"
+              }
+            ],
+            signature_activity: {
+              title: "Financial Stewardship Mastery",
+              icon: "💰",
+              description: "Three-month intensive on budget creation, financial analysis, and cost optimization",
+              phases: [
+                {
+                  phase: 1,
+                  title: "Budget Creation & Planning Excellence",
+                  duration: "Month 1",
+                  activities: [
+                    "Create comprehensive annual budget for your department with line-item detail",
+                    "CM Shadowing Focus: Observe CM during budget planning sessions and financial reviews",
+                    "Analysis Practice: Review 3 years of historical budget data to identify trends and opportunities"
+                  ],
+                  deliverables: [
+                    "Annual Department Budget with detailed justifications",
+                    "Budget Planning Process Documentation",
+                    "Historical Trend Analysis Report"
+                  ],
+                  journal_prompt: "How do I balance operational needs with financial constraints? What budget assumptions am I making and how do I validate them?"
+                },
+                {
+                  phase: 2,
+                  title: "Financial Monitoring & Variance Analysis",
+                  duration: "Month 2",
+                  activities: [
+                    "Implement weekly budget monitoring and variance analysis systems",
+                    "CM Shadowing Focus: Observe CM conducting financial reviews and addressing budget variances",
+                    "Practice Challenge: Present monthly financial performance to leadership with actionable insights"
+                  ],
+                  deliverables: [
+                    "Monthly Financial Dashboard and KPI Tracking System",
+                    "Variance Analysis Reports with root cause analysis",
+                    "Financial Performance Improvement Action Plans"
+                  ],
+                  journal_prompt: "How do I identify the real drivers behind budget variances? What financial indicators give me early warning of potential issues?"
+                },
+                {
+                  phase: 3,
+                  title: "Cost Optimization & Strategic Financial Planning",
+                  duration: "Month 3",
+                  activities: [
+                    "Identify and implement cost optimization opportunities without compromising quality",
+                    "Cross-Department Learning: Study financial best practices from other high-performing properties",
+                    "Strategic Initiative: Present 3-year financial forecast with improvement recommendations"
+                  ],
+                  deliverables: [
+                    "Cost Optimization Implementation Plan with ROI projections",
+                    "3-Year Financial Forecast and Strategic Recommendations",
+                    "Financial Best Practices Playbook"
+                  ],
+                  journal_prompt: "How do I optimize costs while maintaining service quality? What financial strategies create long-term value vs. short-term savings?"
+                }
+              ]
+            }
           },
           variance_analysis: {
-            name: "Variance Analysis",
-            description: "Analyze budget vs actual performance",
+            name: "Performance Analytics & Business Intelligence",
+            description: "Develop expertise in analyzing performance data and creating actionable business insights",
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 1
+            total_tasks: 8,
+            foundation_courses: [
+              {
+                id: "fm-fc-04",
+                title: "Data Analysis for Property Management",
+                duration: "1.5 hours",
+                platform: "PerformanceHQ", 
+                description: "Using data to drive operational decisions"
+              },
+              {
+                id: "fm-fc-05",
+                title: "KPI Development and Tracking",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Creating meaningful performance metrics"
+              }
+            ],
+            signature_activity: {
+              title: "Business Intelligence Champion",
+              icon: "📊",
+              description: "Three-month development of advanced analytics and data-driven decision making skills",
+              phases: [
+                {
+                  phase: 1,
+                  title: "Data Collection & Analysis Foundation",
+                  duration: "Month 1",
+                  activities: [
+                    "Build comprehensive data collection systems for key performance indicators",
+                    "Learn advanced Excel/analytics tools for data manipulation and visualization",
+                    "Create baseline performance benchmarks across all operational areas"
+                  ],
+                  deliverables: [
+                    "Comprehensive KPI Dashboard for department operations",
+                    "Data Collection and Quality Assurance Protocols",
+                    "Performance Baseline Report with benchmarking"
+                  ],
+                  journal_prompt: "What data tells the real story of our performance? How do I ensure data quality while maintaining efficiency?"
+                }
+              ]
+            }
           },
           cost_control: {
-            name: "Cost Control",
-            description: "Monitor and control operational costs",
+            name: "Strategic Cost Management",
+            description: "Master advanced cost control and resource optimization strategies",
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 1
+            total_tasks: 6,
+            foundation_courses: [
+              {
+                id: "fm-fc-06",
+                title: "Strategic Cost Management",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Advanced cost control methodologies"
+              }
+            ]
           }
         }
       },
