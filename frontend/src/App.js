@@ -1569,11 +1569,11 @@ const App = () => {
     return competencyTaskProgress[taskKey]?.notes || '';
   };
 
-  const getOverallProgress = () => {
-    if (Object.keys(competencies).length === 0) return 0;
-    const totalProgress = Object.values(competencies).reduce((sum, area) => sum + (area.overall_progress || 0), 0);
-    return Math.round(totalProgress / Object.keys(competencies).length);
-  };
+  useEffect(() => {
+    if (Object.keys(competencies).length > 0 && Object.keys(competencyTaskProgress).length > 0) {
+      updateCompetencyProgress();
+    }
+  }, [competencyTaskProgress, competencies]);
 
   if (loading) {
     return (
