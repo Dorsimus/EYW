@@ -1558,6 +1558,7 @@ const App = () => {
   };
 
   const handleCompleteCompetencyTask = (areaKey, subKey, taskId, notes = '', taskType = 'course') => {
+    console.log(`Completing task: ${areaKey} -> ${subKey} -> ${taskId}`);
     const taskKey = `${areaKey}_${subKey}_${taskId}`;
     const updatedProgress = {
       ...competencyTaskProgress,
@@ -1569,13 +1570,17 @@ const App = () => {
       }
     };
     
+    console.log('Updated progress object:', updatedProgress);
     setCompetencyTaskProgress(updatedProgress);
     localStorage.setItem('competency_task_progress', JSON.stringify(updatedProgress));
     setShowTaskModal(null);
     setTaskNotes('');
     
-    // Update competency progress percentages
-    setTimeout(() => updateCompetencyProgress(), 100);
+    // Update competency progress percentages immediately
+    setTimeout(() => {
+      console.log('Triggering progress update...');
+      updateCompetencyProgress();
+    }, 500);
   };
 
   const isCompetencyTaskComplete = (areaKey, subKey, taskId) => {
