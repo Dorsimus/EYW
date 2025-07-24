@@ -3013,7 +3013,7 @@ const CompetenciesView = ({
                                                         journal_response: e.target.value,
                                                         last_journal_update: new Date().toISOString()
                                                       };
-                                                      handleCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_journal');
+                                                      onCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_journal');
                                                     }}
                                                     placeholder="Write your reflective response here... Take your time to think deeply about your leadership journey."
                                                     className="w-full p-3 border border-orange-200 rounded-md focus:ring-orange-500 focus:border-orange-500 text-sm"
