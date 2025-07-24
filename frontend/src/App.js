@@ -1909,17 +1909,21 @@ const App = () => {
           >
             <div className="p-6">
               <h4 className="text-lg font-medium text-gray-900 mb-4">
-                Complete {showTaskModal.taskType === 'course' ? 'Course' : 'Task'}: {showTaskModal.task.title}
+                {showTaskModal.taskType === 'phase_activity' ? 'Add Notes for Activity' : 
+                 showTaskModal.taskType === 'course' ? 'Complete Course' : 'Complete Task'}: {showTaskModal.task.title}
               </h4>
               
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Task Notes (Required)
+                  {showTaskModal.taskType === 'phase_activity' ? 'Activity Notes' : 'Task Notes'} 
+                  {showTaskModal.taskType !== 'phase_activity' && ' (Required)'}
                 </label>
                 <textarea
                   value={taskNotes}
                   onChange={(e) => setTaskNotes(e.target.value)}
-                  placeholder="Describe your key learnings, insights, or how you applied this knowledge..."
+                  placeholder={showTaskModal.taskType === 'phase_activity' ? 
+                    "Add your thoughts, insights, or observations about this activity..." :
+                    "Describe your key learnings, insights, or how you applied this knowledge..."}
                   className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                   rows={4}
                   onClick={(e) => e.stopPropagation()}
@@ -1935,7 +1939,33 @@ const App = () => {
                 </button>
                 <button
                   onClick={() => {
-                    if (taskNotes.trim()) {
+                    if (showTaskModal.taskType === 'phase_activity') {
+                      // Handle phase activity notes
+                      const phaseProgress = getCompetencyTaskNotes(showTaskModal.areaKey, showTaskModal.subKey, `phase_${showTaskModal.phase}_progress`) || '{}';
+                      let parsedProgress = {};
+                      try {
+                        parsedProgress = JSON.parse(phaseProgress);
+                      } catch (e) {
+                        parsedProgress = {};
+                      }
+                      
+                      const newProgress = {
+                        ...parsedProgress,
+                        [showTaskModal.activityKey]: {
+                          ...parsedProgress[showTaskModal.activityKey],
+                          notes: taskNotes.trim()
+                        }
+                      };
+                      
+                      handleCompleteCompetencyTask(
+                        showTaskModal.areaKey, 
+                        showTaskModal.subKey, 
+                        `phase_${showTaskModal.phase}_progress`, 
+                        JSON.stringify(newProgress), 
+                        'phase_activity'
+                      );
+                    } else if (taskNotes.trim()) {
+                      // Handle regular task completion
                       handleCompleteCompetencyTask(
                         showTaskModal.areaKey, 
                         showTaskModal.subKey, 
@@ -1945,10 +1975,10 @@ const App = () => {
                       );
                     }
                   }}
-                  disabled={!taskNotes.trim()}
+                  disabled={showTaskModal.taskType !== 'phase_activity' && !taskNotes.trim()}
                   className="px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
                 >
-                  Mark Complete
+                  {showTaskModal.taskType === 'phase_activity' ? 'Save Notes' : 'Mark Complete'}
                 </button>
               </div>
             </div>
