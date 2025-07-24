@@ -2735,7 +2735,11 @@ const CompetenciesView = ({
                                           
                                           {/* Notes Button */}
                                           <button
-                                            onClick={() => openTaskModal(areaKey, subKey, course, 'course')}
+                                            onClick={() => {
+                                              setShowTaskModal({ areaKey, subKey, task: course, taskType: 'course' });
+                                              const existingNotes = getCompetencyTaskNotes(areaKey, subKey, course.id);
+                                              setTaskNotes(existingNotes);
+                                            }}
                                             className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors"
                                           >
                                             📝 {courseNotes ? 'View Notes' : 'Add Notes'}
