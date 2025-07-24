@@ -2625,26 +2625,81 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
                               <h5 className="font-semibold text-gray-900 mb-3 flex items-center">
                                 📚 <span className="ml-2">Foundation Courses (PerformanceHQ)</span>
                               </h5>
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                {subData.foundation_courses.map((course, index) => (
-                                  <div key={index} className="bg-gray-50 rounded-lg p-3 border">
-                                    <div className="flex items-start justify-between">
-                                      <div className="flex-1">
-                                        <h6 className="font-medium text-sm text-gray-900 mb-1">
-                                          {course.title}
-                                        </h6>
-                                        <p className="text-xs text-gray-600 mb-2">
-                                          {course.description}
-                                        </p>
-                                        <div className="flex items-center space-x-2 text-xs text-gray-500">
-                                          <span>⏱️ {course.duration}</span>
-                                          <span>•</span>
-                                          <span>{course.platform}</span>
+                              <div className="grid grid-cols-1 gap-3">
+                                {subData.foundation_courses.map((course, index) => {
+                                  const isCompleted = isCompetencyTaskComplete(areaKey, subKey, course.id);
+                                  const courseNotes = getCompetencyTaskNotes(areaKey, subKey, course.id);
+                                  
+                                  return (
+                                    <div key={index} className={`rounded-lg p-4 border-2 transition-all ${isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
+                                      <div className="flex items-start justify-between mb-3">
+                                        <div className="flex-1">
+                                          <div className="flex items-center mb-2">
+                                            {isCompleted && <span className="text-green-600 mr-2">✅</span>}
+                                            <h6 className="font-semibold text-sm text-gray-900">
+                                              {course.title}
+                                            </h6>
+                                          </div>
+                                          <p className="text-xs text-gray-600 mb-2">
+                                            {course.description}
+                                          </p>
+                                          <div className="flex items-center space-x-3 text-xs text-gray-500 mb-3">
+                                            <span>⏱️ {course.duration}</span>
+                                            <span>•</span>
+                                            <span>{course.platform}</span>
+                                          </div>
                                         </div>
                                       </div>
+                                      
+                                      {/* Action Buttons */}
+                                      <div className="flex items-center justify-between">
+                                        <div className="flex items-center space-x-2">
+                                          {/* LMS Link Button */}
+                                          <a 
+                                            href={`https://performancehq.com/courses/${course.id}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
+                                          >
+                                            🔗 Open in LMS
+                                          </a>
+                                          
+                                          {/* Notes Button */}
+                                          <button
+                                            onClick={() => openTaskModal(areaKey, subKey, course, 'course')}
+                                            className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors"
+                                          >
+                                            📝 {courseNotes ? 'View Notes' : 'Add Notes'}
+                                          </button>
+                                        </div>
+                                        
+                                        {/* Mark Complete Button */}
+                                        {!isCompleted && (
+                                          <button
+                                            onClick={() => openTaskModal(areaKey, subKey, course, 'course')}
+                                            className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-green-600 border border-green-600 rounded-md hover:bg-green-700 transition-colors"
+                                          >
+                                            ✓ Mark Complete
+                                          </button>
+                                        )}
+                                        
+                                        {isCompleted && (
+                                          <div className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-green-700 bg-green-100 border border-green-200 rounded-md">
+                                            ✅ Completed
+                                          </div>
+                                        )}
+                                      </div>
+                                      
+                                      {/* Show notes if they exist */}
+                                      {courseNotes && (
+                                        <div className="mt-3 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs">
+                                          <p className="font-medium text-yellow-800 mb-1">📝 Your Notes:</p>
+                                          <p className="text-yellow-700">{courseNotes}</p>
+                                        </div>
+                                      )}
                                     </div>
-                                  </div>
-                                ))}
+                                  );
+                                })}
                               </div>
                             </div>
                           )}
