@@ -2796,74 +2796,282 @@ const CompetenciesView = ({
                                   {subData.signature_activity.description}
                                 </p>
                                 
-                                {/* Activity Phases */}
+                                {/* Interactive Development Phases */}
                                 {subData.signature_activity.phases && (
-                                  <div className="space-y-4">
-                                    <h6 className="font-semibold text-purple-900">Development Phases:</h6>
-                                    {subData.signature_activity.phases.map((phase, phaseIndex) => (
-                                      <div key={phaseIndex} className="bg-white rounded-lg p-4 border border-purple-100">
-                                        <div className="flex items-start justify-between mb-3">
-                                          <h6 className="font-bold text-gray-900">
-                                            Phase {phase.phase}: {phase.title}
-                                          </h6>
-                                          <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
-                                            {phase.duration}
-                                          </span>
+                                  <div className="space-y-6">
+                                    <h6 className="font-semibold text-purple-900 text-lg">🗺️ Your Leadership Journey - Development Phases</h6>
+                                    <p className="text-sm text-purple-700 italic">Track every step of your 3-month leadership evolution journey!</p>
+                                    
+                                    {subData.signature_activity.phases.map((phase, phaseIndex) => {
+                                      const phaseKey = `${areaKey}_${subKey}_phase_${phase.phase}`;
+                                      const phaseProgress = getCompetencyTaskNotes(areaKey, subKey, `phase_${phase.phase}_progress`) || '{}';
+                                      let parsedProgress = {};
+                                      try {
+                                        parsedProgress = JSON.parse(phaseProgress);
+                                      } catch (e) {
+                                        parsedProgress = {};
+                                      }
+                                      
+                                      return (
+                                        <div key={phaseIndex} className="bg-gradient-to-br from-white to-purple-50 rounded-lg p-6 border-2 border-purple-200 shadow-sm">
+                                          <div className="flex items-start justify-between mb-4">
+                                            <div className="flex items-center">
+                                              <div className="w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold mr-3">
+                                                {phase.phase}
+                                              </div>
+                                              <div>
+                                                <h6 className="font-bold text-xl text-gray-900">
+                                                  {phase.title}
+                                                </h6>
+                                                <p className="text-sm text-purple-700 font-medium">{phase.duration}</p>
+                                              </div>
+                                            </div>
+                                            <span className="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium">
+                                              📅 {phase.duration}
+                                            </span>
+                                          </div>
+                                          
+                                          {/* Key Activities Checklist */}
+                                          {phase.activities && (
+                                            <div className="mb-6">
+                                              <h7 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                                ✅ Key Activities
+                                              </h7>
+                                              <div className="space-y-3">
+                                                {phase.activities.map((activity, actIndex) => {
+                                                  const activityKey = `activity_${actIndex}`;
+                                                  const isCompleted = parsedProgress[activityKey]?.completed || false;
+                                                  const activityNotes = parsedProgress[activityKey]?.notes || '';
+                                                  
+                                                  return (
+                                                    <div key={actIndex} className={`p-4 rounded-lg border-2 transition-all ${isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
+                                                      <div className="flex items-start space-x-3">
+                                                        <input
+                                                          type="checkbox"
+                                                          checked={isCompleted}
+                                                          onChange={(e) => {
+                                                            const newProgress = {
+                                                              ...parsedProgress,
+                                                              [activityKey]: {
+                                                                ...parsedProgress[activityKey],
+                                                                completed: e.target.checked,
+                                                                completedAt: e.target.checked ? new Date().toISOString() : null
+                                                              }
+                                                            };
+                                                            handleCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_activity');
+                                                          }}
+                                                          className="mt-1 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                                                        />
+                                                        <div className="flex-1">
+                                                          <p className={`text-sm font-medium ${isCompleted ? 'text-green-800 line-through' : 'text-gray-800'}`}>
+                                                            {activity}
+                                                          </p>
+                                                          {isCompleted && (
+                                                            <p className="text-xs text-green-600 mt-1">
+                                                              ✅ Completed {parsedProgress[activityKey]?.completedAt ? new Date(parsedProgress[activityKey].completedAt).toLocaleDateString() : ''}
+                                                            </p>
+                                                          )}
+                                                          
+                                                          {/* Activity Notes */}
+                                                          <div className="mt-2">
+                                                            <button
+                                                              onClick={() => {
+                                                                const currentNotes = parsedProgress[activityKey]?.notes || '';
+                                                                const newNotes = prompt(`Add notes for: ${activity}`, currentNotes);
+                                                                if (newNotes !== null) {
+                                                                  const newProgress = {
+                                                                    ...parsedProgress,
+                                                                    [activityKey]: {
+                                                                      ...parsedProgress[activityKey],
+                                                                      notes: newNotes
+                                                                    }
+                                                                  };
+                                                                  handleCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_activity');
+                                                                }
+                                                              }}
+                                                              className="text-xs px-2 py-1 bg-blue-50 text-blue-600 border border-blue-200 rounded hover:bg-blue-100 transition-colors"
+                                                            >
+                                                              📝 {activityNotes ? 'Edit Notes' : 'Add Notes'}
+                                                            </button>
+                                                            {activityNotes && (
+                                                              <div className="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs">
+                                                                <p className="font-medium text-yellow-800">📝 Your Notes:</p>
+                                                                <p className="text-yellow-700 mt-1">{activityNotes}</p>
+                                                              </div>
+                                                            )}
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  );
+                                                })}
+                                              </div>
+                                            </div>
+                                          )}
+                                          
+                                          {/* Deliverables Section */}
+                                          {phase.deliverables && (
+                                            <div className="mb-6">
+                                              <h7 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                                📄 Deliverables
+                                              </h7>
+                                              <div className="space-y-3">
+                                                {phase.deliverables.map((deliverable, delIndex) => {
+                                                  const deliverableKey = `deliverable_${delIndex}`;
+                                                  const isCompleted = parsedProgress[deliverableKey]?.completed || false;
+                                                  const hasFile = parsedProgress[deliverableKey]?.fileName || false;
+                                                  
+                                                  return (
+                                                    <div key={delIndex} className={`p-4 rounded-lg border-2 transition-all ${isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
+                                                      <div className="flex items-start justify-between">
+                                                        <div className="flex items-start space-x-3 flex-1">
+                                                          <input
+                                                            type="checkbox"
+                                                            checked={isCompleted}
+                                                            onChange={(e) => {
+                                                              const newProgress = {
+                                                                ...parsedProgress,
+                                                                [deliverableKey]: {
+                                                                  ...parsedProgress[deliverableKey],
+                                                                  completed: e.target.checked,
+                                                                  completedAt: e.target.checked ? new Date().toISOString() : null
+                                                                }
+                                                              };
+                                                              handleCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_deliverable');
+                                                            }}
+                                                            className="mt-1 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                                                          />
+                                                          <div className="flex-1">
+                                                            <p className={`text-sm font-medium ${isCompleted ? 'text-green-800 line-through' : 'text-gray-800'}`}>
+                                                              {deliverable}
+                                                            </p>
+                                                            {isCompleted && (
+                                                              <p className="text-xs text-green-600 mt-1">
+                                                                ✅ Completed {parsedProgress[deliverableKey]?.completedAt ? new Date(parsedProgress[deliverableKey].completedAt).toLocaleDateString() : ''}
+                                                              </p>
+                                                            )}
+                                                            {hasFile && (
+                                                              <p className="text-xs text-blue-600 mt-1">
+                                                                📎 File: {parsedProgress[deliverableKey].fileName}
+                                                              </p>
+                                                            )}
+                                                          </div>
+                                                        </div>
+                                                        
+                                                        {/* File Upload Button */}
+                                                        <div className="ml-3">
+                                                          <input
+                                                            type="file"
+                                                            id={`file_${phaseKey}_${deliverableKey}`}
+                                                            className="hidden"
+                                                            onChange={(e) => {
+                                                              const file = e.target.files[0];
+                                                              if (file) {
+                                                                const newProgress = {
+                                                                  ...parsedProgress,
+                                                                  [deliverableKey]: {
+                                                                    ...parsedProgress[deliverableKey],
+                                                                    fileName: file.name,
+                                                                    uploadedAt: new Date().toISOString()
+                                                                  }
+                                                                };
+                                                                handleCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_deliverable');
+                                                              }
+                                                            }}
+                                                          />
+                                                          <label
+                                                            htmlFor={`file_${phaseKey}_${deliverableKey}`}
+                                                            className="cursor-pointer text-xs px-3 py-1.5 bg-purple-50 text-purple-600 border border-purple-200 rounded hover:bg-purple-100 transition-colors"
+                                                          >
+                                                            📎 {hasFile ? 'Update File' : 'Upload File'}
+                                                          </label>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  );
+                                                })}
+                                              </div>
+                                            </div>
+                                          )}
+                                          
+                                          {/* Journal Prompt Section */}
+                                          {phase.journal_prompt && (
+                                            <div className="mb-4">
+                                              <h7 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                                📖 Leadership Journal Prompt
+                                              </h7>
+                                              <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-l-4 border-orange-400 p-4 rounded-r-lg">
+                                                <p className="text-sm text-orange-800 font-medium italic mb-3">
+                                                  "{phase.journal_prompt}"
+                                                </p>
+                                                <div className="space-y-2">
+                                                  <textarea
+                                                    value={parsedProgress.journal_response || ''}
+                                                    onChange={(e) => {
+                                                      const newProgress = {
+                                                        ...parsedProgress,
+                                                        journal_response: e.target.value,
+                                                        last_journal_update: new Date().toISOString()
+                                                      };
+                                                      handleCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_journal');
+                                                    }}
+                                                    placeholder="Write your reflective response here... Take your time to think deeply about your leadership journey."
+                                                    className="w-full p-3 border border-orange-200 rounded-md focus:ring-orange-500 focus:border-orange-500 text-sm"
+                                                    rows={4}
+                                                  />
+                                                  {parsedProgress.journal_response && (
+                                                    <p className="text-xs text-orange-600">
+                                                      ✍️ Last updated: {parsedProgress.last_journal_update ? new Date(parsedProgress.last_journal_update).toLocaleDateString() : 'Unknown'}
+                                                    </p>
+                                                  )}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          )}
+                                          
+                                          {/* Reflection Questions */}
+                                          {phase.reflection_questions && (
+                                            <div>
+                                              <h7 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                                🤔 Reflection Questions
+                                              </h7>
+                                              <div className="space-y-3">
+                                                {phase.reflection_questions.map((question, qIndex) => {
+                                                  const questionKey = `reflection_${qIndex}`;
+                                                  
+                                                  return (
+                                                    <div key={qIndex} className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                                                      <p className="text-sm font-medium text-blue-800 mb-2">
+                                                        Q{qIndex + 1}: {question}
+                                                      </p>
+                                                      <textarea
+                                                        value={parsedProgress[questionKey] || ''}
+                                                        onChange={(e) => {
+                                                          const newProgress = {
+                                                            ...parsedProgress,
+                                                            [questionKey]: e.target.value,
+                                                            [`${questionKey}_updated`]: new Date().toISOString()
+                                                          };
+                                                          handleCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_reflection');
+                                                        }}
+                                                        placeholder="Share your thoughts and insights..."
+                                                        className="w-full p-2 border border-blue-200 rounded focus:ring-blue-500 focus:border-blue-500 text-sm"
+                                                        rows={2}
+                                                      />
+                                                      {parsedProgress[questionKey] && (
+                                                        <p className="text-xs text-blue-600 mt-1">
+                                                          ✍️ Last updated: {parsedProgress[`${questionKey}_updated`] ? new Date(parsedProgress[`${questionKey}_updated`]).toLocaleDateString() : 'Unknown'}
+                                                        </p>
+                                                      )}
+                                                    </div>
+                                                  );
+                                                })}
+                                              </div>
+                                            </div>
+                                          )}
                                         </div>
-                                        
-                                        {/* Activities */}
-                                        {phase.activities && (
-                                          <div className="mb-3">
-                                            <p className="text-xs font-medium text-gray-700 mb-2">Key Activities:</p>
-                                            <ul className="text-xs text-gray-600 space-y-1 ml-4">
-                                              {phase.activities.map((activity, actIndex) => (
-                                                <li key={actIndex} className="list-disc">
-                                                  {activity}
-                                                </li>
-                                              ))}
-                                            </ul>
-                                          </div>
-                                        )}
-                                        
-                                        {/* Deliverables */}
-                                        {phase.deliverables && (
-                                          <div className="mb-3">
-                                            <p className="text-xs font-medium text-gray-700 mb-2">📄 Deliverables:</p>
-                                            <ul className="text-xs text-gray-600 space-y-1 ml-4">
-                                              {phase.deliverables.map((deliverable, delIndex) => (
-                                                <li key={delIndex} className="list-disc">
-                                                  {deliverable}
-                                                </li>
-                                              ))}
-                                            </ul>
-                                          </div>
-                                        )}
-                                        
-                                        {/* Journal Prompt */}
-                                        {phase.journal_prompt && (
-                                          <div className="bg-yellow-50 rounded p-3 border-l-3 border-yellow-400">
-                                            <p className="text-xs font-medium text-yellow-800 mb-1">📝 Journal Prompt:</p>
-                                            <p className="text-xs text-yellow-700 italic">
-                                              "{phase.journal_prompt}"
-                                            </p>
-                                          </div>
-                                        )}
-                                        
-                                        {/* Reflection Questions */}
-                                        {phase.reflection_questions && (
-                                          <div className="mt-3">
-                                            <p className="text-xs font-medium text-gray-700 mb-2">💭 Reflection Questions:</p>
-                                            <ul className="text-xs text-gray-600 space-y-1 ml-4">
-                                              {phase.reflection_questions.map((question, qIndex) => (
-                                                <li key={qIndex} className="list-disc">
-                                                  {question}
-                                                </li>
-                                              ))}
-                                            </ul>
-                                          </div>
-                                        )}
-                                      </div>
-                                    ))}
+                                      );
+                                    })}
                                   </div>
                                 )}
                               </div>
