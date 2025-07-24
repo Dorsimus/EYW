@@ -2178,6 +2178,14 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
     return saved ? JSON.parse(saved) : {};
   });
 
+  // Add state for competency task completion and notes
+  const [competencyTaskProgress, setCompetencyTaskProgress] = useState(() => {
+    const saved = localStorage.getItem('competency_task_progress');
+    return saved ? JSON.parse(saved) : {};
+  });
+  const [showTaskModal, setShowTaskModal] = useState(null);
+  const [taskNotes, setTaskNotes] = useState('');
+
   const handleViewTasks = (areaKey, subKey) => {
     if (areaKey === 'culminating_project') {
       // Handle culminating project phases
