@@ -1516,6 +1516,7 @@ const App = () => {
   };
 
   const updateCompetencyProgress = () => {
+    console.log('Updating competency progress...');
     const updatedCompetencies = { ...competencies };
     
     Object.keys(updatedCompetencies).forEach(areaKey => {
@@ -1541,6 +1542,8 @@ const App = () => {
       
       // Update area overall progress
       const areaPercentage = areaTotalTasks > 0 ? Math.round((areaCompletedTasks / areaTotalTasks) * 100) : 0;
+      console.log(`Area ${areaKey}: ${areaCompletedTasks}/${areaTotalTasks} = ${areaPercentage}%`);
+      
       updatedCompetencies[areaKey] = {
         ...updatedCompetencies[areaKey],
         overall_progress: areaPercentage,
@@ -1550,6 +1553,7 @@ const App = () => {
       };
     });
     
+    console.log('Setting updated competencies:', updatedCompetencies);
     setCompetencies(updatedCompetencies);
   };
 
