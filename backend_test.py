@@ -614,6 +614,59 @@ class TaskCompetencyAPITester:
             print("   ❌ CRITICAL FAILURE: Backend-Frontend Cross-Functional framework mismatch!")
             return False, response
 
+    def test_strategic_thinking_task_references(self):
+        """Test that existing strategic_thinking tasks reference correct sub-competency names"""
+        print("\n🔍 Strategic Thinking Task References Verification")
+        
+        success, response = self.run_test(
+            "Get All Tasks", 
+            "GET", 
+            "tasks", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Filter strategic_thinking tasks
+        strategic_thinking_tasks = [task for task in response if task.get('competency_area') == 'strategic_thinking']
+        print(f"   Found {len(strategic_thinking_tasks)} strategic_thinking tasks")
+        
+        expected_sub_competencies = {
+            "strategic_analysis_planning",
+            "data_driven_decisions", 
+            "market_competitive_positioning",
+            "innovation_continuous_improvement",
+            "vision_goal_achievement"
+        }
+        
+        valid_references = True
+        sub_competency_counts = {}
+        
+        for task in strategic_thinking_tasks:
+            sub_comp = task.get('sub_competency')
+            title = task.get('title', 'No title')
+            
+            if sub_comp in expected_sub_competencies:
+                print(f"   ✅ Task '{title}' -> {sub_comp} - VALID")
+                sub_competency_counts[sub_comp] = sub_competency_counts.get(sub_comp, 0) + 1
+            else:
+                print(f"   ❌ Task '{title}' -> {sub_comp} - INVALID REFERENCE")
+                valid_references = False
+        
+        # Show distribution
+        print(f"   Task Distribution Across Sub-Competencies:")
+        for sub_comp in expected_sub_competencies:
+            count = sub_competency_counts.get(sub_comp, 0)
+            print(f"     - {sub_comp}: {count} tasks")
+        
+        if valid_references:
+            print("   ✅ All strategic_thinking tasks reference valid sub-competencies")
+        else:
+            print("   ❌ Some strategic_thinking tasks have invalid sub-competency references")
+        
+        return valid_references, strategic_thinking_tasks
+
     def test_cross_functional_task_references(self):
         """Test that existing cross_functional tasks reference correct sub-competency names"""
         print("\n🔍 Cross-Functional Task References Verification")
