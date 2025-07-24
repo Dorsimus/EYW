@@ -2886,7 +2886,7 @@ const CompetenciesView = ({
                                                                       notes: newNotes
                                                                     }
                                                                   };
-                                                                  handleCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_activity');
+                                                                  onCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_activity');
                                                                 }
                                                               }}
                                                               className="text-xs px-2 py-1 bg-blue-50 text-blue-600 border border-blue-200 rounded hover:bg-blue-100 transition-colors"
