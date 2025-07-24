@@ -259,17 +259,13 @@ NAVIGATOR_COMPETENCIES = {
     },
     "cross_functional": {
         "name": "Cross-Functional Collaboration", 
-        "description": "Building bridges between departments for seamless property operations",
+        "description": "We Win Together - No Department Is an Island",
         "sub_competencies": {
-            "interdept_understanding": "Inter-Departmental Understanding",
-            "resident_journey": "Resident Journey Mapping",
-            "revenue_awareness": "Revenue Impact Awareness",
-            "collaborative_problem_solving": "Collaborative Problem Solving",
-            "joint_planning": "Joint Planning",
-            "resource_sharing": "Resource Sharing",
-            "communication_protocols": "Communication Protocols",
-            "dept_conflict_resolution": "Conflict Resolution",
-            "success_metrics": "Success Metrics"
+            "interdepartmental_partnership": "Inter-Departmental Partnership & Communication",
+            "resident_experience_collaboration": "Resident Experience Collaboration",
+            "property_team_culture": "Property-Wide Team Building & Culture",
+            "stakeholder_relationship_management": "External Stakeholder Relationship Management",
+            "conflict_resolution_collaboration": "Conflict Resolution & Joint Problem Solving"
         }
     },
     "strategic_thinking": {
