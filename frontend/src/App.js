@@ -5334,9 +5334,9 @@ const CompetenciesView = ({
                                           {/* Key Activities Checklist */}
                                           {phase.activities && (
                                             <div className="mb-6">
-                                              <h7 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                              <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                                                 ✅ Key Activities
-                                              </h7>
+                                              </h4>
                                               <div className="space-y-3">
                                                 {phase.activities.map((activity, actIndex) => {
                                                   const activityKey = `activity_${actIndex}`;
