@@ -2509,7 +2509,7 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
               </div>
             </div>
 
-            {expandedArea === areaKey && (
+            {(expandedArea === areaKey || expandedArea?.startsWith(`${areaKey}_`)) && (
               <div className="px-6 py-4 bg-gray-50">
                 {/* Philosophy Section for Leadership & Supervision */}
                 {areaKey === 'leadership_supervision' && areaData.philosophy && (
