@@ -2858,7 +2858,7 @@ const CompetenciesView = ({
                                                                 completedAt: e.target.checked ? new Date().toISOString() : null
                                                               }
                                                             };
-                                                            handleCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_activity');
+                                                            onCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_activity');
                                                           }}
                                                           className="mt-1 h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                                                         />
