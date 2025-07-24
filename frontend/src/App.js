@@ -1651,6 +1651,14 @@ const App = () => {
             selectedCompetency={selectedCompetency}
             competencyTasks={competencyTasks}
             onCompleteTask={completeTask}
+            competencyTaskProgress={competencyTaskProgress}
+            onCompleteCompetencyTask={handleCompleteCompetencyTask}
+            isCompetencyTaskComplete={isCompetencyTaskComplete}
+            getCompetencyTaskNotes={getCompetencyTaskNotes}
+            showTaskModal={showTaskModal}
+            setShowTaskModal={setShowTaskModal}
+            taskNotes={taskNotes}
+            setTaskNotes={setTaskNotes}
           />
         )}
         
