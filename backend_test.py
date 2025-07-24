@@ -487,37 +487,363 @@ class TaskCompetencyAPITester:
             )
         
         return success, response
-        """Test portfolio operations (existing functionality)"""
+
+    def test_cross_functional_framework_verification(self):
+        """Test Cross-Functional Collaboration framework structure - CRITICAL TEST"""
+        print("\n🎯 CRITICAL: Cross-Functional Framework Verification")
+        
+        success, response = self.run_test(
+            "Get Competency Framework", 
+            "GET", 
+            "competencies", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Check if cross_functional competency exists
+        if 'cross_functional' not in response:
+            print("❌ CRITICAL: cross_functional competency area missing from backend")
+            return False, {}
+        
+        cross_functional = response['cross_functional']
+        expected_sub_competencies = {
+            "interdepartmental_partnership": "Inter-Departmental Partnership & Communication",
+            "resident_experience_collaboration": "Resident Experience Collaboration",
+            "property_team_culture": "Property-Wide Team Building & Culture",
+            "stakeholder_relationship_management": "External Stakeholder Relationship Management",
+            "conflict_resolution_collaboration": "Conflict Resolution & Joint Problem Solving"
+        }
+        
+        print(f"   Cross-Functional Name: {cross_functional.get('name', 'Missing')}")
+        print(f"   Cross-Functional Description: {cross_functional.get('description', 'Missing')}")
+        
+        # Verify sub-competencies structure
+        backend_sub_competencies = cross_functional.get('sub_competencies', {})
+        print(f"   Backend Sub-Competencies Count: {len(backend_sub_competencies)}")
+        print(f"   Expected Sub-Competencies Count: {len(expected_sub_competencies)}")
+        
+        # Check each expected sub-competency
+        all_match = True
+        for key, expected_name in expected_sub_competencies.items():
+            if key in backend_sub_competencies:
+                actual_name = backend_sub_competencies[key]
+                if actual_name == expected_name:
+                    print(f"   ✅ {key}: '{actual_name}' - CORRECT")
+                else:
+                    print(f"   ❌ {key}: Expected '{expected_name}', got '{actual_name}' - MISMATCH")
+                    all_match = False
+            else:
+                print(f"   ❌ {key}: MISSING from backend")
+                all_match = False
+        
+        # Check for unexpected sub-competencies
+        for key in backend_sub_competencies:
+            if key not in expected_sub_competencies:
+                print(f"   ⚠️  {key}: UNEXPECTED sub-competency in backend")
+                all_match = False
+        
+        if all_match:
+            print("   🎯 SUCCESS: Backend Cross-Functional framework matches frontend requirements!")
+            return True, response
+        else:
+            print("   ❌ CRITICAL FAILURE: Backend-Frontend Cross-Functional framework mismatch!")
+            return False, response
+
+    def test_cross_functional_task_references(self):
+        """Test that existing cross_functional tasks reference correct sub-competency names"""
+        print("\n🔍 Cross-Functional Task References Verification")
+        
+        success, response = self.run_test(
+            "Get All Tasks", 
+            "GET", 
+            "tasks", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Filter cross_functional tasks
+        cross_functional_tasks = [task for task in response if task.get('competency_area') == 'cross_functional']
+        print(f"   Found {len(cross_functional_tasks)} cross_functional tasks")
+        
+        expected_sub_competencies = {
+            "interdepartmental_partnership",
+            "resident_experience_collaboration", 
+            "property_team_culture",
+            "stakeholder_relationship_management",
+            "conflict_resolution_collaboration"
+        }
+        
+        valid_references = True
+        sub_competency_counts = {}
+        
+        for task in cross_functional_tasks:
+            sub_comp = task.get('sub_competency')
+            title = task.get('title', 'No title')
+            
+            if sub_comp in expected_sub_competencies:
+                print(f"   ✅ Task '{title}' -> {sub_comp} - VALID")
+                sub_competency_counts[sub_comp] = sub_competency_counts.get(sub_comp, 0) + 1
+            else:
+                print(f"   ❌ Task '{title}' -> {sub_comp} - INVALID REFERENCE")
+                valid_references = False
+        
+        # Show distribution
+        print(f"   Task Distribution Across Sub-Competencies:")
+        for sub_comp in expected_sub_competencies:
+            count = sub_competency_counts.get(sub_comp, 0)
+            print(f"     - {sub_comp}: {count} tasks")
+        
+        if valid_references:
+            print("   ✅ All cross_functional tasks reference valid sub-competencies")
+        else:
+            print("   ❌ Some cross_functional tasks have invalid sub-competency references")
+        
+        return valid_references, cross_functional_tasks
+
+    def test_cross_functional_competency_progress(self):
+        """Test competency progress calculation with new Cross-Functional structure"""
+        print("\n📊 Cross-Functional Competency Progress Calculation")
+        
         if not self.user_id:
             print("❌ No user ID available for testing")
             return False, {}
-
-        # Create portfolio item
-        portfolio_data = {
-            'title': 'Test Portfolio Item',
-            'description': 'Test portfolio description',
-            'competency_areas': '["leadership_supervision"]',
-            'tags': '["test", "automation"]'
-        }
-
+        
         success, response = self.run_test(
-            "Create Portfolio Item", 
-            "POST", 
-            f"users/{self.user_id}/portfolio", 
-            200,
-            data=portfolio_data
+            "Get User Competencies", 
+            "GET", 
+            f"users/{self.user_id}/competencies", 
+            200
         )
         
-        if success:
-            # Get portfolio items
+        if not success:
+            return False, {}
+        
+        # Check cross_functional competency progress
+        if 'cross_functional' not in response:
+            print("❌ cross_functional competency missing from user progress")
+            return False, {}
+        
+        cross_functional_progress = response['cross_functional']
+        sub_competencies = cross_functional_progress.get('sub_competencies', {})
+        
+        expected_sub_competencies = {
+            "interdepartmental_partnership",
+            "resident_experience_collaboration",
+            "property_team_culture", 
+            "stakeholder_relationship_management",
+            "conflict_resolution_collaboration"
+        }
+        
+        print(f"   Cross-Functional Overall Progress: {cross_functional_progress.get('overall_progress', 0)}%")
+        print(f"   Sub-Competencies Found: {len(sub_competencies)}")
+        
+        progress_calculation_valid = True
+        total_tasks = 0
+        total_completed = 0
+        
+        for sub_comp in expected_sub_competencies:
+            if sub_comp in sub_competencies:
+                sub_data = sub_competencies[sub_comp]
+                completed = sub_data.get('completed_tasks', 0)
+                total = sub_data.get('total_tasks', 0)
+                percentage = sub_data.get('completion_percentage', 0)
+                
+                print(f"   ✅ {sub_comp}: {completed}/{total} tasks ({percentage:.1f}%)")
+                total_tasks += total
+                total_completed += completed
+            else:
+                print(f"   ❌ {sub_comp}: MISSING from user progress")
+                progress_calculation_valid = False
+        
+        print(f"   Total Cross-Functional Tasks: {total_tasks}")
+        print(f"   Total Completed: {total_completed}")
+        
+        if progress_calculation_valid:
+            print("   ✅ Cross-Functional competency progress calculation working correctly")
+        else:
+            print("   ❌ Cross-Functional competency progress calculation has issues")
+        
+        return progress_calculation_valid, response
+
+    def test_admin_cross_functional_task_management(self):
+        """Test admin can manage tasks across new Cross-Functional sub-competency areas"""
+        print("\n🔐 Admin Cross-Functional Task Management")
+        
+        if not self.admin_token:
+            print("❌ No admin token available for testing")
+            return False, {}
+        
+        # Test creating tasks for each new sub-competency
+        expected_sub_competencies = [
+            "interdepartmental_partnership",
+            "resident_experience_collaboration",
+            "property_team_culture",
+            "stakeholder_relationship_management", 
+            "conflict_resolution_collaboration"
+        ]
+        
+        created_task_ids = []
+        all_successful = True
+        
+        for i, sub_comp in enumerate(expected_sub_competencies):
+            task_data = {
+                "title": f"Test Cross-Functional Task - {sub_comp.replace('_', ' ').title()}",
+                "description": f"Test task for {sub_comp} sub-competency area",
+                "task_type": "assessment",
+                "competency_area": "cross_functional",
+                "sub_competency": sub_comp,
+                "order": i + 1,
+                "required": True,
+                "estimated_hours": 2.0,
+                "instructions": f"Complete this test task for {sub_comp} validation"
+            }
+            
+            success, response = self.run_test(
+                f"Admin Create Cross-Functional Task - {sub_comp}", 
+                "POST", 
+                "admin/tasks", 
+                200, 
+                data=task_data, 
+                auth_required=True
+            )
+            
+            if success and 'id' in response:
+                created_task_ids.append(response['id'])
+                print(f"   ✅ Created task for {sub_comp}: {response['id']}")
+            else:
+                print(f"   ❌ Failed to create task for {sub_comp}")
+                all_successful = False
+        
+        # Test updating one of the created tasks
+        if created_task_ids:
+            test_task_id = created_task_ids[0]
+            update_data = {
+                "title": "Updated Cross-Functional Test Task",
+                "estimated_hours": 3.0
+            }
+            
+            success, response = self.run_test(
+                "Admin Update Cross-Functional Task", 
+                "PUT", 
+                f"admin/tasks/{test_task_id}", 
+                200, 
+                data=update_data, 
+                auth_required=True
+            )
+            
+            if success:
+                print(f"   ✅ Successfully updated cross-functional task")
+            else:
+                print(f"   ❌ Failed to update cross-functional task")
+                all_successful = False
+        
+        # Clean up - deactivate created test tasks
+        for task_id in created_task_ids:
             self.run_test(
-                "Get User Portfolio", 
-                "GET", 
-                f"users/{self.user_id}/portfolio", 
-                200
+                f"Admin Delete Test Task", 
+                "DELETE", 
+                f"admin/tasks/{task_id}", 
+                200, 
+                auth_required=True
             )
         
-        return success, response
+        if all_successful:
+            print("   ✅ Admin can successfully manage Cross-Functional tasks across all sub-competencies")
+        else:
+            print("   ❌ Admin task management has issues with Cross-Functional sub-competencies")
+        
+        return all_successful, {"created_tasks": len(created_task_ids)}
+
+    def test_backend_frontend_alignment(self):
+        """Test that backend structure matches frontend Cross-Functional Collaboration framework"""
+        print("\n🔄 Backend-Frontend Alignment Verification")
+        
+        # Get competency framework from backend
+        success, framework = self.run_test(
+            "Get Competency Framework", 
+            "GET", 
+            "competencies", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Get user competencies to test the full data flow
+        if self.user_id:
+            success, user_competencies = self.run_test(
+                "Get User Competencies", 
+                "GET", 
+                f"users/{self.user_id}/competencies", 
+                200
+            )
+        else:
+            user_competencies = {}
+        
+        # Expected frontend structure
+        expected_structure = {
+            "name": "Cross-Functional Collaboration",
+            "description": "We Win Together - No Department Is an Island",
+            "sub_competencies": {
+                "interdepartmental_partnership": "Inter-Departmental Partnership & Communication",
+                "resident_experience_collaboration": "Resident Experience Collaboration",
+                "property_team_culture": "Property-Wide Team Building & Culture",
+                "stakeholder_relationship_management": "External Stakeholder Relationship Management",
+                "conflict_resolution_collaboration": "Conflict Resolution & Joint Problem Solving"
+            }
+        }
+        
+        # Verify framework structure
+        cross_functional = framework.get('cross_functional', {})
+        alignment_issues = []
+        
+        # Check name
+        if cross_functional.get('name') != expected_structure['name']:
+            alignment_issues.append(f"Name mismatch: expected '{expected_structure['name']}', got '{cross_functional.get('name')}'")
+        
+        # Check description
+        if cross_functional.get('description') != expected_structure['description']:
+            alignment_issues.append(f"Description mismatch: expected '{expected_structure['description']}', got '{cross_functional.get('description')}'")
+        
+        # Check sub-competencies
+        backend_sub_comps = cross_functional.get('sub_competencies', {})
+        expected_sub_comps = expected_structure['sub_competencies']
+        
+        if len(backend_sub_comps) != len(expected_sub_comps):
+            alignment_issues.append(f"Sub-competency count mismatch: expected {len(expected_sub_comps)}, got {len(backend_sub_comps)}")
+        
+        for key, expected_name in expected_sub_comps.items():
+            if key not in backend_sub_comps:
+                alignment_issues.append(f"Missing sub-competency: {key}")
+            elif backend_sub_comps[key] != expected_name:
+                alignment_issues.append(f"Sub-competency name mismatch for {key}: expected '{expected_name}', got '{backend_sub_comps[key]}'")
+        
+        # Check user competency data structure alignment
+        if user_competencies and 'cross_functional' in user_competencies:
+            user_cross_functional = user_competencies['cross_functional']
+            user_sub_comps = user_cross_functional.get('sub_competencies', {})
+            
+            for key in expected_sub_comps.keys():
+                if key not in user_sub_comps:
+                    alignment_issues.append(f"User competency missing sub-competency: {key}")
+        
+        # Report results
+        if not alignment_issues:
+            print("   ✅ PERFECT ALIGNMENT: Backend structure exactly matches frontend requirements!")
+            print(f"   - Competency name: ✅ '{cross_functional.get('name')}'")
+            print(f"   - Description: ✅ '{cross_functional.get('description')}'")
+            print(f"   - Sub-competencies: ✅ {len(backend_sub_comps)} areas correctly defined")
+            print(f"   - User progress structure: ✅ Aligned")
+            return True, {"alignment": "perfect", "issues": []}
+        else:
+            print("   ❌ ALIGNMENT ISSUES FOUND:")
+            for issue in alignment_issues:
+                print(f"     - {issue}")
+            return False, {"alignment": "issues", "issues": alignment_issues}
 
 def main():
     print("🚀 Starting COMPREHENSIVE Backend API Tests - FOCUS: User Creation Hanging Issue")
