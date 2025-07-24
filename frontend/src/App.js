@@ -1901,6 +1901,65 @@ const App = () => {
           </div>
         </div>
       )}
+
+      {/* Competency Task Completion Modal */}
+      {showTaskModal && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-60"
+          onClick={() => setShowTaskModal(null)}
+        >
+          <div 
+            className="bg-white rounded-lg max-w-md w-full mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6">
+              <h4 className="text-lg font-medium text-gray-900 mb-4">
+                Complete {showTaskModal.taskType === 'course' ? 'Course' : 'Task'}: {showTaskModal.task.title}
+              </h4>
+              
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Task Notes (Required)
+                </label>
+                <textarea
+                  value={taskNotes}
+                  onChange={(e) => setTaskNotes(e.target.value)}
+                  placeholder="Describe your key learnings, insights, or how you applied this knowledge..."
+                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  rows={4}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </div>
+              
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={() => setShowTaskModal(null)}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    if (taskNotes.trim()) {
+                      onCompleteCompetencyTask(
+                        showTaskModal.areaKey, 
+                        showTaskModal.subKey, 
+                        showTaskModal.task.id, 
+                        taskNotes.trim(), 
+                        showTaskModal.taskType
+                      );
+                    }
+                  }}
+                  disabled={!taskNotes.trim()}
+                  className="px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  Mark Complete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
