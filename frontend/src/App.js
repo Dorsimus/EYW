@@ -1585,7 +1585,10 @@ const App = () => {
 
   const isCompetencyTaskComplete = (areaKey, subKey, taskId) => {
     const taskKey = `${areaKey}_${subKey}_${taskId}`;
-    return competencyTaskProgress[taskKey]?.completed || false;
+    const isComplete = competencyTaskProgress[taskKey]?.completed || false;
+    console.log(`Checking task completion: ${taskKey} = ${isComplete ? 'COMPLETE' : 'incomplete'}`);
+    console.log('Available task keys:', Object.keys(competencyTaskProgress));
+    return isComplete;
   };
 
   const getCompetencyTaskNotes = (areaKey, subKey, taskId) => {
