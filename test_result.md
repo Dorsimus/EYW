@@ -398,13 +398,16 @@ frontend:
     implemented: true
     working: false
     file: "frontend/src/App.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
         - comment: "Integrated comprehensive Cross-Functional Collaboration framework with 5 focus areas: Inter-Departmental Partnership, Resident Experience Collaboration, Property-Wide Team Building, External Stakeholder Management, and Conflict Resolution. Each area includes foundation courses and detailed 3-phase signature activities with deliverables, journal prompts, and custom materials. Total of 68 tasks across all sub-competencies. Framework follows established interactive pattern with foundation courses, signature activities, validation criteria, portfolio defense, and CM readiness indicators."
+        - working: false
+        - agent: "testing"
+        - comment: "❌ CRITICAL BACKEND-FRONTEND MISMATCH IDENTIFIED! Comprehensive testing revealed that the Cross-Functional Collaboration framework integration is incomplete. **FRONTEND STRUCTURE (CORRECT):** 5 sub-competencies with 68 total tasks: 1) interdepartmental_partnership (16 tasks), 2) resident_experience_collaboration (15 tasks), 3) property_team_culture (12 tasks), 4) stakeholder_relationship_management (12 tasks), 5) conflict_resolution_collaboration (13 tasks). **BACKEND STRUCTURE (OUTDATED):** Still has old 9 sub-competencies: interdept_understanding, resident_journey, revenue_awareness, collaborative_problem_solving, joint_planning, resource_sharing, communication_protocols, dept_conflict_resolution, success_metrics. **IMPACT:** Backend competency progress calculation fails with new structure, admin task management cannot handle new sub-competency areas, user competency data shows wrong structure. **ROOT CAUSE:** Backend server.py NAVIGATOR_COMPETENCIES['cross_functional'] needs to be updated to match frontend structure. Backend APIs work correctly but serve outdated competency framework data."
 
 metadata:
   created_by: "main_agent"
