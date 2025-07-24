@@ -2219,7 +2219,21 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
 };
 
 // Enhanced Competencies View Component
-const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, competencyTasks, onCompleteTask }) => {
+const CompetenciesView = ({ 
+  competencies, 
+  onViewTasks, 
+  selectedCompetency, 
+  competencyTasks, 
+  onCompleteTask,
+  competencyTaskProgress,
+  onCompleteCompetencyTask,
+  isCompetencyTaskComplete,
+  getCompetencyTaskNotes,
+  showTaskModal,
+  setShowTaskModal,
+  taskNotes,
+  setTaskNotes
+}) => {
   const [expandedArea, setExpandedArea] = useState(null);
   const [taskModal, setTaskModal] = useState(null);
   const [selectedCulminatingTask, setSelectedCulminatingTask] = useState(null);
