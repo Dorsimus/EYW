@@ -2975,7 +2975,7 @@ const CompetenciesView = ({
                                                                     uploadedAt: new Date().toISOString()
                                                                   }
                                                                 };
-                                                                handleCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_deliverable');
+                                                                onCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_deliverable');
                                                               }
                                                             }}
                                                           />
