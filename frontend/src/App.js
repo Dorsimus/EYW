@@ -1576,11 +1576,130 @@ const App = () => {
     setShowTaskModal(null);
     setTaskNotes('');
     
-    // Update competency progress percentages immediately
+    // Update competency progress percentages immediately with the new progress data
     setTimeout(() => {
-      console.log('Triggering progress update...');
-      updateCompetencyProgress();
+      console.log('Triggering progress update with fresh data...');
+      updateCompetencyProgressWithData(updatedProgress);
     }, 500);
+  };
+
+  const updateCompetencyProgressWithData = (progressData) => {
+    console.log('Updating competency progress with provided data...');
+    const updatedCompetencies = { ...competencies };
+    
+    Object.keys(updatedCompetencies).forEach(areaKey => {
+      const areaData = updatedCompetencies[areaKey];
+      let areaCompletedTasks = 0;
+      let areaTotalTasks = 0;
+      
+      // Calculate progress for each sub-competency
+      Object.keys(areaData.sub_competencies || {}).forEach(subKey => {
+        const subProgress = calculateCompetencyProgressWithData(areaKey, subKey, progressData);
+        
+        areaCompletedTasks += subProgress.completed;
+        areaTotalTasks += subProgress.total;
+        
+        // Update sub-competency progress
+        updatedCompetencies[areaKey].sub_competencies[subKey] = {
+          ...updatedCompetencies[areaKey].sub_competencies[subKey],
+          progress_percentage: subProgress.percentage,
+          completed_tasks: subProgress.completed,
+          total_tasks: subProgress.total
+        };
+      });
+      
+      // Update area overall progress
+      const areaPercentage = areaTotalTasks > 0 ? Math.round((areaCompletedTasks / areaTotalTasks) * 100) : 0;
+      console.log(`Area ${areaKey}: ${areaCompletedTasks}/${areaTotalTasks} = ${areaPercentage}%`);
+      
+      updatedCompetencies[areaKey] = {
+        ...updatedCompetencies[areaKey],
+        overall_progress: areaPercentage,
+        completion_percentage: areaPercentage,
+        completed_tasks: areaCompletedTasks,
+        total_tasks: areaTotalTasks
+      };
+    });
+    
+    console.log('Setting updated competencies with fresh data:', updatedCompetencies);
+    setCompetencies(updatedCompetencies);
+  };
+
+  const calculateCompetencyProgressWithData = (areaKey, subKey, progressData) => {
+    console.log(`Calculating progress for ${areaKey} -> ${subKey} with fresh data`);
+    
+    // Get all tasks for this sub-competency
+    const areaData = competencies[areaKey];
+    if (!areaData) {
+      console.log(`No area data found for ${areaKey}`);
+      return { completed: 0, total: 0, percentage: 0 };
+    }
+    
+    const subData = areaData.sub_competencies[subKey];
+    if (!subData) {
+      console.log(`No sub data found for ${subKey}`);
+      return { completed: 0, total: 0, percentage: 0 };
+    }
+    
+    let totalTasks = 0;
+    let completedTasks = 0;
+    
+    // Count Foundation Courses
+    if (subData.foundation_courses) {
+      totalTasks += subData.foundation_courses.length;
+      console.log(`Foundation courses: ${subData.foundation_courses.length}`);
+      
+      subData.foundation_courses.forEach(course => {
+        const taskKey = `${areaKey}_${subKey}_${course.id}`;
+        const isComplete = progressData[taskKey]?.completed || false;
+        console.log(`Course ${course.id}: ${isComplete ? 'COMPLETE' : 'incomplete'} (using fresh data)`);
+        if (isComplete) {
+          completedTasks++;
+        }
+      });
+    }
+    
+    // Count Phase Activities and Deliverables
+    if (subData.signature_activity?.phases) {
+      console.log(`Found ${subData.signature_activity.phases.length} phases`);
+      
+      subData.signature_activity.phases.forEach(phase => {
+        const phaseTaskKey = `${areaKey}_${subKey}_phase_${phase.phase}_progress`;
+        const phaseProgress = progressData[phaseTaskKey]?.notes || '{}';
+        let parsedProgress = {};
+        try {
+          parsedProgress = JSON.parse(phaseProgress);
+        } catch (e) {
+          parsedProgress = {};
+        }
+        
+        // Count activities in this phase
+        if (phase.activities) {
+          totalTasks += phase.activities.length;
+          phase.activities.forEach((activity, actIndex) => {
+            const activityKey = `activity_${actIndex}`;
+            if (parsedProgress[activityKey]?.completed) {
+              completedTasks++;
+            }
+          });
+        }
+        
+        // Count deliverables in this phase
+        if (phase.deliverables) {
+          totalTasks += phase.deliverables.length;
+          phase.deliverables.forEach((deliverable, delIndex) => {
+            const deliverableKey = `deliverable_${delIndex}`;
+            if (parsedProgress[deliverableKey]?.completed) {
+              completedTasks++;
+            }
+          });
+        }
+      });
+    }
+    
+    const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+    console.log(`Progress with fresh data: ${completedTasks}/${totalTasks} = ${percentage}%`);
+    return { completed: completedTasks, total: totalTasks, percentage };
   };
 
   const isCompetencyTaskComplete = (areaKey, subKey, taskId) => {
