@@ -1202,6 +1202,78 @@ class TaskCompetencyAPITester:
                 print(f"     - {issue}")
             return False, {"alignment": "issues", "issues": alignment_issues}
 
+    def test_other_competency_areas_regression(self):
+        """Test that other competency areas (Leadership, Financial, Operational) still work correctly"""
+        print("\n🔍 Other Competency Areas Regression Testing")
+        
+        success, response = self.run_test(
+            "Get Competency Framework", 
+            "GET", 
+            "competencies", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Expected competency areas that should remain unchanged
+        expected_areas = {
+            "leadership_supervision": "Leadership & Supervision",
+            "financial_management": "Financial Management & Business Acumen", 
+            "operational_management": "Operational Management"
+        }
+        
+        regression_issues = []
+        
+        for area_key, expected_name in expected_areas.items():
+            if area_key not in response:
+                regression_issues.append(f"Missing competency area: {area_key}")
+                continue
+                
+            area_data = response[area_key]
+            actual_name = area_data.get('name', 'Missing')
+            
+            if actual_name != expected_name:
+                regression_issues.append(f"Name changed for {area_key}: expected '{expected_name}', got '{actual_name}'")
+            
+            # Check that sub-competencies exist
+            sub_comps = area_data.get('sub_competencies', {})
+            if len(sub_comps) == 0:
+                regression_issues.append(f"No sub-competencies found for {area_key}")
+            else:
+                print(f"   ✅ {area_key}: {len(sub_comps)} sub-competencies found")
+        
+        # Test user competency progress for these areas
+        if self.user_id:
+            success, user_competencies = self.run_test(
+                "Get User Competencies", 
+                "GET", 
+                f"users/{self.user_id}/competencies", 
+                200
+            )
+            
+            if success:
+                for area_key in expected_areas.keys():
+                    if area_key not in user_competencies:
+                        regression_issues.append(f"User competency missing area: {area_key}")
+                    else:
+                        user_area = user_competencies[area_key]
+                        user_sub_comps = user_area.get('sub_competencies', {})
+                        if len(user_sub_comps) == 0:
+                            regression_issues.append(f"User competency has no sub-competencies for {area_key}")
+                        else:
+                            print(f"   ✅ User progress for {area_key}: {len(user_sub_comps)} sub-competencies tracked")
+        
+        # Report results
+        if not regression_issues:
+            print("   ✅ NO REGRESSIONS: All other competency areas working correctly!")
+            return True, {"regressions": False, "issues": []}
+        else:
+            print("   ❌ REGRESSION ISSUES FOUND:")
+            for issue in regression_issues:
+                print(f"     - {issue}")
+            return False, {"regressions": True, "issues": regression_issues}
+
 def main():
     print("🚀 Starting COMPREHENSIVE Backend API Tests - FOCUS: Cross-Functional Collaboration Framework")
     print("=" * 80)
