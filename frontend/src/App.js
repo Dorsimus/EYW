@@ -2178,18 +2178,6 @@ const CompetenciesView = ({ competencies, onViewTasks, selectedCompetency, compe
     return saved ? JSON.parse(saved) : {};
   });
 
-  // Helper function to get competency color class
-  const getCompetencyClass = (areaKey) => {
-    const classMap = {
-      'financial_management': 'competency-financial',
-      'leadership_supervision': 'competency-leadership', 
-      'operational_management': 'competency-operational',
-      'cross_functional_collaboration': 'competency-cross-functional',
-      'strategic_thinking': 'competency-strategic'
-    };
-    return classMap[areaKey] || '';
-  };
-
   const handleViewTasks = (areaKey, subKey) => {
     if (areaKey === 'culminating_project') {
       // Handle culminating project phases
