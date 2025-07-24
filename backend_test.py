@@ -846,7 +846,7 @@ class TaskCompetencyAPITester:
             return False, {"alignment": "issues", "issues": alignment_issues}
 
 def main():
-    print("🚀 Starting COMPREHENSIVE Backend API Tests - FOCUS: User Creation Hanging Issue")
+    print("🚀 Starting COMPREHENSIVE Backend API Tests - FOCUS: Cross-Functional Collaboration Framework")
     print("=" * 80)
     
     tester = TaskCompetencyAPITester()
@@ -864,18 +864,28 @@ def main():
     tester.test_create_user()                  # Legacy test
     tester.test_get_user()
     
-    # 3. HIGH PRIORITY - User Data Loading Endpoints
+    # 3. CRITICAL - Cross-Functional Collaboration Framework Tests
+    print("\n🎯 CRITICAL - Cross-Functional Collaboration Framework Tests:")
+    tester.test_cross_functional_framework_verification()
+    tester.test_cross_functional_task_references()
+    tester.test_cross_functional_competency_progress()
+    
+    # 4. HIGH PRIORITY - User Data Loading Endpoints
     print("\n📊 HIGH PRIORITY - User Data Loading Tests:")
     tester.test_get_user_competencies()        # GET /api/users/{id}/competencies
     tester.test_portfolio_operations()         # GET /api/users/{id}/portfolio
     
-    # 4. MEDIUM PRIORITY - Admin Seed Tasks
+    # 5. MEDIUM PRIORITY - Admin Seed Tasks
     print("\n🌱 MEDIUM PRIORITY - Admin Seed Tasks:")
     tester.test_create_admin_user()  # Create admin if doesn't exist
     tester.test_admin_login()        # POST /api/admin/login
     tester.test_seed_sample_tasks()  # POST /api/admin/seed-tasks
     
-    # 5. LOW PRIORITY - Admin API Verification
+    # 6. CRITICAL - Admin Cross-Functional Task Management
+    print("\n🔐 CRITICAL - Admin Cross-Functional Task Management:")
+    tester.test_admin_cross_functional_task_management()
+    
+    # 7. LOW PRIORITY - Admin API Verification
     print("\n🔐 LOW PRIORITY - Admin API Verification:")
     tester.test_admin_stats()        # GET /api/admin/stats
     tester.test_admin_get_all_tasks()  # GET /api/admin/tasks
@@ -884,13 +894,17 @@ def main():
     tester.test_admin_update_task()    # PUT /api/admin/tasks/{id}
     tester.test_admin_delete_task()    # DELETE /api/admin/tasks/{id}
     
-    # 6. Additional Task Management Tests
+    # 8. Additional Task Management Tests
     print("\n📚 Additional Task Management Tests:")
     tester.test_get_all_tasks()      # GET /api/tasks
     tester.test_get_user_tasks_for_competency()  # GET /api/users/{id}/tasks/{area}/{sub}
     tester.test_complete_task()      # POST /api/users/{id}/task-completions
     
-    # 7. Additional API tests
+    # 9. CRITICAL - Backend-Frontend Alignment Verification
+    print("\n🔄 CRITICAL - Backend-Frontend Alignment:")
+    tester.test_backend_frontend_alignment()
+    
+    # 10. Additional API tests
     print("\n📊 Additional API Tests:")
     tester.test_get_competency_framework()
     tester.test_get_tasks_for_competency()
@@ -902,6 +916,16 @@ def main():
     print(f"   Tests Run: {tester.tests_run}")
     print(f"   Tests Passed: {tester.tests_passed}")
     print(f"   Success Rate: {(tester.tests_passed/tester.tests_run)*100:.1f}%")
+    
+    # Specific analysis for Cross-Functional Collaboration framework
+    print(f"\n🎯 CROSS-FUNCTIONAL COLLABORATION FRAMEWORK ANALYSIS:")
+    print(f"   This test focused on verifying the backend has been updated to match")
+    print(f"   the frontend integration with 5 specific focus areas:")
+    print(f"   1. interdepartmental_partnership")
+    print(f"   2. resident_experience_collaboration")
+    print(f"   3. property_team_culture")
+    print(f"   4. stakeholder_relationship_management")
+    print(f"   5. conflict_resolution_collaboration")
     
     # Specific analysis for user creation hanging issue
     print(f"\n🔍 USER CREATION ANALYSIS:")
@@ -925,7 +949,7 @@ def main():
     
     if tester.tests_passed == tester.tests_run:
         print("🎉 ALL TESTS PASSED! Backend APIs are working correctly.")
-        print("   If frontend still hangs, issue is likely in frontend/network layer.")
+        print("   Cross-Functional Collaboration framework is properly aligned.")
         return 0
     else:
         failed_tests = tester.tests_run - tester.tests_passed
