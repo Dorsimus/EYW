@@ -1569,11 +1569,7 @@ const App = () => {
     return competencyTaskProgress[taskKey]?.notes || '';
   };
 
-  useEffect(() => {
-    if (Object.keys(competencies).length > 0 && Object.keys(competencyTaskProgress).length > 0) {
-      updateCompetencyProgress();
-    }
-  }, [competencyTaskProgress, competencies]);
+  // Remove problematic useEffect - replaced with manual progress updates
 
   const getOverallProgress = () => {
     if (Object.keys(competencies).length === 0) return 0;
