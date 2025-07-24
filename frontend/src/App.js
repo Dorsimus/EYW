@@ -10,6 +10,18 @@ const API = `${BACKEND_URL}/api`;
 const getStoredUserId = () => localStorage.getItem('demo_user_id');
 const setStoredUserId = (id) => localStorage.setItem('demo_user_id', id);
 
+// Helper function to get competency color class
+const getCompetencyClass = (areaKey) => {
+  const classMap = {
+    'financial_management': 'competency-financial',
+    'leadership_supervision': 'competency-leadership', 
+    'operational_management': 'competency-operational',
+    'cross_functional_collaboration': 'competency-cross-functional',
+    'strategic_thinking': 'competency-strategic'
+  };
+  return classMap[areaKey] || '';
+};
+
 const App = () => {
   const [currentView, setCurrentView] = useState('dashboard');
   const [user, setUser] = useState(null);
