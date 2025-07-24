@@ -565,7 +565,7 @@ SAMPLE_TASKS = [
         "description": "Complete case study on successful change management in property management",
         "task_type": "course_link",
         "competency_area": "strategic_thinking",
-        "sub_competency": "change_leadership",
+        "sub_competency": "innovation_continuous_improvement",
         "order": 1,
         "required": False,
         "estimated_hours": 2.0,
