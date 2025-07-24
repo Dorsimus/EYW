@@ -1936,7 +1936,7 @@ const App = () => {
                 <button
                   onClick={() => {
                     if (taskNotes.trim()) {
-                      handleCompleteCompetencyTask(
+                      onCompleteCompetencyTask(
                         showTaskModal.areaKey, 
                         showTaskModal.subKey, 
                         showTaskModal.task.id, 
