@@ -1243,28 +1243,556 @@ const App = () => {
         }
       },
       operational_management: {
-        name: "Operational Management",
-        description: "Optimize workflows and manage daily operations",
+        name: "Operational Management & Process Excellence",
+        description: "Core Philosophy: Efficient Operations + Quality Standards = Resident Satisfaction + Business Success - Optimizing department operations, ensuring compliance and safety, and building operational expertise",
         overall_progress: 0,
         completion_percentage: 0, 
         completed_tasks: 0,
-        total_tasks: 2,
+        total_tasks: 82,
         competency_area: "operational_management",
         sub_competencies: {
-          workflow_optimization: {
-            name: "Workflow Optimization",
-            description: "Streamline processes and improve efficiency",
+          process_optimization: {
+            name: "Process Optimization & Standard Operating Procedures",
+            description: "Analyze, improve, and standardize department processes for maximum efficiency",
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 1
+            total_tasks: 19,
+            foundation_courses: [
+              {
+                id: "om-fc-01",
+                title: "Quick Start: Make Ready Process",
+                duration: "15 minutes",
+                platform: "PerformanceHQ",
+                description: "Foundation of property operations"
+              },
+              {
+                id: "om-fc-02",
+                title: "Preventative Maintenance",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Systematic approach to maintenance operations"
+              },
+              {
+                id: "om-fc-03",
+                title: "Maintenance For Office Staff",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Cross-functional operational understanding"
+              },
+              {
+                id: "om-fc-04",
+                title: "Effective Time Management",
+                duration: "35 minutes",
+                platform: "PerformanceHQ",
+                description: "Personal and team efficiency"
+              }
+            ],
+            signature_activity: {
+              title: "Operational Excellence Systems",
+              icon: "⚙️",
+              description: "Three-month journey to analyze, improve, and standardize all department processes",
+              phases: [
+                {
+                  phase: 1,
+                  title: "Current Process Assessment & Documentation",
+                  duration: "Month 1",
+                  activities: [
+                    "Analyze and document all current department processes to identify improvement opportunities",
+                    "CM Shadowing Focus: Observe CM reviewing and improving property-wide operational processes (1 hour weekly)",
+                    "Complete comprehensive process mapping and efficiency analysis for all major workflows"
+                  ],
+                  deliverables: [
+                    "Current Process Maps (visual documentation of all major department workflows)",
+                    "Process Efficiency Analysis (time studies and bottleneck identification)",
+                    "SOP Gap Assessment (identifying processes that need documented procedures)"
+                  ],
+                  journal_prompt: "Which of our current processes work well, and which create frustration or waste time? How can I document our best practices so they're consistent across the team?",
+                  custom_materials: [
+                    "Process Mapping for Department Leaders - How to document and analyze current workflows",
+                    "SOP Creation Templates for Property Management - Standard formats for creating procedures",
+                    "Efficiency Assessment Tools - Methods for measuring current process effectiveness"
+                  ]
+                },
+                {
+                  phase: 2,
+                  title: "Process Improvement Implementation",
+                  duration: "Month 2",
+                  activities: [
+                    "Design and implement improved processes with measurable efficiency gains",
+                    "CM Shadowing Focus: Participate in property-wide process improvement discussions and implementation",
+                    "Lead implementation of 3+ process improvements with team buy-in and measurement"
+                  ],
+                  deliverables: [
+                    "Process Improvement Plans (detailed plans for 3+ process improvements with timelines)",
+                    "Implementation Results (before/after comparisons showing efficiency gains)",
+                    "Team Feedback on Changes (how process improvements affected team satisfaction and performance)"
+                  ],
+                  journal_prompt: "What process improvements are having the biggest impact on our efficiency? How do I ensure changes stick and don't revert to old ways?",
+                  custom_materials: [
+                    "Process Improvement Methodology - Step-by-step approach to improving workflows",
+                    "Change Management for Operational Improvements - Getting team buy-in for process changes",
+                    "Efficiency Measurement and Tracking - How to measure and maintain process improvements"
+                  ]
+                },
+                {
+                  phase: 3,
+                  title: "Standard Operating Procedure Creation & Training",
+                  duration: "Month 3",
+                  activities: [
+                    "Create comprehensive SOPs and train team members on standardized processes",
+                    "Team Training Leadership: Lead training sessions for team members on new/improved processes",
+                    "Develop SOP maintenance system to keep procedures current and effective"
+                  ],
+                  deliverables: [
+                    "Complete SOP Library (documented procedures for all major department processes)",
+                    "Training Materials (guides, checklists, and resources for teaching procedures)",
+                    "SOP Implementation Results (evidence of improved consistency and quality)"
+                  ],
+                  journal_prompt: "How do I create procedures that people actually follow rather than ignore? What makes an SOP useful vs. bureaucratic?",
+                  custom_materials: [
+                    "SOP Writing Best Practices - Creating procedures that are actually followed",
+                    "Training Design for Operational Procedures - How to teach processes effectively",
+                    "SOP Maintenance and Updates - Keeping procedures current and relevant"
+                  ]
+                }
+              ]
+            }
+          },
+          quality_compliance: {
+            name: "Quality Control & Compliance Management",
+            description: "Establish quality standards and ensure regulatory compliance across all operations",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 17,
+            foundation_courses: [
+              {
+                id: "om-fc-05",
+                title: "Fair Housing For Maintenance",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Legal compliance for maintenance operations"
+              },
+              {
+                id: "om-fc-06",
+                title: "Express: Leasing - Tour Safely, Fairly and in Compliance With Laws",
+                duration: "5 minutes",
+                platform: "PerformanceHQ",
+                description: "Leasing compliance basics"
+              },
+              {
+                id: "om-fc-07",
+                title: "Reducing Risk through Policies and Procedures",
+                duration: "15 minutes",
+                platform: "PerformanceHQ",
+                description: "Risk management through procedures"
+              },
+              {
+                id: "om-fc-08",
+                title: "GH Webinar: Risk Management Inspections in Multifamily Housing",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Property inspection best practices"
+              }
+            ],
+            signature_activity: {
+              title: "Quality & Compliance Mastery",
+              icon: "✅",
+              description: "Three-month intensive on quality standards, compliance management, and inspection leadership",
+              phases: [
+                {
+                  phase: 1,
+                  title: "Quality Standards Development & Implementation",
+                  duration: "Month 1",
+                  activities: [
+                    "Establish clear quality standards for all department operations and implement measurement systems",
+                    "CM Shadowing Focus: Observe CM conducting quality inspections and addressing quality issues",
+                    "Develop and implement quality control systems with measurable standards"
+                  ],
+                  deliverables: [
+                    "Department Quality Standards (clear, measurable criteria for all major work outputs)",
+                    "Quality Control Checklists (tools for consistent quality measurement)",
+                    "Quality Performance Tracking (data showing quality improvements over time)"
+                  ],
+                  journal_prompt: "What does 'quality' really mean in my department? How can I measure and maintain quality standards that residents actually notice and appreciate?",
+                  custom_materials: [
+                    "Quality Standards Creation for Property Management - Developing measurable quality criteria",
+                    "Quality Control Checklists by Department - Practical tools for maintaining standards",
+                    "Customer Experience Quality Metrics - Measuring quality from resident perspective"
+                  ]
+                },
+                {
+                  phase: 2,
+                  title: "Compliance Management & Risk Prevention",
+                  duration: "Month 2",
+                  activities: [
+                    "Master compliance requirements and develop proactive systems to prevent violations",
+                    "CM Shadowing Focus: Participate in compliance reviews and regulatory discussions",
+                    "Create comprehensive compliance monitoring and risk prevention systems"
+                  ],
+                  deliverables: [
+                    "Compliance Checklist (comprehensive list of all applicable regulations and requirements)",
+                    "Compliance Monitoring System (process for staying current with regulatory changes)",
+                    "Risk Prevention Plan (proactive measures to avoid violations and legal issues)"
+                  ],
+                  journal_prompt: "What compliance requirements apply to my department, and how do I stay on top of changes? What proactive steps can I take to prevent violations before they happen?",
+                  custom_materials: [
+                    "Compliance Requirements by Department - Key legal and regulatory requirements for leasing/maintenance",
+                    "Compliance Monitoring Systems - Tools for staying on top of regulatory requirements",
+                    "Risk Prevention Strategies - Proactive approaches to avoiding compliance violations"
+                  ]
+                },
+                {
+                  phase: 3,
+                  title: "Inspection & Audit Management",
+                  duration: "Month 3",
+                  activities: [
+                    "Develop expertise in conducting thorough inspections and preparing for external audits",
+                    "Implementation: Lead department inspections and coordinate corrective actions",
+                    "Build systems for managing inspections and audit preparation effectively"
+                  ],
+                  deliverables: [
+                    "Internal Inspection System (regular inspection schedules and procedures)",
+                    "Audit Preparation Process (systematic approach to preparing for external inspections)",
+                    "Corrective Action Examples (how you've addressed inspection findings and prevented recurrence)"
+                  ],
+                  journal_prompt: "How can I make inspections valuable learning opportunities rather than just compliance exercises? What inspection approach helps us improve rather than just check boxes?",
+                  custom_materials: [
+                    "Internal Inspection Protocols - Systematic approaches to property and department inspections",
+                    "Audit Preparation and Management - Preparing for external inspections and audits",
+                    "Corrective Action Planning - Addressing inspection findings and preventing recurrence"
+                  ]
+                }
+              ]
+            }
+          },
+          safety_leadership: {
+            name: "Safety Leadership & Risk Management",
+            description: "Create and lead strong safety culture while managing operational risks effectively",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 18,
+            foundation_courses: [
+              {
+                id: "om-fc-09",
+                title: "Safety Series: Manage Maintenance Safety",
+                duration: "20 minutes",
+                platform: "PerformanceHQ",
+                description: "Safety leadership fundamentals"
+              },
+              {
+                id: "om-fc-10",
+                title: "Safety Series: Personal Protective Equipment",
+                duration: "20 minutes",
+                platform: "PerformanceHQ",
+                description: "PPE requirements and usage"
+              },
+              {
+                id: "om-fc-11",
+                title: "Safety Series: Preventing Slips, Trips, and Falls",
+                duration: "20 minutes",
+                platform: "PerformanceHQ",
+                description: "Common hazard prevention"
+              },
+              {
+                id: "om-fc-12",
+                title: "Safety Series: Required OSHA Recordkeeping - OSHA 300",
+                duration: "20 minutes",
+                platform: "PerformanceHQ",
+                description: "Documentation requirements"
+              },
+              {
+                id: "om-fc-13",
+                title: "Crisis Management: Prevention & Preparation",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Emergency response planning"
+              }
+            ],
+            signature_activity: {
+              title: "Safety Leadership Program",
+              icon: "🛡️",
+              description: "Three-month development of safety culture, risk management, and emergency response leadership",
+              phases: [
+                {
+                  phase: 1,
+                  title: "Safety Culture Development",
+                  duration: "Month 1",
+                  activities: [
+                    "Create and lead a strong safety culture within your department and property",
+                    "CM Shadowing Focus: Observe CM handling safety issues and conducting safety meetings",
+                    "Develop and implement safety training and communication programs"
+                  ],
+                  deliverables: [
+                    "Department Safety Culture Assessment (current state and improvement plan)",
+                    "Safety Training Materials (presentations, handouts, and activities you've created)",
+                    "Safety Communication Examples (how you promote safety awareness in daily operations)"
+                  ],
+                  journal_prompt: "How do I make safety a priority that people embrace rather than resent? What safety practices actually protect people vs. just satisfy requirements?",
+                  custom_materials: [
+                    "Safety Culture Assessment and Development - Building safety-first mindset in teams",
+                    "Safety Training Design and Delivery - How to conduct effective safety training",
+                    "Safety Communication Strategies - Making safety engaging rather than boring"
+                  ]
+                },
+                {
+                  phase: 2,
+                  title: "Risk Assessment & Hazard Management",
+                  duration: "Month 2",
+                  activities: [
+                    "Develop expertise in identifying, assessing, and mitigating operational risks",
+                    "CM Shadowing Focus: Participate in risk assessments and incident investigations",
+                    "Create comprehensive risk management and hazard mitigation systems"
+                  ],
+                  deliverables: [
+                    "Risk Assessment Documentation (comprehensive review of department and property hazards)",
+                    "Risk Mitigation Plans (specific actions to reduce identified risks)",
+                    "Incident Analysis Examples (investigations you've conducted with prevention recommendations)"
+                  ],
+                  journal_prompt: "What risks exist in our operations that I might be overlooking? How can I be more proactive about preventing incidents rather than just responding to them?",
+                  custom_materials: [
+                    "Property Risk Assessment Techniques - Systematic approaches to identifying hazards",
+                    "Risk Mitigation Planning - Developing practical solutions to reduce risks",
+                    "Incident Investigation and Prevention - Learning from safety incidents to prevent recurrence"
+                  ]
+                },
+                {
+                  phase: 3,
+                  title: "Emergency Response Leadership",
+                  duration: "Month 3",
+                  activities: [
+                    "Build capability to lead team and property response during emergency situations",
+                    "Implementation: Lead emergency response drills and coordinate with local emergency services",
+                    "Develop comprehensive emergency response and business continuity capabilities"
+                  ],
+                  deliverables: [
+                    "Emergency Response Plans (detailed procedures for various emergency scenarios)",
+                    "Crisis Leadership Examples (situations where you've led during emergencies or high-stress events)",
+                    "Business Continuity Procedures (how to maintain essential operations during disruptions)"
+                  ],
+                  journal_prompt: "How do I stay calm and decisive during emergencies while keeping my team safe and focused? What emergency scenarios are we not adequately prepared for?",
+                  custom_materials: [
+                    "Emergency Response Planning for Property Management - Creating comprehensive emergency plans",
+                    "Crisis Leadership Techniques - Leading teams effectively during high-stress situations",
+                    "Business Continuity Planning - Maintaining operations during and after emergencies"
+                  ]
+                }
+              ]
+            }
           },
           technology_utilization: {
-            name: "Technology Utilization",
-            description: "Leverage technology for operational improvements",
+            name: "Technology Utilization & System Management",
+            description: "Optimize technology usage and lead digital innovation for operational efficiency",
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 1
+            total_tasks: 14,
+            foundation_courses: [
+              {
+                id: "om-fc-14",
+                title: "Virtual Leasing: Technology Tools for Virtual Leasing",
+                duration: "20 minutes",
+                platform: "PerformanceHQ",
+                description: "Technology integration in leasing"
+              },
+              {
+                id: "om-fc-15",
+                title: "Customer Relationship Management",
+                duration: "2 hours",
+                platform: "PerformanceHQ",
+                description: "CRM systems and resident communication technology"
+              }
+            ],
+            signature_activity: {
+              title: "Technology Optimization Project",
+              icon: "💻",
+              description: "Three-month technology leadership development focusing on optimization, automation, and innovation",
+              phases: [
+                {
+                  phase: 1,
+                  title: "Current Technology Assessment & Optimization",
+                  duration: "Month 1",
+                  activities: [
+                    "Evaluate current technology usage and identify optimization opportunities",
+                    "CM Shadowing Focus: Observe CM using property management technology and data analysis tools",
+                    "Develop comprehensive technology assessment and improvement plan"
+                  ],
+                  deliverables: [
+                    "Technology Usage Assessment (how your department currently uses available technology)",
+                    "Optimization Opportunities (ways to better utilize existing technology)",
+                    "Technology Training Plan (how to improve team technology skills)"
+                  ],
+                  journal_prompt: "What technology tools are we underutilizing that could make our work more efficient? How can I help my team get better at using technology to improve their performance?",
+                  custom_materials: [
+                    "Property Management Technology Assessment - How to evaluate technology effectiveness",
+                    "Software Optimization for Department Leaders - Getting more from existing systems",
+                    "Technology Training Design - Teaching team members to use technology effectively"
+                  ]
+                },
+                {
+                  phase: 2,
+                  title: "System Integration & Process Automation",
+                  duration: "Month 2",
+                  activities: [
+                    "Implement system integrations and automated processes to improve efficiency",
+                    "Implementation: Lead technology improvement project that benefits both leasing and maintenance",
+                    "Create data reporting and automation systems for improved decision making"
+                  ],
+                  deliverables: [
+                    "Automation Implementation (processes you've automated or streamlined using technology)",
+                    "System Integration Examples (how you've connected different tools for better efficiency)",
+                    "Data Reporting Systems (reports and dashboards you've created to track department performance)"
+                  ],
+                  journal_prompt: "What repetitive tasks could be automated to free up time for higher-value work? How can I use data and reporting to make better operational decisions?",
+                  custom_materials: [
+                    "Process Automation Opportunities in Property Management - Identifying tasks that can be automated",
+                    "System Integration Best Practices - Connecting different software systems effectively",
+                    "Data Management and Reporting - Using technology to track and report performance"
+                  ]
+                },
+                {
+                  phase: 3,
+                  title: "Technology Leadership & Innovation",
+                  duration: "Month 3",
+                  activities: [
+                    "Become the technology leader for your department and contribute to property-wide technology initiatives",
+                    "Presentation: Present technology improvement recommendations to CM and property team",
+                    "Lead innovation initiatives and technology adoption across the property"
+                  ],
+                  deliverables: [
+                    "Technology Leadership Examples (times you've led technology adoption or problem-solving)",
+                    "Innovation Implementation (new technology solutions you've researched, proposed, or implemented)",
+                    "Technology ROI Analysis (financial impact of technology improvements you've made)"
+                  ],
+                  journal_prompt: "How can I be a technology leader who helps others embrace improvements rather than resist change? What technology innovations could significantly improve our operations?",
+                  custom_materials: [
+                    "Technology Change Management - Leading technology adoption and changes",
+                    "Digital Innovation in Property Management - Identifying and implementing new technology solutions",
+                    "Technology ROI Analysis - Evaluating technology investments and improvements"
+                  ]
+                }
+              ]
+            }
+          },
+          vendor_relations: {
+            name: "Vendor Relations & Contract Oversight",
+            description: "Master vendor relationship management and contract oversight for optimal service delivery",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 14,
+            foundation_courses: [
+              {
+                id: "om-fc-16",
+                title: "2025 Student Turns Training - Session 1: Vendor Procurement",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Vendor selection and management"
+              },
+              {
+                id: "om-fc-17",
+                title: "GH Webinar: The Property Manager's Survival Guide - Mastering Maintenance Without a Lead Tech",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Working with external contractors"
+              }
+            ],
+            signature_activity: {
+              title: "Vendor Management Excellence",
+              icon: "🤝",
+              description: "Three-month development of vendor relationship management, contract oversight, and strategic partnership skills",
+              phases: [
+                {
+                  phase: 1,
+                  title: "Vendor Relationship Development & Management",
+                  duration: "Month 1",
+                  activities: [
+                    "Build expertise in selecting, managing, and optimizing vendor relationships",
+                    "CM Shadowing Focus: Observe CM managing vendor relationships and resolving vendor issues",
+                    "Develop systematic approach to vendor evaluation and relationship management"
+                  ],
+                  deliverables: [
+                    "Vendor Evaluation Process (criteria and methods for selecting contractors and suppliers)",
+                    "Vendor Relationship Management Plan (how you build and maintain productive vendor relationships)",
+                    "Vendor Performance Tracking (systems for monitoring and improving vendor performance)"
+                  ],
+                  journal_prompt: "What makes a vendor relationship successful vs. problematic? How can I get better performance from contractors while maintaining good working relationships?",
+                  custom_materials: [
+                    "Vendor Selection and Evaluation Criteria - How to choose the right contractors and suppliers",
+                    "Vendor Relationship Management - Building productive working relationships with contractors",
+                    "Vendor Performance Monitoring - Tracking and improving vendor performance"
+                  ]
+                },
+                {
+                  phase: 2,
+                  title: "Contract Management & Cost Control",
+                  duration: "Month 2",
+                  activities: [
+                    "Develop skills in contract oversight, cost management, and vendor accountability",
+                    "CM Shadowing Focus: Participate in contract negotiations and vendor performance reviews",
+                    "Implement contract management and cost control systems"
+                  ],
+                  deliverables: [
+                    "Contract Management Process (how you oversee vendor contracts and ensure compliance)",
+                    "Cost Control Examples (specific strategies you've used to manage vendor costs)",
+                    "Vendor Accountability Systems (how you hold contractors accountable for quality and performance)"
+                  ],
+                  journal_prompt: "How do I balance cost control with quality requirements when managing vendors? What contract terms and oversight practices actually protect our interests?",
+                  custom_materials: [
+                    "Contract Basics for Property Management - Understanding key contract terms and requirements",
+                    "Vendor Cost Management Strategies - Controlling costs while maintaining quality",
+                    "Contract Compliance Monitoring - Ensuring vendors meet their contractual obligations"
+                  ]
+                },
+                {
+                  phase: 3,
+                  title: "Strategic Vendor Partnership Development",
+                  duration: "Month 3",
+                  activities: [
+                    "Build strategic partnerships with key vendors that provide long-term value",
+                    "Cross-Department Project: Work with opposite department to optimize shared vendor relationships",
+                    "Develop vendor improvement programs and risk management strategies"
+                  ],
+                  deliverables: [
+                    "Strategic Partnership Examples (vendor relationships you've developed that provide exceptional value)",
+                    "Vendor Improvement Programs (how you've helped vendors improve their service to your property)",
+                    "Risk Management Plans (how you minimize risks from vendor relationships)"
+                  ],
+                  journal_prompt: "Which vendor relationships could become strategic partnerships that benefit both parties? How can I help vendors succeed while ensuring they deliver excellent service to us?",
+                  custom_materials: [
+                    "Strategic Vendor Partnership Development - Moving beyond transactional relationships",
+                    "Vendor Performance Improvement Programs - Helping vendors provide better service",
+                    "Vendor Risk Management - Reducing risks associated with vendor relationships"
+                  ]
+                }
+              ]
+            }
           }
+        },
+        validation_criteria: {
+          mastery_gates: [
+            "Process Improvement Evidence: Document at least 3 operational improvements with measurable efficiency gains",
+            "Quality & Compliance Competency: Demonstrate thorough knowledge of department compliance requirements and maintain quality standards",
+            "Safety Leadership: Lead safety initiatives and demonstrate effective emergency response capabilities",
+            "Technology Utilization: Successfully implement technology improvements that enhance department operations",
+            "Vendor Management: Manage vendor relationships effectively with evidence of cost control and quality maintenance"
+          ],
+          portfolio_defense: {
+            title: "Portfolio Defense - Operational Focus",
+            duration: "25-minute presentation to CM and peer panel",
+            components: [
+              "Process Optimization: Present operational improvements with before/after results",
+              "Quality & Compliance Management: Demonstrate knowledge of compliance requirements and quality control systems",
+              "Safety Leadership: Present safety culture development and emergency response capabilities",
+              "Technology & Vendor Management: Show examples of technology optimization and effective vendor relationships",
+              "Q&A on Operational Scenarios: Handle complex operational challenges and decision-making scenarios"
+            ]
+          },
+          cm_readiness_indicators: [
+            "Systems Thinking: Understands how all operational systems connect and affect each other",
+            "Process Leadership: Proven ability to analyze, improve, and standardize operational processes",
+            "Compliance Expertise: Thorough knowledge of legal and regulatory requirements",
+            "Technology Proficiency: Effective at using and optimizing technology for operational efficiency",
+            "Vendor Management Skills: Successfully manages contractor and supplier relationships",
+            "Safety Leadership: Creates and maintains strong safety culture and emergency preparedness"
+          ]
         }
       },
       cross_functional_collaboration: {
