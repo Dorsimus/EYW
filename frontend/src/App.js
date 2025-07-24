@@ -1441,12 +1441,20 @@ const App = () => {
 
   // Competency Task Management Functions
   const calculateCompetencyProgress = (areaKey, subKey) => {
+    console.log(`Calculating progress for ${areaKey} -> ${subKey}`);
+    
     // Get all tasks for this sub-competency
     const areaData = competencies[areaKey];
-    if (!areaData) return { completed: 0, total: 0, percentage: 0 };
+    if (!areaData) {
+      console.log(`No area data found for ${areaKey}`);
+      return { completed: 0, total: 0, percentage: 0 };
+    }
     
     const subData = areaData.sub_competencies[subKey];
-    if (!subData) return { completed: 0, total: 0, percentage: 0 };
+    if (!subData) {
+      console.log(`No sub data found for ${subKey}`);
+      return { completed: 0, total: 0, percentage: 0 };
+    }
     
     let totalTasks = 0;
     let completedTasks = 0;
@@ -1454,8 +1462,12 @@ const App = () => {
     // Count Foundation Courses
     if (subData.foundation_courses) {
       totalTasks += subData.foundation_courses.length;
+      console.log(`Foundation courses: ${subData.foundation_courses.length}`);
+      
       subData.foundation_courses.forEach(course => {
-        if (isCompetencyTaskComplete(areaKey, subKey, course.id)) {
+        const isComplete = isCompetencyTaskComplete(areaKey, subKey, course.id);
+        console.log(`Course ${course.id}: ${isComplete ? 'COMPLETE' : 'incomplete'}`);
+        if (isComplete) {
           completedTasks++;
         }
       });
@@ -1463,6 +1475,8 @@ const App = () => {
     
     // Count Phase Activities and Deliverables
     if (subData.signature_activity?.phases) {
+      console.log(`Found ${subData.signature_activity.phases.length} phases`);
+      
       subData.signature_activity.phases.forEach(phase => {
         const phaseProgress = getCompetencyTaskNotes(areaKey, subKey, `phase_${phase.phase}_progress`) || '{}';
         let parsedProgress = {};
@@ -1497,6 +1511,7 @@ const App = () => {
     }
     
     const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+    console.log(`Progress: ${completedTasks}/${totalTasks} = ${percentage}%`);
     return { completed: completedTasks, total: totalTasks, percentage };
   };
 
