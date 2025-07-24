@@ -850,6 +850,95 @@ class TaskCompetencyAPITester:
         
         return progress_calculation_valid, response
 
+    def test_admin_strategic_thinking_task_management(self):
+        """Test admin can manage tasks across new Strategic Thinking sub-competency areas"""
+        print("\n🔐 Admin Strategic Thinking Task Management")
+        
+        if not self.admin_token:
+            print("❌ No admin token available for testing")
+            return False, {}
+        
+        # Test creating tasks for each new sub-competency
+        expected_sub_competencies = [
+            "strategic_analysis_planning",
+            "data_driven_decisions",
+            "market_competitive_positioning",
+            "innovation_continuous_improvement", 
+            "vision_goal_achievement"
+        ]
+        
+        created_task_ids = []
+        all_successful = True
+        
+        for i, sub_comp in enumerate(expected_sub_competencies):
+            task_data = {
+                "title": f"Test Strategic Thinking Task - {sub_comp.replace('_', ' ').title()}",
+                "description": f"Test task for {sub_comp} sub-competency area",
+                "task_type": "assessment",
+                "competency_area": "strategic_thinking",
+                "sub_competency": sub_comp,
+                "order": i + 1,
+                "required": True,
+                "estimated_hours": 2.0,
+                "instructions": f"Complete this test task for {sub_comp} validation"
+            }
+            
+            success, response = self.run_test(
+                f"Admin Create Strategic Thinking Task - {sub_comp}", 
+                "POST", 
+                "admin/tasks", 
+                200, 
+                data=task_data, 
+                auth_required=True
+            )
+            
+            if success and 'id' in response:
+                created_task_ids.append(response['id'])
+                print(f"   ✅ Created task for {sub_comp}: {response['id']}")
+            else:
+                print(f"   ❌ Failed to create task for {sub_comp}")
+                all_successful = False
+        
+        # Test updating one of the created tasks
+        if created_task_ids:
+            test_task_id = created_task_ids[0]
+            update_data = {
+                "title": "Updated Strategic Thinking Test Task",
+                "estimated_hours": 3.0
+            }
+            
+            success, response = self.run_test(
+                "Admin Update Strategic Thinking Task", 
+                "PUT", 
+                f"admin/tasks/{test_task_id}", 
+                200, 
+                data=update_data, 
+                auth_required=True
+            )
+            
+            if success:
+                print(f"   ✅ Successfully updated strategic thinking task")
+            else:
+                print(f"   ❌ Failed to update strategic thinking task")
+                all_successful = False
+        
+        # Clean up - deactivate created test tasks
+        for task_id in created_task_ids:
+            self.run_test(
+                f"Admin Delete Test Task", 
+                "DELETE", 
+                f"admin/tasks/{task_id}", 
+                200, 
+                auth_required=True
+            )
+        
+        if all_successful:
+            print("   ✅ Admin can successfully manage Strategic Thinking tasks across all sub-competencies")
+        else:
+            print("   ❌ Admin task management has issues with Strategic Thinking sub-competencies")
+        
+        return all_successful, {"created_tasks": len(created_task_ids)}
+
     def test_admin_cross_functional_task_management(self):
         """Test admin can manage tasks across new Cross-Functional sub-competency areas"""
         print("\n🔐 Admin Cross-Functional Task Management")
