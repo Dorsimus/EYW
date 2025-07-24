@@ -1425,18 +1425,6 @@ const App = () => {
     return Math.round(totalProgress / Object.keys(competencies).length);
   };
 
-  // Helper function to get competency color class
-  const getCompetencyClass = (areaKey) => {
-    const classMap = {
-      'financial_management': 'competency-financial',
-      'leadership_supervision': 'competency-leadership', 
-      'operational_management': 'competency-operational',
-      'cross_functional_collaboration': 'competency-cross-functional',
-      'strategic_thinking': 'competency-strategic'
-    };
-    return classMap[areaKey] || '';
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
