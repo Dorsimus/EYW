@@ -391,7 +391,7 @@ SAMPLE_TASKS = [
         "description": "Spend time with the opposite department (Leasing/Maintenance) to understand their processes",
         "task_type": "shadowing",
         "competency_area": "cross_functional",
-        "sub_competency": "interdept_understanding",
+        "sub_competency": "interdepartmental_partnership",
         "order": 1,
         "required": True,
         "estimated_hours": 16.0,
