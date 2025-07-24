@@ -543,7 +543,7 @@ SAMPLE_TASKS = [
         "description": "Research and present on emerging property management trends",
         "task_type": "document_upload",
         "competency_area": "strategic_thinking",
-        "sub_competency": "trend_identification",
+        "sub_competency": "data_driven_decisions",
         "order": 1,
         "required": True,
         "estimated_hours": 4.0,
