@@ -5409,9 +5409,9 @@ const CompetenciesView = ({
                                           {/* Deliverables Section */}
                                           {phase.deliverables && (
                                             <div className="mb-6">
-                                              <h7 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                              <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                                                 📄 Deliverables
-                                              </h7>
+                                              </h4>
                                               <div className="space-y-3">
                                                 {phase.deliverables.map((deliverable, delIndex) => {
                                                   const deliverableKey = `deliverable_${delIndex}`;
