@@ -2749,7 +2749,11 @@ const CompetenciesView = ({
                                         {/* Mark Complete Button */}
                                         {!isCompleted && (
                                           <button
-                                            onClick={() => openTaskModal(areaKey, subKey, course, 'course')}
+                                            onClick={() => {
+                                              setShowTaskModal({ areaKey, subKey, task: course, taskType: 'course' });
+                                              const existingNotes = getCompetencyTaskNotes(areaKey, subKey, course.id);
+                                              setTaskNotes(existingNotes);
+                                            }}
                                             className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-green-600 border border-green-600 rounded-md hover:bg-green-700 transition-colors"
                                           >
                                             ✓ Mark Complete
