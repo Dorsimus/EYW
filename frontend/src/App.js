@@ -569,7 +569,57 @@ const App = () => {
             signature_activity: {
               title: "Performance Excellence System",
               icon: "📈",
-              description: "Three-month system for goal setting, performance monitoring, and team development"
+              description: "Three-month system for goal setting, performance monitoring, and team development",
+              phases: [
+                {
+                  phase: 1,
+                  title: "Goal Setting & Expectations Framework",
+                  duration: "Month 1",
+                  activities: [
+                    "Develop SMART goals system for each team member aligned with property objectives",
+                    "CM Shadowing Focus: Observe CM conducting goal-setting sessions and performance check-ins",
+                    "Implementation Practice: Set quarterly goals with each team member using new framework"
+                  ],
+                  deliverables: [
+                    "Individual Goal Setting Templates and Process",
+                    "Team Performance Dashboard (tracking key metrics)",
+                    "90-Day Performance Plans for each team member"
+                  ],
+                  journal_prompt: "How do I balance challenging goals with achievable expectations? What makes goals motivating vs. overwhelming?"
+                },
+                {
+                  phase: 2,
+                  title: "Performance Monitoring & Feedback Systems",
+                  duration: "Month 2",
+                  activities: [
+                    "Build regular performance monitoring and feedback rhythms",
+                    "CM Shadowing Focus: Observe CM giving performance feedback and course corrections",
+                    "Practice Challenge: Conduct weekly performance check-ins with consistent documentation"
+                  ],
+                  deliverables: [
+                    "Performance Monitoring Schedule and Protocols",
+                    "Feedback Documentation System",
+                    "Performance Improvement Plan Templates"
+                  ],
+                  journal_prompt: "How do I make performance conversations supportive rather than punitive? What feedback approach drives improvement vs. defensiveness?"
+                },
+                {
+                  phase: 3,
+                  title: "Team Development & Recognition Systems",
+                  duration: "Month 3",
+                  activities: [
+                    "Create systems for identifying and developing team member strengths and growth opportunities",
+                    "Cross-Department Learning: Shadow other department heads on talent development approaches",
+                    "Implementation: Launch team member development plans with recognition programs"
+                  ],
+                  deliverables: [
+                    "Individual Development Plans for each team member",
+                    "Skills Assessment and Growth Tracking System",
+                    "Recognition and Reward Program Framework"
+                  ],
+                  journal_prompt: "How do I identify and nurture hidden potential in team members? What development opportunities create lasting engagement?"
+                }
+              ]
             }
           },
           team_culture: {
