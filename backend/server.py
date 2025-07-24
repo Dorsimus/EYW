@@ -270,18 +270,13 @@ NAVIGATOR_COMPETENCIES = {
     },
     "strategic_thinking": {
         "name": "Strategic Thinking & Planning",
-        "description": "Developing the strategic mindset needed for property management leadership",
+        "description": "Think Like an Owner, Act Like a Leader, Plan Like a Strategist",
         "sub_competencies": {
-            "market_awareness": "Market Awareness",
-            "trend_identification": "Trend Identification",
-            "opportunity_recognition": "Opportunity Recognition",
-            "problem_anticipation": "Problem Anticipation",
-            "longterm_planning": "Long-term Planning",
-            "change_leadership": "Change Leadership",
-            "stakeholder_management": "Stakeholder Management",
-            "project_management": "Project Management",
-            "innovation_adoption": "Innovation Adoption",
-            "continuous_improvement": "Continuous Improvement"
+            "strategic_analysis_planning": "Property-Level Strategic Analysis & Planning",
+            "data_driven_decisions": "Data-Driven Decision Making & Insights",
+            "market_competitive_positioning": "Market Awareness & Competitive Positioning",
+            "innovation_continuous_improvement": "Innovation & Continuous Improvement Leadership",
+            "vision_goal_achievement": "Long-Term Vision & Goal Achievement"
         }
     }
 }
