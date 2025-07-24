@@ -1431,6 +1431,41 @@ const App = () => {
     }
   };
 
+  // Competency Task Management Functions
+  const handleCompleteCompetencyTask = (areaKey, subKey, taskId, notes = '', taskType = 'course') => {
+    const taskKey = `${areaKey}_${subKey}_${taskId}`;
+    const updatedProgress = {
+      ...competencyTaskProgress,
+      [taskKey]: {
+        completed: true,
+        completedAt: new Date().toISOString(),
+        notes: notes,
+        taskType: taskType
+      }
+    };
+    
+    setCompetencyTaskProgress(updatedProgress);
+    localStorage.setItem('competency_task_progress', JSON.stringify(updatedProgress));
+    setShowTaskModal(null);
+    setTaskNotes('');
+  };
+
+  const isCompetencyTaskComplete = (areaKey, subKey, taskId) => {
+    const taskKey = `${areaKey}_${subKey}_${taskId}`;
+    return competencyTaskProgress[taskKey]?.completed || false;
+  };
+
+  const getCompetencyTaskNotes = (areaKey, subKey, taskId) => {
+    const taskKey = `${areaKey}_${subKey}_${taskId}`;
+    return competencyTaskProgress[taskKey]?.notes || '';
+  };
+
+  const openTaskModal = (areaKey, subKey, task, taskType = 'course') => {
+    setShowTaskModal({ areaKey, subKey, task, taskType });
+    const existingNotes = getCompetencyTaskNotes(areaKey, subKey, task.id);
+    setTaskNotes(existingNotes);
+  };
+
   const getOverallProgress = () => {
     if (Object.keys(competencies).length === 0) return 0;
     const totalProgress = Object.values(competencies).reduce((sum, area) => sum + (area.overall_progress || 0), 0);
