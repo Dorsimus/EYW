@@ -5529,9 +5529,9 @@ const CompetenciesView = ({
                                           {/* Reflection Questions */}
                                           {phase.reflection_questions && (
                                             <div>
-                                              <h7 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                              <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                                                 🤔 Reflection Questions
-                                              </h7>
+                                              </h4>
                                               <div className="space-y-3">
                                                 {phase.reflection_questions.map((question, qIndex) => {
                                                   const questionKey = `reflection_${qIndex}`;
