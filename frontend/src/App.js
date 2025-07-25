@@ -5360,9 +5360,82 @@ const CompetenciesView = ({
                                         {/* Document Section */}
                                         <div className="mb-4">
                                           <h6 className="text-sm font-semibold text-gray-700 mb-2 block">📄 Document:</h6>
-                                          <p className="text-sm text-gray-800 bg-yellow-50 p-3 rounded border border-yellow-100">
-                                            {monthActivity.document}
-                                          </p>
+                                          <div className="bg-yellow-50 p-3 rounded border border-yellow-100">
+                                            <p className="text-sm text-gray-800 mb-3">
+                                              {monthActivity.document}
+                                            </p>
+                                            
+                                            {/* Document Action Buttons */}
+                                            <div className="flex items-center space-x-2 flex-wrap gap-2">
+                                              {/* Add to Portfolio Button */}
+                                              <button
+                                                onClick={() => {
+                                                  // Handle portfolio addition
+                                                  setShowTaskModal({ 
+                                                    areaKey, 
+                                                    subKey, 
+                                                    task: {
+                                                      ...monthActivity,
+                                                      id: `${activityKey}_document`,
+                                                      title: `${monthActivity.title} - Document`,
+                                                      type: 'portfolio_document'
+                                                    }, 
+                                                    taskType: 'portfolio_document' 
+                                                  });
+                                                  setTaskNotes(getCompetencyTaskNotes(areaKey, subKey, `${activityKey}_document`) || '');
+                                                }}
+                                                className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-blue-700 bg-blue-100 border border-blue-200 rounded-md hover:bg-blue-200 transition-colors"
+                                              >
+                                                📂 Add to Portfolio
+                                              </button>
+                                              
+                                              {/* Download Template Button (where applicable) */}
+                                              {(monthActivity.document.includes('Template') || monthActivity.document.includes('Playbook') || monthActivity.document.includes('Framework')) && (
+                                                <button
+                                                  onClick={() => {
+                                                    // Handle template download
+                                                    const templateName = monthActivity.title.replace(/\s+/g, '_').toLowerCase();
+                                                    console.log(`Downloading template: ${templateName}`);
+                                                    // Here would be actual template download logic
+                                                  }}
+                                                  className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-green-700 bg-green-100 border border-green-200 rounded-md hover:bg-green-200 transition-colors"
+                                                >
+                                                  📄 Download Template
+                                                </button>
+                                              )}
+                                              
+                                              {/* Upload Completed Document Button */}
+                                              <button
+                                                onClick={() => {
+                                                  // Handle document upload
+                                                  const input = document.createElement('input');
+                                                  input.type = 'file';
+                                                  input.accept = '.pdf,.doc,.docx,.txt';
+                                                  input.onchange = (e) => {
+                                                    const file = e.target.files[0];
+                                                    if (file) {
+                                                      // Here would be actual file upload logic
+                                                      console.log(`Uploading document: ${file.name}`);
+                                                      // Save file reference to competency task notes
+                                                      onCompleteCompetencyTask(areaKey, subKey, `${activityKey}_uploaded_doc`, file.name, 'document_upload');
+                                                    }
+                                                  };
+                                                  input.click();
+                                                }}
+                                                className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-purple-700 bg-purple-100 border border-purple-200 rounded-md hover:bg-purple-200 transition-colors"
+                                              >
+                                                📤 Upload Document
+                                              </button>
+                                            </div>
+                                            
+                                            {/* Show uploaded document if exists */}
+                                            {getCompetencyTaskNotes(areaKey, subKey, `${activityKey}_uploaded_doc`) && (
+                                              <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded text-xs">
+                                                <p className="font-medium text-green-800 mb-1">📎 Uploaded Document:</p>
+                                                <p className="text-green-700">{getCompetencyTaskNotes(areaKey, subKey, `${activityKey}_uploaded_doc`)}</p>
+                                              </div>
+                                            )}
+                                          </div>
                                         </div>
                                         
                                         {/* Reflection/Journal Prompt */}
