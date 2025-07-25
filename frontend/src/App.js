@@ -402,7 +402,27 @@ const App = () => {
                 curiosity_question: "What if every difficult conversation could actually strengthen our relationship?"
               }
             ],
-            competency_gate: "Successfully resolve documented conflict + Team member feedback on conversation quality"
+            competency_gate: "Successfully resolve documented conflict + Team member feedback on conversation quality",
+            dive_deeper_resources: [
+              {
+                title: "Crucial Conversations: Tools for Talking When Stakes Are High",
+                type: "Book",
+                description: "Master framework for difficult conversations",
+                url: "https://cruciallearning.com/crucial-conversations-book/"
+              },
+              {
+                title: "Difficult Conversations: How to Discuss What Matters Most",
+                type: "Book",
+                description: "Harvard Negotiation Project insights on tough talks",
+                url: "#"
+              },
+              {
+                title: "Nonviolent Communication by Marshall Rosenberg",
+                type: "Book/Video",
+                description: "Compassionate communication techniques",
+                url: "https://www.cnvc.org/"
+              }
+            ]
           },
           building_collaborative_culture: {
             name: "Building Collaborative Team Culture",
