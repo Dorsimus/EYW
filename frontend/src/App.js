@@ -475,7 +475,27 @@ const App = () => {
                 curiosity_question: "How can we make positive culture as automatic as our daily routines?"
               }
             ],
-            competency_gate: "Team reports improved culture in surveys + Observable changes in team interactions"
+            competency_gate: "Team reports improved culture in surveys + Observable changes in team interactions",
+            dive_deeper_resources: [
+              {
+                title: "The Culture Map by Erin Meyer",
+                type: "Book",
+                description: "Understanding different cultural styles in teamwork",
+                url: "#"
+              },
+              {
+                title: "The Advantage by Patrick Lencioni",
+                type: "Book",
+                description: "Building healthy organizational culture",
+                url: "https://www.tablegroup.com/books/advantage"
+              },
+              {
+                title: "Psychological Safety: The Key to Happy, High-Performing Teams",
+                type: "Article",
+                description: "Creating environments where people can take risks",
+                url: "https://www.ccl.org/articles/leading-effectively-articles/psychological-safety-key-happy-high-performing-teams/"
+              }
+            ]
           },
           developing_others_success: {
             name: "Developing Others for Success",
