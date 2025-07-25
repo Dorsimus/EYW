@@ -5498,6 +5498,74 @@ const CompetenciesView = ({
                                     <p className="text-sm text-emerald-700">{subData.competency_gate}</p>
                                   </div>
                                 )}
+                                
+                                {/* Dive Deeper Resources */}
+                                {subData.dive_deeper_resources && (
+                                  <div className="mt-4 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-200">
+                                    <h6 className="font-semibold text-indigo-800 mb-3 block flex items-center">
+                                      📚 Dive Deeper Resources
+                                    </h6>
+                                    <div className="space-y-3">
+                                      {subData.dive_deeper_resources.map((resource, resourceIndex) => (
+                                        <div key={resourceIndex} className="bg-white p-3 rounded border border-indigo-100">
+                                          <div className="flex items-start justify-between mb-2">
+                                            <div className="flex-1">
+                                              <h7 className="font-semibold text-sm text-indigo-900 mb-1">
+                                                {resource.title}
+                                              </h7>
+                                              <p className="text-xs text-indigo-700 mb-2">
+                                                {resource.description}
+                                              </p>
+                                              <span className="inline-block px-2 py-1 text-xs font-medium text-indigo-600 bg-indigo-100 rounded">
+                                                {resource.type}
+                                              </span>
+                                            </div>
+                                          </div>
+                                          
+                                          <div className="flex items-center space-x-2 mt-2">
+                                            {resource.url && resource.url !== '#' && (
+                                              <a 
+                                                href={resource.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center px-2 py-1 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100 transition-colors"
+                                              >
+                                                🔗 View Resource
+                                              </a>
+                                            )}
+                                            
+                                            <button
+                                              onClick={() => {
+                                                setShowTaskModal({ 
+                                                  areaKey, 
+                                                  subKey, 
+                                                  task: {
+                                                    ...resource,
+                                                    id: `resource_${resourceIndex}`,
+                                                    type: 'resource_notes'
+                                                  }, 
+                                                  taskType: 'resource_notes' 
+                                                });
+                                                setTaskNotes(getCompetencyTaskNotes(areaKey, subKey, `resource_${resourceIndex}_notes`) || '');
+                                              }}
+                                              className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 transition-colors"
+                                            >
+                                              📝 Add Notes
+                                            </button>
+                                          </div>
+                                          
+                                          {/* Show notes if they exist */}
+                                          {getCompetencyTaskNotes(areaKey, subKey, `resource_${resourceIndex}_notes`) && (
+                                            <div className="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs">
+                                              <p className="font-medium text-yellow-800 mb-1">📝 Your Notes:</p>
+                                              <p className="text-yellow-700">{getCompetencyTaskNotes(areaKey, subKey, `resource_${resourceIndex}_notes`)}</p>
+                                            </div>
+                                          )}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
                               </div>
                             </div>
                           )}
