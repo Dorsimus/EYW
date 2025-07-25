@@ -5167,7 +5167,7 @@ const CompetenciesView = ({
                                         
                                         {/* In-the-Flow Activity */}
                                         <div className="mb-4">
-                                          <h7 className="text-sm font-semibold text-gray-700 mb-2 block">🔄 In-the-Flow Activity:</h7>
+                                          <h6 className="text-sm font-semibold text-gray-700 mb-2 block">🔄 In-the-Flow Activity:</h6>
                                           <p className="text-sm text-gray-800 bg-blue-50 p-3 rounded border border-blue-100">
                                             {monthActivity.in_the_flow_activity}
                                           </p>
@@ -5175,7 +5175,7 @@ const CompetenciesView = ({
                                         
                                         {/* Document Section */}
                                         <div className="mb-4">
-                                          <h7 className="text-sm font-semibold text-gray-700 mb-2 block">📄 Document:</h7>
+                                          <h6 className="text-sm font-semibold text-gray-700 mb-2 block">📄 Document:</h6>
                                           <p className="text-sm text-gray-800 bg-yellow-50 p-3 rounded border border-yellow-100">
                                             {monthActivity.document}
                                           </p>
@@ -5184,11 +5184,11 @@ const CompetenciesView = ({
                                         {/* Reflection/Journal Prompt */}
                                         {(monthActivity.reflection || monthActivity.journal_prompt || monthActivity.curiosity_question) && (
                                           <div className="mb-4">
-                                            <h7 className="text-sm font-semibold text-gray-700 mb-2 block">
+                                            <h6 className="text-sm font-semibold text-gray-700 mb-2 block">
                                               {monthActivity.reflection && '🤔 Reflection:'}
                                               {monthActivity.journal_prompt && '📖 Journal Prompt:'}
                                               {monthActivity.curiosity_question && '💡 Curiosity Question:'}
-                                            </h7>
+                                            </h6>
                                             <p className="text-sm text-purple-800 bg-purple-50 p-3 rounded border border-purple-100 italic">
                                               "{monthActivity.reflection || monthActivity.journal_prompt || monthActivity.curiosity_question}"
                                             </p>
