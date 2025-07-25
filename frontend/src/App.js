@@ -263,474 +263,294 @@ const App = () => {
       setCompetencies({
       leadership_supervision: {
         name: "Leadership & Supervision",
-        description: "High Standards + High Support = High Performance + High Engagement",
-        philosophy: "The Navigator Leadership & Supervision development focuses exclusively on people leadership skills - managing, motivating, developing, and inspiring teams to achieve excellence while maintaining high engagement. Each activity builds toward Community Manager readiness through mastery of human leadership fundamentals.",
+        description: "Leadership Isn't a Title, It's How You Show Up Every Day",
+        philosophy: "The Navigator Leadership & Supervision development transforms department supervisors into inspiring people leaders through their daily work. Every task builds real leadership skills while creating tangible value for residents and the property. This is learning in action, not learning in addition.",
+        time_commitment: "~12 minutes per week + natural work integration",
+        duration: "12-15 months (competency-based progression)",
+        focus: "Curiosity-driven leadership development through authentic work experiences",
         overall_progress: 0,
         completion_percentage: 0,
         completed_tasks: 0,
-        total_tasks: 15,
+        total_tasks: 16,
         competency_area: "leadership_supervision",
+        curiosity_ignition: {
+          title: "Leadership Curiosity Assessment",
+          description: "Before diving in, spark curiosity about your leadership journey",
+          time_required: "5 minutes of thinking",
+          reflection_prompts: [
+            "What's one leadership moment from this week that I keep thinking about?",
+            "If I could ask any great leader three questions, what would they be?",
+            "What does leadership look like when no one's watching?",
+            "How do I want people to feel after working with me?"
+          ],
+          setup_requirement: "Create a simple place to capture leadership observations, questions, and 'aha moments' throughout the program."
+        },
         sub_competencies: {
-          team_leadership_motivation: {
-            name: "Team Leadership & Motivation Mastery",
-            description: "Master the fundamentals of leading and motivating teams to achieve excellence",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 7,
-            foundation_courses: [
-              {
-                id: "ls-fc-01",
-                title: "Essential Skills for the New Supervisor",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Starting point for new leaders"
-              },
-              {
-                id: "ls-fc-02", 
-                title: "Leadership 101",
-                duration: "45 minutes",
-                platform: "PerformanceHQ",
-                description: "Core leadership principles"
-              },
-              {
-                id: "ls-fc-03",
-                title: "Leadership 201", 
-                duration: "2 hours 5 minutes",
-                platform: "PerformanceHQ",
-                description: "Advanced leadership concepts"
-              },
-              {
-                id: "ls-fc-04",
-                title: "Employee Motivation",
-                duration: "1 hour",
-                platform: "PerformanceHQ", 
-                description: "Understanding what drives team performance"
-              }
-            ],
-            signature_activity: {
-              title: "Leadership Evolution Portfolio",
-              icon: "🚀",
-              description: "Three-month journey developing your personal leadership style and team impact",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Leadership Style Discovery",
-                  duration: "Month 1",
-                  activities: [
-                    "Complete comprehensive leadership assessment and create personal leadership manifesto",
-                    "CM Shadowing Focus: Observe CM during team meetings and one-on-ones (1 hour weekly for 4 weeks)",
-                    "Weekly journal reflections on leadership observations and insights"
-                  ],
-                  deliverables: [
-                    "Personal Leadership Manifesto (1-2 pages)",
-                    "Leadership Assessment Results",
-                    "Shadowing Reflection Journal"
-                  ],
-                  journal_prompt: "What kind of leader do I want to be? What does 'high standards with fun' look like in my leadership style?",
-                  reflection_questions: [
-                    "How does my CM balance high standards with team enjoyment?",
-                    "What specific leadership behaviors create both accountability and engagement?", 
-                    "Which leadership approaches resonated most with me and why?"
-                  ]
-                },
-                {
-                  phase: 2,
-                  title: "Team Diagnostic & Development Plan",
-                  duration: "Month 2", 
-                  activities: [
-                    "Conduct thorough assessment of current team dynamics",
-                    "Create individualized development plans for each team member",
-                    "Shadow CM during individual performance discussions and team development planning"
-                  ],
-                  deliverables: [
-                    "Team Strengths & Growth Assessment (using structured template)",
-                    "Individual Development Plans for each team member",
-                    "Team Motivation Strategy tailored to each personality"
-                  ],
-                  journal_prompt: "What motivates each person on my team differently? How can I adapt my leadership to bring out the best in each individual?"
-                },
-                {
-                  phase: 3,
-                  title: "Leadership Impact Measurement",
-                  duration: "Month 3",
-                  activities: [
-                    "Implement new leadership strategies and collect 360-degree feedback",
-                    "Shadow another Navigator at different property for perspective comparison", 
-                    "Measure team engagement improvements"
-                  ],
-                  deliverables: [
-                    "360-Feedback Summary (from team, peers, CM)",
-                    "Team Engagement Survey Results (before/after comparison)",
-                    "Leadership Growth Evidence (specific behavior changes)"
-                  ],
-                  journal_prompt: "How have I evolved as a leader? What leadership behaviors are having the biggest positive impact on my team?"
-                }
-              ]
-            }
-          },
-          difficult_conversations: {
-            name: "Difficult Conversations & Feedback Mastery", 
-            description: "Master the art of giving effective feedback and handling challenging conversations",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 6,
-            foundation_courses: [
-              {
-                id: "ls-fc-05",
-                title: "Performance Management",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Structured approach to performance discussions"
-              },
-              {
-                id: "ls-fc-06",
-                title: "Coaching Foundations", 
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Coaching vs. managing mindset"
-              },
-              {
-                id: "ls-fc-07",
-                title: "Conflict Resolution (Supervisor Version)",
-                duration: "2 hours",
-                platform: "PerformanceHQ",
-                description: "Advanced conflict management"
-              }
-            ],
-            signature_activity: {
-              title: "Courageous Conversations Challenge",
-              icon: "🎯",
-              description: "Three-month intensive developing expertise in feedback, performance issues, and coaching",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Feedback Framework Development",
-                  duration: "Month 1",
-                  activities: [
-                    "Master the art of giving effective, frequent feedback",
-                    "CM Shadowing Focus: Observe CM giving performance feedback and coaching conversations",
-                    "Practice Challenge: Give meaningful feedback to each team member weekly for 4 weeks"
-                  ],
-                  deliverables: [
-                    "Personal Feedback Framework (methodology for daily/weekly feedback)",
-                    "Feedback Scripts Library for common situations", 
-                    "Weekly Feedback Log (tracking frequency, topics, and outcomes)"
-                  ],
-                  journal_prompt: "What makes feedback effective vs. ineffective? How can I make difficult conversations productive rather than punitive?"
-                },
-                {
-                  phase: 2,
-                  title: "Performance Issue Resolution",
-                  duration: "Month 2",
-                  activities: [
-                    "Develop expertise in addressing performance problems with care and firmness",
-                    "Role Play Practice: Practice difficult scenarios with mentor or CM",
-                    "CM Shadowing Focus: Observe CM handling performance issues and corrective action discussions"
-                  ],
-                  deliverables: [
-                    "Performance Improvement Process (step-by-step methodology)",
-                    "Case Study Documentation (2-3 real performance issues addressed)",
-                    "Performance Conversation Scripts and Outcomes"
-                  ],
-                  journal_prompt: "How do I maintain care and respect while holding firm standards? What does supportive accountability look like?"
-                },
-                {
-                  phase: 3,
-                  title: "Coaching for Development",
-                  duration: "Month 3",
-                  activities: [
-                    "Build skills in coaching team members for growth and advancement",
-                    "Peer Learning: Partner with another Navigator to practice coaching techniques"
-                  ],
-                  deliverables: [
-                    "Individual Coaching Plans for each team member",
-                    "Career Development Conversations Documentation",
-                    "Coaching Session Notes and Progress Tracking"
-                  ],
-                  journal_prompt: "How do I shift from managing performance to developing potential? What coaching questions unlock growth in others?"
-                }
-              ]
-            }
-          },
-          communication_conflict: {
-            name: "Communication & Conflict Resolution Excellence",
-            description: "Build expertise in clear communication and resolving team conflicts",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 5,
-            foundation_courses: [
-              {
-                id: "ls-fc-08",
-                title: "Leadership Booster: Communication Skills for Supervisors",
-                duration: "5 minutes", 
-                platform: "PerformanceHQ",
-                description: "Quick communication tips"
-              },
-              {
-                id: "ls-fc-09",
-                title: "Amanda Ripley on Why We Get Trapped in Conflict and How We Get Out",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Conflict psychology"
-              },
-              {
-                id: "ls-fc-10",
-                title: "Booster: De-Escalating Conflict",
-                duration: "5 minutes",
-                platform: "PerformanceHQ", 
-                description: "De-escalation techniques"
-              }
-            ],
-            signature_activity: {
-              title: "Communication Master Class",
-              icon: "🗣️",
-              description: "Three-month development of communication systems, conflict resolution, and influence skills",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Clear Communication Systems",
-                  duration: "Month 1",
-                  activities: [
-                    "Develop systems for consistent, clear communication with team",
-                    "CM Shadowing Focus: Observe how CM structures and leads various types of meetings",
-                    "Practice Implementation: Lead weekly team meetings and daily huddles for 4 weeks"
-                  ],
-                  deliverables: [
-                    "Team Communication Standards and Expectations",
-                    "Meeting Templates (team meetings, one-on-ones, huddles)",
-                    "Communication Tracking System (ensuring nothing falls through cracks)"
-                  ],
-                  journal_prompt: "How do I ensure my communication is clear, consistent, and actionable? What communication habits build trust vs. confusion?"
-                },
-                {
-                  phase: 2,
-                  title: "Conflict Resolution Mastery",
-                  duration: "Month 2",
-                  activities: [
-                    "Build expertise in resolving interpersonal conflicts and team disputes",
-                    "CM Shadowing Focus: Observe CM mediating conflicts and difficult team dynamics",
-                    "Skill Practice: Facilitate resolution of team conflicts (with CM oversight)"
-                  ],
-                  deliverables: [
-                    "Conflict Resolution Playbook (personal methodology)",
-                    "Conflict Case Studies (3+ real conflicts resolved)",
-                    "Team Harmony Improvement Evidence"
-                  ],
-                  journal_prompt: "How do I stay neutral and solution-focused during emotional conflicts? What techniques help me de-escalate while addressing root issues?"
-                },
-                {
-                  phase: 3,
-                  title: "Influencing Without Authority",
-                  duration: "Month 3",
-                  activities: [
-                    "Develop skills in motivating and influencing team members through inspiration rather than position power",
-                    "Cross-Property Learning: Observe different leadership styles at 2 other properties",
-                    "Practice advanced influence techniques with team member buy-in challenges"
-                  ],
-                  deliverables: [
-                    "Influence Strategy for each team member",
-                    "Examples of successful influence and motivation",
-                    "Team Buy-in Success Stories"
-                  ],
-                  journal_prompt: "How do I earn influence and respect rather than demanding it? What makes people want to follow my leadership?"
-                }
-              ]
-            }
-          },
-          performance_management: {
-            name: "Performance Management & Team Development", 
-            description: "Develop systems for managing performance and developing team members",
+          inspiring_team_motivation: {
+            name: "Inspiring Team Motivation & Engagement",
+            description: "What makes someone excited to come to work for you specifically?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
             progress_percentage: 0,
             completed_tasks: 0,
             total_tasks: 4,
+            core_learning_question: "What makes someone excited to come to work for me specifically?",
             foundation_courses: [
               {
-                id: "ls-fc-11",
-                title: "Build a Positive Work Environment Series for Supervisors",
-                duration: "45 minutes",
+                id: "ls-new-fc-01",
+                title: "Employee Motivation",
+                duration: "1 hour",
                 platform: "PerformanceHQ",
-                description: "Creating positive teams"
-              },
-              {
-                id: "ls-fc-12",
-                title: "Leadership Booster: Building Psychological Safety in Teams",
-                duration: "5 minutes",
-                platform: "PerformanceHQ",
-                description: "Safe environment creation"
-              },
-              {
-                id: "ls-fc-13",
-                title: "Team Retention Strategies Series",
-                duration: "25 minutes",
-                platform: "PerformanceHQ",
-                description: "Keeping good people"
+                description: "Why people do what they do"
               }
             ],
-            signature_activity: {
-              title: "Performance Excellence System",
-              icon: "📈",
-              description: "Three-month system for goal setting, performance monitoring, and team development",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Goal Setting & Expectations Framework",
-                  duration: "Month 1",
-                  activities: [
-                    "Develop SMART goals system for each team member aligned with property objectives",
-                    "CM Shadowing Focus: Observe CM conducting goal-setting sessions and performance check-ins",
-                    "Implementation Practice: Set quarterly goals with each team member using new framework"
-                  ],
-                  deliverables: [
-                    "Individual Goal Setting Templates and Process",
-                    "Team Performance Dashboard (tracking key metrics)",
-                    "90-Day Performance Plans for each team member"
-                  ],
-                  journal_prompt: "How do I balance challenging goals with achievable expectations? What makes goals motivating vs. overwhelming?"
-                },
-                {
-                  phase: 2,
-                  title: "Performance Monitoring & Feedback Systems",
-                  duration: "Month 2",
-                  activities: [
-                    "Build regular performance monitoring and feedback rhythms",
-                    "CM Shadowing Focus: Observe CM giving performance feedback and course corrections",
-                    "Practice Challenge: Conduct weekly performance check-ins with consistent documentation"
-                  ],
-                  deliverables: [
-                    "Performance Monitoring Schedule and Protocols",
-                    "Feedback Documentation System",
-                    "Performance Improvement Plan Templates"
-                  ],
-                  journal_prompt: "How do I make performance conversations supportive rather than punitive? What feedback approach drives improvement vs. defensiveness?"
-                },
-                {
-                  phase: 3,
-                  title: "Team Development & Recognition Systems",
-                  duration: "Month 3",
-                  activities: [
-                    "Create systems for identifying and developing team member strengths and growth opportunities",
-                    "Cross-Department Learning: Shadow other department heads on talent development approaches",
-                    "Implementation: Launch team member development plans with recognition programs"
-                  ],
-                  deliverables: [
-                    "Individual Development Plans for each team member",
-                    "Skills Assessment and Growth Tracking System",
-                    "Recognition and Reward Program Framework"
-                  ],
-                  journal_prompt: "How do I identify and nurture hidden potential in team members? What development opportunities create lasting engagement?"
-                }
-              ]
-            }
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Leadership Style Discovery",
+                in_the_flow_activity: "During your regular one-on-ones, ask each team member: 'When do you feel most energized at work?', 'What kind of support helps you do your best work?', 'How do you like to receive feedback?'",
+                document: "Simple Leadership Style Notes (10 minutes weekly)",
+                reflection: "What patterns do I see in what motivates different people?"
+              },
+              {
+                month: 2,
+                title: "Motivation in Action",
+                in_the_flow_activity: "Choose ONE motivational approach to try with each team member based on Month 1 discoveries",
+                document: "Motivation Experiment Results (5 minutes weekly)",
+                integrations: ["Financial Integration: Track team performance metrics during motivation experiments", "Cross-Functional Integration: Share motivation successes with opposite department Navigator"],
+                journal_prompt: "What motivation experiments surprised me? What didn't work as expected?"
+              },
+              {
+                month: 3,
+                title: "Sustainable Motivation Systems",
+                in_the_flow_activity: "Create one simple, sustainable motivation practice for your team",
+                document: "Team Motivation Playbook (one-page guide you actually use)",
+                integrations: ["Operational Integration: Connect motivation practices to daily operational routines"],
+                curiosity_question: "How can motivation become as natural as breathing in our daily work?"
+              }
+            ],
+            competency_gate: "Team members report higher engagement in brief surveys + Observable behavior changes in team dynamics"
           },
-          team_culture: {
-            name: "Team Culture & Environment Creation",
-            description: "Build and maintain positive, high-performing team cultures",
+          mastering_difficult_conversations: {
+            name: "Mastering Difficult Conversations",
+            description: "How do I have conversations that strengthen relationships while raising standards?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 3,
+            total_tasks: 4,
+            core_learning_question: "How do I have conversations that strengthen relationships while raising standards?",
             foundation_courses: [
               {
-                id: "ls-fc-14",
+                id: "ls-new-fc-02",
+                title: "Performance Management",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "How to have conversations that matter"
+              },
+              {
+                id: "ls-new-fc-03",
+                title: "Coaching Foundations",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Coaching vs. fixing mindset"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Feedback Foundations",
+                in_the_flow_activity: "Give meaningful feedback to one team member weekly (something you should already be doing!)",
+                document: "Weekly Feedback Log - just note what worked/didn't work (5 minutes)",
+                integrations: ["Leadership Integration: Practice feedback techniques learned in Leadership modules"],
+                reflection: "What makes feedback feel helpful vs. hurtful?"
+              },
+              {
+                month: 2,
+                title: "Performance Conversations",
+                in_the_flow_activity: "Address one performance issue using structured approach",
+                document: "Performance Conversation Template (create a simple framework you'll actually use)",
+                integrations: ["Financial Integration: Connect performance conversations to departmental budget impact", "Strategic Integration: Frame performance in context of property goals"],
+                journal_prompt: "How do I balance care for the person with accountability for results?"
+              },
+              {
+                month: 3,
+                title: "Conflict Resolution Mastery",
+                in_the_flow_activity: "Resolve one team or cross-department conflict using learned techniques",
+                document: "Conflict Resolution Success Story (detailed case study)",
+                integrations: ["Cross-Functional Integration: Practice conflict resolution with maintenance/leasing counterpart"],
+                curiosity_question: "What if every difficult conversation could actually strengthen our relationship?"
+              }
+            ],
+            competency_gate: "Successfully resolve documented conflict + Team member feedback on conversation quality"
+          },
+          building_collaborative_culture: {
+            name: "Building Collaborative Team Culture",
+            description: "How do we have high standards AND have fun together?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do we have high standards AND have fun together?",
+            foundation_courses: [
+              {
+                id: "ls-new-fc-04",
                 title: "Building a Team Culture",
                 duration: "1 hour",
                 platform: "PerformanceHQ",
-                description: "Creating positive team dynamics"
+                description: "Creating environments where people thrive"
               },
               {
-                id: "ls-fc-15",
+                id: "ls-new-fc-05",
                 title: "Being a Team Player",
                 duration: "1 hour",
-                platform: "PerformanceHQ", 
-                description: "Modeling collaborative behavior"
-              },
-              {
-                id: "ls-fc-16",
-                title: "Leadership Booster: Preventing Toxic Workplace Cultures",
-                duration: "5 minutes",
                 platform: "PerformanceHQ",
-                description: "Culture protection"
+                description: "Modeling collaboration"
               }
             ],
-            signature_activity: {
-              title: "Culture Champion Challenge",
-              icon: "🌟",
-              description: "Three-month intensive on assessing, building, and sustaining positive team culture",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Culture Assessment & Vision Development",
-                  duration: "Month 1",
-                  activities: [
-                    "Conduct comprehensive team culture assessment using surveys and observations",
-                    "CM Shadowing Focus: Observe how CM identifies and addresses culture challenges",
-                    "Team Engagement: Facilitate team sessions to define desired culture and values"
-                  ],
-                  deliverables: [
-                    "Team Culture Assessment Report (current state analysis)",
-                    "Culture Vision Statement co-created with team",
-                    "Culture Gap Analysis (current vs. desired state)"
-                  ],
-                  journal_prompt: "What cultural elements make teams thrive vs. struggle? How do I assess culture objectively while leading change?"
-                },
-                {
-                  phase: 2,
-                  title: "Culture Building Initiatives Implementation",
-                  duration: "Month 2",
-                  activities: [
-                    "Launch targeted culture-building initiatives based on assessment findings",
-                    "CM Shadowing Focus: Observe CM reinforcing positive behaviors and addressing culture detractors",
-                    "Practice Implementation: Lead culture-building activities (team rituals, recognition programs, communication improvements)"
-                  ],
-                  deliverables: [
-                    "Culture Building Action Plan with specific initiatives",
-                    "Team Ritual and Recognition System Implementation",
-                    "Culture Metrics Tracking Dashboard"
-                  ],
-                  journal_prompt: "How do I balance authenticity with intentional culture change? What initiatives create lasting behavioral shifts vs. temporary enthusiasm?"
-                },
-                {
-                  phase: 3,
-                  title: "Culture Sustainability & Measurement",
-                  duration: "Month 3",
-                  activities: [
-                    "Develop systems for sustaining positive culture changes long-term",
-                    "Cross-Property Learning: Study high-performing team cultures at 2 other properties",
-                    "Culture Legacy: Create systems for onboarding new team members into the culture"
-                  ],
-                  deliverables: [
-                    "Culture Sustainability Playbook (maintaining positive changes)",
-                    "New Team Member Culture Integration Process",
-                    "Culture Success Measurement System (ongoing assessment tools)"
-                  ],
-                  journal_prompt: "How do I ensure culture changes outlast my direct involvement? What makes culture self-sustaining vs. dependent on constant reinforcement?"
-                }
-              ]
-            }
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Culture Assessment & Vision",
+                in_the_flow_activity: "Observe and document current team culture during regular work",
+                document: "Team Culture Snapshot (what you observe + what team members say they want)",
+                integrations: ["Cross-Functional Integration: Compare culture observations with opposite department"],
+                reflection: "What does our culture feel like day-to-day? What do we want it to feel like?"
+              },
+              {
+                month: 2,
+                title: "Culture Building Experiments",
+                in_the_flow_activity: "Try one small culture-building practice monthly (team check-ins, celebrations, etc.)",
+                document: "Culture Experiment Results (what worked, what didn't, why)",
+                integrations: ["Operational Integration: Connect culture practices to daily operational meetings"],
+                journal_prompt: "What culture practices actually make work more enjoyable AND more effective?"
+              },
+              {
+                month: 3,
+                title: "Sustainable Culture Systems",
+                in_the_flow_activity: "Implement one lasting culture practice that requires no extra time",
+                document: "Culture Playbook (simple practices that stick)",
+                integrations: ["Strategic Integration: Connect culture practices to property-wide goals"],
+                curiosity_question: "How can we make positive culture as automatic as our daily routines?"
+              }
+            ],
+            competency_gate: "Team reports improved culture in surveys + Observable changes in team interactions"
+          },
+          developing_others_success: {
+            name: "Developing Others for Success",
+            description: "How do I help each person become the best version of themselves?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I help each person become the best version of themselves?",
+            foundation_courses: [
+              {
+                id: "ls-new-fc-06",
+                title: "Coaching Foundations",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Growing people vs. managing tasks"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Individual Development Focus",
+                in_the_flow_activity: "Create simple development goal with each team member during regular meetings",
+                document: "Individual Development Plans (one page per person with their input)",
+                integrations: ["Financial Integration: Connect development goals to departmental performance metrics"],
+                reflection: "What does each person on my team want to become? How can I help?"
+              },
+              {
+                month: 2,
+                title: "Teaching & Mentoring",
+                in_the_flow_activity: "Teach each team member one new skill or improve existing skill",
+                document: "Teaching Success Stories (what you taught, how, what worked)",
+                integrations: ["Cross-Functional Integration: Cross-train team member in opposite department skill"],
+                journal_prompt: "What's the difference between telling someone what to do and helping them learn to think?"
+              },
+              {
+                month: 3,
+                title: "Development Results & Recognition",
+                in_the_flow_activity: "Recognize and celebrate each team member's growth",
+                document: "Development Success Showcase (evidence of team member growth)",
+                integrations: ["Strategic Integration: Connect individual development to property advancement opportunities"],
+                curiosity_question: "How can helping others grow become the most rewarding part of my work?"
+              }
+            ],
+            competency_gate: "Team member demonstrates new skill/advancement + Peer recognition of development abilities"
           }
         },
+        integration_activities: {
+          weekly_cm_shadowing: {
+            title: "Weekly CM Shadowing",
+            time: "30 minutes weekly - rotated focus",
+            schedule: [
+              { months: "1-3", focus: "Team meetings and motivation techniques" },
+              { months: "4-6", focus: "Performance conversations and feedback delivery" },
+              { months: "7-9", focus: "Culture building and team development" },
+              { months: "10-12", focus: "Advanced leadership and strategic thinking" }
+            ]
+          },
+          cross_department_exchange: {
+            title: "Cross-Department Leadership Exchange",
+            time: "Monthly - 30 minutes",
+            activities: [
+              "Share leadership successes and challenges with opposite department Navigator",
+              "Practice leadership skills in cross-functional scenarios",
+              "Build property-wide leadership perspective"
+            ]
+          },
+          leadership_curiosity_journal: {
+            title: "Leadership Curiosity Journal",
+            time: "5 minutes weekly",
+            activities: [
+              "Document leadership observations, questions, and insights",
+              "Track 'aha moments' and behavior changes",
+              "Reflect on leadership growth and areas for continued development"
+            ]
+          }
+        },
+        culminating_project: {
+          title: "Leadership Legacy Initiative",
+          duration: "Final 2-3 months of program",
+          challenge: "Design and implement one leadership initiative that improves both team performance and team satisfaction",
+          options: [
+            "Team Development Program: Create systematic approach to developing your team members",
+            "Culture Transformation Project: Lead significant improvement in team culture and collaboration",
+            "Cross-Department Leadership Initiative: Solve problem requiring leadership across departments"
+          ],
+          deliverables: [
+            "Project proposal and implementation plan (2 pages max)",
+            "Evidence of positive impact (metrics, feedback, observations)",
+            "Leadership lessons learned and future development plan (1 page)"
+          ],
+          presentation: "15-minute presentation to CM and peer panel on leadership growth and impact"
+        },
         validation_criteria: {
-          mastery_gates: [
-            "360-Degree Feedback Score: Average 4.0+ (5-point scale) on leadership effectiveness",
-            "Team Performance Improvement: Department shows measurable improvement over 6-month period", 
-            "Conflict Resolution Mastery: Successfully resolve 3+ documented complex interpersonal conflicts",
-            "Team Development Evidence: At least one team member advances or receives promotion/recognition"
+          mastery_evidence_portfolio: [
+            "Motivation Mastery: Team engagement improvement + sustainable motivation practices",
+            "Conversation Excellence: Successful difficult conversations + team feedback",
+            "Culture Building: Observable culture improvements + team satisfaction",
+            "Development Success: Team member advancement + teaching effectiveness"
           ],
           portfolio_defense: {
-            title: "Portfolio Defense - Leadership Focus",
-            duration: "20-minute presentation to CM and peer panel",
+            duration: "20 minutes",
             components: [
-              "Leadership Journey: Document evolution from beginning to end of program",
-              "Team Impact Evidence: Concrete examples of leadership development improving team performance",
-              "Conflict Resolution Case Study: Detailed example of complex conflict successfully resolved",
-              "Q&A on Leadership Scenarios: Handle challenging leadership situations and decision-making"
+              "Leadership Journey Story: How you've grown as a leader through the program",
+              "Team Transformation Evidence: Specific examples of positive team changes",
+              "Leadership Philosophy: Your personal approach to leading others",
+              "Future Development Plan: How you'll continue growing as a leader"
             ]
           },
           cm_readiness_indicators: [
-            "Proven Team Leadership: Successfully leading team toward consistent goal achievement",
-            "Difficult Conversation Mastery: Comfortable with performance management, discipline, and coaching",
-            "Culture Creation Skills: Evidence of intentionally building positive, high-performing team environment", 
-            "Conflict Resolution Expertise: Demonstrated ability to resolve complex interpersonal issues",
-            "People Development Success: Track record of helping team members grow and advance"
+            "Proven Team Leadership: Successfully leading team toward consistent results",
+            "Difficult Conversation Mastery: Comfortable with all aspects of performance management",
+            "Culture Creation: Evidence of intentionally building positive team environment",
+            "People Development Track Record: Team members advance and grow under your leadership"
           ]
         }
       },
