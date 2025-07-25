@@ -5494,9 +5494,9 @@ const CompetenciesView = ({
                                           {/* Journal Prompt Section */}
                                           {phase.journal_prompt && (
                                             <div className="mb-4">
-                                              <h7 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                              <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
                                                 📖 Leadership Journal Prompt
-                                              </h7>
+                                              </h4>
                                               <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-l-4 border-orange-400 p-4 rounded-r-lg">
                                                 <p className="text-sm text-orange-800 font-medium italic mb-3">
                                                   "{phase.journal_prompt}"
