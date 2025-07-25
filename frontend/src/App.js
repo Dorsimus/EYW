@@ -541,7 +541,27 @@ const App = () => {
                 curiosity_question: "How can helping others grow become the most rewarding part of my work?"
               }
             ],
-            competency_gate: "Team member demonstrates new skill/advancement + Peer recognition of development abilities"
+            competency_gate: "Team member demonstrates new skill/advancement + Peer recognition of development abilities",
+            dive_deeper_resources: [
+              {
+                title: "The Coaching Habit: Say Less, Ask More & Change the Way You Lead Forever",
+                type: "Book",
+                description: "Seven essential coaching questions for leaders",
+                url: "https://boxofcrayons.com/the-coaching-habit-book/"
+              },
+              {
+                title: "Multipliers: How the Best Leaders Make Everyone Smarter",
+                type: "Book",
+                description: "Leading in ways that amplify team intelligence",
+                url: "#"
+              },
+              {
+                title: "The Talent Code by Daniel Coyle",
+                type: "Book",
+                description: "How to develop skill and talent in others",
+                url: "#"
+              }
+            ]
           }
         },
         integration_activities: {
