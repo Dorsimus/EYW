@@ -5211,7 +5211,7 @@ const CompetenciesView = ({
                                         {/* Integration Connections */}
                                         {monthActivity.integrations && (
                                           <div className="mb-4">
-                                            <h7 className="text-sm font-semibold text-gray-700 mb-2 block">🔗 Competency Integrations:</h7>
+                                            <h6 className="text-sm font-semibold text-gray-700 mb-2 block">🔗 Competency Integrations:</h6>
                                             <div className="space-y-2">
                                               {monthActivity.integrations.map((integration, intIndex) => (
                                                 <div key={intIndex} className="bg-gradient-to-r from-orange-50 to-red-50 p-2 rounded border border-orange-200">
@@ -5237,7 +5237,7 @@ const CompetenciesView = ({
                                 {/* Competency Gate */}
                                 {subData.competency_gate && (
                                   <div className="mt-4 p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-lg border border-emerald-200">
-                                    <h7 className="font-semibold text-emerald-800 mb-2 block">🎯 Competency Gate:</h7>
+                                    <h6 className="font-semibold text-emerald-800 mb-2 block">🎯 Competency Gate:</h6>
                                     <p className="text-sm text-emerald-700">{subData.competency_gate}</p>
                                   </div>
                                 )}
