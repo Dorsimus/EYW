@@ -5510,9 +5510,9 @@ const CompetenciesView = ({
                                         <div key={resourceIndex} className="bg-white p-3 rounded border border-indigo-100">
                                           <div className="flex items-start justify-between mb-2">
                                             <div className="flex-1">
-                                              <h7 className="font-semibold text-sm text-indigo-900 mb-1">
+                                              <h6 className="font-semibold text-sm text-indigo-900 mb-1">
                                                 {resource.title}
-                                              </h7>
+                                              </h6>
                                               <p className="text-xs text-indigo-700 mb-2">
                                                 {resource.description}
                                               </p>
