@@ -211,18 +211,12 @@ class PortfolioItemCreate(BaseModel):
 NAVIGATOR_COMPETENCIES = {
     "leadership_supervision": {
         "name": "Leadership & Supervision",
-        "description": "Mastering the art of leading people and managing performance",
+        "description": "Leadership Isn't a Title, It's How You Show Up Every Day",
         "sub_competencies": {
-            "team_motivation": "Team Motivation & Engagement",
-            "delegation": "Delegation Excellence", 
-            "performance_management": "Performance Management",
-            "coaching_development": "Coaching & Development",
-            "team_building": "Team Building",
-            "conflict_resolution": "Conflict Resolution & Communication",
-            "difficult_conversations": "Difficult Conversations",
-            "cross_dept_communication": "Cross-Departmental Communication",
-            "resident_resolution": "Resident Issue Resolution",
-            "crisis_leadership": "Crisis Leadership"
+            "inspiring_team_motivation": "Inspiring Team Motivation & Engagement",
+            "mastering_difficult_conversations": "Mastering Difficult Conversations",
+            "building_collaborative_culture": "Building Collaborative Team Culture",
+            "developing_others_success": "Developing Others for Success"
         }
     },
     "financial_management": {
