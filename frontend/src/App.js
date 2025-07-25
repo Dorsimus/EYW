@@ -5101,6 +5101,150 @@ const CompetenciesView = ({
                             </div>
                           )}
 
+                          {/* Monthly Activities - New Leadership Format */}
+                          {subData?.monthly_activities && (
+                            <div>
+                              <h5 className="font-semibold text-gray-900 mb-3 flex items-center">
+                                📅 Monthly Development Activities
+                              </h5>
+                              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+                                <p className="text-sm text-blue-800 mb-4 font-medium">
+                                  🎯 Core Learning Question: "{subData.core_learning_question}"
+                                </p>
+                                <p className="text-xs text-blue-700 mb-4">
+                                  Duration: {subData.duration} • Time: {subData.weekly_time}
+                                </p>
+                                
+                                <div className="space-y-4">
+                                  {subData.monthly_activities.map((monthActivity, monthIndex) => {
+                                    const activityKey = `monthly_activity_${monthActivity.month}`;
+                                    const isCompleted = isCompetencyTaskComplete(areaKey, subKey, activityKey);
+                                    const activityNotes = getCompetencyTaskNotes(areaKey, subKey, activityKey);
+                                    
+                                    return (
+                                      <div key={monthIndex} className={`p-4 rounded-lg border-2 transition-all ${isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
+                                        <div className="flex items-start justify-between mb-3">
+                                          <div className="flex items-center">
+                                            <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                                              {monthActivity.month}
+                                            </div>
+                                            <div>
+                                              <h6 className={`font-bold text-lg ${isCompleted ? 'text-green-800' : 'text-gray-900'}`}>
+                                                {monthActivity.title}
+                                              </h6>
+                                            </div>
+                                          </div>
+                                          <div className="flex items-center space-x-2">
+                                            {!isCompleted && (
+                                              <button
+                                                onClick={() => {
+                                                  setShowTaskModal({ 
+                                                    areaKey, 
+                                                    subKey, 
+                                                    task: {
+                                                      ...monthActivity,
+                                                      id: activityKey,
+                                                      title: monthActivity.title,
+                                                      type: 'monthly_activity'
+                                                    }, 
+                                                    taskType: 'monthly_activity' 
+                                                  });
+                                                  setTaskNotes(activityNotes);
+                                                }}
+                                                className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-blue-600 border border-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+                                              >
+                                                ✓ Mark Complete
+                                              </button>
+                                            )}
+                                            
+                                            {isCompleted && (
+                                              <div className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-green-700 bg-green-100 border border-green-200 rounded-md">
+                                                ✅ Completed
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                        
+                                        {/* In-the-Flow Activity */}
+                                        <div className="mb-4">
+                                          <h7 className="text-sm font-semibold text-gray-700 mb-2 block">🔄 In-the-Flow Activity:</h7>
+                                          <p className="text-sm text-gray-800 bg-blue-50 p-3 rounded border border-blue-100">
+                                            {monthActivity.in_the_flow_activity}
+                                          </p>
+                                        </div>
+                                        
+                                        {/* Document Section */}
+                                        <div className="mb-4">
+                                          <h7 className="text-sm font-semibold text-gray-700 mb-2 block">📄 Document:</h7>
+                                          <p className="text-sm text-gray-800 bg-yellow-50 p-3 rounded border border-yellow-100">
+                                            {monthActivity.document}
+                                          </p>
+                                        </div>
+                                        
+                                        {/* Reflection/Journal Prompt */}
+                                        {(monthActivity.reflection || monthActivity.journal_prompt || monthActivity.curiosity_question) && (
+                                          <div className="mb-4">
+                                            <h7 className="text-sm font-semibold text-gray-700 mb-2 block">
+                                              {monthActivity.reflection && '🤔 Reflection:'}
+                                              {monthActivity.journal_prompt && '📖 Journal Prompt:'}
+                                              {monthActivity.curiosity_question && '💡 Curiosity Question:'}
+                                            </h7>
+                                            <p className="text-sm text-purple-800 bg-purple-50 p-3 rounded border border-purple-100 italic">
+                                              "{monthActivity.reflection || monthActivity.journal_prompt || monthActivity.curiosity_question}"
+                                            </p>
+                                            
+                                            {/* Journal/Reflection Input Area */}
+                                            <div className="mt-3">
+                                              <textarea
+                                                placeholder="Share your thoughts and reflections here..."
+                                                className="w-full p-3 border border-purple-200 rounded-lg text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                                                rows="3"
+                                                value={getCompetencyTaskNotes(areaKey, subKey, `${activityKey}_reflection`) || ''}
+                                                onChange={(e) => {
+                                                  onCompleteCompetencyTask(areaKey, subKey, `${activityKey}_reflection`, e.target.value, 'reflection');
+                                                }}
+                                              />
+                                            </div>
+                                          </div>
+                                        )}
+                                        
+                                        {/* Integration Connections */}
+                                        {monthActivity.integrations && (
+                                          <div className="mb-4">
+                                            <h7 className="text-sm font-semibold text-gray-700 mb-2 block">🔗 Competency Integrations:</h7>
+                                            <div className="space-y-2">
+                                              {monthActivity.integrations.map((integration, intIndex) => (
+                                                <div key={intIndex} className="bg-gradient-to-r from-orange-50 to-red-50 p-2 rounded border border-orange-200">
+                                                  <p className="text-xs text-orange-800">{integration}</p>
+                                                </div>
+                                              ))}
+                                            </div>
+                                          </div>
+                                        )}
+                                        
+                                        {/* Show notes if they exist */}
+                                        {activityNotes && (
+                                          <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm">
+                                            <p className="font-medium text-yellow-800 mb-1">📝 Your Work Notes:</p>
+                                            <p className="text-yellow-700">{activityNotes}</p>
+                                          </div>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                                
+                                {/* Competency Gate */}
+                                {subData.competency_gate && (
+                                  <div className="mt-4 p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-lg border border-emerald-200">
+                                    <h7 className="font-semibold text-emerald-800 mb-2 block">🎯 Competency Gate:</h7>
+                                    <p className="text-sm text-emerald-700">{subData.competency_gate}</p>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
+
                           {/* Signature Activity */}
                           {subData?.signature_activity && (
                             <div>
