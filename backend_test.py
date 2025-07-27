@@ -1053,16 +1053,15 @@ class TaskCompetencyAPITester:
         else:
             user_competencies = {}
         
-        # Expected frontend structure
+        # Expected frontend structure for refined framework
         expected_structure = {
             "name": "Strategic Thinking & Planning",
-            "description": "Think Like an Owner, Act Like a Leader, Plan Like a Strategist",
+            "description": "Think Beyond Today - Lead for Tomorrow",
             "sub_competencies": {
-                "strategic_analysis_planning": "Property-Level Strategic Analysis & Planning",
-                "data_driven_decisions": "Data-Driven Decision Making & Insights",
-                "market_competitive_positioning": "Market Awareness & Competitive Positioning",
-                "innovation_continuous_improvement": "Innovation & Continuous Improvement Leadership",
-                "vision_goal_achievement": "Long-Term Vision & Goal Achievement"
+                "seeing_patterns_anticipating_trends": "Seeing Patterns & Anticipating Trends",
+                "innovation_continuous_improvement": "Innovation & Continuous Improvement Thinking",
+                "problem_solving_future_focus": "Problem-Solving with Future Focus",
+                "planning_goal_achievement": "Planning & Goal Achievement with Strategic Perspective"
             }
         }
         
@@ -1102,7 +1101,7 @@ class TaskCompetencyAPITester:
         
         # Report results
         if not alignment_issues:
-            print("   ✅ PERFECT ALIGNMENT: Backend structure exactly matches frontend requirements!")
+            print("   ✅ PERFECT ALIGNMENT: Backend structure exactly matches refined frontend requirements!")
             print(f"   - Competency name: ✅ '{strategic_thinking.get('name')}'")
             print(f"   - Description: ✅ '{strategic_thinking.get('description')}'")
             print(f"   - Sub-competencies: ✅ {len(backend_sub_comps)} areas correctly defined")
