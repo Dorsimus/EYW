@@ -491,6 +491,7 @@ test_plan:
   current_focus:
     - "Cross-Functional Collaboration Framework Refinement"
     - "Cross-Functional Collaboration Framework Backend Sync"
+    - "Strategic Thinking Framework Refinement"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
