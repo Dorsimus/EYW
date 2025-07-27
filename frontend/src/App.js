@@ -1357,564 +1357,439 @@ const App = () => {
       },
       cross_functional_collaboration: {
         name: "Cross-Functional Collaboration",
-        description: "We Win Together - No Department Is an Island",
-        philosophy: "The Navigator Cross-Functional Collaboration development transforms department-focused leaders into property-wide team builders who understand that exceptional resident experience requires seamless collaboration between all functions. This section emphasizes breaking down leasing/maintenance silos while building broader stakeholder relationship skills.",
+        description: "Breaking Down Silos & Building Unified Property Teams",
+        philosophy: "We Win Together - One Property, One Team. The Navigator Cross-Functional Collaboration development transforms department-focused leaders into property-wide team builders who understand that exceptional resident experience requires seamless collaboration between all functions. This isn't about getting along - it's about creating something better together than either department could create alone.",
+        time_commitment: "~12 minutes per week + natural work integration",
+        duration: "12-15 months (competency-based progression)",
+        focus: "Building bridges between departments through shared projects and genuine partnership",
         overall_progress: 0,
         completion_percentage: 0,
         completed_tasks: 0,
-        total_tasks: 68,
-        competency_area: "cross_functional_collaboration", 
+        total_tasks: 16,
+        competency_area: "cross_functional_collaboration",
+        curiosity_ignition: {
+          title: "🔥 Collaboration Curiosity Assessment",
+          subtitle: "Before diving in, spark curiosity about working across departments",
+          reflection_prompts: [
+            "What's one thing the other department does that I wish I understood better?",
+            "When have I seen leasing and maintenance work together in a way that created something amazing?",
+            "What resident experience could we create if our departments worked together seamlessly?",
+            "What would change if we thought of ourselves as one property team instead of separate departments?"
+          ],
+          journal_setup: "Create a simple place to capture collaboration observations, partnership ideas, and \"we're stronger together\" moments throughout the program."
+        },
         sub_competencies: {
-          interdepartmental_partnership: {
-            name: "Inter-Departmental Partnership & Communication",
-            description: "Build bridges between departments to create seamless resident experience",
+          understanding_other_department: {
+            name: "Understanding & Appreciating the Other Department",
+            description: "What would help me be a better partner to the other department?",
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 16,
-            foundation_courses: [
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Being a Team Player",
+              duration: "1 hour",
+              platform: "PerformanceHQ",
+              description: "Foundation of collaborative mindset",
+              available: true
+            },
+            dive_deeper_resources: [
               {
-                id: "cf-fc-01",
-                title: "Being a Team Player",
+                title: "Maintenance For Office Staff",
                 duration: "1 hour",
                 platform: "PerformanceHQ",
-                description: "Foundation of collaborative mindset"
+                description: "Cross-functional operational understanding",
+                available: true
               },
               {
-                id: "cf-fc-02",
-                title: "Building a Team Culture",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Creating unified team environment"
+                title: "Walking in Their Shoes",
+                duration: "30 minutes",
+                platform: "Custom Content",
+                description: "Understanding what drives success in the other department",
+                custom_content_needed: true
               },
               {
-                id: "cf-fc-03",
-                title: "Express: People Skills - The Win-Win of Being a Team Player",
-                duration: "4 minutes",
-                platform: "PerformanceHQ",
-                description: "Quick collaboration tips"
-              },
-              {
-                id: "cf-fc-04",
-                title: "Leadership Booster: Communication Skills for Supervisors",
-                duration: "5 minutes",
-                platform: "PerformanceHQ",
-                description: "Cross-functional communication"
+                title: "Cross-Functional Teamwork That Actually Works",
+                duration: "12 minutes",
+                platform: "YouTube",
+                description: "Practical collaboration principles"
               }
             ],
-            signature_activity: {
-              title: "Department Bridge Builder Challenge",
-              icon: "🤝",
-              description: "Three-month journey developing cross-department partnership and communication skills",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Understanding the Other Side",
-                  duration: "Month 1",
-                  activities: [
-                    "Deep dive into understanding how the opposite department operates and what drives their success",
-                    "Cross-Department Shadowing: Spend 5 hours weekly for 4 weeks with opposite department Navigator",
-                    "Week 1: Shadow daily operations and routine tasks",
-                    "Week 2: Observe customer interaction and problem-solving",
-                    "Week 3: Participate in department meetings and planning",
-                    "Week 4: Work together on shared challenges"
-                  ],
-                  deliverables: [
-                    "Cross-Department Learning Journal (detailed observations from 20 hours of shadowing opposite department)",
-                    "Process Impact Analysis (how your department's work affects the other department's success)",
-                    "Collaboration Opportunity Assessment (specific ways departments could work better together)"
-                  ],
-                  journal_prompt: "What surprised me most about how the other department operates? How do my daily decisions make their job easier or harder?",
-                  custom_materials: [
-                    "Leasing Operations Guide for Maintenance Leaders - Complete overview of leasing processes, challenges, and success metrics",
-                    "Maintenance Operations Guide for Leasing Leaders - Comprehensive maintenance workflow, priorities, and quality standards",
-                    "Resident Journey Mapping Across Departments - How leasing and maintenance touchpoints create the complete resident experience"
-                  ]
-                },
-                {
-                  phase: 2,
-                  title: "Communication Bridge Building",
-                  duration: "Month 2",
-                  activities: [
-                    "Establish regular communication systems and collaborative workflows between departments",
-                    "Weekly Cross-Department Check-ins: 30-minute meetings with opposite department counterpart",
-                    "Joint Problem-Solving Sessions: Address challenges that affect both departments",
-                    "Shared Goal Setting: Create goals that require both departments to succeed"
-                  ],
-                  deliverables: [
-                    "Communication System Implementation (new processes for information sharing between departments)",
-                    "Joint Meeting Leadership (agendas, notes, and outcomes from meetings you've facilitated)",
-                    "Collaborative Decision Examples (decisions made jointly that improved overall property performance)"
-                  ],
-                  journal_prompt: "What communication practices are most effective at preventing misunderstandings? How can we make information sharing automatic rather than manual?",
-                  custom_materials: [
-                    "Cross-Department Communication Protocols - Standards for information sharing and coordination",
-                    "Joint Meeting Facilitation Guide - Running effective meetings with both departments",
-                    "Collaborative Decision-Making Framework - Making decisions that benefit both departments"
-                  ]
-                },
-                {
-                  phase: 3,
-                  title: "Partnership Innovation",
-                  duration: "Month 3",
-                  activities: [
-                    "Create innovative partnerships and joint initiatives that demonstrate the power of collaboration",
-                    "Collaborative Project: Design and execute major initiative requiring both departments (e.g., resident experience enhancement, operational efficiency improvement, emergency response protocol)",
-                    "Peer Learning: Partner with Navigator pair from different property to compare collaboration approaches"
-                  ],
-                  deliverables: [
-                    "Joint Initiative Results (collaborative projects with measurable positive outcomes)",
-                    "Partnership Innovation Examples (creative ways you've connected department operations)",
-                    "Team Collaboration Development (how you've encouraged collaboration within your team)"
-                  ],
-                  journal_prompt: "What collaborative initiatives have had the biggest impact on resident satisfaction and property performance? How can we make collaboration the norm rather than the exception?",
-                  custom_materials: [
-                    "Joint Initiative Planning and Execution - Designing projects that require both departments",
-                    "Partnership Success Measurement - Tracking the impact of collaborative efforts",
-                    "Collaboration Culture Expansion - Spreading collaborative mindset to team members"
-                  ]
-                }
-              ]
-            }
-          },
-          resident_experience_collaboration: {
-            name: "Resident Experience Collaboration",
-            description: "Create unified resident experience through seamless department coordination",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 15,
-            foundation_courses: [
+            monthly_activities: [
               {
-                id: "cf-fc-05",
-                title: "Customer Relationship Management",
-                duration: "2 hours",
-                platform: "PerformanceHQ",
-                description: "Comprehensive customer service approach"
+                month: 1,
+                title: "Department Curiosity Exploration",
+                in_flow_activity: "Spend 30 minutes weekly with your opposite department counterpart, just observing and asking curious questions",
+                document_section: {
+                  title: "Department Discovery Journal", 
+                  description: "Insights about how the other department really works",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Share what you're learning with your team to build appreciation",
+                journal_prompt: "What surprised me most about how the other department operates? What challenges do they face that I never considered?"
               },
               {
-                id: "cf-fc-06",
+                month: 2,
+                title: "Appreciation in Action",
+                in_flow_activity: "Find one specific way to make the other department's work easier each week",
+                document_section: {
+                  title: "Partnership Action Log",
+                  description: "Concrete ways you've supported the other department",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build other department considerations into your daily decisions",
+                journal_prompt: "What small actions have the biggest impact on our working relationship? How does helping them actually help residents?"
+              },
+              {
+                month: 3,
+                title: "Bridge Building",
+                in_flow_activity: "Facilitate one conversation between your teams about how to work better together",
+                document_section: {
+                  title: "Team Bridge-Building Results",
+                  description: "Improved understanding and cooperation between teams",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect department partnership to property-wide goals",
+                curiosity_question: "How can appreciation and understanding become automatic between our departments?"
+              }
+            ],
+            competency_gate: "Demonstrate improved working relationship with opposite department + Teams show increased cooperation"
+          },
+          unified_resident_experience: {
+            name: "Unified Resident Experience Creation",
+            description: "How can our departments work together to create resident experiences that neither could create alone?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Customer Relationship Management",
+              duration: "2 hours",
+              platform: "PerformanceHQ",
+              description: "Comprehensive approach to resident service",
+              available: true
+            },
+            dive_deeper_resources: [
+              {
                 title: "Resident Retention",
                 duration: "1 hour 30 minutes",
                 platform: "PerformanceHQ",
-                description: "Holistic approach to resident satisfaction"
+                description: "Holistic resident satisfaction approach",
+                available: true
               },
               {
-                id: "cf-fc-07",
-                title: "Customer Service 1-4 Series",
-                duration: "1 hour 30 minutes total",
+                title: "Customer Service 1: Be Proactive",
+                duration: "30 minutes",
                 platform: "PerformanceHQ",
-                description: "Proactive, professional, prompt, personal service"
+                description: "Anticipating resident needs",
+                available: true
               },
               {
-                id: "cf-fc-08",
-                title: "Spark: Customer Service: Creating a Thriving Community Through Exceptional Customer Service",
+                title: "Creating Seamless Customer Experience Across Teams",
+                duration: "10 minutes",
+                platform: "YouTube",
+                description: "Cross-functional service excellence"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Resident Journey Mapping",
+                in_flow_activity: "Map one resident's experience from move-in to renewal, identifying all touchpoints from both departments",
+                document_section: {
+                  title: "Resident Experience Map",
+                  description: "Visual showing where departments interact with residents",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Work with opposite department Navigator to create the map together",
+                journal_prompt: "Where in the resident journey do our departments create magic together? Where do we create confusion or frustration?"
+              },
+              {
+                month: 2,
+                title: "Coordinated Service Excellence",
+                in_flow_activity: "Choose one resident touchpoint where departments can coordinate better and improve it together",
+                document_section: {
+                  title: "Service Coordination Success Story",
+                  description: "Improved resident experience through department coordination",
+                  portfolio_integration: true
+                },
+                financial_integration: "Connect improved coordination to resident satisfaction and retention",
+                journal_prompt: "What does great coordination feel like from the resident's perspective? How can we make this coordination feel natural instead of forced?"
+              },
+              {
+                month: 3,
+                title: "Proactive Partnership Programs",
+                in_flow_activity: "Create one small program or practice that proactively enhances resident experience through department partnership",
+                document_section: {
+                  title: "Partnership Program Results",
+                  description: "Resident feedback and team satisfaction with collaborative initiative",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Involve both teams in designing and implementing the program",
+                curiosity_question: "What resident experiences could we create if we always thought like partners instead of separate departments?"
+              }
+            ],
+            competency_gate: "Successfully improve 1 resident touchpoint through collaboration + Measurable resident satisfaction improvement"
+          },
+          communication_across_departments: {
+            name: "Effective Communication Across Departments", 
+            description: "How do I communicate in a way that makes the other department want to work with me?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Building a Team Culture",
+              duration: "1 hour",
+              platform: "PerformanceHQ",
+              description: "Creating unified team environment",
+              available: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "Leadership Booster: Communication Skills for Supervisors",
                 duration: "5 minutes",
                 platform: "PerformanceHQ",
-                description: "Community-focused service mindset"
-              }
-            ],
-            signature_activity: {
-              title: "Unified Resident Experience Project",
-              icon: "🏠",
-              description: "Three-month development focused on creating seamless resident experience through department collaboration",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Resident Journey Analysis & Touchpoint Mapping",
-                  duration: "Month 1",
-                  activities: [
-                    "Map complete resident experience from prospect to move-out, identifying all department touchpoints",
-                    "Resident Feedback Collection: Conduct resident interviews and surveys focusing on cross-department experience",
-                    "CM Shadowing Focus: Observe CM handling complex resident issues requiring department coordination"
-                  ],
-                  deliverables: [
-                    "Resident Journey Map (complete visual mapping of resident experience with all department touchpoints)",
-                    "Touchpoint Quality Analysis (assessment of resident experience at each interaction point)",
-                    "Experience Gap Identification (specific areas where department coordination could improve resident satisfaction)"
-                  ],
-                  journal_prompt: "Where in the resident journey do we create friction because departments aren't coordinating? What would a seamless resident experience look like?",
-                  custom_materials: [
-                    "Complete Resident Journey Mapping - Comprehensive resident experience from first contact to move-out",
-                    "Touchpoint Quality Assessment - Evaluating resident interactions across all departments",
-                    "Resident Experience Gap Analysis - Identifying disconnects and improvement opportunities"
-                  ]
-                },
-                {
-                  phase: 2,
-                  title: "Coordinated Service Excellence",
-                  duration: "Month 2",
-                  activities: [
-                    "Implement coordinated service approaches that improve resident experience through department collaboration",
-                    "Joint Resident Meetings: Attend resident meetings with opposite department counterpart",
-                    "Coordinated Problem Resolution: Work together on complex resident issues",
-                    "Unified Communication Approach: Ensure residents receive consistent information"
-                  ],
-                  deliverables: [
-                    "Coordinated Service Implementation (new processes for departments to work together on resident requests)",
-                    "Communication Coordination Examples (how departments ensure consistent resident communication)",
-                    "Service Recovery Success Stories (problems solved through cross-department collaboration)"
-                  ],
-                  journal_prompt: "How does better department coordination actually improve what residents experience? What coordination efforts have the biggest impact on resident satisfaction?",
-                  custom_materials: [
-                    "Coordinated Service Delivery Protocols - Systems for departments to work together on resident needs",
-                    "Resident Communication Coordination - Ensuring consistent messaging across departments",
-                    "Service Recovery Through Collaboration - Fixing problems that cross department boundaries"
-                  ]
-                },
-                {
-                  phase: 3,
-                  title: "Proactive Resident Experience Enhancement",
-                  duration: "Month 3",
-                  activities: [
-                    "Create proactive programs that enhance resident experience through intentional collaboration",
-                    "Collaborative Program Leadership: Lead resident experience program requiring both department participation",
-                    "Resident Success Stories: Document specific examples of exceptional resident experience created through collaboration"
-                  ],
-                  deliverables: [
-                    "Proactive Experience Programs (initiatives you've created that proactively enhance resident experience)",
-                    "Community Building Results (collaborative efforts that strengthened resident community)",
-                    "Innovation Implementation (creative resident experience improvements through department partnership)"
-                  ],
-                  journal_prompt: "What proactive steps can we take together to make residents feel valued and supported? How can department collaboration create experiences that residents remember and share with others?",
-                  custom_materials: [
-                    "Proactive Resident Experience Programs - Creating initiatives that anticipate and exceed resident expectations",
-                    "Community Building Through Department Collaboration - Using teamwork to create stronger resident community",
-                    "Resident Experience Innovation - Creative approaches to exceptional resident service"
-                  ]
-                }
-              ]
-            }
-          },
-          property_team_culture: {
-            name: "Property-Wide Team Building & Culture",
-            description: "Create unified culture and team identity across all departments",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 12,
-            foundation_courses: [
-              {
-                id: "cf-fc-09",
-                title: "Team Retention Strategies Series",
-                duration: "25 minutes",
-                platform: "PerformanceHQ",
-                description: "Keeping good team members engaged"
+                description: "Clear communication techniques",
+                available: true
               },
               {
-                id: "cf-fc-10",
-                title: "Leadership Booster: Building Psychological Safety in Teams",
-                duration: "5 minutes",
-                platform: "PerformanceHQ",
-                description: "Safe collaboration environment"
-              },
-              {
-                id: "cf-fc-11",
-                title: "CM Weekly Meeting - Extreme Ownership with Kate Reeves",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Accountability across teams"
-              }
-            ],
-            signature_activity: {
-              title: "Unity Culture Champion",
-              icon: "🌟",
-              description: "Three-month intensive on building unified property culture and team identity",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Property-Wide Culture Assessment & Vision",
-                  duration: "Month 1",
-                  activities: [
-                    "Assess current property culture and create vision for unified team environment",
-                    "Team Engagement: Facilitate discussions with all property team members about desired culture",
-                    "CM Shadowing Focus: Observe how CM builds and maintains culture across different departments"
-                  ],
-                  deliverables: [
-                    "Property Culture Assessment (comprehensive evaluation of current team culture across all departments)",
-                    "Unity Culture Vision (shared vision for property-wide team culture with specific behavioral expectations)",
-                    "Culture Building Strategy (detailed plan for creating more unified property culture)"
-                  ],
-                  journal_prompt: "What does a truly unified property team look like? How can we create culture where everyone feels part of one team rather than separate departments?",
-                  custom_materials: [
-                    "Property Culture Assessment Tools - Methods for evaluating team culture across departments",
-                    "Unity Culture Vision Development - Creating shared vision for property-wide team culture",
-                    "Cross-Department Culture Building Strategies - Practical approaches to building unified culture"
-                  ]
-                },
-                {
-                  phase: 2,
-                  title: "Unity Initiative Implementation",
-                  duration: "Month 2",
-                  activities: [
-                    "Implement specific initiatives that build unity and shared identity across property",
-                    "All-Team Meetings: Facilitate property-wide team meetings focused on unity",
-                    "Cross-Department Projects: Lead initiatives requiring multiple departments",
-                    "Shared Celebrations: Organize celebrations that include all team members"
-                  ],
-                  deliverables: [
-                    "Unity Initiative Results (team building activities and programs you've implemented)",
-                    "Shared Goal Achievement (goals that required all departments working together)",
-                    "Cross-Department Recognition Examples (how you've celebrated collaboration and teamwork)"
-                  ],
-                  journal_prompt: "What initiatives actually bring people together vs. feel forced? How can we celebrate shared successes and create genuine team unity?",
-                  custom_materials: [
-                    "Property-Wide Team Building Activities - Events and practices that bring departments together",
-                    "Shared Goal Setting Across Departments - Creating goals that unite rather than divide teams",
-                    "Cross-Department Recognition Programs - Celebrating collaboration and mutual support"
-                  ]
-                },
-                {
-                  phase: 3,
-                  title: "Culture Sustainability & Growth",
-                  duration: "Month 3",
-                  activities: [
-                    "Build systems to maintain and evolve unified culture over time",
-                    "Leadership Development: Train team members to be culture champions in their areas",
-                    "Long-term Impact Assessment: Measure sustained improvements in teamwork and collaboration"
-                  ],
-                  deliverables: [
-                    "Culture Sustainability Plan (systems and processes for maintaining unified culture)",
-                    "Culture Evolution Strategy (how culture will adapt and grow over time)",
-                    "Culture Leadership Examples (how you've developed others as culture champions)"
-                  ],
-                  journal_prompt: "How do we maintain strong culture during busy periods, staff changes, and challenges? What makes culture resilient and sustainable?",
-                  custom_materials: [
-                    "Culture Maintenance Systems - Processes for sustaining positive culture during changes",
-                    "Culture Evolution Planning - Adapting culture as team and property changes",
-                    "Culture Leadership Development - Training others to champion unified culture"
-                  ]
-                }
-              ]
-            }
-          },
-          stakeholder_relationship_management: {
-            name: "External Stakeholder Relationship Management",
-            description: "Build and maintain strong relationships with external partners and stakeholders",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 12,
-            foundation_courses: [
-              {
-                id: "cf-fc-12",
-                title: "Creating and Delivering Business Presentations",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Communicating with external stakeholders"
-              },
-              {
-                id: "cf-fc-13",
-                title: "GH Webinar: Staying Calm Under Pressure: Proven Strategies for Diffusing Stressful Customer Interactions",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Managing difficult stakeholder situations"
-              },
-              {
-                id: "cf-fc-14",
-                title: "CM Weekly Meeting - Handling Agency Visits with Confidence",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "External stakeholder management"
-              }
-            ],
-            signature_activity: {
-              title: "Stakeholder Relationship Excellence",
-              icon: "🌐",
-              description: "Three-month development of external stakeholder relationship management skills",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Stakeholder Mapping & Relationship Assessment",
-                  duration: "Month 1",
-                  activities: [
-                    "Identify all external stakeholders and assess current relationship quality",
-                    "Stakeholder Interviews: Conduct conversations with key external stakeholders to understand their needs",
-                    "CM Shadowing Focus: Observe CM interactions with various external stakeholders"
-                  ],
-                  deliverables: [
-                    "Stakeholder Map (comprehensive identification of all external parties affecting property)",
-                    "Relationship Assessment (current quality of relationships with key stakeholders)",
-                    "Communication Preferences Analysis (how different stakeholders prefer to receive information and interact)"
-                  ],
-                  journal_prompt: "Who are all the external stakeholders that affect our property success? How can we better understand and serve their needs while achieving our goals?",
-                  custom_materials: [
-                    "Property Stakeholder Mapping Guide - Identifying all external parties who affect property success",
-                    "Relationship Quality Assessment Tools - Evaluating current stakeholder relationships",
-                    "Stakeholder Communication Preferences - Understanding how different stakeholders prefer to interact"
-                  ]
-                },
-                {
-                  phase: 2,
-                  title: "Professional Relationship Development",
-                  duration: "Month 2",
-                  activities: [
-                    "Build stronger professional relationships with key external stakeholders",
-                    "Regular Stakeholder Check-ins: Establish regular communication with key external partners",
-                    "Value-Added Interactions: Find ways to provide value beyond minimum requirements",
-                    "Professional Networking: Participate in industry or community networking opportunities"
-                  ],
-                  deliverables: [
-                    "Relationship Development Plan (strategy for strengthening relationships with key stakeholders)",
-                    "Value Creation Examples (ways you've created mutual value with external partners)",
-                    "Communication Adaptation Examples (how you've adjusted communication for different stakeholder needs)"
-                  ],
-                  journal_prompt: "What do our external stakeholders really need from us? How can we exceed their expectations while achieving our property goals?",
-                  custom_materials: [
-                    "Professional Relationship Building Strategies - Developing trust and rapport with external parties",
-                    "Stakeholder Value Creation - Finding win-win solutions with external partners",
-                    "Professional Communication Across Different Audiences - Adapting communication style for different stakeholder types"
-                  ]
-                },
-                {
-                  phase: 3,
-                  title: "Strategic Partnership Development",
-                  duration: "Month 3",
-                  activities: [
-                    "Develop strategic partnerships that provide long-term value to property and stakeholders",
-                    "Strategic Initiative Leadership: Lead initiative that involves multiple external stakeholders",
-                    "Industry Engagement: Participate in industry events or committees as property representative"
-                  ],
-                  deliverables: [
-                    "Strategic Partnership Examples (relationships you've developed that provide exceptional mutual value)",
-                    "Collaboration Innovation Results (creative partnerships that benefited both property and stakeholders)",
-                    "Partnership Value Documentation (measurable benefits from strategic stakeholder relationships)"
-                  ],
-                  journal_prompt: "Which stakeholder relationships could become true strategic partnerships? How can we create relationships that provide ongoing value for everyone involved?",
-                  custom_materials: [
-                    "Strategic Partnership Development - Moving from transactional to strategic relationships",
-                    "Stakeholder Collaboration Innovation - Creative approaches to working with external partners",
-                    "Partnership Performance Measurement - Tracking the value of strategic relationships"
-                  ]
-                }
-              ]
-            }
-          },
-          conflict_resolution_collaboration: {
-            name: "Conflict Resolution & Joint Problem Solving",
-            description: "Master collaborative problem solving and mediation across multiple parties",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 13,
-            foundation_courses: [
-              {
-                id: "cf-fc-15",
                 title: "Conflict Resolution (Supervisor Version)",
                 duration: "2 hours",
                 platform: "PerformanceHQ",
-                description: "Advanced conflict management"
+                description: "Managing disagreements constructively",
+                available: true
               },
               {
-                id: "cf-fc-16",
-                title: "Amanda Ripley on Why We Get Trapped in Conflict and How We Get Out",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Understanding conflict psychology"
-              },
-              {
-                id: "cf-fc-17",
-                title: "Spark: Resident Retention - Handling Mediation Between Two Residents",
-                duration: "5 minutes",
-                platform: "PerformanceHQ",
-                description: "Mediation skills"
+                title: "Communication That Builds Bridges, Not Walls",
+                duration: "8 minutes",
+                platform: "YouTube",
+                description: "Constructive cross-functional communication"
               }
             ],
-            signature_activity: {
-              title: "Collaborative Problem Solving Mastery",
-              icon: "⚖️",
-              description: "Three-month intensive development of advanced conflict resolution and collaborative problem solving skills",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Conflict Prevention & Early Intervention",
-                  duration: "Month 1",
-                  activities: [
-                    "Develop systems to prevent conflicts and address issues before they escalate",
-                    "Proactive Monitoring: Implement systems to identify potential conflicts early",
-                    "CM Shadowing Focus: Observe CM preventing and addressing early-stage conflicts"
-                  ],
-                  deliverables: [
-                    "Conflict Prevention Plan (systems for identifying and preventing common conflicts)",
-                    "Early Intervention Examples (situations where early action prevented larger problems)",
-                    "Conflict Pattern Analysis (common sources of friction and prevention strategies)"
-                  ],
-                  journal_prompt: "What patterns of conflict do I see between departments or with stakeholders? How can we address root causes rather than just symptoms?",
-                  custom_materials: [
-                    "Conflict Prevention Systems - Identifying and addressing potential conflicts early",
-                    "Cross-Department Conflict Patterns - Common sources of friction between leasing and maintenance",
-                    "Early Intervention Techniques - Addressing small issues before they become big problems"
-                  ]
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Communication Bridge Building",
+                in_flow_activity: "Establish one regular communication practice with your opposite department counterpart",
+                document_section: {
+                  title: "Communication Practice Results",
+                  description: "Improved information sharing and coordination",
+                  portfolio_integration: true
                 },
-                {
-                  phase: 2,
-                  title: "Collaborative Problem Solving",
-                  duration: "Month 2",
-                  activities: [
-                    "Master techniques for solving complex problems that require multiple parties working together",
-                    "Joint Problem Solving Sessions: Facilitate sessions with multiple departments/stakeholders",
-                    "Solution Testing and Refinement: Pilot collaborative solutions and adjust based on results",
-                    "Follow-up and Accountability: Ensure collaborative solutions are implemented and maintained"
-                  ],
-                  deliverables: [
-                    "Problem Solving Process (methodology for collaborative problem solving)",
-                    "Multi-Party Solution Examples (complex problems solved through collaboration)",
-                    "Implementation Success Stories (collaborative solutions that achieved lasting results)"
-                  ],
-                  journal_prompt: "What problem-solving approaches get everyone invested in the solution? How can we ensure collaborative solutions actually get implemented and maintained?",
-                  custom_materials: [
-                    "Collaborative Problem Solving Framework - Step-by-step process for joint problem solving",
-                    "Multi-Party Negotiation Techniques - Finding solutions when multiple interests are involved",
-                    "Solution Implementation and Follow-up - Ensuring collaborative solutions actually work"
-                  ]
+                operational_integration: "Build cross-department communication into routine operational practices",
+                journal_prompt: "What communication practices prevent problems vs. create them? How can I make communication feel helpful instead of burdensome?"
+              },
+              {
+                month: 2,
+                title: "Collaborative Problem Solving",
+                in_flow_activity: "When a problem affects both departments, involve both teams in finding the solution",
+                document_section: {
+                  title: "Collaborative Problem-Solving Examples",
+                  description: "Problems solved better through department partnership",
+                  portfolio_integration: true
                 },
-                {
-                  phase: 3,
-                  title: "Mediation & Advanced Conflict Resolution",
-                  duration: "Month 3",
-                  activities: [
-                    "Develop advanced skills in mediating conflicts and facilitating resolution between parties",
-                    "Advanced Practice: Mediate complex conflicts involving multiple parties or departments",
-                    "Mentorship: Begin mentoring others in conflict resolution and collaborative problem solving"
-                  ],
-                  deliverables: [
-                    "Mediation Success Examples (conflicts you've successfully mediated)",
-                    "Advanced Resolution Techniques (methods you've used for complex conflicts)",
-                    "Relationship Repair Results (how you've rebuilt trust and collaboration after conflicts)"
-                  ],
-                  journal_prompt: "How do I help conflicting parties find common ground and rebuild trust? What makes the difference between resolving conflicts and actually strengthening relationships?",
-                  custom_materials: [
-                    "Mediation Skills for Property Leaders - Facilitating resolution between conflicting parties",
-                    "Advanced Conflict Resolution Techniques - Handling complex, multi-party conflicts",
-                    "Relationship Repair and Trust Building - Rebuilding working relationships after conflicts"
-                  ]
-                }
-              ]
-            }
+                strategic_integration: "Frame problems and solutions in terms of property-wide impact",
+                journal_prompt: "What makes problem-solving feel collaborative vs. competitive? How do the best solutions consider both departments' needs?"
+              },
+              {
+                month: 3,
+                title: "Conflict Prevention & Resolution",
+                in_flow_activity: "Address one source of recurring friction between departments and create a better way forward",
+                document_section: {
+                  title: "Conflict Resolution Success Story",
+                  description: "Friction reduced through improved communication and understanding",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Model constructive conflict resolution for both teams",
+                curiosity_question: "How can we turn the things that create friction into opportunities for better partnership?"
+              }
+            ],
+            competency_gate: "Establish effective communication practices with other department + Successfully resolve cross-department conflict"
+          },
+          stakeholder_relationship_building: {
+            name: "Stakeholder Relationship Building",
+            description: "How do I build relationships where everyone wins and wants to work together again?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Building Relationships That Matter",
+              duration: "45 minutes",
+              platform: "Custom Content",
+              description: "Professional relationship development with internal and external stakeholders",
+              custom_content_needed: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "Creating and Delivering Business Presentations",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Professional communication with stakeholders",
+                available: true
+              },
+              {
+                title: "Business Etiquette",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Professional relationship skills",
+                available: true
+              },
+              {
+                title: "Building Professional Relationships That Last",
+                duration: "15 minutes",
+                platform: "YouTube",
+                description: "Long-term relationship development"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Internal Stakeholder Partnership",
+                in_flow_activity: "Identify key internal stakeholders (CM, other department leaders, home office contacts) and strengthen one relationship",
+                document_section: {
+                  title: "Stakeholder Relationship Development",
+                  description: "Improved working relationships with internal partners",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Work with opposite department Navigator on shared stakeholder relationships",
+                journal_prompt: "Which internal relationships could make everyone's work easier if they were stronger? What do these stakeholders need from me to be successful?"
+              },
+              {
+                month: 2,
+                title: "External Stakeholder Engagement",
+                in_flow_activity: "Engage with one external stakeholder (vendor, resident, community partner) in a way that builds the relationship",
+                document_section: {
+                  title: "External Relationship Building Examples",
+                  description: "Improved external partnerships that benefit the property",
+                  portfolio_integration: true
+                },
+                financial_integration: "Connect stakeholder relationships to cost savings or revenue enhancement",
+                journal_prompt: "What external relationships could create more value if they were partnerships instead of transactions?"
+              },
+              {
+                month: 3,
+                title: "Stakeholder Value Creation",
+                in_flow_activity: "Find one way to create value for a stakeholder that also benefits your property",
+                document_section: {
+                  title: "Mutual Value Creation Examples",
+                  description: "Win-win outcomes from stakeholder relationships",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect stakeholder relationships to long-term property success",
+                curiosity_question: "How can I make every stakeholder interaction feel like the beginning of a valuable partnership?"
+              }
+            ],
+            competency_gate: "Strengthen relationships with 2+ stakeholders + Create measurable value through improved relationships"
           }
         },
-        validation_criteria: {
-          mastery_gates: [
-            "Department Partnership Excellence: Demonstrate strong working relationship with opposite department counterpart with measurable improvements in coordination",
-            "Resident Experience Collaboration: Lead initiatives that improve resident experience through department collaboration",
-            "Stakeholder Relationship Management: Successfully manage relationships with multiple external stakeholders",
-            "Conflict Resolution Competency: Successfully resolve 3+ complex conflicts involving multiple parties",
-            "Culture Building Leadership: Lead initiatives that strengthen property-wide team unity and collaboration"
+        collaboration_integration_activities: {
+          weekly_cross_department_partnership: {
+            duration: "15 minutes weekly - rotated focus",
+            schedule: [
+              { months: "1-3", focus: "Department understanding and appreciation building" },
+              { months: "4-6", focus: "Resident experience coordination and improvement" },
+              { months: "7-9", focus: "Communication and problem-solving collaboration" },
+              { months: "10-12", focus: "Stakeholder relationship development and value creation" }
+            ]
+          },
+          monthly_property_team_connection: {
+            duration: "20 minutes monthly",
+            activities: [
+              "Share collaboration successes and challenges with all property team members",
+              "Practice collaboration skills in property-wide scenarios",
+              "Build property-wide perspective and unified team culture"
+            ]
+          },
+          collaboration_curiosity_journal: {
+            duration: "5 minutes weekly",
+            focus: [
+              "Document collaboration observations, partnership ideas, and insights",
+              "Track \"stronger together\" moments when collaboration creates something special",
+              "Reflect on collaboration leadership growth and team development"
+            ]
+          }
+        },
+        culminating_collaboration_project: {
+          title: "Partnership Excellence Initiative",
+          timeline: "Final 2-3 months of program",
+          challenge: "Design and implement one collaborative initiative that demonstrates the power of departments working together",
+          options: [
+            "Resident Experience Enhancement: Create exceptional resident experience through seamless department coordination",
+            "Operational Efficiency Partnership: Solve operational challenge through cross-department collaboration",
+            "Stakeholder Value Creation: Build stakeholder relationship that benefits all parties",
+            "Culture Unity Project: Strengthen property-wide team culture through collaborative leadership"
+          ],
+          deliverables: [
+            "Partnership opportunity analysis and plan (1 page)",
+            "Implementation approach with both departments involved (1 page)",
+            "Results documentation with partnership impact and lessons learned (1 page)"
+          ],
+          presentation: "15-minute presentation to CM and property team on collaboration leadership and partnership building"
+        },
+        competency_validation: {
+          evidence_portfolio: [
+            "Department Partnership: Strong working relationship with opposite department with measurable improvements",
+            "Resident Experience Collaboration: Improved resident experience through department coordination",
+            "Communication Excellence: Effective communication practices that prevent problems and build relationships",
+            "Stakeholder Relationship Success: Strengthened stakeholder relationships that create mutual value"
           ],
           portfolio_defense: {
-            challenge: "30-minute presentation to panel including CM, opposite department counterpart, and external stakeholder",
+            duration: "20 minutes",
             components: [
-              "Partnership Development: Present examples of successful cross-department collaboration with measurable results",
-              "Resident Experience Enhancement: Show how collaboration improved resident satisfaction and experience",
-              "Stakeholder Relationship Success: Demonstrate effective management of external relationships",
-              "Conflict Resolution Case Study: Present complex conflict successfully resolved through collaborative approach",
-              "Q&A with Multi-Party Panel: Handle questions and scenarios involving multiple stakeholders"
+              "Collaboration Journey Story: How partnership thinking has changed your leadership approach",
+              "Partnership Evidence: Specific examples of successful collaboration and their impact",
+              "Relationship Building: How you've strengthened relationships across departments and with stakeholders",
+              "Future Partnership Vision: How you'll continue developing collaboration leadership skills"
             ]
           },
           cm_readiness_indicators: [
             "Property-Wide Perspective: Thinks and acts considering all departments and stakeholders",
-            "Relationship Building Excellence: Builds strong working relationships across all functions and with external parties",
-            "Conflict Resolution Leadership: Effectively mediates conflicts and facilitates collaborative solutions",
-            "Culture Development Skills: Creates and maintains unified team culture across departments",
-            "Stakeholder Management Competency: Successfully manages complex stakeholder relationships",
-            "Collaborative Problem Solving: Consistently finds solutions that work for multiple parties"
+            "Relationship Building Excellence: Builds strong working relationships across all functions",
+            "Collaborative Problem Solving: Consistently finds solutions that work for multiple parties",
+            "Stakeholder Management Competency: Successfully manages complex internal and external relationships"
           ]
-        }
+        },
+        success_metrics: {
+          leading_indicators: [
+            "Cross-department communication frequency and quality",
+            "Collaborative problem-solving attempts and success",
+            "Stakeholder relationship engagement and strengthening",
+            "Property-wide team culture and collaboration improvement"
+          ],
+          lagging_indicators: [
+            "Resident satisfaction scores related to coordinated service",
+            "Cross-department conflict reduction and resolution effectiveness",
+            "Stakeholder relationship quality and value creation",
+            "Property-wide team engagement and unity"
+          ],
+          curiosity_growth_indicators: [
+            "Partnership questions asked and insights gained",
+            "Collaboration experiments attempted and lessons learned",
+            "Relationships strengthened and value created",
+            "Others developed in collaboration and partnership skills"
+          ]
+        },
+        custom_content_development: {
+          high_priority: [
+            "Walking in Their Shoes (30 minutes) - Understanding what drives success in the other department",
+            "Building Relationships That Matter (45 minutes) - Professional relationship development with stakeholders"
+          ],
+          medium_priority: [
+            "Property management examples for existing collaboration courses",
+            "Cross-functional scenario practice materials"
+          ],
+          low_priority: [
+            "Advanced stakeholder management tools",
+            "Industry collaboration best practices"
+          ]
+        },
+        program_philosophy: "This refined framework transforms cross-functional collaboration from \"getting along\" into \"creating something better together.\" Every activity focuses on building genuine partnerships that create value for residents, stakeholders, and the property. The goal isn't perfect harmony - it's productive partnership. Each competency builds the relationship skills and collaborative mindset that makes Navigators valuable partners today while preparing them for Community Manager stakeholder management responsibilities. Curiosity drives collaboration. By constantly asking \"how can we be better together?\" and \"what would make this a win for everyone?\", Navigators develop the partnership mindset that creates exceptional property operations. Collaboration is leadership development. The best collaboration comes from leaders who understand that success comes through others, creating collaborative excellence that elevates everyone's performance."
       },
       strategic_thinking: {
         name: "Strategic Thinking",
