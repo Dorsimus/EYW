@@ -5167,7 +5167,20 @@ const CompetenciesView = ({
                               <div className="text-xs text-gray-500">tasks</div>
                             </div>
                             <button
-                              onClick={() => setExpandedArea(expandedArea === `${areaKey}_${subKey}` ? areaKey : `${areaKey}_${subKey}`)}
+                              onClick={() => {
+                                const newExpandedArea = expandedArea === `${areaKey}_${subKey}` ? areaKey : `${areaKey}_${subKey}`;
+                                setExpandedArea(newExpandedArea);
+                                
+                                // If expanding (not collapsing), scroll to the top of this sub-competency
+                                if (newExpandedArea === `${areaKey}_${subKey}`) {
+                                  setTimeout(() => {
+                                    const element = document.querySelector(`[data-subkey="${areaKey}_${subKey}"]`);
+                                    if (element) {
+                                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    }
+                                  }, 100);
+                                }
+                              }}
                               className="text-blue-600 hover:text-blue-800 text-sm font-medium px-3 py-1 rounded border"
                             >
                               {expandedArea === `${areaKey}_${subKey}` ? 'Collapse' : 'View Details'}
