@@ -519,7 +519,7 @@ const App = () => {
               {
                 month: 1,
                 title: "Individual Development Focus",
-                in_the_flow_activity: "Create simple development goal with each team member during regular meetings",
+                in_the_flow_activity: "Create a simple developmental plan with each team member, starting with one focused goal, during your next one-on-one. Check in each week to track progress.",
                 document: "Individual Development Plans (one page per person with their input)",
                 integrations: ["Financial Integration: Connect development goals to departmental performance metrics"],
                 reflection: "What does each person on my team want to become? How can I help?"
