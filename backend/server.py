@@ -251,13 +251,12 @@ NAVIGATOR_COMPETENCIES = {
     },
     "strategic_thinking": {
         "name": "Strategic Thinking & Planning",
-        "description": "Think Like an Owner, Act Like a Leader, Plan Like a Strategist",
+        "description": "Think Beyond Today - Lead for Tomorrow",
         "sub_competencies": {
-            "strategic_analysis_planning": "Property-Level Strategic Analysis & Planning",
-            "data_driven_decisions": "Data-Driven Decision Making & Insights",
-            "market_competitive_positioning": "Market Awareness & Competitive Positioning",
-            "innovation_continuous_improvement": "Innovation & Continuous Improvement Leadership",
-            "vision_goal_achievement": "Long-Term Vision & Goal Achievement"
+            "seeing_patterns_anticipating_trends": "Seeing Patterns & Anticipating Trends",
+            "innovation_continuous_improvement": "Innovation & Continuous Improvement Thinking",
+            "problem_solving_future_focus": "Problem-Solving with Future Focus",
+            "planning_goal_achievement": "Planning & Goal Achievement with Strategic Perspective"
         }
     }
 }
