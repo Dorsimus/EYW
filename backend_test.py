@@ -858,13 +858,12 @@ class TaskCompetencyAPITester:
             print("❌ No admin token available for testing")
             return False, {}
         
-        # Test creating tasks for each new sub-competency
+        # Test creating tasks for each refined sub-competency
         expected_sub_competencies = [
-            "strategic_analysis_planning",
-            "data_driven_decisions",
-            "market_competitive_positioning",
-            "innovation_continuous_improvement", 
-            "vision_goal_achievement"
+            "seeing_patterns_anticipating_trends",
+            "innovation_continuous_improvement",
+            "problem_solving_future_focus",
+            "planning_goal_achievement"
         ]
         
         created_task_ids = []
@@ -933,7 +932,7 @@ class TaskCompetencyAPITester:
             )
         
         if all_successful:
-            print("   ✅ Admin can successfully manage Strategic Thinking tasks across all sub-competencies")
+            print("   ✅ Admin can successfully manage Strategic Thinking tasks across all refined sub-competencies")
         else:
             print("   ❌ Admin task management has issues with Strategic Thinking sub-competencies")
         
