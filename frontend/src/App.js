@@ -323,7 +323,7 @@ const App = () => {
               {
                 month: 3,
                 title: "Sustainable Motivation Systems",
-                in_the_flow_activity: "Create one simple, sustainable motivation practice for your team",
+                in_the_flow_activity: "Create simple, sustainable motivational practices for your team. Use the Team Motivation Playbook to help you create a simple, one-page guide.",
                 document: "Team Motivation Playbook (one-page guide you actually use)",
                 integrations: ["Operational Integration: Connect motivation practices to daily operational routines"],
                 curiosity_question: "How can motivation become as natural as breathing in our daily work?"
