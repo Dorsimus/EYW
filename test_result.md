@@ -235,7 +235,7 @@ backend:
         - comment: "Need to update backend NAVIGATOR_COMPETENCIES['cross_functional_collaboration'] to match refined frontend framework with 4 competencies and 16 total tasks. Must sync backend data structure with streamlined frontend structure."
 
   - task: "Cross-Functional Collaboration Framework Refinement"
-    implemented: false
+    implemented: true
     working: "NA"
     file: "frontend/src/App.js"
     stuck_count: 0
@@ -245,6 +245,9 @@ backend:
         - working: "NA"
         - agent: "main"
         - comment: "Need to implement refined Cross-Functional Collaboration framework with streamlined 4-competency structure (16 total tasks) replacing current 5-competency structure (68 tasks). New structure focuses on 'flow of work' learning with ~12 minutes/week commitment."
+        - working: "NA"
+        - agent: "main"
+        - comment: "IMPLEMENTED: Successfully replaced the complex Cross-Functional Collaboration framework with refined structure. Updated from 5 sub-competencies (68 tasks) to 4 competencies (16 tasks): Understanding & Appreciating the Other Department, Unified Resident Experience Creation, Effective Communication Across Departments, Stakeholder Relationship Building. Added curiosity ignition, monthly activities, portfolio integration, and streamlined content matching other frameworks. Also updated competencyOptions to match new structure."
 
 frontend:
   - task: "Admin Login Modal"
