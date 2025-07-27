@@ -2371,6 +2371,1531 @@ const App = () => {
     }
   };
 
+  const setupRefinedCompetencies = async () => {
+    // Set up the refined local competency structure
+    setCompetencies({
+      leadership_supervision: {
+        name: "Leadership & Supervision",
+        description: "Leadership Isn't a Title, It's How You Show Up Every Day",
+        philosophy: "The Navigator Leadership & Supervision development transforms department supervisors into inspiring people leaders through their daily work. Every task builds real leadership skills while creating tangible value for residents and the property. This is learning in action, not learning in addition.",
+        time_commitment: "~12 minutes per week + natural work integration",
+        duration: "12-15 months (competency-based progression)",
+        focus: "Curiosity-driven leadership development through authentic work experiences",
+        overall_progress: 0,
+        completion_percentage: 0,
+        completed_tasks: 0,
+        total_tasks: 16,
+        competency_area: "leadership_supervision",
+        curiosity_ignition: {
+          title: "Leadership Curiosity Assessment",
+          description: "Before diving in, spark curiosity about your leadership journey",
+          time_required: "5 minutes of thinking",
+          reflection_prompts: [
+            "What's one leadership moment from this week that I keep thinking about?",
+            "If I could ask any great leader three questions, what would they be?",
+            "What does leadership look like when no one's watching?",
+            "How do I want people to feel after working with me?"
+          ],
+          setup_requirement: "Create a simple place to capture leadership observations, questions, and 'aha moments' throughout the program."
+        },
+        sub_competencies: {
+          inspiring_team_motivation: {
+            name: "Inspiring Team Motivation & Engagement",
+            description: "What makes someone excited to come to work for you specifically?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "What makes someone excited to come to work for me specifically?",
+            foundation_courses: [
+              {
+                title: "Being a Team Player",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Foundation of collaborative mindset",
+                link_type: "external",
+                url: "https://performancehq.com/team-player"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Motivation Detective Work",
+                in_flow_activity: "During your weekly one-on-ones, ask each team member: 'What made you most excited about work this week?'",
+                document_section: {
+                  title: "Team Motivation Insights",
+                  description: "What you're learning about what motivates each person",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Apply motivation insights to daily interactions",
+                journal_prompt: "What surprised me about what motivates my team members? How can I use these insights in my daily leadership?"
+              },
+              {
+                month: 2,
+                title: "Energy Creation Experiments",
+                in_flow_activity: "Try one new approach each week to boost team energy based on what you learned about their motivations",
+                document_section: {
+                  title: "Motivation Experiment Results",
+                  description: "What you tried and how team members responded",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build motivation boosters into regular operations",
+                journal_prompt: "Which motivation experiments had the biggest impact? How can I make energy creation a natural part of my leadership style?"
+              },
+              {
+                month: 3,
+                title: "Recognition Revolution",
+                in_flow_activity: "Develop and implement recognition practices that connect to what each person finds motivating",
+                document_section: {
+                  title: "Personal Recognition System",
+                  description: "Recognition approaches tailored to each team member",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect individual recognition to department goals",
+                curiosity_question: "How can recognition become so personalized and timely that it feels natural rather than forced?"
+              }
+            ],
+            competency_gate: "Team members can articulate what motivates them + Recognition system implemented"
+          },
+          mastering_difficult_conversations: {
+            name: "Mastering Difficult Conversations",
+            description: "How do I turn the conversations I dread into opportunities for stronger relationships?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I turn the conversations I dread into opportunities for stronger relationships?",
+            foundation_courses: [
+              {
+                title: "Conflict Resolution (Supervisor Version)",
+                duration: "2 hours",
+                platform: "PerformanceHQ",
+                description: "Advanced conflict management techniques",
+                link_type: "external",
+                url: "https://performancehq.com/conflict-resolution"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Conversation Courage Building",
+                in_flow_activity: "Practice having one 'slightly difficult' conversation each week with increasing confidence",
+                document_section: {
+                  title: "Difficult Conversation Practice Log",
+                  description: "Conversations you've had and what you learned",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Apply conversation skills to daily interactions",
+                journal_prompt: "What makes difficult conversations easier for me? How has my confidence in addressing issues changed?"
+              },
+              {
+                month: 2,
+                title: "Relationship-First Approach",
+                in_flow_activity: "Focus on strengthening relationships before, during, and after difficult conversations",
+                document_section: {
+                  title: "Relationship Impact Results",
+                  description: "How focusing on relationships changed conversation outcomes",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Practice difficult conversations across departments",
+                journal_prompt: "How does leading with relationship care change the dynamic of difficult conversations?"
+              },
+              {
+                month: 3,
+                title: "Proactive Problem Prevention",
+                in_flow_activity: "Develop systems for addressing small issues before they become difficult conversations",
+                document_section: {
+                  title: "Prevention Systems in Action",
+                  description: "Systems you've created to prevent conflicts",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build conflict prevention into regular management practices",
+                curiosity_question: "How can I create such open communication that difficult conversations become rare because issues get addressed early?"
+              }
+            ],
+            competency_gate: "Successfully navigate challenging conversation + Demonstrate relationship strengthening"
+          },
+          building_collaborative_culture: {
+            name: "Building Collaborative Team Culture",
+            description: "How do I create a team environment where collaboration feels natural, not forced?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I create a team environment where collaboration feels natural, not forced?",
+            foundation_courses: [
+              {
+                title: "Building a Team Culture",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Creating unified team environment",
+                link_type: "external",
+                url: "https://performancehq.com/team-culture"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Culture Assessment & Vision",
+                in_flow_activity: "Observe current team dynamics and involve team in envisioning ideal collaborative culture",
+                document_section: {
+                  title: "Team Culture Vision",
+                  description: "Current state and collaborative vision for your team",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect team culture to department and property goals",
+                journal_prompt: "What does great collaboration look like in our specific work environment? What cultural shifts would make the biggest difference?"
+              },
+              {
+                month: 2,
+                title: "Collaboration Catalyst Activities",
+                in_flow_activity: "Implement practices that naturally encourage team collaboration and mutual support",
+                document_section: {
+                  title: "Collaboration Success Stories",
+                  description: "Examples of improved teamwork and collaboration",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Model collaborative leadership behavior",
+                journal_prompt: "Which collaboration practices feel most natural to my team? How has increased collaboration affected our work quality?"
+              },
+              {
+                month: 3,
+                title: "Culture Sustainability",
+                in_flow_activity: "Create systems and practices that maintain collaborative culture over time",
+                document_section: {
+                  title: "Culture Maintenance Systems",
+                  description: "Sustainable practices for maintaining collaborative culture",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build collaboration into routine operations and processes",
+                curiosity_question: "How can collaborative culture become so natural that it continues even when I'm not directly involved?"
+              }
+            ],
+            competency_gate: "Measurable improvement in team collaboration + Sustainable culture practices implemented"
+          },
+          developing_others_success: {
+            name: "Developing Others for Success",
+            description: "How do I help each team member grow in ways that matter to them and benefit our property?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I help each team member grow in ways that matter to them and benefit our property?",
+            foundation_courses: [
+              {
+                title: "Performance Management",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Developing and managing team performance",
+                link_type: "external",
+                url: "https://performancehq.com/performance-management"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Individual Development Discovery",
+                in_flow_activity: "Have development-focused conversations with each team member to understand their growth interests",
+                document_section: {
+                  title: "Team Development Plans",
+                  description: "Individual development goals and growth opportunities for each team member",
+                  portfolio_integration: true
+                },
+                financial_integration: "Connect individual development to property value creation",
+                journal_prompt: "What development opportunities would most benefit each team member and our property? How can I support growth that serves both?"
+              },
+              {
+                month: 2,
+                title: "Development in Daily Work",
+                in_flow_activity: "Create opportunities for skill building and growth within regular work responsibilities",
+                document_section: {
+                  title: "Growth-in-Work Examples",
+                  description: "How you've created development opportunities within daily operations",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Arrange development opportunities with other departments",
+                journal_prompt: "How can development become part of how we work rather than something extra? What growth opportunities exist in our daily activities?"
+              },
+              {
+                month: 3,
+                title: "Success Celebration & Future Planning",
+                in_flow_activity: "Recognize team member growth achievements and plan next development steps",
+                document_section: {
+                  title: "Development Success Stories",
+                  description: "Team member growth achievements and future development plans",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Use team member development to strengthen overall team capability",
+                curiosity_question: "How can I make development so integrated into our work that team members constantly grow while delivering great results?"
+              }
+            ],
+            competency_gate: "Each team member has clear development plan + Demonstrated skill/career growth"
+          }
+        },
+        // Additional leadership framework elements...
+        leadership_integration_activities: {
+          weekly_cm_shadowing: {
+            duration: "15 minutes weekly - rotated focus",
+            month_1_3: "Leadership style observation and daily leadership decisions",
+            month_4_6: "Team development practices and people leadership approaches",
+            month_7_9: "Communication effectiveness and relationship building",
+            month_10_12: "Leadership challenges and advancement preparation"
+          },
+          cross_department_collaboration: {
+            duration: "Monthly - 20 minutes",
+            activities: [
+              "Share leadership insights with opposite department Navigator",
+              "Collaborate on cross-department team initiatives",
+              "Practice leadership in property-wide scenarios"
+            ]
+          },
+          leadership_curiosity_journal: {
+            duration: "5 minutes weekly",
+            focus: [
+              "Document leadership observations, questions, and insights",
+              "Track 'aha moments' when leadership approaches work or don't work",
+              "Reflect on leadership growth and team development"
+            ]
+          }
+        },
+        culminating_leadership_project: {
+          title: "Leadership Excellence Initiative",
+          timeline: "Final 2-3 months of program",
+          challenge: "Design and implement one leadership initiative that demonstrates your growth as a people leader",
+          options: [
+            "Team Development Program: Create comprehensive development program for your team",
+            "Leadership Culture Project: Lead initiative that improves property-wide leadership culture",
+            "Succession Planning: Develop and implement plan for developing future leaders",
+            "Cross-Department Leadership: Lead initiative requiring leadership across multiple departments"
+          ],
+          deliverables: [
+            "Leadership opportunity analysis and initiative plan (1 page)",
+            "Implementation approach with team involvement (1 page)",
+            "Results documentation with leadership impact and lessons learned (1 page)"
+          ],
+          presentation: "15-minute presentation to CM and Regional Manager on leadership development and people impact"
+        },
+        competency_validation: {
+          evidence_portfolio: [
+            "Team Motivation: Demonstrated ability to inspire and motivate team members",
+            "Difficult Conversations: Successfully navigated challenging conversations with relationship building",
+            "Collaborative Culture: Created team environment where collaboration thrives",
+            "Development Leadership: Evidence of team member growth and development under your leadership"
+          ],
+          portfolio_defense: {
+            duration: "20 minutes",
+            components: [
+              "Leadership Journey Story: How your leadership approach has evolved",
+              "People Impact Evidence: Specific examples of team development and motivation",
+              "Relationship Building: How you've strengthened relationships through leadership",
+              "Future Leadership Vision: How you'll continue developing as a people leader"
+            ]
+          },
+          cm_readiness_indicators: [
+            "People Leadership: Consistently develops and motivates team members",
+            "Relationship Excellence: Builds strong working relationships across all levels",
+            "Communication Mastery: Handles difficult conversations with skill and care",
+            "Culture Development: Creates positive team environment that drives results"
+          ]
+        }
+      },
+      financial_management: {
+        name: "Financial Management & Business Acumen",
+        description: "Every Decision Has a Dollar Impact - Make Them Count",
+        philosophy: "The Navigator Financial Management development transforms department supervisors into financially-savvy leaders who understand the money side of property management. Every activity connects daily decisions to financial outcomes while building the business acumen essential for Community Manager success.",
+        time_commitment: "~12 minutes per week + natural work integration",
+        duration: "12-15 months (competency-based progression)",
+        focus: "Financial curiosity and business understanding through real budget and revenue work",
+        overall_progress: 0,
+        completion_percentage: 0,
+        completed_tasks: 0,
+        total_tasks: 16,
+        competency_area: "financial_management",
+        curiosity_ignition: {
+          title: "💰 Financial Curiosity Assessment",
+          description: "Before diving in, spark curiosity about the money side of your work",
+          time_required: "5 minutes of thinking",
+          reflection_prompts: [
+            "What's one decision I made this week that probably had a financial impact I didn't consider?",
+            "If I owned this property, what would keep me up at night financially?",
+            "How does my department's work show up in dollars and cents?",
+            "What financial questions do I wish I knew how to answer?"
+          ],
+          setup_requirement: "Create a simple place to capture financial observations, questions, and 'connection moments' throughout the program."
+        },
+        sub_competencies: {
+          property_pl_understanding: {
+            name: "Property P&L Understanding",
+            description: "How does my department's daily work show up on the property's financial statement?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How does my department's daily work show up on the property's financial statement?",
+            foundation_courses: [
+              {
+                title: "Property Management Financials",
+                duration: "1 hour 15 minutes",
+                platform: "PerformanceHQ",
+                description: "Understanding property financial statements",
+                link_type: "external"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "P&L Connection Discovery",
+                in_flow_activity: "Review last month's P&L with your CM and identify where your department's work appears",
+                document_section: {
+                  title: "Department P&L Impact Map",
+                  description: "Where and how your department shows up in property financials",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Share P&L insights with your team to build financial awareness",
+                journal_prompt: "Where does my department create revenue and where do we create expenses? What surprised me about our financial impact?"
+              },
+              {
+                month: 2,
+                title: "Financial Decision Making",
+                in_flow_activity: "For every significant department decision, consider and document the financial impact",
+                document_section: {
+                  title: "Financial Decision Log",
+                  description: "Daily decisions and their financial implications",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build financial thinking into routine decision processes",
+                journal_prompt: "How has thinking about money changed the way I make decisions? What decisions have bigger financial impact than I realized?"
+              },
+              {
+                month: 3,
+                title: "P&L Improvement Ideas",
+                in_flow_activity: "Generate and implement ideas for improving your department's financial contribution",
+                document_section: {
+                  title: "Financial Improvement Results",
+                  description: "Ideas you've implemented to improve department financial performance",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect improvement ideas to long-term property financial goals",
+                curiosity_question: "What could my department do differently to have an even more positive financial impact on the property?"
+              }
+            ],
+            competency_gate: "Accurately explain department's P&L impact + Implement financial improvement"
+          },
+          departmental_budget_management: {
+            name: "Departmental Budget Management",
+            description: "How do I manage my department's money like it's my own?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I manage my department's money like it's my own?",
+            foundation_courses: [
+              {
+                title: "Budgeting Basics",
+                duration: "45 minutes",
+                platform: "PerformanceHQ",
+                description: "Fundamental budgeting principles",
+                link_type: "external"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Budget Reality Check",
+                in_flow_activity: "Track actual spending vs budget for 4 weeks and understand variance drivers",
+                document_section: {
+                  title: "Budget Variance Analysis",
+                  description: "Where actual spending differs from budget and why",
+                  portfolio_integration: true
+                },
+                financial_integration: "Connect budget management to property-wide financial performance",
+                journal_prompt: "What causes our budget variances? How can I better predict and control department spending?"
+              },
+              {
+                month: 2,
+                title: "Smart Spending Strategies",
+                in_flow_activity: "Implement cost-saving measures while maintaining or improving service quality",
+                document_section: {
+                  title: "Cost Management Success Stories",
+                  description: "Ways you've reduced costs without sacrificing quality",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Share cost-saving ideas with other departments",
+                journal_prompt: "What spending actually adds value vs. what spending is just habit? How can I be smarter with department money?"
+              },
+              {
+                month: 3,
+                title: "Budget Planning & Forecasting",
+                in_flow_activity: "Participate in next year's budget planning with data-driven recommendations",
+                document_section: {
+                  title: "Budget Planning Contribution",
+                  description: "Your input and recommendations for department budget planning",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Involve team in budget awareness and cost-conscious decision making",
+                curiosity_question: "How can I make budget management feel natural rather than restrictive for my team and me?"
+              }
+            ],
+            competency_gate: "Successfully manage department within budget + Contribute to budget planning process"
+          },
+          cost_conscious_decision_making: {
+            name: "Cost-Conscious Decision Making",
+            description: "How do I make every dollar count while still delivering great results?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I make every dollar count while still delivering great results?",
+            foundation_courses: [
+              {
+                title: "Financial Decision Making",
+                duration: "30 minutes",
+                platform: "Custom Content",
+                description: "Framework for making cost-conscious decisions",
+                custom_content_needed: true
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "ROI Thinking Development",
+                in_flow_activity: "For every significant purchase or investment, calculate and document expected return",
+                document_section: {
+                  title: "ROI Decision Examples",
+                  description: "Decisions you've made using return on investment thinking",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build ROI thinking into routine purchasing decisions",
+                journal_prompt: "What purchases or investments have delivered the best return? How has ROI thinking changed my decision making?"
+              },
+              {
+                month: 2,
+                title: "Value vs. Cost Analysis",
+                in_flow_activity: "Practice distinguishing between cost (what we pay) and value (what we get) in department decisions",
+                document_section: {
+                  title: "Value Creation Examples",
+                  description: "How you've maximized value while managing costs",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect value thinking to long-term property strategy",
+                journal_prompt: "Where are we getting great value for our money? Where are we overpaying for what we get?"
+              },
+              {
+                month: 3,
+                title: "Cost-Conscious Culture",
+                in_flow_activity: "Develop team practices that naturally consider cost and value in daily decisions",
+                document_section: {
+                  title: "Cost-Conscious Team Practices",
+                  description: "How your team has embraced cost-conscious decision making",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Teach and model cost-conscious thinking for your team",
+                curiosity_question: "How can cost-consciousness become a natural part of how my team thinks rather than a restriction?"
+              }
+            ],
+            competency_gate: "Demonstrate consistent ROI-based decision making + Team shows cost-conscious behavior"
+          },
+          financial_communication_business_understanding: {
+            name: "Financial Communication & Business Understanding",
+            description: "How do I speak confidently about money and business impact?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I speak confidently about money and business impact?",
+            foundation_courses: [
+              {
+                title: "Business Communication Essentials",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Professional business communication skills",
+                link_type: "external"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Financial Vocabulary Building",
+                in_flow_activity: "Learn and practice using financial terms and concepts in daily conversations",
+                document_section: {
+                  title: "Financial Communication Growth",
+                  description: "How your comfort with financial discussions has improved",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Practice financial discussions with other department leaders",
+                journal_prompt: "How has my comfort with financial conversations changed? What financial concepts do I now understand that I didn't before?"
+              },
+              {
+                month: 2,
+                title: "Business Impact Storytelling",
+                in_flow_activity: "Practice explaining your department's work in terms of business impact and value creation",
+                document_section: {
+                  title: "Business Impact Stories",
+                  description: "How you've learned to communicate department value in business terms",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Help team members understand and communicate their business impact",
+                journal_prompt: "How can I tell our department's story in a way that clearly shows business value? What impact are we having that others might not see?"
+              },
+              {
+                month: 3,
+                title: "Financial Presentation & Reporting",
+                in_flow_activity: "Present financial information or business case to CM with confidence and clarity",
+                document_section: {
+                  title: "Financial Presentation Success",
+                  description: "Financial presentations or business cases you've delivered",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect financial communication to property strategic discussions",
+                curiosity_question: "How can I make financial discussions feel natural and valuable rather than intimidating?"
+              }
+            ],
+            competency_gate: "Successfully present financial information to leadership + Demonstrate business acumen in discussions"
+          }
+        },
+        // Additional financial framework elements would be added here...
+      },
+      operational_management: {
+        name: "Operational Management",
+        description: "Great Operations Are Invisible - Bad Operations Are Obvious",
+        philosophy: "The Navigator Operational Management development transforms department supervisors into systems-thinking leaders who create operational excellence through daily work. Every activity builds understanding of how processes, systems, and efficiency create exceptional resident experience while reducing costs and complexity.",
+        time_commitment: "~12 minutes per week + natural work integration",
+        duration: "12-15 months (competency-based progression)",
+        focus: "Systems thinking through daily operational improvements",
+        overall_progress: 0,
+        completion_percentage: 0,
+        completed_tasks: 0,
+        total_tasks: 16,
+        competency_area: "operational_management",
+        curiosity_ignition: {
+          title: "⚙️ Operations Curiosity Assessment",
+          description: "Before diving in, spark curiosity about how work actually gets done",
+          time_required: "5 minutes of thinking",
+          reflection_prompts: [
+            "What's one thing that happens smoothly every day that residents never have to think about?",
+            "If I could fix one operational frustration this week, what would have the biggest impact?",
+            "What operational 'magic' do I create that others might not notice?",
+            "How do the systems I manage affect everyone else's ability to do great work?"
+          ],
+          setup_requirement: "Create a simple place to capture operational observations, improvement ideas, and 'systems thinking moments' throughout the program."
+        },
+        sub_competencies: {
+          process_improvement_efficiency: {
+            name: "Process Improvement & Efficiency",
+            description: "What's one process that could work better if I thought about it differently?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "What's one process that could work better if I thought about it differently?",
+            foundation_courses: [
+              {
+                title: "Process Improvement Fundamentals",
+                duration: "45 minutes",
+                platform: "PerformanceHQ",
+                description: "Basic process analysis and improvement techniques",
+                link_type: "external"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Process Mapping & Analysis",
+                in_flow_activity: "Map out one key department process and identify bottlenecks or inefficiencies",
+                document_section: {
+                  title: "Process Improvement Opportunities",
+                  description: "Process maps and improvement opportunities you've identified",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build process thinking into daily workflow management",
+                journal_prompt: "What processes work smoothly vs. create frustration? Where are the biggest opportunities for improvement?"
+              },
+              {
+                month: 2,
+                title: "Efficiency Implementation",
+                in_flow_activity: "Implement and test one process improvement each week",
+                document_section: {
+                  title: "Process Improvement Results",
+                  description: "Improvements you've tested and their impact",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Involve team in identifying and implementing process improvements",
+                journal_prompt: "Which process improvements made the biggest difference? How can I make process improvement a regular part of how we work?"
+              },
+              {
+                month: 3,
+                title: "Systems Integration",
+                in_flow_activity: "Look for ways your improved processes can work better with other departments",
+                document_section: {
+                  title: "Cross-Department Process Coordination",
+                  description: "How your process improvements benefit other departments",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Share process improvements with other department leaders",
+                curiosity_question: "How can process improvement become automatic rather than something I have to remember to do?"
+              }
+            ],
+            competency_gate: "Successfully implement measurable process improvement + Document impact on efficiency"
+          },
+          quality_control_standards: {
+            name: "Quality Control & Standards",
+            description: "How do I create quality standards that actually get followed?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I create quality standards that actually get followed?",
+            foundation_courses: [
+              {
+                title: "Quality Management Principles",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Creating and maintaining quality standards",
+                link_type: "external"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Quality Standards Development",
+                in_flow_activity: "Work with team to define clear, practical quality standards for key work",
+                document_section: {
+                  title: "Quality Standards Documentation",
+                  description: "Quality standards you've developed with your team",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect quality standards to resident satisfaction and property goals",
+                journal_prompt: "What does 'quality work' mean in our department? How can we make standards clear and achievable?"
+              },
+              {
+                month: 2,
+                title: "Quality Monitoring & Feedback",
+                in_flow_activity: "Implement simple systems to monitor quality and provide helpful feedback",
+                document_section: {
+                  title: "Quality Monitoring System",
+                  description: "How you track and maintain quality standards",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build quality monitoring into routine operations",
+                journal_prompt: "What quality monitoring actually helps vs. feels bureaucratic? How can quality feedback be helpful rather than punitive?"
+              },
+              {
+                month: 3,
+                title: "Continuous Quality Improvement",
+                in_flow_activity: "Use quality data to continuously improve standards and processes",
+                document_section: {
+                  title: "Quality Improvement Examples",
+                  description: "How quality monitoring has led to actual improvements",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Engage team in quality improvement and standard evolution",
+                curiosity_question: "How can quality standards evolve and improve rather than just stay static?"
+              }
+            ],
+            competency_gate: "Implement quality standards that team follows + Demonstrate continuous improvement"
+          },
+          safety_leadership_risk_awareness: {
+            name: "Safety Leadership & Risk Awareness",
+            description: "How do I create a department where safety is automatic, not an afterthought?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I create a department where safety is automatic, not an afterthought?",
+            foundation_courses: [
+              {
+                title: "Safety Leadership",
+                duration: "1 hour 30 minutes",
+                platform: "PerformanceHQ",
+                description: "Leading safety culture and risk management",
+                link_type: "external"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Risk Assessment & Safety Culture",
+                in_flow_activity: "Conduct thorough safety assessment and work with team to build safety awareness",
+                document_section: {
+                  title: "Safety Assessment & Culture Plan",
+                  description: "Safety risks you've identified and culture improvements planned",
+                  portfolio_integration: true
+                },
+                financial_integration: "Connect safety improvements to cost reduction and liability management",
+                journal_prompt: "What safety risks exist that we might not be seeing? How can I make safety discussions productive rather than scary?"
+              },
+              {
+                month: 2,
+                title: "Proactive Safety Measures",
+                in_flow_activity: "Implement preventive safety measures and systems to reduce risk",
+                document_section: {
+                  title: "Safety Improvement Implementation",
+                  description: "Preventive safety measures you've put in place",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build safety considerations into all operational procedures",
+                journal_prompt: "Which safety improvements have made the biggest difference? How can safety become automatic in our daily work?"
+              },
+              {
+                month: 3,
+                title: "Safety Leadership & Training",
+                in_flow_activity: "Develop team safety leadership and create ongoing safety training",
+                document_section: {
+                  title: "Safety Leadership Development",
+                  description: "How you've built safety leadership in your team",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Share safety improvements and practices with other departments",
+                curiosity_question: "How can I make everyone on my team feel responsible for safety rather than it being just my job?"
+              }
+            ],
+            competency_gate: "Implement measurable safety improvements + Team demonstrates safety leadership"
+          },
+          technology_system_optimization: {
+            name: "Technology & System Optimization",
+            description: "How do I make technology work for us instead of against us?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I make technology work for us instead of against us?",
+            foundation_courses: [
+              {
+                title: "Technology Management for Leaders",
+                duration: "45 minutes",
+                platform: "Custom Content",
+                description: "Using technology to improve operations",
+                custom_content_needed: true
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Technology Assessment & Optimization",
+                in_flow_activity: "Evaluate current technology use and identify optimization opportunities",
+                document_section: {
+                  title: "Technology Optimization Plan",
+                  description: "Technology improvements and optimizations you've identified",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect technology optimization to long-term operational strategy",
+                journal_prompt: "Where is technology helping us vs. creating extra work? What technology opportunities might we be missing?"
+              },
+              {
+                month: 2,
+                title: "System Integration & Efficiency",
+                in_flow_activity: "Improve how different systems work together to reduce manual work",
+                document_section: {
+                  title: "System Integration Improvements",
+                  description: "Ways you've improved system integration and efficiency",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build system optimization into routine technology management",
+                journal_prompt: "How can our systems work together better? Where are we doing manual work that technology could handle?"
+              },
+              {
+                month: 3,
+                title: "Technology Leadership & Training",
+                in_flow_activity: "Develop team technology skills and create systems for ongoing optimization",
+                document_section: {
+                  title: "Technology Leadership Results",
+                  description: "How you've built technology capability and optimization in your team",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Help team members become more effective with technology",
+                curiosity_question: "How can technology continue to evolve and improve our operations rather than just stay static?"
+              }
+            ],
+            competency_gate: "Implement technology improvements that measurably improve efficiency + Team demonstrates improved technology use"
+          }
+        }
+        // Additional operational framework elements would be added here...
+      },
+      cross_functional_collaboration: {
+        name: "Cross-Functional Collaboration",
+        description: "Breaking Down Silos & Building Unified Property Teams",
+        philosophy: "We Win Together - One Property, One Team. The Navigator Cross-Functional Collaboration development transforms department-focused leaders into property-wide team builders who understand that exceptional resident experience requires seamless collaboration between all functions. This isn't about getting along - it's about creating something better together than either department could create alone.",
+        time_commitment: "~12 minutes per week + natural work integration",
+        duration: "12-15 months (competency-based progression)",
+        focus: "Building bridges between departments through shared projects and genuine partnership",
+        overall_progress: 0,
+        completion_percentage: 0,
+        completed_tasks: 0,
+        total_tasks: 16,
+        competency_area: "cross_functional_collaboration",
+        curiosity_ignition: {
+          title: "🔥 Collaboration Curiosity Assessment",
+          subtitle: "Before diving in, spark curiosity about working across departments",
+          reflection_prompts: [
+            "What's one thing the other department does that I wish I understood better?",
+            "When have I seen leasing and maintenance work together in a way that created something amazing?",
+            "What resident experience could we create if our departments worked together seamlessly?",
+            "What would change if we thought of ourselves as one property team instead of separate departments?"
+          ],
+          journal_setup: "Create a simple place to capture collaboration observations, partnership ideas, and \"we're stronger together\" moments throughout the program."
+        },
+        sub_competencies: {
+          understanding_other_department: {
+            name: "Understanding & Appreciating the Other Department",
+            description: "What would help me be a better partner to the other department?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Being a Team Player",
+              duration: "1 hour",
+              platform: "PerformanceHQ",
+              description: "Foundation of collaborative mindset",
+              available: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "Maintenance For Office Staff",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Cross-functional operational understanding",
+                available: true
+              },
+              {
+                title: "Walking in Their Shoes",
+                duration: "30 minutes",
+                platform: "Custom Content",
+                description: "Understanding what drives success in the other department",
+                custom_content_needed: true
+              },
+              {
+                title: "Cross-Functional Teamwork That Actually Works",
+                duration: "12 minutes",
+                platform: "YouTube",
+                description: "Practical collaboration principles"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Department Curiosity Exploration",
+                in_flow_activity: "Spend 30 minutes weekly with your opposite department counterpart, just observing and asking curious questions",
+                document_section: {
+                  title: "Department Discovery Journal", 
+                  description: "Insights about how the other department really works",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Share what you're learning with your team to build appreciation",
+                journal_prompt: "What surprised me most about how the other department operates? What challenges do they face that I never considered?"
+              },
+              {
+                month: 2,
+                title: "Appreciation in Action",
+                in_flow_activity: "Find one specific way to make the other department's work easier each week",
+                document_section: {
+                  title: "Partnership Action Log",
+                  description: "Concrete ways you've supported the other department",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build other department considerations into your daily decisions",
+                journal_prompt: "What small actions have the biggest impact on our working relationship? How does helping them actually help residents?"
+              },
+              {
+                month: 3,
+                title: "Bridge Building",
+                in_flow_activity: "Facilitate one conversation between your teams about how to work better together",
+                document_section: {
+                  title: "Team Bridge-Building Results",
+                  description: "Improved understanding and cooperation between teams",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect department partnership to property-wide goals",
+                curiosity_question: "How can appreciation and understanding become automatic between our departments?"
+              }
+            ],
+            competency_gate: "Demonstrate improved working relationship with opposite department + Teams show increased cooperation"
+          },
+          unified_resident_experience: {
+            name: "Unified Resident Experience Creation",
+            description: "How can our departments work together to create resident experiences that neither could create alone?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Customer Relationship Management",
+              duration: "2 hours",
+              platform: "PerformanceHQ",
+              description: "Comprehensive approach to resident service",
+              available: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "Resident Retention",
+                duration: "1 hour 30 minutes",
+                platform: "PerformanceHQ",
+                description: "Holistic resident satisfaction approach",
+                available: true
+              },
+              {
+                title: "Customer Service 1: Be Proactive",
+                duration: "30 minutes",
+                platform: "PerformanceHQ",
+                description: "Anticipating resident needs",
+                available: true
+              },
+              {
+                title: "Creating Seamless Customer Experience Across Teams",
+                duration: "10 minutes",
+                platform: "YouTube",
+                description: "Cross-functional service excellence"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Resident Journey Mapping",
+                in_flow_activity: "Map one resident's experience from move-in to renewal, identifying all touchpoints from both departments",
+                document_section: {
+                  title: "Resident Experience Map",
+                  description: "Visual showing where departments interact with residents",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Work with opposite department Navigator to create the map together",
+                journal_prompt: "Where in the resident journey do our departments create magic together? Where do we create confusion or frustration?"
+              },
+              {
+                month: 2,
+                title: "Coordinated Service Excellence",
+                in_flow_activity: "Choose one resident touchpoint where departments can coordinate better and improve it together",
+                document_section: {
+                  title: "Service Coordination Success Story",
+                  description: "Improved resident experience through department coordination",
+                  portfolio_integration: true
+                },
+                financial_integration: "Connect improved coordination to resident satisfaction and retention",
+                journal_prompt: "What does great coordination feel like from the resident's perspective? How can we make this coordination feel natural instead of forced?"
+              },
+              {
+                month: 3,
+                title: "Proactive Partnership Programs",
+                in_flow_activity: "Create one small program or practice that proactively enhances resident experience through department partnership",
+                document_section: {
+                  title: "Partnership Program Results",
+                  description: "Resident feedback and team satisfaction with collaborative initiative",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Involve both teams in designing and implementing the program",
+                curiosity_question: "What resident experiences could we create if we always thought like partners instead of separate departments?"
+              }
+            ],
+            competency_gate: "Successfully improve 1 resident touchpoint through collaboration + Measurable resident satisfaction improvement"
+          },
+          communication_across_departments: {
+            name: "Effective Communication Across Departments", 
+            description: "How do I communicate in a way that makes the other department want to work with me?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Building a Team Culture",
+              duration: "1 hour",
+              platform: "PerformanceHQ",
+              description: "Creating unified team environment",
+              available: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "Leadership Booster: Communication Skills for Supervisors",
+                duration: "5 minutes",
+                platform: "PerformanceHQ",
+                description: "Clear communication techniques",
+                available: true
+              },
+              {
+                title: "Conflict Resolution (Supervisor Version)",
+                duration: "2 hours",
+                platform: "PerformanceHQ",
+                description: "Managing disagreements constructively",
+                available: true
+              },
+              {
+                title: "Communication That Builds Bridges, Not Walls",
+                duration: "8 minutes",
+                platform: "YouTube",
+                description: "Constructive cross-functional communication"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Communication Bridge Building",
+                in_flow_activity: "Establish one regular communication practice with your opposite department counterpart",
+                document_section: {
+                  title: "Communication Practice Results",
+                  description: "Improved information sharing and coordination",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build cross-department communication into routine operational practices",
+                journal_prompt: "What communication practices prevent problems vs. create them? How can I make communication feel helpful instead of burdensome?"
+              },
+              {
+                month: 2,
+                title: "Collaborative Problem Solving",
+                in_flow_activity: "When a problem affects both departments, involve both teams in finding the solution",
+                document_section: {
+                  title: "Collaborative Problem-Solving Examples",
+                  description: "Problems solved better through department partnership",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Frame problems and solutions in terms of property-wide impact",
+                journal_prompt: "What makes problem-solving feel collaborative vs. competitive? How do the best solutions consider both departments' needs?"
+              },
+              {
+                month: 3,
+                title: "Conflict Prevention & Resolution",
+                in_flow_activity: "Address one source of recurring friction between departments and create a better way forward",
+                document_section: {
+                  title: "Conflict Resolution Success Story",
+                  description: "Friction reduced through improved communication and understanding",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Model constructive conflict resolution for both teams",
+                curiosity_question: "How can we turn the things that create friction into opportunities for better partnership?"
+              }
+            ],
+            competency_gate: "Establish effective communication practices with other department + Successfully resolve cross-department conflict"
+          },
+          stakeholder_relationship_building: {
+            name: "Stakeholder Relationship Building",
+            description: "How do I build relationships where everyone wins and wants to work together again?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Building Relationships That Matter",
+              duration: "45 minutes",
+              platform: "Custom Content",
+              description: "Professional relationship development with internal and external stakeholders",
+              custom_content_needed: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "Creating and Delivering Business Presentations",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Professional communication with stakeholders",
+                available: true
+              },
+              {
+                title: "Business Etiquette",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Professional relationship skills",
+                available: true
+              },
+              {
+                title: "Building Professional Relationships That Last",
+                duration: "15 minutes",
+                platform: "YouTube",
+                description: "Long-term relationship development"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Internal Stakeholder Partnership",
+                in_flow_activity: "Identify key internal stakeholders (CM, other department leaders, home office contacts) and strengthen one relationship",
+                document_section: {
+                  title: "Stakeholder Relationship Development",
+                  description: "Improved working relationships with internal partners",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Work with opposite department Navigator on shared stakeholder relationships",
+                journal_prompt: "Which internal relationships could make everyone's work easier if they were stronger? What do these stakeholders need from me to be successful?"
+              },
+              {
+                month: 2,
+                title: "External Stakeholder Engagement",
+                in_flow_activity: "Engage with one external stakeholder (vendor, resident, community partner) in a way that builds the relationship",
+                document_section: {
+                  title: "External Relationship Building Examples",
+                  description: "Improved external partnerships that benefit the property",
+                  portfolio_integration: true
+                },
+                financial_integration: "Connect stakeholder relationships to cost savings or revenue enhancement",
+                journal_prompt: "What external relationships could create more value if they were partnerships instead of transactions?"
+              },
+              {
+                month: 3,
+                title: "Stakeholder Value Creation",
+                in_flow_activity: "Find one way to create value for a stakeholder that also benefits your property",
+                document_section: {
+                  title: "Mutual Value Creation Examples",
+                  description: "Win-win outcomes from stakeholder relationships",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect stakeholder relationships to long-term property success",
+                curiosity_question: "How can I make every stakeholder interaction feel like the beginning of a valuable partnership?"
+              }
+            ],
+            competency_gate: "Strengthen relationships with 2+ stakeholders + Create measurable value through improved relationships"
+          }
+        }
+        // Additional collaboration framework elements would be added here...
+      },
+      strategic_thinking: {
+        name: "Strategic Thinking",
+        description: "Think Beyond Today - Lead for Tomorrow",
+        philosophy: "The Navigator Strategic Thinking development transforms department supervisors into future-focused leaders who can see beyond daily tasks to identify opportunities, anticipate challenges, and make decisions that position the property for long-term success. This isn't about becoming a visionary CEO - it's about developing the strategic mindset essential for Community Manager effectiveness.",
+        time_commitment: "~12 minutes per week + natural work integration",
+        duration: "12-15 months (competency-based progression)",
+        focus: "Strategic thinking through real department decisions and property planning",
+        overall_progress: 0,
+        completion_percentage: 0,
+        completed_tasks: 0,
+        total_tasks: 16,
+        competency_area: "strategic_thinking",
+        curiosity_ignition: {
+          title: "🔥 Strategic Curiosity Assessment",
+          subtitle: "Before diving in, spark curiosity about thinking strategically",
+          reflection_prompts: [
+            "What's one trend I've noticed at our property that might predict something bigger coming?",
+            "If I could change one thing about how we operate that would still matter in two years, what would it be?",
+            "What decision did a great leader make that seemed small but had big long-term impact?",
+            "How would I run things differently if I knew I'd be here for the next five years?"
+          ],
+          journal_setup: "Create a simple place to capture strategic observations, pattern recognition, and \"thinking ahead\" moments throughout the program."
+        },
+        sub_competencies: {
+          seeing_patterns_anticipating_trends: {
+            name: "Seeing Patterns & Anticipating Trends",
+            description: "What patterns in our daily work might tell me something important about our future?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "CM Weekly Meeting - Data Driven Decisions with Martin Knapp",
+              duration: "1 hour",
+              platform: "PerformanceHQ",
+              description: "Using information to see what's coming",
+              available: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "Performance Management",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Using metrics to identify trends",
+                available: true
+              },
+              {
+                title: "Pattern Recognition for Property Leaders",
+                duration: "30 minutes",
+                platform: "Custom Content",
+                description: "Simple framework for spotting trends in property operations",
+                custom_content_needed: true
+              },
+              {
+                title: "How to Spot Trends Before They're Obvious",
+                duration: "10 minutes",
+                platform: "YouTube",
+                description: "Practical trend identification skills"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Pattern Detective Work",
+                in_flow_activity: "During weekly property meetings, note one pattern or trend you observe in your department's data",
+                document_section: {
+                  title: "Pattern Recognition Log",
+                  description: "Weekly observations of trends in your department",
+                  portfolio_integration: true
+                },
+                operational_integration: "Connect patterns to daily operational decisions",
+                journal_prompt: "What patterns do I see that others might be missing? What do these patterns suggest about what's coming?"
+              },
+              {
+                month: 2,
+                title: "Trend Impact Analysis",
+                in_flow_activity: "Choose one pattern from Month 1 and think through what it might mean for your department's future",
+                document_section: {
+                  title: "Trend Impact Assessment",
+                  description: "Simple analysis of what one trend could mean",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Discuss trend observations with opposite department Navigator",
+                journal_prompt: "If this trend continues, what opportunities or challenges might we face? How should we prepare?"
+              },
+              {
+                month: 3,
+                title: "Proactive Planning",
+                in_flow_activity: "Make one small change in your department based on a trend you've identified",
+                document_section: {
+                  title: "Proactive Action Results",
+                  description: "Change you made based on trend analysis and its outcomes",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Share trend thinking with your team to build strategic awareness",
+                curiosity_question: "How can pattern recognition become a natural part of how I think about our work?"
+              }
+            ],
+            competency_gate: "Identify meaningful trend affecting department + Take proactive action based on trend analysis"
+          },
+          innovation_continuous_improvement: {
+            name: "Innovation & Continuous Improvement Thinking",
+            description: "What could we do differently that would make our work easier, better, or more effective?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Leadership 201",
+              duration: "2 hours 5 minutes",
+              platform: "PerformanceHQ",
+              description: "Advanced leadership including innovation thinking",
+              available: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "Employee Motivation",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Creating culture that encourages new ideas",
+                available: true
+              },
+              {
+                title: "Effective Time Management",
+                duration: "35 minutes",
+                platform: "PerformanceHQ",
+                description: "Finding time for improvement thinking",
+                available: true
+              },
+              {
+                title: "Innovation Starts with Small Improvements",
+                duration: "8 minutes",
+                platform: "YouTube",
+                description: "Practical approach to workplace innovation"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Improvement Opportunity Hunting",
+                in_flow_activity: "Weekly, identify one thing in your department that could work better",
+                document_section: {
+                  title: "Improvement Opportunity Log",
+                  description: "Weekly ideas for making work better",
+                  portfolio_integration: true
+                },
+                financial_integration: "Consider cost and benefit of improvement ideas",
+                journal_prompt: "What improvements would have the biggest impact? What holds us back from making simple improvements?"
+              },
+              {
+                month: 2,
+                title: "Small Innovation Testing",
+                in_flow_activity: "Try one small improvement or new approach each week",
+                document_section: {
+                  title: "Innovation Experiment Results",
+                  description: "What you tried, what happened, what you learned",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect improvements to long-term department goals",
+                journal_prompt: "Which small changes made the biggest difference? What did I learn about implementing improvements?"
+              },
+              {
+                month: 3,
+                title: "Innovation Culture Building",
+                in_flow_activity: "Get your team involved in suggesting and testing improvements",
+                document_section: {
+                  title: "Team Innovation Examples",
+                  description: "Improvements suggested and implemented by team members",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build improvement thinking into regular department operations",
+                curiosity_question: "How can continuous improvement become as natural as daily operations for my team?"
+              }
+            ],
+            competency_gate: "Successfully implement 2+ department improvements + Team demonstrates improvement mindset"
+          },
+          problem_solving_future_focus: {
+            name: "Problem-Solving with Future Focus",
+            description: "How do I solve this problem in a way that makes similar problems less likely in the future?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "CM Weekly Meeting - Extreme Ownership with Kate Reeves",
+              duration: "1 hour",
+              platform: "PerformanceHQ",
+              description: "Taking ownership of solutions and outcomes",
+              available: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "Conflict Resolution (Supervisor Version)",
+                duration: "2 hours",
+                platform: "PerformanceHQ",
+                description: "Strategic approach to resolving issues",
+                available: true
+              },
+              {
+                title: "Future-Focused Problem Solving",
+                duration: "30 minutes",
+                platform: "Custom Content",
+                description: "Framework for solving problems in ways that prevent future issues",
+                custom_content_needed: true
+              },
+              {
+                title: "Root Cause Analysis Simplified",
+                duration: "12 minutes",
+                platform: "YouTube",
+                description: "Getting to the real source of problems"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Root Cause Thinking",
+                in_flow_activity: "When solving routine problems, dig deeper to understand what really caused them",
+                document_section: {
+                  title: "Root Cause Analysis Examples",
+                  description: "Deeper thinking about what causes common problems",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Explore root causes that might involve both departments",
+                journal_prompt: "What problems keep recurring because we're not addressing the real cause? What patterns do I see in our problems?"
+              },
+              {
+                month: 2,
+                title: "Solution Design for Long-Term Impact",
+                in_flow_activity: "For each significant problem you solve, design the solution to prevent similar future problems",
+                document_section: {
+                  title: "Future-Focused Solution Examples",
+                  description: "Solutions designed to prevent problem recurrence",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Involve team in designing solutions that address root causes",
+                journal_prompt: "What solutions that seemed good short-term might create problems later? How can I think more long-term in my problem-solving?"
+              },
+              {
+                month: 3,
+                title: "Systematic Problem Prevention",
+                in_flow_activity: "Create one simple system or process that prevents a category of problems",
+                document_section: {
+                  title: "Problem Prevention System",
+                  description: "Process or practice that reduces future problems",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect problem prevention to property-wide efficiency goals",
+                curiosity_question: "How can problem-solving become problem prevention? What systems could eliminate whole categories of issues?"
+              }
+            ],
+            competency_gate: "Implement solution that addresses root cause + Create system that prevents future problems"
+          },
+          planning_goal_achievement: {
+            name: "Planning & Goal Achievement with Strategic Perspective",
+            description: "How do I set goals and make plans that connect our daily work to where we want to be long-term?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Strategic Planning for Department Leaders",
+              duration: "45 minutes",
+              platform: "Custom Content",
+              description: "Simple approach to planning that connects daily work to bigger goals",
+              custom_content_needed: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "CM Weekly Meeting - Multipliers with Matt",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Strategic leadership that multiplies team effectiveness",
+                available: true
+              },
+              {
+                title: "Creating and Delivering Business Presentations",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Communicating strategic plans effectively",
+                available: true
+              },
+              {
+                title: "Strategic Planning That Actually Works",
+                duration: "15 minutes",
+                platform: "YouTube",
+                description: "Practical strategic planning approach"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Strategic Goal Setting",
+                in_flow_activity: "Set one strategic goal for your department that would matter in 6-12 months",
+                document_section: {
+                  title: "Strategic Goal Development",
+                  description: "Goal that connects current work to future success",
+                  portfolio_integration: true
+                },
+                financial_integration: "Connect strategic goal to department and property financial success",
+                journal_prompt: "What goal would make the biggest difference for our long-term success? How does this goal connect to daily decisions?"
+              },
+              {
+                month: 2,
+                title: "Strategic Planning & Implementation",
+                in_flow_activity: "Create simple plan for achieving your strategic goal and start implementing it",
+                document_section: {
+                  title: "Strategic Implementation Plan",
+                  description: "Practical steps toward achieving strategic goal",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build strategic goal progress into regular operational routines",
+                journal_prompt: "What's working in my strategic implementation? What obstacles require creative solutions?"
+              },
+              {
+                month: 3,
+                title: "Strategic Communication & Team Alignment",
+                in_flow_activity: "Get your team involved in understanding and working toward the strategic goal",
+                document_section: {
+                  title: "Team Strategic Alignment Examples",
+                  description: "How team members contribute to strategic goal",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Explore how strategic goal might connect with opposite department's goals",
+                curiosity_question: "How can strategic thinking become part of how my team naturally thinks about our work?"
+              }
+            ],
+            competency_gate: "Set and make progress on meaningful strategic goal + Team understands and contributes to strategic direction"
+          }
+        }
+        // Additional strategic framework elements would be added here...
+      }
+    });
+  };
+
   const loadUserData = async (userId) => {
     try {
       // Load competencies progress from backend
