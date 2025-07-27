@@ -388,7 +388,7 @@ const App = () => {
               {
                 month: 2,
                 title: "Performance Conversations",
-                in_the_flow_activity: "Address one performance issue using structured approach",
+                in_the_flow_activity: "Address one performance issue using a structured approach",
                 document: "Performance Conversation Template (create a simple framework you'll actually use)",
                 integrations: ["Financial Integration: Connect performance conversations to departmental budget impact", "Strategic Integration: Frame performance in context of property goals"],
                 journal_prompt: "How do I balance care for the person with accountability for results?"
