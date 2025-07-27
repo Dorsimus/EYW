@@ -6495,7 +6495,7 @@ const AdminTasksView = ({ tasks, onCreateTask, onUpdateTask, onDeleteTask, showC
     { area: 'leadership_supervision', subs: ['team_motivation', 'delegation', 'performance_management', 'coaching_development', 'team_building', 'conflict_resolution', 'difficult_conversations', 'cross_dept_communication', 'resident_resolution', 'crisis_leadership'] },
     { area: 'financial_management', subs: ['budget_creation', 'variance_analysis', 'cost_control', 'roi_decisions', 'revenue_impact', 'pl_understanding', 'kpi_tracking', 'financial_forecasting', 'capex_planning', 'vendor_cost_mgmt'] },
     { area: 'operational_management', subs: ['workflow_optimization', 'technology_utilization', 'quality_control', 'sop_management', 'innovation', 'safety_management', 'policy_enforcement', 'legal_compliance', 'emergency_preparedness', 'documentation'] },
-    { area: 'cross_functional', subs: ['interdept_understanding', 'resident_journey', 'revenue_awareness', 'collaborative_problem_solving', 'joint_planning', 'resource_sharing', 'communication_protocols', 'dept_conflict_resolution', 'success_metrics'] },
+    { area: 'cross_functional_collaboration', subs: ['understanding_other_department', 'unified_resident_experience', 'communication_across_departments', 'stakeholder_relationship_building'] },
     { area: 'strategic_thinking', subs: ['market_awareness', 'trend_identification', 'opportunity_recognition', 'problem_anticipation', 'longterm_planning', 'change_leadership', 'stakeholder_management', 'project_management', 'innovation_adoption', 'continuous_improvement'] }
   ];
 
