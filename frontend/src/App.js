@@ -535,7 +535,7 @@ const App = () => {
               {
                 month: 3,
                 title: "Development Results & Recognition",
-                in_the_flow_activity: "Recognize and celebrate each team member's growth",
+                in_the_flow_activity: "Recognizing good work helps keep people motivated and maintain high standards. Recognize and celebrate each team member's growth, and document your success stories below.",
                 document: "Development Success Showcase (evidence of team member growth)",
                 integrations: ["Strategic Integration: Connect individual development to property advancement opportunities"],
                 curiosity_question: "How can helping others grow become the most rewarding part of my work?"
