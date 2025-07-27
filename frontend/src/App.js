@@ -407,7 +407,7 @@ const App = () => {
               {
                 title: "Crucial Conversations: Tools for Talking When Stakes Are High",
                 type: "Book",
-                description: "Master framework for difficult conversations",
+                description: "Master the framework for difficult conversations",
                 url: "https://cruciallearning.com/crucial-conversations-book/"
               },
               {
