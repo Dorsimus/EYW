@@ -5352,9 +5352,24 @@ const CompetenciesView = ({
                                         {/* In-the-Flow Activity */}
                                         <div className="mb-4">
                                           <h6 className="text-sm font-semibold text-gray-700 mb-2 block">🔄 In-the-Flow Activity:</h6>
-                                          <p className="text-sm text-gray-800 bg-blue-50 p-3 rounded border border-blue-100">
-                                            {monthActivity.in_the_flow_activity}
-                                          </p>
+                                          <div className="text-sm text-gray-800 bg-blue-50 p-3 rounded border border-blue-100">
+                                            {monthActivity.in_the_flow_activity.split('\n').map((line, lineIndex) => {
+                                              if (line.startsWith('•')) {
+                                                return (
+                                                  <div key={lineIndex} className="flex items-start mb-1">
+                                                    <span className="mr-2 text-blue-600">•</span>
+                                                    <span>{line.substring(1).trim()}</span>
+                                                  </div>
+                                                );
+                                              } else {
+                                                return (
+                                                  <p key={lineIndex} className={lineIndex > 0 ? 'mt-2' : ''}>
+                                                    {line}
+                                                  </p>
+                                                );
+                                              }
+                                            })}
+                                          </div>
                                         </div>
                                         
                                         {/* Document Section */}
