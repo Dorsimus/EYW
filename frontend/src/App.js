@@ -380,7 +380,7 @@ const App = () => {
               {
                 month: 1,
                 title: "Feedback Foundations",
-                in_the_flow_activity: "Give meaningful feedback to one team member weekly (something you should already be doing!)",
+                in_the_flow_activity: "Give meaningful feedback to one team member weekly",
                 document: "Weekly Feedback Log - just note what worked/didn't work (5 minutes)",
                 integrations: ["Leadership Integration: Practice feedback techniques learned in Leadership modules"],
                 reflection: "What makes feedback feel helpful vs. hurtful?"
