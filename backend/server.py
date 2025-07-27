@@ -231,18 +231,12 @@ NAVIGATOR_COMPETENCIES = {
     },
     "operational_management": {
         "name": "Operational Management",
-        "description": "Optimizing departmental operations for maximum efficiency and effectiveness",
+        "description": "Great Operations Are Invisible - Bad Operations Are Obvious",
         "sub_competencies": {
-            "workflow_optimization": "Workflow Optimization",
-            "technology_utilization": "Technology Utilization",
-            "quality_control": "Quality Control",
-            "sop_management": "Standard Operating Procedures",
-            "innovation": "Innovation Implementation",
-            "safety_management": "Safety Management",
-            "policy_enforcement": "Policy Enforcement",
-            "legal_compliance": "Legal Compliance",
-            "emergency_preparedness": "Emergency Preparedness",
-            "documentation": "Documentation Standards"
+            "process_improvement_efficiency": "Process Improvement & Efficiency",
+            "quality_control_standards": "Quality Control & Standards",
+            "safety_leadership_risk_awareness": "Safety Leadership & Risk Awareness",
+            "technology_system_optimization": "Technology & System Optimization"
         }
     },
     "cross_functional": {
