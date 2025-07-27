@@ -2368,15 +2368,44 @@ const App = () => {
 
   const loadUserData = async (userId) => {
     try {
-      // Load competencies
+      // Load competencies progress from backend
       const compResponse = await axios.get(`${API}/users/${userId}/competencies`);
-      setCompetencies(compResponse.data);
+      const backendProgress = compResponse.data;
+      
+      // Merge backend progress with local refined competency structure
+      const mergedCompetencies = { ...competencies };
+      
+      // Update progress data from backend while keeping local structure
+      Object.keys(backendProgress).forEach(areaKey => {
+        if (mergedCompetencies[areaKey]) {
+          // Update overall progress from backend
+          mergedCompetencies[areaKey].overall_progress = backendProgress[areaKey].overall_progress || 0;
+          mergedCompetencies[areaKey].completion_percentage = backendProgress[areaKey].overall_progress || 0;
+          
+          // Update sub-competency progress from backend
+          const backendSubCompetencies = backendProgress[areaKey].sub_competencies || {};
+          Object.keys(backendSubCompetencies).forEach(subKey => {
+            if (mergedCompetencies[areaKey].sub_competencies && mergedCompetencies[areaKey].sub_competencies[subKey]) {
+              const backendSubData = backendSubCompetencies[subKey];
+              mergedCompetencies[areaKey].sub_competencies[subKey] = {
+                ...mergedCompetencies[areaKey].sub_competencies[subKey],
+                progress_percentage: backendSubData.completion_percentage || 0,
+                completed_tasks: backendSubData.completed_tasks || 0,
+                total_tasks: backendSubData.total_tasks || mergedCompetencies[areaKey].sub_competencies[subKey].total_tasks || 4
+              };
+            }
+          });
+        }
+      });
+      
+      setCompetencies(mergedCompetencies);
       
       // Load portfolio
       const portfolioResponse = await axios.get(`${API}/users/${userId}/portfolio`);
       setPortfolio(portfolioResponse.data);
     } catch (error) {
       console.error('Error loading user data:', error);
+      // Keep using local refined competency structure if backend fails
     }
   };
 
