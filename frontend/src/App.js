@@ -308,7 +308,7 @@ const App = () => {
               {
                 month: 1,
                 title: "Leadership Style Discovery",
-                in_the_flow_activity: "During your regular one-on-ones, ask each team member: 'When do you feel most energized at work?', 'What kind of support helps you do your best work?', 'How do you like to receive feedback?'",
+                in_the_flow_activity: "During your regular one-on-ones, ask each team member:\n• 'When do you feel most energized at work?'\n• 'What kind of support helps you do your best work?'\n• 'How do you like to receive feedback?'\n\nTake notes and then document what you learn below.",
                 document: "Simple Leadership Style Notes (10 minutes weekly)",
                 reflection: "What patterns do I see in what motivates different people?"
               },
