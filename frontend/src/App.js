@@ -2354,7 +2354,7 @@ const App = () => {
       setUser(userData);
       
       // Set up local refined competency structure first
-      await setupRefinedCompetencies();
+      setupRefinedCompetencies();
       
       // Then load progress data from backend
       await loadUserData(userData.id);
