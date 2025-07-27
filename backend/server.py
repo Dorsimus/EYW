@@ -239,15 +239,14 @@ NAVIGATOR_COMPETENCIES = {
             "technology_system_optimization": "Technology & System Optimization"
         }
     },
-    "cross_functional": {
+    "cross_functional_collaboration": {
         "name": "Cross-Functional Collaboration", 
-        "description": "We Win Together - No Department Is an Island",
+        "description": "Breaking Down Silos & Building Unified Property Teams",
         "sub_competencies": {
-            "interdepartmental_partnership": "Inter-Departmental Partnership & Communication",
-            "resident_experience_collaboration": "Resident Experience Collaboration",
-            "property_team_culture": "Property-Wide Team Building & Culture",
-            "stakeholder_relationship_management": "External Stakeholder Relationship Management",
-            "conflict_resolution_collaboration": "Conflict Resolution & Joint Problem Solving"
+            "understanding_other_department": "Understanding & Appreciating the Other Department",
+            "unified_resident_experience": "Unified Resident Experience Creation",
+            "communication_across_departments": "Effective Communication Across Departments",
+            "stakeholder_relationship_building": "Stakeholder Relationship Building"
         }
     },
     "strategic_thinking": {
