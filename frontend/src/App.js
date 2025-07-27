@@ -636,509 +636,361 @@ const App = () => {
       },
       financial_management: {
         name: "Financial Management & Business Acumen",
-        description: "Building Department Leaders Who Understand Business Impact - Core Philosophy: Department Leaders Who Understand Numbers Make Better Decisions", 
+        description: "Every Decision Has a Dollar Impact - Make Them Count",
+        philosophy: "The Navigator Financial Management development transforms department supervisors into business-minded leaders who understand the financial impact of their daily decisions. This isn't about becoming an accountant - it's about thinking like an owner while leading your team.",
+        time_commitment: "~12 minutes per week + natural work integration",
+        duration: "12-15 months (competency-based progression)",
+        focus: "Financial literacy through real department decisions and daily operations",
         overall_progress: 0,
         completion_percentage: 0,
         completed_tasks: 0,
-        total_tasks: 85,
+        total_tasks: 16,
         competency_area: "financial_management",
+        curiosity_ignition: {
+          title: "Financial Curiosity Assessment",
+          description: "Before diving in, spark curiosity about the money side of your work",
+          time_required: "5 minutes of thinking",
+          reflection_prompts: [
+            "What's one decision I made this week that probably had a financial impact I didn't consider?",
+            "If I owned this property, what would keep me up at night financially?",
+            "How does my department's work show up in dollars and cents?",
+            "What financial questions do I wish I knew how to answer?"
+          ],
+          setup_requirement: "Create a simple place to capture financial observations, questions, and 'connection moments' throughout the program."
+        },
         sub_competencies: {
-          departmental_financial_responsibility: {
-            name: "Departmental Financial Responsibility & P&L Understanding",
-            description: "Learn to read property P&L statements and understand your department's financial impact",
+          property_pl_understanding: {
+            name: "Property P&L Understanding",
+            description: "How does my department's daily work show up on the property's financial statement?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 21,
+            total_tasks: 4,
+            core_learning_question: "How does my department's daily work show up on the property's financial statement?",
             foundation_courses: [
               {
-                id: "fm-fc-01",
+                id: "fm-new-fc-01",
                 title: "Property Management Financials",
                 duration: "1 hour 15 minutes",
                 platform: "PerformanceHQ",
-                description: "Core financial concepts for property management"
-              },
-              {
-                id: "fm-fc-02",
-                title: "CM Weekly Meeting - Accounting with Mike Mullins",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Real-world accounting application"
-              },
-              {
-                id: "fm-fc-03",
-                title: "CM Weekly Meeting - Accounting with Steph & Mike",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Advanced accounting concepts"
+                description: "Where the money comes from and goes"
               }
             ],
-            signature_activity: {
-              title: "Department Financial Impact Mastery",
-              icon: "🔢",
-              description: "Three-month journey to master P&L reading and understand your department's financial impact",
-              phases: [
-                {
-                  phase: 1,
-                  title: "P&L Reading & Department Connection",
-                  duration: "Month 1",
-                  activities: [
-                    "Learn to read property P&L statements and identify your department's impact on each line item",
-                    "CM Shadowing Focus: Observe CM reviewing monthly P&L and asking questions about line items (1 hour monthly)",
-                    "Practice P&L analysis with department focus for 3 consecutive months"
-                  ],
-                  deliverables: [
-                    "P&L Reading Practice (annotated P&L showing department's impact on each relevant line)",
-                    "Department Impact Analysis (how leasing/maintenance decisions show up financially)",
-                    "Monthly P&L Review Notes (3 months of observations and questions)"
-                  ],
-                  journal_prompt: "Which P&L line items do I directly influence through my daily decisions? How can I better understand the financial impact of my department's work?",
-                  custom_materials: [
-                    "Navigator's P&L Reading Guide - How to read and interpret property P&L statements with department focus",
-                    "Department Impact Mapping - Which P&L lines your department directly affects",
-                    "Student Housing P&L Basics - Key differences in student housing financial statements"
-                  ]
-                },
-                {
-                  phase: 2,
-                  title: "Revenue vs. Expense Understanding",
-                  duration: "Month 2",
-                  activities: [
-                    "Develop clear understanding of how your department drives revenue and manages expenses",
-                    "CM Shadowing Focus: Participate in monthly revenue/expense review focusing on your department",
-                    "Analyze 3 months of department revenue and expense patterns"
-                  ],
-                  deliverables: [
-                    "Revenue Impact Analysis (how your department contributes to property revenue)",
-                    "Department Expense Breakdown (categorizing and understanding all department expenses)",
-                    "Cost-Per-Unit Calculations (understanding department costs on per-unit basis)"
-                  ],
-                  journal_prompt: "How does my department generate or protect revenue? What expenses do I have control over, and how can I manage them more effectively?",
-                  custom_materials: [
-                    "Revenue Drivers by Department - How leasing drives revenue, how maintenance protects revenue",
-                    "Expense Category Management - Understanding controllable vs. uncontrollable expenses",
-                    "Cost Per Unit Thinking - Breaking down department costs on a per-unit basis"
-                  ]
-                },
-                {
-                  phase: 3,
-                  title: "Financial Trend Awareness",
-                  duration: "Month 3",
-                  activities: [
-                    "Learn to identify financial patterns that affect your department and property",
-                    "Peer Learning: Compare financial patterns with Navigator from different property type",
-                    "Develop predictive awareness of seasonal and cyclical financial changes"
-                  ],
-                  deliverables: [
-                    "Seasonal Trend Analysis (identifying patterns in your department's financial performance)",
-                    "Variance Explanation Practice (explaining why department numbers were different than expected)",
-                    "Financial Improvement Opportunities (realistic ways to improve department financial performance)"
-                  ],
-                  journal_prompt: "What financial patterns do I see in my department? How can I anticipate and prepare for predictable financial changes?",
-                  custom_materials: [
-                    "Seasonal Financial Patterns in Student Housing - Understanding predictable financial cycles",
-                    "Financial Red Flags for Department Leaders - Early warning signs to watch for",
-                    "Month-to-Month Variance Analysis - Understanding why numbers change and what to do"
-                  ]
-                }
-              ]
-            }
+            monthly_activities: [
+              {
+                month: 1,
+                title: "P&L Detective Work",
+                in_the_flow_activity: "During monthly property meetings, identify which P&L line items your department directly affects",
+                document: "P&L Impact Map (simple one-page visual showing your department's financial connections)",
+                integrations: ["Leadership Integration: Discuss financial impact with team during regular meetings"],
+                reflection: "Which of my daily decisions have bigger financial consequences than I realized?"
+              },
+              {
+                month: 2,
+                title: "Revenue vs. Expense Awareness",
+                in_the_flow_activity: "Track one department decision weekly and estimate its financial impact",
+                document: "Financial Impact Log (weekly notes on decisions and estimated dollar effects)",
+                integrations: ["Cross-Functional Integration: Compare financial impacts with opposite department Navigator"],
+                journal_prompt: "What department decisions feel small but might have big financial ripple effects?"
+              },
+              {
+                month: 3,
+                title: "Financial Storytelling",
+                in_the_flow_activity: "Explain your department's financial contribution to your team in simple terms",
+                document: "Department Financial Story (one-page explanation your team can understand)",
+                integrations: ["Strategic Integration: Connect department financials to overall property goals"],
+                curiosity_question: "How can I help my team understand that we're not just doing tasks - we're driving financial success?"
+              }
+            ],
+            competency_gate: "Accurately identify 5+ P&L line items your department affects + Explain department's financial role to team",
+            dive_deeper_resources: [
+              {
+                title: "CM Weekly Meeting - Accounting with Mike Mullins",
+                type: "Course",
+                description: "Real-world accounting application",
+                url: "#"
+              },
+              {
+                title: "P&L Reading Guide for Department Leaders",
+                type: "Custom Content",
+                description: "Simple guide to understanding property financials",
+                url: "#"
+              },
+              {
+                title: "Property Management P&L Basics",
+                type: "YouTube Video",
+                description: "Visual breakdown of property financial statements (15 minutes)",
+                url: "https://youtube.com/search?q=property+management+P%26L+basics"
+              }
+            ]
           },
           departmental_budget_management: {
-            name: "Departmental Budget Creation & Management",
-            description: "Master the creation and ongoing management of department budgets",
+            name: "Departmental Budget Management", 
+            description: "How do I create a budget that challenges us to improve while being realistic about what we can achieve?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 17,
+            total_tasks: 4,
+            core_learning_question: "How do I create a budget that challenges us to improve while being realistic about what we can achieve?",
             foundation_courses: [
               {
-                id: "fm-fc-04",
-                title: "Performance Management",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Using metrics to drive performance"
-              },
-              {
-                id: "fm-fc-05",
-                title: "Creating and Delivering Business Presentations",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Presenting financial information effectively"
+                id: "fm-new-fc-02",
+                title: "Department Budget Basics for Supervisors",
+                duration: "45 minutes",
+                platform: "Custom Content",
+                description: "How to create and manage department budgets"
               }
             ],
-            signature_activity: {
-              title: "Department Budget Mastery",
-              icon: "💰",
-              description: "Three-month intensive on creating, tracking, and communicating department budgets",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Budget Basics & Department Planning",
-                  duration: "Month 1",
-                  activities: [
-                    "Learn to create realistic departmental budgets based on historical data and operational needs",
-                    "CM Shadowing Focus: Participate in department budget planning discussions with CM",
-                    "Complete comprehensive historical analysis and budget creation process"
-                  ],
-                  deliverables: [
-                    "Department Budget Creation Process (your methodology for building budgets)",
-                    "Historical Analysis Worksheet (3 years of department performance with trends)",
-                    "Budget Proposal (next year's department budget with line-by-line justifications)"
-                  ],
-                  journal_prompt: "What drives the costs in my department? How can I create a budget that's both realistic and helps us improve performance?",
-                  custom_materials: [
-                    "Department Budget Creation Guide - Step-by-step process for building department budgets",
-                    "Historical Data Analysis for Budgeting - Using past performance to predict future needs",
-                    "Budget Justification Templates - How to explain and defend budget requests"
-                  ]
-                },
-                {
-                  phase: 2,
-                  title: "Monthly Budget Tracking & Management",
-                  duration: "Month 2",
-                  activities: [
-                    "Develop systems for monitoring department budget performance and taking corrective action",
-                    "CM Shadowing Focus: Observe monthly budget review meetings and variance discussions",
-                    "Implement and test monthly budget tracking and variance analysis systems"
-                  ],
-                  deliverables: [
-                    "Monthly Budget Tracking System (how you monitor and report department spending)",
-                    "Budget Variance Analysis (3 months of explaining why actual differed from budget)",
-                    "Cost Control Implementation (specific actions taken to manage department expenses)"
-                  ],
-                  journal_prompt: "How do I stay on top of my department's budget without micromanaging every expense? What cost control measures actually work in day-to-day operations?",
-                  custom_materials: [
-                    "Monthly Budget Tracking Templates - Simple tools for monitoring department spending",
-                    "Budget Variance Management - When to worry about budget differences and what to do",
-                    "Cost Control Strategies by Department - Practical ways to manage expenses without hurting operations"
-                  ]
-                },
-                {
-                  phase: 3,
-                  title: "Budget Communication & Team Involvement",
-                  duration: "Month 3",
-                  activities: [
-                    "Learn to communicate budget expectations to your team and involve them in budget management",
-                    "Team Implementation: Lead team meeting about department budget and cost consciousness",
-                    "Develop team engagement strategies for financial performance improvement"
-                  ],
-                  deliverables: [
-                    "Team Budget Communication Plan (how you share budget information and expectations)",
-                    "Team Financial Goals (budget-related goals for department team members)",
-                    "Budget Success Stories (examples of team members contributing to better financial performance)"
-                  ],
-                  journal_prompt: "How can I get my team excited about managing costs and improving financial performance? What budget information helps them do their jobs better?",
-                  custom_materials: [
-                    "Budget Communication for Teams - How to explain budget constraints and goals to your team",
-                    "Team Involvement in Cost Management - Getting your team to care about financial performance",
-                    "Department Financial Goals Setting - Creating budget-related goals that motivate rather than restrict"
-                  ]
-                }
-              ]
-            }
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Budget Reality Check",
+                in_the_flow_activity: "Review your current department budget line by line with your CM",
+                document: "Budget Understanding Worksheet (what each line item means and how you influence it)",
+                integrations: ["Operational Integration: Connect budget categories to daily operational decisions"],
+                reflection: "What budget line items surprise me? Where do I have more control than I thought?"
+              },
+              {
+                month: 2,
+                title: "Budget Creation Practice",
+                in_the_flow_activity: "Create next month's department budget forecast based on current trends",
+                document: "Budget Forecast with Rationale (simple forecast with explanation of assumptions)", 
+                integrations: ["Financial Integration: Compare forecast accuracy to actual results"],
+                journal_prompt: "What factors make budgeting hard? How can I get better at predicting our financial needs?"
+              },
+              {
+                month: 3,
+                title: "Budget Communication & Team Involvement",
+                in_the_flow_activity: "Share budget goals with your team and get their input on cost-saving ideas",
+                document: "Team Budget Engagement Plan (how you involve team in budget awareness)",
+                integrations: ["Leadership Integration: Use budget discussions to teach team about business impact"],
+                curiosity_question: "How can budget awareness help my team make better daily decisions?"
+              }
+            ],
+            competency_gate: "Create department budget forecast within 10% accuracy + Team demonstrates budget awareness",
+            dive_deeper_resources: [
+              {
+                title: "Creating and Delivering Business Presentations",
+                type: "Course",
+                description: "Presenting budget information",
+                url: "#"
+              },
+              {
+                title: "Performance Management",
+                type: "Course", 
+                description: "Using metrics to drive performance",
+                url: "#"
+              },
+              {
+                title: "Budgeting 101 for Managers",
+                type: "YouTube Video",
+                description: "Basic budget management principles (12 minutes)",
+                url: "https://youtube.com/search?q=budgeting+101+managers"
+              }
+            ]
           },
           cost_conscious_decision_making: {
-            name: "Cost-Conscious Decision Making & Basic ROI Thinking",
-            description: "Develop skills in evaluating financial impact of decisions and basic ROI analysis",
+            name: "Cost-Conscious Decision Making",
+            description: "What's the real cost of this decision, including everything I might not see immediately?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes", 
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 17,
+            total_tasks: 4,
+            core_learning_question: "What's the real cost of this decision, including everything I might not see immediately?",
             foundation_courses: [
               {
-                id: "fm-fc-06",
+                id: "fm-new-fc-03",
                 title: "Business Ethics",
                 duration: "1 hour",
                 platform: "PerformanceHQ",
-                description: "Ethical decision-making in business contexts"
-              },
-              {
-                id: "fm-fc-07",
-                title: "Spark: Resident Retention - Turnover Trouble - The High Cost of Vacancy",
-                duration: "5 minutes",
-                platform: "PerformanceHQ",
-                description: "Understanding true costs of vacancy and turnover"
+                description: "Making decisions that balance multiple interests"
               }
             ],
-            signature_activity: {
-              title: "Smart Financial Decision Making",
-              icon: "📊",
-              description: "Three-month development of cost-benefit analysis and ROI thinking skills",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Cost-Benefit Analysis for Daily Decisions",
-                  duration: "Month 1",
-                  activities: [
-                    "Learn to evaluate the financial impact of routine department decisions",
-                    "CM Shadowing Focus: Observe CM making operational decisions and considering financial implications",
-                    "Practice cost-benefit analysis on 5 recent department decisions"
-                  ],
-                  deliverables: [
-                    "Decision-Making Framework (your process for considering financial impact in daily decisions)",
-                    "Cost-Benefit Analysis Examples (5 recent department decisions with financial analysis)",
-                    "ROI Calculation Practice (3 scenarios with complete financial analysis)"
-                  ],
-                  journal_prompt: "What's the real cost of the decisions I make daily? How can I get better at seeing the full financial picture before deciding?",
-                  custom_materials: [
-                    "Department Decision Cost-Benefit Guide - Simple framework for evaluating daily decisions financially",
-                    "Hidden Costs Checklist - Finding all the costs associated with department decisions",
-                    "ROI Templates for Department Leaders - Basic ROI calculations for common situations"
-                  ]
-                },
-                {
-                  phase: 2,
-                  title: "Department Investment Decisions",
-                  duration: "Month 2",
-                  activities: [
-                    "Develop skills in evaluating department-level investments and improvements",
-                    "Peer Collaboration: Work with opposite department Navigator on joint investment analysis",
-                    "Complete investment analysis for 2-3 potential department improvements"
-                  ],
-                  deliverables: [
-                    "Investment Analysis Examples (2-3 department investments with complete financial analysis)",
-                    "Quality vs. Cost Evaluations (decisions where you balanced financial and operational needs)",
-                    "Payback Period Calculations (showing when investments will pay for themselves)"
-                  ],
-                  journal_prompt: "How do I balance immediate costs with long-term benefits? What investments in my department would really pay off?",
-                  custom_materials: [
-                    "Department Investment Analysis - How to evaluate equipment, technology, or process investments",
-                    "Payback Period Calculations - Simple method for determining if investments make sense",
-                    "Quality vs. Cost Decision Framework - Balancing financial and operational considerations"
-                  ]
-                },
-                {
-                  phase: 3,
-                  title: "Efficiency and Process Improvement ROI",
-                  duration: "Month 3",
-                  activities: [
-                    "Identify and quantify the financial benefits of department efficiency improvements",
-                    "Cross-Department Project: Identify efficiency improvement that benefits both leasing and maintenance",
-                    "Implement and measure ROI of process improvements"
-                  ],
-                  deliverables: [
-                    "Process Efficiency Analysis (identifying improvement opportunities with financial impact)",
-                    "Efficiency Improvement Implementation (changes made with before/after financial comparison)",
-                    "Time-Savings ROI Calculations (showing financial value of process improvements)"
-                  ],
-                  journal_prompt: "What process improvements could save time AND money? How do I implement changes that actually stick and provide lasting financial benefits?",
-                  custom_materials: [
-                    "Efficiency Improvement Financial Analysis - How to calculate the dollar value of time and process savings",
-                    "Department Process Cost Analysis - Understanding the true cost of current processes",
-                    "Improvement Implementation Planning - Making changes that actually improve financial performance"
-                  ]
-                }
-              ]
-            }
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Hidden Costs Detective",
+                in_the_flow_activity: "For each major department decision, identify all costs (obvious and hidden)",
+                document: "Hidden Costs Discovery Log (weekly examples of costs you found beyond the obvious)",
+                integrations: ["Cross-Functional Integration: Discuss hidden costs with maintenance/leasing counterpart"],
+                reflection: "What costs do I consistently underestimate? What costs do I not think about at all?"
+              },
+              {
+                month: 2,
+                title: "ROI Decision Framework",
+                in_the_flow_activity: "Use simple cost-benefit thinking for one department decision weekly",
+                document: "ROI Decision Examples (real decisions with simple cost-benefit analysis)",
+                integrations: ["Strategic Integration: Connect decisions to long-term property goals"],
+                journal_prompt: "What decisions seem expensive upfront but might save money long-term? What cheap decisions might be costly later?"
+              },
+              {
+                month: 3,
+                title: "Team Cost Consciousness",
+                in_the_flow_activity: "Teach your team to think about costs when making routine decisions",
+                document: "Cost-Conscious Culture Examples (how team members started considering costs)",
+                integrations: ["Operational Integration: Build cost awareness into daily operational procedures"],
+                curiosity_question: "How can cost-conscious thinking become as natural as safety awareness for my team?"
+              }
+            ],
+            competency_gate: "Document 3 decisions with improved financial outcomes + Team demonstrates cost-conscious behavior",
+            dive_deeper_resources: [
+              {
+                title: "Spark: Resident Retention - Turnover Trouble - The High Cost of Vacancy",
+                type: "Course",
+                description: "Understanding true costs (5 minutes)",
+                url: "#"
+              },
+              {
+                title: "ROI Thinking for Department Leaders",
+                type: "Custom Content",
+                description: "Simple cost-benefit analysis for daily decisions",
+                url: "#"
+              },
+              {
+                title: "Cost-Benefit Analysis Simplified",
+                type: "YouTube Video", 
+                description: "Quick framework for decision making (8 minutes)",
+                url: "https://youtube.com/search?q=cost+benefit+analysis+simplified"
+              }
+            ]
           },
-          financial_communication: {
-            name: "Financial Communication & Team Education",
-            description: "Develop ability to communicate financial concepts to teams and leadership",
+          financial_communication_business_understanding: {
+            name: "Financial Communication & Business Understanding",
+            description: "How do I explain financial concepts so clearly that anyone can understand and act on them?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 17,
+            total_tasks: 4,
+            core_learning_question: "How do I explain financial concepts so clearly that anyone can understand and act on them?",
             foundation_courses: [
               {
-                id: "fm-fc-08",
+                id: "fm-new-fc-04",
                 title: "Creating and Delivering Business Presentations",
                 duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Presenting data effectively"
+                platform: "PerformanceHQ", 
+                description: "Making numbers tell a story"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Financial Translation Skills",
+                in_the_flow_activity: "Practice explaining financial concepts to team members in simple terms",
+                document: "Financial Translation Examples (complex concepts explained simply)",
+                integrations: ["Leadership Integration: Use financial explanations to motivate and educate team"],
+                reflection: "What financial jargon do I use that my team doesn't understand? How can I explain things more clearly?"
               },
               {
-                id: "fm-fc-09",
+                month: 2,
+                title: "Business Impact Reporting",
+                in_the_flow_activity: "Create simple monthly report on your department's business impact for your CM",
+                document: "Department Business Impact Reports (simple, visual reports showing value created)",
+                integrations: ["Cross-Functional Integration: Compare business impact with opposite department"],
+                journal_prompt: "What business value does my department create beyond just completing tasks?"
+              },
+              {
+                month: 3,
+                title: "Financial Leadership & Teaching",
+                in_the_flow_activity: "Help team members understand how their individual work contributes to financial success",
+                document: "Financial Education Success Stories (team members understanding financial connections)",
+                integrations: ["Strategic Integration: Connect individual contributions to property-wide financial goals"],
+                curiosity_question: "How can financial understanding make my team feel more valued and important?"
+              }
+            ],
+            competency_gate: "Successfully explain department financials to team + Create meaningful business impact report",
+            dive_deeper_resources: [
+              {
                 title: "Business Writing: Grammar Works",
-                duration: "2 hours",
-                platform: "PerformanceHQ",
-                description: "Professional communication skills"
-              }
-            ],
-            signature_activity: {
-              title: "Financial Communication Skills",
-              icon: "📈",
-              description: "Three-month development of financial communication and education abilities",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Explaining Financial Information to Your Team",
-                  duration: "Month 1",
-                  activities: [
-                    "Develop ability to communicate financial concepts and department performance to team members",
-                    "CM Shadowing Focus: Observe how CM communicates financial information in team settings",
-                    "Practice explaining financial concepts in team meetings"
-                  ],
-                  deliverables: [
-                    "Team Financial Communication Examples (how you explain budget and financial performance)",
-                    "Department Performance Reports (simple financial updates you share with your team)",
-                    "Financial Goal Documentation (budget-related goals set with team members)"
-                  ],
-                  journal_prompt: "How can I help my team understand how their work affects the property's financial success? What financial information helps them do their jobs better?",
-                  custom_materials: [
-                    "Financial Communication for Non-Financial People - How to explain numbers without overwhelming people",
-                    "Department Performance Reporting - Creating simple, understandable financial updates for your team",
-                    "Financial Goal Setting with Teams - Making budget goals meaningful and motivating"
-                  ]
-                },
-                {
-                  phase: 2,
-                  title: "Department Financial Reporting to CM",
-                  duration: "Month 2",
-                  activities: [
-                    "Learn to create clear, useful financial reports and updates for your Community Manager",
-                    "Presentation Practice: Present monthly department financial update to CM",
-                    "Develop systematic approach to financial reporting and variance explanation"
-                  ],
-                  deliverables: [
-                    "Monthly Financial Reports (regular updates you provide to CM about department performance)",
-                    "Variance Explanations (examples of explaining budget differences with recommendations)",
-                    "Financial Recommendations (suggestions you've made to CM based on financial analysis)"
-                  ],
-                  journal_prompt: "What financial information does my CM need from me? How can I present financial updates that are helpful rather than just informational?",
-                  custom_materials: [
-                    "Department Financial Reporting Templates - Standard formats for updating CM on department financial performance",
-                    "Variance Explanation Guidelines - How to explain why actual performance differed from budget",
-                    "Financial Recommendation Framework - How to present financially-based suggestions to CM"
-                  ]
-                },
-                {
-                  phase: 3,
-                  title: "Cross-Department Financial Collaboration",
-                  duration: "Month 3",
-                  activities: [
-                    "Develop skills in discussing financial impact and decisions with other departments",
-                    "Collaborative Project: Work with opposite department on shared financial goal or challenge",
-                    "Practice cross-department financial communication and conflict resolution"
-                  ],
-                  deliverables: [
-                    "Cross-Department Financial Discussions (examples of working through financial decisions with other departments)",
-                    "Joint Planning Examples (collaborative financial planning with leasing/maintenance counterpart)",
-                    "Resource Allocation Decisions (how you've worked through competing financial priorities)"
-                  ],
-                  journal_prompt: "How can leasing and maintenance work together to improve property financial performance? What financial conversations do I need to have with other departments?",
-                  custom_materials: [
-                    "Cross-Department Financial Communication - How to discuss financial implications with leasing/maintenance counterparts",
-                    "Joint Financial Planning - Working together on decisions that affect both departments financially",
-                    "Financial Conflict Resolution - Handling disagreements about resources and spending"
-                  ]
-                }
-              ]
-            }
-          },
-          operational_efficiency: {
-            name: "Operational Efficiency & Department Cost Control",
-            description: "Master cost control and waste reduction while maintaining operational quality",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 13,
-            foundation_courses: [
-              {
-                id: "fm-fc-10",
-                title: "Business Etiquette",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Professional business interactions"
+                type: "Course",
+                description: "Professional communication (2 hours)",
+                url: "#"
               },
               {
-                id: "fm-fc-11",
-                title: "Express: Customer Service - Responding to Residents Facing Financial Hardship",
-                duration: "5 minutes",
-                platform: "PerformanceHQ",
-                description: "Balancing business and resident needs"
+                title: "Business Etiquette",
+                type: "Course",
+                description: "Professional business interactions (1 hour)",
+                url: "#"
+              },
+              {
+                title: "How to Explain Financial Information Simply",
+                type: "YouTube Video",
+                description: "Making complex financial concepts accessible (10 minutes)",
+                url: "https://youtube.com/search?q=explain+financial+information+simply"
               }
-            ],
-            signature_activity: {
-              title: "Department Financial Optimization",
-              icon: "🎯",
-              description: "Three-month intensive on cost control, efficiency improvement, and preventive financial management",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Cost Control & Waste Reduction",
-                  duration: "Month 1",
-                  activities: [
-                    "Identify and eliminate waste in department operations while maintaining quality",
-                    "CM Shadowing Focus: Observe CM making cost control decisions and balancing priorities",
-                    "Conduct comprehensive department cost analysis and implement waste reduction measures"
-                  ],
-                  deliverables: [
-                    "Department Cost Analysis (comprehensive review of all department expenses)",
-                    "Waste Reduction Implementation (specific changes made to reduce unnecessary costs)",
-                    "Quality Maintenance Plan (how you maintain standards while controlling costs)"
-                  ],
-                  journal_prompt: "Where is my department wasting money without adding value? How can I control costs without sacrificing the quality of our work?",
-                  custom_materials: [
-                    "Department Cost Control Strategies - Practical ways to manage expenses without hurting operations",
-                    "Waste Identification and Elimination - Finding and fixing financial waste in daily operations",
-                    "Quality vs. Cost Balance - Maintaining service standards while controlling costs"
-                  ]
-                },
-                {
-                  phase: 2,
-                  title: "Resource Optimization & Efficiency",
-                  duration: "Month 2",
-                  activities: [
-                    "Improve department efficiency to get better results with the same or fewer resources",
-                    "Team Implementation: Lead department efficiency improvement project with measurable results",
-                    "Implement cross-training initiatives and measure financial benefits"
-                  ],
-                  deliverables: [
-                    "Resource Optimization Plan (how you're getting more from existing department resources)",
-                    "Efficiency Improvement Results (measurable improvements in department productivity)",
-                    "Cross-Training Cost-Benefit Analysis (financial benefits of having cross-trained team members)"
-                  ],
-                  journal_prompt: "How can my department accomplish more with the same resources? What efficiency improvements would have the biggest financial impact?",
-                  custom_materials: [
-                    "Department Resource Optimization - Getting more from existing resources (people, equipment, supplies)",
-                    "Efficiency Measurement and Improvement - Tracking and improving department productivity",
-                    "Cross-Training Financial Benefits - How cross-training can improve financial performance"
-                  ]
-                },
-                {
-                  phase: 3,
-                  title: "Preventive Financial Management",
-                  duration: "Month 3",
-                  activities: [
-                    "Develop proactive approaches to prevent costly problems and maintain financial performance",
-                    "Implementation: Implement preventive measures that save money over time",
-                    "Create comprehensive emergency financial procedures for unexpected situations"
-                  ],
-                  deliverables: [
-                    "Preventive Management Plan (proactive steps to prevent costly department problems)",
-                    "Financial Risk Assessment (potential financial risks in your department and prevention strategies)",
-                    "Emergency Financial Procedures (how your department manages costs during unexpected situations)"
-                  ],
-                  journal_prompt: "What proactive steps can I take to prevent expensive problems in my department? How do I balance prevention costs with potential savings?",
-                  custom_materials: [
-                    "Preventive Cost Management - Preventing expensive problems through proactive management",
-                    "Financial Risk Identification - Spotting potential financial problems before they become expensive",
-                    "Department Emergency Financial Planning - Managing department finances during unexpected situations"
-                  ]
-                }
-              ]
-            }
+            ]
           }
         },
+        integration_activities: {
+          weekly_cm_financial_shadowing: {
+            title: "Weekly CM Financial Shadowing",
+            time: "15 minutes weekly - rotated focus",
+            schedule: [
+              { months: "1-3", focus: "P&L review meetings and financial discussions" },
+              { months: "4-6", focus: "Budget planning and variance analysis" },
+              { months: "7-9", focus: "Cost control decisions and ROI discussions" },
+              { months: "10-12", focus: "Financial reporting and strategic financial thinking" }
+            ]
+          },
+          cross_department_financial_exchange: {
+            title: "Cross-Department Financial Exchange",
+            time: "Monthly - 20 minutes",
+            activities: [
+              "Share financial insights and challenges with opposite department Navigator",
+              "Compare department financial impacts and opportunities",
+              "Practice financial communication across departments"
+            ]
+          },
+          financial_curiosity_journal: {
+            title: "Financial Curiosity Journal",
+            time: "5 minutes weekly",
+            activities: [
+              "Document financial observations, questions, and insights",
+              "Track 'money moments' when financial understanding clicks",
+              "Reflect on business thinking growth and financial confidence"
+            ]
+          }
+        },
+        culminating_project: {
+          title: "Department Financial Optimization Initiative",
+          duration: "Final 2-3 months of program",
+          challenge: "Identify and implement one financial improvement that benefits both department performance and property profitability",
+          options: [
+            "Cost Reduction Project: Find ways to reduce department costs without sacrificing quality",
+            "Revenue Enhancement Initiative: Improve department practices that drive property revenue", 
+            "Efficiency Investment Analysis: Propose investment that improves long-term financial performance"
+          ],
+          deliverables: [
+            "Financial analysis of current state and opportunity (1 page)",
+            "Implementation plan with projected financial impact (1 page)",
+            "Results documentation with actual financial outcomes (1 page)"
+          ],
+          presentation: "15-minute presentation to CM and Regional Manager on financial thinking and business impact"
+        },
         validation_criteria: {
-          mastery_gates: [
-            "P&L Reading Competency: Demonstrate ability to read property P&L and explain department's impact on key line items",
-            "Department Budget Management: Successfully create and manage department budget within 5% of target for 6+ months",
-            "ROI Decision Making: Complete 3 different department-level ROI analyses with sound reasoning and implementation",
-            "Cost Control Evidence: Document measurable cost savings or efficiency improvements in department operations"
+          mastery_evidence_portfolio: [
+            "P&L Understanding: Clear connection between daily work and property financials",
+            "Budget Management: Successful department budget creation and management",
+            "Cost-Conscious Decisions: Evidence of improved financial decision-making",
+            "Financial Communication: Ability to explain financial concepts clearly to others"
           ],
           portfolio_defense: {
-            title: "Portfolio Defense - Financial Focus",
-            duration: "20-minute presentation to CM and peer panel",
+            duration: "20 minutes",
             components: [
-              "P&L Understanding: Explain how department impacts property P&L and identify improvement opportunities",
-              "Budget Management: Present department budget management approach and results",
-              "Cost-Conscious Decision Making: Present examples of decisions made with financial impact consideration",
-              "Q&A on Financial Scenarios: Handle department-level financial decision-making scenarios"
+              "Financial Journey Story: How financial understanding has changed your leadership",
+              "Business Impact Evidence: Specific examples of financially-smart decisions and outcomes",
+              "Team Financial Development: How you've built financial awareness in your team",
+              "Future Financial Goals: How you'll continue developing business acumen"
             ]
           },
           cm_readiness_indicators: [
-            "Department Financial Responsibility: Proven ability to manage department budget and financial performance",
-            "Cost-Conscious Leadership: Consistently makes decisions considering financial impact",
-            "Financial Communication: Can explain financial concepts to team members and peers",
-            "Operational Efficiency: Implements improvements that enhance both operations and financial performance",
-            "Cross-Department Financial Collaboration: Works effectively with other departments on financial decisions"
+            "Department Financial Responsibility: Proven ability to manage department finances effectively",
+            "Business-Minded Decision Making: Consistently considers financial impact in all decisions",
+            "Financial Communication Skills: Can explain property financials to team and stakeholders",
+            "Strategic Financial Thinking: Understands how department fits into property financial success"
           ]
         }
       },
