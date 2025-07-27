@@ -396,7 +396,7 @@ const App = () => {
               {
                 month: 3,
                 title: "Conflict Resolution Mastery",
-                in_the_flow_activity: "Resolve one team or cross-department conflict using learned techniques",
+                in_the_flow_activity: "Using what you've learned from the coursework, resolve one team or cross-department conflict. Document your successes below.",
                 document: "Conflict Resolution Success Story (detailed case study)",
                 integrations: ["Cross-Functional Integration: Practice conflict resolution with maintenance/leasing counterpart"],
                 curiosity_question: "What if every difficult conversation could actually strengthen our relationship?"
