@@ -468,7 +468,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Strategic Thinking Framework Integration"
+    - "Cross-Functional Collaboration Framework Refinement"
+    - "Cross-Functional Collaboration Framework Backend Sync"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
