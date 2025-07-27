@@ -379,7 +379,7 @@ SAMPLE_TASKS = [
         "description": "Research and analyze your local property management market conditions",
         "task_type": "document_upload",
         "competency_area": "strategic_thinking",
-        "sub_competency": "market_competitive_positioning",
+        "sub_competency": "seeing_patterns_anticipating_trends",
         "order": 1,
         "required": True,
         "estimated_hours": 6.0,
