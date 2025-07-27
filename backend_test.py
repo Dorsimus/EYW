@@ -1274,82 +1274,413 @@ class TaskCompetencyAPITester:
                 print(f"     - {issue}")
             return False, {"regressions": True, "issues": regression_issues}
 
+    def test_cross_functional_collaboration_refined_structure(self):
+        """Test the refined Cross-Functional Collaboration framework structure - CRITICAL TEST"""
+        print("\n🎯 CRITICAL: Cross-Functional Collaboration Refined Framework Verification")
+        
+        success, response = self.run_test(
+            "Get Competency Framework", 
+            "GET", 
+            "competencies", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Check if cross_functional_collaboration competency exists (NEW KEY)
+        if 'cross_functional_collaboration' not in response:
+            print("❌ CRITICAL: cross_functional_collaboration competency area missing from backend")
+            print("   Expected key: 'cross_functional_collaboration' (not 'cross_functional')")
+            return False, {}
+        
+        cross_functional = response['cross_functional_collaboration']
+        expected_sub_competencies = {
+            "understanding_other_department": "Understanding & Appreciating the Other Department",
+            "unified_resident_experience": "Unified Resident Experience Creation",
+            "communication_across_departments": "Effective Communication Across Departments",
+            "stakeholder_relationship_building": "Stakeholder Relationship Building"
+        }
+        
+        print(f"   Cross-Functional Name: {cross_functional.get('name', 'Missing')}")
+        print(f"   Cross-Functional Description: {cross_functional.get('description', 'Missing')}")
+        
+        # Verify sub-competencies structure
+        backend_sub_competencies = cross_functional.get('sub_competencies', {})
+        print(f"   Backend Sub-Competencies Count: {len(backend_sub_competencies)}")
+        print(f"   Expected Sub-Competencies Count: {len(expected_sub_competencies)}")
+        
+        # Check each expected sub-competency
+        all_match = True
+        for key, expected_name in expected_sub_competencies.items():
+            if key in backend_sub_competencies:
+                actual_name = backend_sub_competencies[key]
+                if actual_name == expected_name:
+                    print(f"   ✅ {key}: '{actual_name}' - CORRECT")
+                else:
+                    print(f"   ❌ {key}: Expected '{expected_name}', got '{actual_name}' - MISMATCH")
+                    all_match = False
+            else:
+                print(f"   ❌ {key}: MISSING from backend")
+                all_match = False
+        
+        # Check for unexpected sub-competencies
+        for key in backend_sub_competencies:
+            if key not in expected_sub_competencies:
+                print(f"   ⚠️  {key}: UNEXPECTED sub-competency in backend")
+                all_match = False
+        
+        if all_match:
+            print("   🎯 SUCCESS: Backend Cross-Functional Collaboration framework matches refined frontend requirements!")
+            return True, response
+        else:
+            print("   ❌ CRITICAL FAILURE: Backend-Frontend Cross-Functional Collaboration framework mismatch!")
+            return False, response
+
+    def test_cross_functional_collaboration_user_progress(self):
+        """Test user competency progress calculation with refined Cross-Functional structure"""
+        print("\n📊 Cross-Functional Collaboration User Progress Calculation")
+        
+        if not self.user_id:
+            print("❌ No user ID available for testing")
+            return False, {}
+        
+        success, response = self.run_test(
+            "Get User Competencies", 
+            "GET", 
+            f"users/{self.user_id}/competencies", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Check cross_functional_collaboration competency progress (NEW KEY)
+        if 'cross_functional_collaboration' not in response:
+            print("❌ cross_functional_collaboration competency missing from user progress")
+            print("   Expected key: 'cross_functional_collaboration' (not 'cross_functional')")
+            return False, {}
+        
+        cross_functional_progress = response['cross_functional_collaboration']
+        sub_competencies = cross_functional_progress.get('sub_competencies', {})
+        
+        expected_sub_competencies = {
+            "understanding_other_department",
+            "unified_resident_experience",
+            "communication_across_departments",
+            "stakeholder_relationship_building"
+        }
+        
+        print(f"   Cross-Functional Overall Progress: {cross_functional_progress.get('overall_progress', 0)}%")
+        print(f"   Sub-Competencies Found: {len(sub_competencies)}")
+        
+        progress_calculation_valid = True
+        total_tasks = 0
+        total_completed = 0
+        
+        for sub_comp in expected_sub_competencies:
+            if sub_comp in sub_competencies:
+                sub_data = sub_competencies[sub_comp]
+                completed = sub_data.get('completed_tasks', 0)
+                total = sub_data.get('total_tasks', 0)
+                percentage = sub_data.get('completion_percentage', 0)
+                
+                print(f"   ✅ {sub_comp}: {completed}/{total} tasks ({percentage:.1f}%)")
+                total_tasks += total
+                total_completed += completed
+            else:
+                print(f"   ❌ {sub_comp}: MISSING from user progress")
+                progress_calculation_valid = False
+        
+        print(f"   Total Cross-Functional Tasks: {total_tasks}")
+        print(f"   Total Completed: {total_completed}")
+        
+        if progress_calculation_valid:
+            print("   ✅ Cross-Functional competency progress calculation working correctly")
+        else:
+            print("   ❌ Cross-Functional competency progress calculation has issues")
+        
+        return progress_calculation_valid, response
+
+    def test_cross_functional_collaboration_admin_task_management(self):
+        """Test admin can manage tasks across refined Cross-Functional sub-competency areas"""
+        print("\n🔐 Admin Cross-Functional Collaboration Task Management")
+        
+        if not self.admin_token:
+            print("❌ No admin token available for testing")
+            return False, {}
+        
+        # Test creating tasks for each refined sub-competency
+        expected_sub_competencies = [
+            "understanding_other_department",
+            "unified_resident_experience",
+            "communication_across_departments",
+            "stakeholder_relationship_building"
+        ]
+        
+        created_task_ids = []
+        all_successful = True
+        
+        for i, sub_comp in enumerate(expected_sub_competencies):
+            task_data = {
+                "title": f"Test Cross-Functional Task - {sub_comp.replace('_', ' ').title()}",
+                "description": f"Test task for {sub_comp} sub-competency area",
+                "task_type": "assessment",
+                "competency_area": "cross_functional_collaboration",  # NEW KEY
+                "sub_competency": sub_comp,
+                "order": i + 1,
+                "required": True,
+                "estimated_hours": 2.0,
+                "instructions": f"Complete this test task for {sub_comp} validation"
+            }
+            
+            success, response = self.run_test(
+                f"Admin Create Cross-Functional Task - {sub_comp}", 
+                "POST", 
+                "admin/tasks", 
+                200, 
+                data=task_data, 
+                auth_required=True
+            )
+            
+            if success and 'id' in response:
+                created_task_ids.append(response['id'])
+                print(f"   ✅ Created task for {sub_comp}: {response['id']}")
+            else:
+                print(f"   ❌ Failed to create task for {sub_comp}")
+                all_successful = False
+        
+        # Test updating one of the created tasks
+        if created_task_ids:
+            test_task_id = created_task_ids[0]
+            update_data = {
+                "title": "Updated Cross-Functional Test Task",
+                "estimated_hours": 3.0
+            }
+            
+            success, response = self.run_test(
+                "Admin Update Cross-Functional Task", 
+                "PUT", 
+                f"admin/tasks/{test_task_id}", 
+                200, 
+                data=update_data, 
+                auth_required=True
+            )
+            
+            if success:
+                print(f"   ✅ Successfully updated cross-functional task")
+            else:
+                print(f"   ❌ Failed to update cross-functional task")
+                all_successful = False
+        
+        # Clean up - deactivate created test tasks
+        for task_id in created_task_ids:
+            self.run_test(
+                f"Admin Delete Test Task", 
+                "DELETE", 
+                f"admin/tasks/{task_id}", 
+                200, 
+                auth_required=True
+            )
+        
+        if all_successful:
+            print("   ✅ Admin can successfully manage Cross-Functional tasks across all refined sub-competencies")
+        else:
+            print("   ❌ Admin task management has issues with Cross-Functional sub-competencies")
+        
+        return all_successful, {"created_tasks": len(created_task_ids)}
+
+    def test_existing_cross_functional_tasks_update(self):
+        """Test that existing cross_functional tasks are updated to use new structure"""
+        print("\n🔍 Existing Cross-Functional Tasks Structure Update Verification")
+        
+        success, response = self.run_test(
+            "Get All Tasks", 
+            "GET", 
+            "tasks", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Filter cross_functional tasks (both old and new keys)
+        old_cross_functional_tasks = [task for task in response if task.get('competency_area') == 'cross_functional']
+        new_cross_functional_tasks = [task for task in response if task.get('competency_area') == 'cross_functional_collaboration']
+        
+        print(f"   Found {len(old_cross_functional_tasks)} tasks with old 'cross_functional' key")
+        print(f"   Found {len(new_cross_functional_tasks)} tasks with new 'cross_functional_collaboration' key")
+        
+        expected_new_sub_competencies = {
+            "understanding_other_department",
+            "unified_resident_experience",
+            "communication_across_departments",
+            "stakeholder_relationship_building"
+        }
+        
+        # Check old tasks for migration status
+        old_tasks_need_update = []
+        for task in old_cross_functional_tasks:
+            sub_comp = task.get('sub_competency')
+            title = task.get('title', 'No title')
+            
+            if sub_comp not in expected_new_sub_competencies:
+                old_tasks_need_update.append({
+                    'id': task.get('id'),
+                    'title': title,
+                    'old_sub_competency': sub_comp
+                })
+                print(f"   ⚠️  Task '{title}' -> {sub_comp} - NEEDS UPDATE TO NEW STRUCTURE")
+        
+        # Check new tasks for correct structure
+        new_tasks_valid = True
+        for task in new_cross_functional_tasks:
+            sub_comp = task.get('sub_competency')
+            title = task.get('title', 'No title')
+            
+            if sub_comp in expected_new_sub_competencies:
+                print(f"   ✅ Task '{title}' -> {sub_comp} - CORRECT NEW STRUCTURE")
+            else:
+                print(f"   ❌ Task '{title}' -> {sub_comp} - INVALID SUB-COMPETENCY")
+                new_tasks_valid = False
+        
+        # Summary
+        if len(old_tasks_need_update) == 0 and new_tasks_valid:
+            print("   ✅ All cross-functional tasks use correct new structure")
+            return True, {"old_tasks_needing_update": 0, "new_tasks_valid": True}
+        else:
+            print(f"   ⚠️  {len(old_tasks_need_update)} old tasks need updating to new structure")
+            if not new_tasks_valid:
+                print("   ❌ Some new tasks have invalid sub-competency references")
+            return False, {"old_tasks_needing_update": len(old_tasks_need_update), "new_tasks_valid": new_tasks_valid}
+
+    def test_cross_functional_collaboration_backend_frontend_alignment(self):
+        """Test that backend structure matches refined frontend Cross-Functional Collaboration framework"""
+        print("\n🔄 Cross-Functional Collaboration Backend-Frontend Alignment Verification")
+        
+        # Get competency framework from backend
+        success, framework = self.run_test(
+            "Get Competency Framework", 
+            "GET", 
+            "competencies", 
+            200
+        )
+        
+        if not success:
+            return False, {}
+        
+        # Get user competencies to test the full data flow
+        if self.user_id:
+            success, user_competencies = self.run_test(
+                "Get User Competencies", 
+                "GET", 
+                f"users/{self.user_id}/competencies", 
+                200
+            )
+        else:
+            user_competencies = {}
+        
+        # Expected refined frontend structure
+        expected_structure = {
+            "name": "Cross-Functional Collaboration",
+            "description": "Breaking Down Silos & Building Unified Property Teams",
+            "sub_competencies": {
+                "understanding_other_department": "Understanding & Appreciating the Other Department",
+                "unified_resident_experience": "Unified Resident Experience Creation",
+                "communication_across_departments": "Effective Communication Across Departments",
+                "stakeholder_relationship_building": "Stakeholder Relationship Building"
+            }
+        }
+        
+        # Verify framework structure (NEW KEY)
+        cross_functional = framework.get('cross_functional_collaboration', {})
+        alignment_issues = []
+        
+        if not cross_functional:
+            alignment_issues.append("Missing 'cross_functional_collaboration' key in backend framework")
+            return False, {"alignment": "critical_failure", "issues": alignment_issues}
+        
+        # Check name
+        if cross_functional.get('name') != expected_structure['name']:
+            alignment_issues.append(f"Name mismatch: expected '{expected_structure['name']}', got '{cross_functional.get('name')}'")
+        
+        # Check description
+        if cross_functional.get('description') != expected_structure['description']:
+            alignment_issues.append(f"Description mismatch: expected '{expected_structure['description']}', got '{cross_functional.get('description')}'")
+        
+        # Check sub-competencies
+        backend_sub_comps = cross_functional.get('sub_competencies', {})
+        expected_sub_comps = expected_structure['sub_competencies']
+        
+        if len(backend_sub_comps) != len(expected_sub_comps):
+            alignment_issues.append(f"Sub-competency count mismatch: expected {len(expected_sub_comps)}, got {len(backend_sub_comps)}")
+        
+        for key, expected_name in expected_sub_comps.items():
+            if key not in backend_sub_comps:
+                alignment_issues.append(f"Missing sub-competency: {key}")
+            elif backend_sub_comps[key] != expected_name:
+                alignment_issues.append(f"Sub-competency name mismatch for {key}: expected '{expected_name}', got '{backend_sub_comps[key]}'")
+        
+        # Check user competency data structure alignment
+        if user_competencies and 'cross_functional_collaboration' in user_competencies:
+            user_cross_functional = user_competencies['cross_functional_collaboration']
+            user_sub_comps = user_cross_functional.get('sub_competencies', {})
+            
+            for key in expected_sub_comps.keys():
+                if key not in user_sub_comps:
+                    alignment_issues.append(f"User competency missing sub-competency: {key}")
+        elif user_competencies:
+            alignment_issues.append("User competencies missing 'cross_functional_collaboration' key")
+        
+        # Report results
+        if not alignment_issues:
+            print("   ✅ PERFECT ALIGNMENT: Backend structure exactly matches refined frontend requirements!")
+            print(f"   - Competency key: ✅ 'cross_functional_collaboration'")
+            print(f"   - Competency name: ✅ '{cross_functional.get('name')}'")
+            print(f"   - Description: ✅ '{cross_functional.get('description')}'")
+            print(f"   - Sub-competencies: ✅ {len(backend_sub_comps)} areas correctly defined")
+            print(f"   - User progress structure: ✅ Aligned")
+            return True, {"alignment": "perfect", "issues": []}
+        else:
+            print("   ❌ ALIGNMENT ISSUES FOUND:")
+            for issue in alignment_issues:
+                print(f"     - {issue}")
+            return False, {"alignment": "issues", "issues": alignment_issues}
+
 def main():
-    print("🚀 Starting COMPREHENSIVE Backend API Tests - FOCUS: Strategic Thinking Framework Integration")
+    print("🚀 Starting CROSS-FUNCTIONAL COLLABORATION FRAMEWORK Backend Testing")
+    print("🎯 FOCUS: Testing refined Cross-Functional Collaboration framework backend implementation")
     print("=" * 80)
     
     tester = TaskCompetencyAPITester()
     
-    # Test sequence following the priority order from review request
+    # Test sequence following the review request priorities
     print("\n📋 BASIC SETUP TESTS:")
     
     # 1. Basic setup tests
     tester.test_root_endpoint()
     
-    # 2. HIGH PRIORITY - User Creation API Testing (Main Issue)
-    print("\n🔥 HIGH PRIORITY - User Creation API Tests (Frontend Hanging Issue):")
-    tester.test_create_user_frontend_format()  # Exact frontend format
-    tester.test_create_user_variations()       # Different payload variations
-    tester.test_create_user()                  # Legacy test
+    # 2. User setup for testing
+    print("\n👤 USER SETUP:")
+    tester.test_create_user_frontend_format()
     tester.test_get_user()
     
-    # 3. CRITICAL - Strategic Thinking Framework Tests
-    print("\n🎯 CRITICAL - Strategic Thinking Framework Tests:")
-    tester.test_strategic_thinking_framework_verification()
-    tester.test_strategic_thinking_task_references()
-    tester.test_strategic_thinking_competency_progress()
+    # 3. Admin setup for testing
+    print("\n🔐 ADMIN SETUP:")
+    tester.test_create_admin_user()
+    tester.test_admin_login()
     
-    # 4. HIGH PRIORITY - User Data Loading Endpoints
-    print("\n📊 HIGH PRIORITY - User Data Loading Tests:")
-    tester.test_get_user_competencies()        # GET /api/users/{id}/competencies
-    tester.test_portfolio_operations()         # GET /api/users/{id}/portfolio
+    # 4. CRITICAL - Cross-Functional Collaboration Framework Tests (MAIN FOCUS)
+    print("\n🎯 CRITICAL - Cross-Functional Collaboration Framework Tests:")
+    tester.test_cross_functional_collaboration_refined_structure()
+    tester.test_cross_functional_collaboration_user_progress()
+    tester.test_cross_functional_collaboration_admin_task_management()
+    tester.test_existing_cross_functional_tasks_update()
+    tester.test_cross_functional_collaboration_backend_frontend_alignment()
     
-    # 5. MEDIUM PRIORITY - Admin Seed Tasks
-    print("\n🌱 MEDIUM PRIORITY - Admin Seed Tasks:")
-    tester.test_create_admin_user()  # Create admin if doesn't exist
-    tester.test_admin_login()        # POST /api/admin/login
-    tester.test_seed_sample_tasks()  # POST /api/admin/seed-tasks
-    
-    # 6. CRITICAL - Admin Strategic Thinking Task Management
-    print("\n🔐 CRITICAL - Admin Strategic Thinking Task Management:")
-    tester.test_admin_strategic_thinking_task_management()
-    
-    # 7. CRITICAL - Cross-Functional Collaboration Framework Tests (Regression)
-    print("\n🎯 CRITICAL - Cross-Functional Framework Regression Tests:")
-    tester.test_cross_functional_framework_verification()
-    tester.test_cross_functional_task_references()
-    tester.test_cross_functional_competency_progress()
-    tester.test_admin_cross_functional_task_management()
-    
-    # 8. CRITICAL - Other Competency Areas Regression Testing
-    print("\n🔍 CRITICAL - Other Competency Areas Regression Testing:")
+    # 5. Regression testing for other competency areas
+    print("\n🔍 REGRESSION TESTING:")
     tester.test_other_competency_areas_regression()
-    
-    # 9. LOW PRIORITY - Admin API Verification
-    print("\n🔐 LOW PRIORITY - Admin API Verification:")
-    tester.test_admin_stats()        # GET /api/admin/stats
-    tester.test_admin_get_all_tasks()  # GET /api/admin/tasks
-    tester.test_admin_get_all_users()  # GET /api/admin/users
-    tester.test_admin_create_task()    # POST /api/admin/tasks
-    tester.test_admin_update_task()    # PUT /api/admin/tasks/{id}
-    tester.test_admin_delete_task()    # DELETE /api/admin/tasks/{id}
-    
-    # 10. Additional Task Management Tests
-    print("\n📚 Additional Task Management Tests:")
-    tester.test_get_all_tasks()      # GET /api/tasks
-    tester.test_get_user_tasks_for_competency()  # GET /api/users/{id}/tasks/{area}/{sub}
-    tester.test_complete_task()      # POST /api/users/{id}/task-completions
-    
-    # 11. CRITICAL - Backend-Frontend Alignment Verification
-    print("\n🔄 CRITICAL - Backend-Frontend Alignment:")
-    tester.test_strategic_thinking_backend_frontend_alignment()
-    tester.test_backend_frontend_alignment()
-    
-    # 12. Additional API tests
-    print("\n📊 Additional API Tests:")
-    tester.test_get_competency_framework()
-    tester.test_get_tasks_for_competency()
-    tester.test_get_user_task_completions()
     
     # Print final results
     print("\n" + "=" * 80)
@@ -1358,47 +1689,32 @@ def main():
     print(f"   Tests Passed: {tester.tests_passed}")
     print(f"   Success Rate: {(tester.tests_passed/tester.tests_run)*100:.1f}%")
     
-    # Specific analysis for Strategic Thinking framework
-    print(f"\n🎯 STRATEGIC THINKING FRAMEWORK ANALYSIS:")
+    # Specific analysis for Cross-Functional Collaboration framework
+    print(f"\n🎯 CROSS-FUNCTIONAL COLLABORATION FRAMEWORK ANALYSIS:")
     print(f"   This test focused on verifying the backend has been updated to match")
-    print(f"   the frontend integration with 5 specific focus areas:")
-    print(f"   1. strategic_analysis_planning: Property-Level Strategic Analysis & Planning")
-    print(f"   2. data_driven_decisions: Data-Driven Decision Making & Insights")
-    print(f"   3. market_competitive_positioning: Market Awareness & Competitive Positioning")
-    print(f"   4. innovation_continuous_improvement: Innovation & Continuous Improvement Leadership")
-    print(f"   5. vision_goal_achievement: Long-Term Vision & Goal Achievement")
-    
-    # Specific analysis for user creation hanging issue
-    print(f"\n🔍 USER CREATION ANALYSIS:")
-    if tester.user_id:
-        print(f"✅ User creation working - User ID: {tester.user_id}")
-        print(f"   Frontend hanging issue may be related to:")
-        print(f"   - Network/proxy issues between frontend and backend")
-        print(f"   - Frontend timeout settings")
-        print(f"   - React.StrictMode double initialization")
-        print(f"   - CORS preflight request handling")
-    else:
-        print(f"❌ User creation failed - This explains frontend hanging")
-    
-    # Detailed admin test results
-    if tester.admin_token:
-        print(f"🔐 Admin Authentication: ✅ SUCCESS")
-        print(f"   Token obtained and admin APIs tested")
-    else:
-        print(f"🔐 Admin Authentication: ❌ FAILED")
-        print(f"   Admin functionality could not be tested")
+    print(f"   the refined frontend framework with 4 streamlined sub-competencies:")
+    print(f"   1. understanding_other_department: Understanding & Appreciating the Other Department")
+    print(f"   2. unified_resident_experience: Unified Resident Experience Creation")
+    print(f"   3. communication_across_departments: Effective Communication Across Departments")
+    print(f"   4. stakeholder_relationship_building: Stakeholder Relationship Building")
+    print(f"   ")
+    print(f"   Key changes tested:")
+    print(f"   - Competency key changed from 'cross_functional' to 'cross_functional_collaboration'")
+    print(f"   - Sub-competencies reduced from 5 old ones to 4 new streamlined ones")
+    print(f"   - SAMPLE_TASKS updated to use new competency structure")
     
     if tester.tests_passed == tester.tests_run:
-        print("🎉 ALL TESTS PASSED! Backend APIs are working correctly.")
-        print("   Strategic Thinking framework is properly aligned.")
+        print("🎉 ALL TESTS PASSED! Cross-Functional Collaboration framework backend is working correctly.")
+        print("   Backend-frontend alignment achieved successfully.")
         return 0
     else:
         failed_tests = tester.tests_run - tester.tests_passed
         print(f"⚠️  {failed_tests} tests failed. Check the issues above.")
         
-        # Provide specific feedback for admin system
-        if not tester.admin_token:
-            print("🚨 CRITICAL: Admin authentication failed - admin features unavailable")
+        # Provide specific feedback for Cross-Functional framework
+        print("\n🚨 CROSS-FUNCTIONAL COLLABORATION ISSUES:")
+        print("   If tests failed, the backend may not be properly synchronized with the frontend.")
+        print("   Check that NAVIGATOR_COMPETENCIES['cross_functional_collaboration'] exists and matches frontend structure.")
         
         return 1
 
