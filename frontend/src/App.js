@@ -5147,7 +5147,7 @@ const CompetenciesView = ({
                 
                 <div className="grid grid-cols-1 gap-6">
                   {Object.entries(areaData.sub_competencies).map(([subKey, subData]) => (
-                    <div key={subKey} className="sub-competency-card bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div key={subKey} className="sub-competency-card bg-white rounded-lg shadow-sm border border-gray-200" data-subkey={`${areaKey}_${subKey}`}>
                       {/* Sub-competency Header */}
                       <div className="px-6 py-4 border-b border-gray-200">
                         <div className="flex items-start justify-between mb-2">
