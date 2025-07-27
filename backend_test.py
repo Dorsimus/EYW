@@ -508,12 +508,12 @@ class TaskCompetencyAPITester:
             return False, {}
         
         strategic_thinking = response['strategic_thinking']
+        # Updated expected structure for refined framework (4 sub-competencies)
         expected_sub_competencies = {
-            "strategic_analysis_planning": "Property-Level Strategic Analysis & Planning",
-            "data_driven_decisions": "Data-Driven Decision Making & Insights",
-            "market_competitive_positioning": "Market Awareness & Competitive Positioning",
-            "innovation_continuous_improvement": "Innovation & Continuous Improvement Leadership",
-            "vision_goal_achievement": "Long-Term Vision & Goal Achievement"
+            "seeing_patterns_anticipating_trends": "Seeing Patterns & Anticipating Trends",
+            "innovation_continuous_improvement": "Innovation & Continuous Improvement Thinking",
+            "problem_solving_future_focus": "Problem-Solving with Future Focus",
+            "planning_goal_achievement": "Planning & Goal Achievement with Strategic Perspective"
         }
         
         print(f"   Strategic Thinking Name: {strategic_thinking.get('name', 'Missing')}")
@@ -545,7 +545,7 @@ class TaskCompetencyAPITester:
                 all_match = False
         
         if all_match:
-            print("   🎯 SUCCESS: Backend Strategic Thinking framework matches frontend requirements!")
+            print("   🎯 SUCCESS: Backend Strategic Thinking framework matches refined frontend requirements!")
             return True, response
         else:
             print("   ❌ CRITICAL FAILURE: Backend-Frontend Strategic Thinking framework mismatch!")
