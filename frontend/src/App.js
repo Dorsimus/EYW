@@ -1793,86 +1793,441 @@ const App = () => {
       },
       strategic_thinking: {
         name: "Strategic Thinking",
-        description: "Think Like an Owner, Act Like a Leader, Plan Like a Strategist",
-        philosophy: "The Navigator Strategic Thinking development transforms tactical department leaders into strategic thinkers who understand property-wide implications, anticipate challenges and opportunities, and make decisions that position the property for long-term success. This section builds the strategic mindset essential for Community Manager effectiveness.",
+        description: "Think Beyond Today - Lead for Tomorrow",
+        philosophy: "The Navigator Strategic Thinking development transforms department supervisors into future-focused leaders who can see beyond daily tasks to identify opportunities, anticipate challenges, and make decisions that position the property for long-term success. This isn't about becoming a visionary CEO - it's about developing the strategic mindset essential for Community Manager effectiveness.",
+        time_commitment: "~12 minutes per week + natural work integration",
+        duration: "12-15 months (competency-based progression)",
+        focus: "Strategic thinking through real department decisions and property planning",
         overall_progress: 0,
         completion_percentage: 0,
         completed_tasks: 0,
-        total_tasks: 66,
+        total_tasks: 16,
         competency_area: "strategic_thinking",
+        curiosity_ignition: {
+          title: "🔥 Strategic Curiosity Assessment",
+          subtitle: "Before diving in, spark curiosity about thinking strategically",
+          reflection_prompts: [
+            "What's one trend I've noticed at our property that might predict something bigger coming?",
+            "If I could change one thing about how we operate that would still matter in two years, what would it be?",
+            "What decision did a great leader make that seemed small but had big long-term impact?",
+            "How would I run things differently if I knew I'd be here for the next five years?"
+          ],
+          journal_setup: "Create a simple place to capture strategic observations, pattern recognition, and \"thinking ahead\" moments throughout the program."
+        },
         sub_competencies: {
-          strategic_analysis_planning: {
-            name: "Property-Level Strategic Analysis & Planning",
-            description: "Develop comprehensive understanding of property strategy and create effective strategic plans",
+          seeing_patterns_anticipating_trends: {
+            name: "Seeing Patterns & Anticipating Trends",
+            description: "What patterns in our daily work might tell me something important about our future?",
             progress_percentage: 0,
             completed_tasks: 0,
-            total_tasks: 14,
-            foundation_courses: [
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "CM Weekly Meeting - Data Driven Decisions with Martin Knapp",
+              duration: "1 hour",
+              platform: "PerformanceHQ",
+              description: "Using information to see what's coming",
+              available: true
+            },
+            dive_deeper_resources: [
               {
-                id: "st-fc-01",
-                title: "CM Weekly Meeting - Data Driven Decisions with Martin Knapp",
+                title: "Performance Management",
                 duration: "1 hour",
                 platform: "PerformanceHQ",
-                description: "Using data for strategic decisions"
+                description: "Using metrics to identify trends",
+                available: true
               },
               {
-                id: "st-fc-02",
-                title: "CM Weekly Meeting - Extreme Ownership with Kate Reeves",
+                title: "Pattern Recognition for Property Leaders",
+                duration: "30 minutes",
+                platform: "Custom Content",
+                description: "Simple framework for spotting trends in property operations",
+                custom_content_needed: true
+              },
+              {
+                title: "How to Spot Trends Before They're Obvious",
+                duration: "10 minutes",
+                platform: "YouTube",
+                description: "Practical trend identification skills"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Pattern Detective Work",
+                in_flow_activity: "During weekly property meetings, note one pattern or trend you observe in your department's data",
+                document_section: {
+                  title: "Pattern Recognition Log",
+                  description: "Weekly observations of trends in your department",
+                  portfolio_integration: true
+                },
+                operational_integration: "Connect patterns to daily operational decisions",
+                journal_prompt: "What patterns do I see that others might be missing? What do these patterns suggest about what's coming?"
+              },
+              {
+                month: 2,
+                title: "Trend Impact Analysis",
+                in_flow_activity: "Choose one pattern from Month 1 and think through what it might mean for your department's future",
+                document_section: {
+                  title: "Trend Impact Assessment",
+                  description: "Simple analysis of what one trend could mean",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Discuss trend observations with opposite department Navigator",
+                journal_prompt: "If this trend continues, what opportunities or challenges might we face? How should we prepare?"
+              },
+              {
+                month: 3,
+                title: "Proactive Planning",
+                in_flow_activity: "Make one small change in your department based on a trend you've identified",
+                document_section: {
+                  title: "Proactive Action Results",
+                  description: "Change you made based on trend analysis and its outcomes",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Share trend thinking with your team to build strategic awareness",
+                curiosity_question: "How can pattern recognition become a natural part of how I think about our work?"
+              }
+            ],
+            competency_gate: "Identify meaningful trend affecting department + Take proactive action based on trend analysis"
+          },
+          innovation_continuous_improvement: {
+            name: "Innovation & Continuous Improvement Thinking",
+            description: "What could we do differently that would make our work easier, better, or more effective?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Leadership 201",
+              duration: "2 hours 5 minutes",
+              platform: "PerformanceHQ",
+              description: "Advanced leadership including innovation thinking",
+              available: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "Employee Motivation",
                 duration: "1 hour",
                 platform: "PerformanceHQ",
-                description: "Taking ownership of strategic outcomes"
+                description: "Creating culture that encourages new ideas",
+                available: true
               },
               {
-                id: "st-fc-03",
+                title: "Effective Time Management",
+                duration: "35 minutes",
+                platform: "PerformanceHQ",
+                description: "Finding time for improvement thinking",
+                available: true
+              },
+              {
+                title: "Innovation Starts with Small Improvements",
+                duration: "8 minutes",
+                platform: "YouTube",
+                description: "Practical approach to workplace innovation"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Improvement Opportunity Hunting",
+                in_flow_activity: "Weekly, identify one thing in your department that could work better",
+                document_section: {
+                  title: "Improvement Opportunity Log",
+                  description: "Weekly ideas for making work better",
+                  portfolio_integration: true
+                },
+                financial_integration: "Consider cost and benefit of improvement ideas",
+                journal_prompt: "What improvements would have the biggest impact? What holds us back from making simple improvements?"
+              },
+              {
+                month: 2,
+                title: "Small Innovation Testing",
+                in_flow_activity: "Try one small improvement or new approach each week",
+                document_section: {
+                  title: "Innovation Experiment Results",
+                  description: "What you tried, what happened, what you learned",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect improvements to long-term department goals",
+                journal_prompt: "Which small changes made the biggest difference? What did I learn about implementing improvements?"
+              },
+              {
+                month: 3,
+                title: "Innovation Culture Building",
+                in_flow_activity: "Get your team involved in suggesting and testing improvements",
+                document_section: {
+                  title: "Team Innovation Examples",
+                  description: "Improvements suggested and implemented by team members",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build improvement thinking into regular department operations",
+                curiosity_question: "How can continuous improvement become as natural as daily operations for my team?"
+              }
+            ],
+            competency_gate: "Successfully implement 2+ department improvements + Team demonstrates improvement mindset"
+          },
+          problem_solving_future_focus: {
+            name: "Problem-Solving with Future Focus",
+            description: "How do I solve this problem in a way that makes similar problems less likely in the future?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "CM Weekly Meeting - Extreme Ownership with Kate Reeves",
+              duration: "1 hour",
+              platform: "PerformanceHQ",
+              description: "Taking ownership of solutions and outcomes",
+              available: true
+            },
+            dive_deeper_resources: [
+              {
+                title: "Conflict Resolution (Supervisor Version)",
+                duration: "2 hours",
+                platform: "PerformanceHQ",
+                description: "Strategic approach to resolving issues",
+                available: true
+              },
+              {
+                title: "Future-Focused Problem Solving",
+                duration: "30 minutes",
+                platform: "Custom Content",
+                description: "Framework for solving problems in ways that prevent future issues",
+                custom_content_needed: true
+              },
+              {
+                title: "Root Cause Analysis Simplified",
+                duration: "12 minutes",
+                platform: "YouTube",
+                description: "Getting to the real source of problems"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Root Cause Thinking",
+                in_flow_activity: "When solving routine problems, dig deeper to understand what really caused them",
+                document_section: {
+                  title: "Root Cause Analysis Examples",
+                  description: "Deeper thinking about what causes common problems",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Explore root causes that might involve both departments",
+                journal_prompt: "What problems keep recurring because we're not addressing the real cause? What patterns do I see in our problems?"
+              },
+              {
+                month: 2,
+                title: "Solution Design for Long-Term Impact",
+                in_flow_activity: "For each significant problem you solve, design the solution to prevent similar future problems",
+                document_section: {
+                  title: "Future-Focused Solution Examples",
+                  description: "Solutions designed to prevent problem recurrence",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Involve team in designing solutions that address root causes",
+                journal_prompt: "What solutions that seemed good short-term might create problems later? How can I think more long-term in my problem-solving?"
+              },
+              {
+                month: 3,
+                title: "Systematic Problem Prevention",
+                in_flow_activity: "Create one simple system or process that prevents a category of problems",
+                document_section: {
+                  title: "Problem Prevention System",
+                  description: "Process or practice that reduces future problems",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect problem prevention to property-wide efficiency goals",
+                curiosity_question: "How can problem-solving become problem prevention? What systems could eliminate whole categories of issues?"
+              }
+            ],
+            competency_gate: "Implement solution that addresses root cause + Create system that prevents future problems"
+          },
+          planning_goal_achievement: {
+            name: "Planning & Goal Achievement with Strategic Perspective",
+            description: "How do I set goals and make plans that connect our daily work to where we want to be long-term?",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            foundation_course: {
+              title: "Strategic Planning for Department Leaders",
+              duration: "45 minutes",
+              platform: "Custom Content",
+              description: "Simple approach to planning that connects daily work to bigger goals",
+              custom_content_needed: true
+            },
+            dive_deeper_resources: [
+              {
                 title: "CM Weekly Meeting - Multipliers with Matt",
                 duration: "1 hour",
                 platform: "PerformanceHQ",
-                description: "Strategic leadership that multiplies team effectiveness"
+                description: "Strategic leadership that multiplies team effectiveness",
+                available: true
               },
               {
-                id: "st-fc-04",
-                title: "Leadership 201",
-                duration: "2 hours 5 minutes",
+                title: "Creating and Delivering Business Presentations",
+                duration: "1 hour",
                 platform: "PerformanceHQ",
-                description: "Advanced strategic leadership concepts"
+                description: "Communicating strategic plans effectively",
+                available: true
+              },
+              {
+                title: "Strategic Planning That Actually Works",
+                duration: "15 minutes",
+                platform: "YouTube",
+                description: "Practical strategic planning approach"
               }
             ],
-            signature_activity: {
-              title: "Property Strategist Development",
-              icon: "🎯",
-              description: "Three-month journey developing strategic thinking and planning capabilities for property leadership",
-              phases: [
-                {
-                  phase: 1,
-                  title: "Strategic Situation Analysis",
-                  duration: "Month 1",
-                  activities: [
-                    "Develop comprehensive understanding of property's strategic position, challenges, and opportunities",
-                    "CM Shadowing Focus: Observe CM conducting strategic planning sessions and long-term property planning (1 hour weekly)"
-                  ],
-                  deliverables: [
-                    "Property Strategic Analysis (comprehensive assessment of property's current strategic position)",
-                    "SWOT Analysis Documentation (detailed strengths, weaknesses, opportunities, threats analysis)",
-                    "Strategic Challenge Identification (key challenges requiring strategic thinking and planning)"
-                  ],
-                  journal_prompt: "What are the biggest strategic challenges and opportunities facing our property? How do short-term operational decisions affect long-term strategic success?",
-                  custom_materials: [
-                    "Property Strategic Analysis Framework - Comprehensive methodology for assessing property's strategic position",
-                    "SWOT Analysis for Property Management - Identifying strengths, weaknesses, opportunities, and threats",
-                    "Strategic Planning Fundamentals for Property Leaders - Basic strategic planning concepts and tools"
-                  ]
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Strategic Goal Setting",
+                in_flow_activity: "Set one strategic goal for your department that would matter in 6-12 months",
+                document_section: {
+                  title: "Strategic Goal Development",
+                  description: "Goal that connects current work to future success",
+                  portfolio_integration: true
                 },
-                {
-                  phase: 2,
-                  title: "Strategic Goal Setting & Planning",
-                  duration: "Month 2",
-                  activities: [
-                    "Create strategic goals and develop comprehensive plans to achieve them",
-                    "CM Shadowing Focus: Participate in strategic planning meetings and goal-setting sessions with Regional Manager"
-                  ],
-                  deliverables: [
-                    "Strategic Goals Framework (long-term goals for property with clear success metrics)",
-                    "Strategic Plan Development (comprehensive plan for achieving strategic objectives)",
+                financial_integration: "Connect strategic goal to department and property financial success",
+                journal_prompt: "What goal would make the biggest difference for our long-term success? How does this goal connect to daily decisions?"
+              },
+              {
+                month: 2,
+                title: "Strategic Planning & Implementation",
+                in_flow_activity: "Create simple plan for achieving your strategic goal and start implementing it",
+                document_section: {
+                  title: "Strategic Implementation Plan",
+                  description: "Practical steps toward achieving strategic goal",
+                  portfolio_integration: true
+                },
+                operational_integration: "Build strategic goal progress into regular operational routines",
+                journal_prompt: "What's working in my strategic implementation? What obstacles require creative solutions?"
+              },
+              {
+                month: 3,
+                title: "Strategic Communication & Team Alignment",
+                in_flow_activity: "Get your team involved in understanding and working toward the strategic goal",
+                document_section: {
+                  title: "Team Strategic Alignment Examples",
+                  description: "How team members contribute to strategic goal",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Explore how strategic goal might connect with opposite department's goals",
+                curiosity_question: "How can strategic thinking become part of how my team naturally thinks about our work?"
+              }
+            ],
+            competency_gate: "Set and make progress on meaningful strategic goal + Team understands and contributes to strategic direction"
+          }
+        },
+        strategic_integration_activities: {
+          weekly_cm_strategic_shadowing: {
+            duration: "15 minutes weekly - rotated focus",
+            schedule: [
+              { months: "1-3", focus: "Strategic planning discussions and long-term thinking" },
+              { months: "4-6", focus: "Innovation initiatives and improvement planning" },
+              { months: "7-9", focus: "Problem-solving and future-focused decision making" },
+              { months: "10-12", focus: "Goal setting and strategic implementation" }
+            ]
+          },
+          cross_department_strategic_exchange: {
+            duration: "Monthly - 20 minutes",
+            activities: [
+              "Share strategic insights and planning with opposite department Navigator",
+              "Explore strategic opportunities that could benefit both departments",
+              "Practice strategic thinking in property-wide scenarios"
+            ]
+          },
+          strategic_curiosity_journal: {
+            duration: "5 minutes weekly",
+            focus: [
+              "Document strategic observations, planning insights, and future-focused thinking",
+              "Track \"thinking ahead\" moments when strategic perspective changes decisions",
+              "Reflect on strategic leadership growth and long-term thinking development"
+            ]
+          }
+        },
+        culminating_strategic_project: {
+          title: "Strategic Leadership Initiative",
+          timeline: "Final 2-3 months of program",
+          challenge: "Design and implement one strategic initiative that positions your department or property for future success",
+          options: [
+            "Innovation Implementation: Lead innovative change that improves long-term performance",
+            "Strategic Process Improvement: Redesign operations for future efficiency and effectiveness", 
+            "Future-Readiness Project: Prepare department for anticipated challenges or opportunities",
+            "Strategic Partnership Development: Build relationships or systems that create long-term value"
+          ],
+          deliverables: [
+            "Strategic opportunity analysis and initiative plan (1 page)",
+            "Implementation approach with timeline and success metrics (1 page)",
+            "Results documentation with strategic impact and lessons learned (1 page)"
+          ],
+          presentation: "15-minute presentation to CM and Regional Manager on strategic thinking and long-term leadership"
+        },
+        competency_validation: {
+          evidence_portfolio: [
+            "Pattern Recognition: Demonstrated ability to identify trends and anticipate future implications",
+            "Innovation Leadership: Successfully implemented improvements that enhance long-term performance",
+            "Strategic Problem Solving: Solved problems in ways that prevent future issues and create lasting improvements",
+            "Strategic Planning: Set and achieved goals that connect daily work to long-term success"
+          ],
+          portfolio_defense: {
+            duration: "20 minutes",
+            components: [
+              "Strategic Thinking Journey: How future-focused thinking has changed your leadership approach",
+              "Strategic Impact Evidence: Specific examples of strategic decisions and their long-term benefits",
+              "Team Strategic Development: How you've built strategic thinking in your team", 
+              "Future Leadership Vision: How you'll continue developing strategic leadership capabilities"
+            ]
+          },
+          cm_readiness_indicators: [
+            "Property-Level Strategic Perspective: Consistently thinks beyond department to property-wide strategic implications",
+            "Innovation and Improvement Leadership: Leads change that positions property for future success",
+            "Strategic Problem-Solving: Addresses challenges in ways that create lasting improvements",
+            "Long-Term Planning Capability: Sets and achieves goals that advance property strategic objectives"
+          ]
+        },
+        success_metrics: {
+          leading_indicators: [
+            "Strategic questions asked and insights developed",
+            "Innovation attempts and improvement implementations",
+            "Future-focused problem-solving approach",
+            "Strategic goal progress and team alignment"
+          ],
+          lagging_indicators: [
+            "Department performance improvements with lasting impact",
+            "Innovation success and operational enhancement",
+            "Problem recurrence reduction and systematic improvements",
+            "Strategic goal achievement and contribution to property success"
+          ],
+          curiosity_growth_indicators: [
+            "Strategic patterns recognized and acted upon",
+            "Innovation experiments attempted and lessons learned",
+            "Long-term thinking applied to daily decisions",
+            "Others developed in strategic thinking and future focus"
+          ]
+        },
+        custom_content_development: {
+          high_priority: [
+            "Pattern Recognition for Property Leaders (30 minutes) - Simple framework for spotting operational trends",
+            "Future-Focused Problem Solving (30 minutes) - Framework for solving problems to prevent recurrence",
+            "Strategic Planning for Department Leaders (45 minutes) - Practical strategic planning for department supervisors"
+          ],
+          medium_priority: [
+            "Strategic thinking examples for existing leadership courses",
+            "Property management strategic scenarios and case studies"
+          ],
+          low_priority: [
+            "Advanced strategic analysis tools",
+            "Industry strategic planning resources"
+          ]
+        },
+        program_philosophy: "This refined framework transforms strategic thinking from \"big picture planning\" into \"future-focused daily decisions.\" Every activity connects to real department leadership while building the strategic mindset needed for Community Manager success. The goal isn't to become a strategic planning expert - it's to think strategically every day. Each competency builds strategic awareness and future-focused thinking that makes Navigators more effective leaders today while preparing them for property-level strategic responsibilities. Curiosity drives strategic development. By constantly asking \"what does this mean for our future?\" and \"how can we be better prepared?\", Navigators develop intuitive strategic thinking. Strategic thinking is practical leadership. The best strategic thinking comes from leaders who can connect daily decisions to long-term success, creating strategic excellence that elevates current performance while building future capability."
+      }
                     "Strategic Initiative Design (specific initiatives that support strategic goals)"
                   ],
                   journal_prompt: "What strategic goals would position our property for long-term success? How do I break down big strategic objectives into actionable departmental initiatives?",
