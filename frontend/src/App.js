@@ -6391,7 +6391,7 @@ const AdminTasksView = ({ tasks, onCreateTask, onUpdateTask, onDeleteTask, showC
     { area: 'financial_management', subs: ['budget_creation', 'variance_analysis', 'cost_control', 'roi_decisions', 'revenue_impact', 'pl_understanding', 'kpi_tracking', 'financial_forecasting', 'capex_planning', 'vendor_cost_mgmt'] },
     { area: 'operational_management', subs: ['workflow_optimization', 'technology_utilization', 'quality_control', 'sop_management', 'innovation', 'safety_management', 'policy_enforcement', 'legal_compliance', 'emergency_preparedness', 'documentation'] },
     { area: 'cross_functional_collaboration', subs: ['understanding_other_department', 'unified_resident_experience', 'communication_across_departments', 'stakeholder_relationship_building'] },
-    { area: 'strategic_thinking', subs: ['market_awareness', 'trend_identification', 'opportunity_recognition', 'problem_anticipation', 'longterm_planning', 'change_leadership', 'stakeholder_management', 'project_management', 'innovation_adoption', 'continuous_improvement'] }
+    { area: 'strategic_thinking', subs: ['seeing_patterns_anticipating_trends', 'innovation_continuous_improvement', 'problem_solving_future_focus', 'planning_goal_achievement'] }
   ];
 
   const handleEdit = (task) => {
