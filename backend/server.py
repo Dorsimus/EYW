@@ -361,13 +361,13 @@ SAMPLE_TASKS = [
         "instructions": "Use standard workflow symbols and identify bottlenecks or inefficiencies."
     },
     
-    # Cross-Functional - Interdepartmental Understanding
+    # Cross-Functional - Understanding Other Department
     {
         "title": "Cross-Training: Shadow Other Department",
         "description": "Spend time with the opposite department (Leasing/Maintenance) to understand their processes",
         "task_type": "shadowing",
-        "competency_area": "cross_functional",
-        "sub_competency": "interdepartmental_partnership",
+        "competency_area": "cross_functional_collaboration",
+        "sub_competency": "understanding_other_department",
         "order": 1,
         "required": True,
         "estimated_hours": 16.0,
