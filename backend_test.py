@@ -746,12 +746,12 @@ class TaskCompetencyAPITester:
         strategic_thinking_progress = response['strategic_thinking']
         sub_competencies = strategic_thinking_progress.get('sub_competencies', {})
         
+        # Updated expected sub-competencies for refined framework
         expected_sub_competencies = {
-            "strategic_analysis_planning",
-            "data_driven_decisions",
-            "market_competitive_positioning", 
+            "seeing_patterns_anticipating_trends",
             "innovation_continuous_improvement",
-            "vision_goal_achievement"
+            "problem_solving_future_focus", 
+            "planning_goal_achievement"
         }
         
         print(f"   Strategic Thinking Overall Progress: {strategic_thinking_progress.get('overall_progress', 0)}%")
