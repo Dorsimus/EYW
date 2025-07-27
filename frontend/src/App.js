@@ -315,7 +315,7 @@ const App = () => {
               {
                 month: 2,
                 title: "Motivation in Action",
-                in_the_flow_activity: "Choose ONE motivational approach to try with each team member based on Month 1 discoveries",
+                in_the_flow_activity: "Based on what you discovered in the Leadership Style Discovery, create an individualized motivational approach for each team member that you'll implement this month. Create a plan and document it below, along with your results.",
                 document: "Motivation Experiment Results (5 minutes weekly)",
                 integrations: ["Financial Integration: Track team performance metrics during motivation experiments", "Cross-Functional Integration: Share motivation successes with opposite department Navigator"],
                 journal_prompt: "What motivation experiments surprised me? What didn't work as expected?"
