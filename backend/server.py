@@ -221,18 +221,12 @@ NAVIGATOR_COMPETENCIES = {
     },
     "financial_management": {
         "name": "Financial Management & Business Acumen",
-        "description": "Understanding and driving the financial success of property operations",
+        "description": "Every Decision Has a Dollar Impact - Make Them Count",
         "sub_competencies": {
-            "budget_creation": "Department Budget Creation",
-            "variance_analysis": "Variance Analysis",
-            "cost_control": "Cost Control",
-            "roi_decisions": "ROI Decision Making",
-            "revenue_impact": "Revenue Impact Understanding",
-            "pl_understanding": "P&L Understanding",
-            "kpi_tracking": "KPI Tracking",
-            "financial_forecasting": "Financial Forecasting",
-            "capex_planning": "Capital Expenditure Planning",
-            "vendor_cost_mgmt": "Vendor Cost Management"
+            "property_pl_understanding": "Property P&L Understanding",
+            "departmental_budget_management": "Departmental Budget Management",
+            "cost_conscious_decision_making": "Cost-Conscious Decision Making",
+            "financial_communication_business_understanding": "Financial Communication & Business Understanding"
         }
     },
     "operational_management": {
