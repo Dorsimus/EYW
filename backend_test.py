@@ -632,12 +632,12 @@ class TaskCompetencyAPITester:
         strategic_thinking_tasks = [task for task in response if task.get('competency_area') == 'strategic_thinking']
         print(f"   Found {len(strategic_thinking_tasks)} strategic_thinking tasks")
         
+        # Updated expected sub-competencies for refined framework
         expected_sub_competencies = {
-            "strategic_analysis_planning",
-            "data_driven_decisions", 
-            "market_competitive_positioning",
-            "innovation_continuous_improvement",
-            "vision_goal_achievement"
+            "seeing_patterns_anticipating_trends",
+            "innovation_continuous_improvement", 
+            "problem_solving_future_focus",
+            "planning_goal_achievement"
         }
         
         valid_references = True
