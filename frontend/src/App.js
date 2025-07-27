@@ -2352,6 +2352,11 @@ const App = () => {
       
       console.log('Setting user data and loading user data...');
       setUser(userData);
+      
+      // Set up local refined competency structure first
+      await setupRefinedCompetencies();
+      
+      // Then load progress data from backend
       await loadUserData(userData.id);
       console.log('User initialization completed successfully');
     } catch (error) {
