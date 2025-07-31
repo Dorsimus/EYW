@@ -73,6 +73,7 @@ ALLOWED_MIME_TYPES = {
     'application/vnd.ms-excel',
     'application/vnd.ms-powerpoint',
     'image/jpeg',
+    'image/jpg',  # Some systems use this
     'image/png',
     'image/gif',
     'image/bmp',
