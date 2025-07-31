@@ -2365,7 +2365,6 @@ const App = () => {
         } catch (e) {
           console.log('Tasks already seeded or error:', e.message);
         }
-      }
       
       console.log('Setting user data and loading user data...');
       setUser(userData);
