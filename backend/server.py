@@ -41,9 +41,47 @@ def serialize_doc(doc):
     else:
         return doc
 
-# Create uploads directory
+# Enhanced File Storage Configuration
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
+
+# Create organized directory structure for portfolio files
+PORTFOLIO_DIR = UPLOAD_DIR / "portfolio"
+EVIDENCE_DIR = UPLOAD_DIR / "evidence" 
+TEMP_DIR = UPLOAD_DIR / "temp"
+
+# Create subdirectories
+for directory in [PORTFOLIO_DIR, EVIDENCE_DIR, TEMP_DIR]:
+    directory.mkdir(exist_ok=True)
+
+# File upload constraints
+MAX_FILE_SIZE = 50 * 1024 * 1024  # 50MB
+ALLOWED_EXTENSIONS = {
+    '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx',
+    '.jpg', '.jpeg', '.png', '.gif', '.bmp',
+    '.mp4', '.mov', '.avi', '.wmv',
+    '.txt', '.rtf'
+}
+
+ALLOWED_MIME_TYPES = {
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'application/msword',
+    'application/vnd.ms-excel',
+    'application/vnd.ms-powerpoint',
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'image/bmp',
+    'video/mp4',
+    'video/quicktime',
+    'video/x-msvideo',
+    'video/x-ms-wmv',
+    'text/plain',
+    'text/rtf'
+}
 
 # Security configuration
 SECRET_KEY = "your-secret-key-here-change-in-production"  # In production, use proper secret
