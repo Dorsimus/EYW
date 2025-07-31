@@ -2311,17 +2311,30 @@ const App = () => {
       console.log('Stored user ID:', storedUserId);
       let userData;
       
-      if (storedUserId) {
-        try {
-          console.log('Trying to get existing user...');
-          const response = await axios.get(`${API}/users/${storedUserId}`, axiosConfig);
-          userData = response.data;
-          console.log('Found existing user:', userData);
-        } catch (error) {
-          console.log('Stored user not found, creating new one. Error:', error.message);
-          // Stored user doesn't exist anymore, clear localStorage
-          localStorage.removeItem('demo_user_id');
-          storedUserId = null;
+      // First, try to use the consistent demo user
+      const demoUserId = "demo-user-123";
+      try {
+        console.log('Trying to get demo user:', demoUserId);
+        const response = await axios.get(`${API}/users/${demoUserId}`, axiosConfig);
+        userData = response.data;
+        console.log('Found demo user:', userData);
+        setStoredUserId(demoUserId); // Store this ID for consistency
+      } catch (error) {
+        console.log('Demo user not found, trying stored user...');
+        
+        // If demo user doesn't exist, try stored user
+        if (storedUserId) {
+          try {
+            console.log('Trying to get existing user...');
+            const response = await axios.get(`${API}/users/${storedUserId}`, axiosConfig);
+            userData = response.data;
+            console.log('Found existing user:', userData);
+          } catch (error) {
+            console.log('Stored user not found, creating new one. Error:', error.message);
+            // Stored user doesn't exist anymore, clear localStorage
+            localStorage.removeItem('demo_user_id');
+            storedUserId = null;
+          }
         }
       }
       
