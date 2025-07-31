@@ -3893,7 +3893,10 @@ const App = () => {
         }
         // Additional strategic framework elements would be added here...
       }
-    });
+    };
+    
+    setCompetencies(refinedCompetencies);
+    return refinedCompetencies;
   };
 
   const loadUserData = async (userId) => {
