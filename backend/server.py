@@ -1099,25 +1099,65 @@ async def create_portfolio_item(
     
     return serialize_doc(portfolio_item.dict())
 
-@api_router.get("/users/{user_id}/portfolio", response_model=List[PortfolioItem])
-async def get_user_portfolio(user_id: str):
-    items = await db.portfolio_items.find({"user_id": user_id}).sort("upload_date", -1).to_list(1000)
-    return [PortfolioItem(**item) for item in items]
+@api_router.get("/users/{user_id}/portfolio")
+async def get_user_portfolio(user_id: str, visibility: Optional[str] = None):
+    """Get user's portfolio items with optional visibility filter"""
+    query = {"user_id": user_id, "status": "active"}
+    
+    if visibility:
+        query["visibility"] = visibility
+    
+    items = await db.portfolio_items.find(query).sort("upload_date", -1).to_list(1000)
+    
+    # Add file size formatting for display
+    for item in items:
+        if item.get("file_size"):
+            item["file_size_formatted"] = format_file_size(item["file_size"])
+    
+    return [serialize_doc(item) for item in items]
 
 @api_router.delete("/users/{user_id}/portfolio/{item_id}")
 async def delete_portfolio_item(user_id: str, item_id: str):
-    # Remove from database
-    result = await db.portfolio_items.delete_one({"id": item_id, "user_id": user_id})
-    if result.deleted_count == 0:
+    """Delete portfolio item and associated file"""
+    # Get the item first to access file path
+    item = await db.portfolio_items.find_one({"id": item_id, "user_id": user_id})
+    if not item:
+        raise HTTPException(status_code=404, detail="Portfolio item not found")
+    
+    # Delete the file if it exists
+    if item.get("file_path"):
+        delete_file(item["file_path"])
+    
+    # Soft delete - mark as deleted instead of removing completely
+    result = await db.portfolio_items.update_one(
+        {"id": item_id, "user_id": user_id},
+        {"$set": {"status": "deleted", "updated_at": datetime.utcnow()}}
+    )
+    
+    if result.modified_count == 0:
         raise HTTPException(status_code=404, detail="Portfolio item not found")
     
     # Remove from competency evidence
-    await db.competency_progress.update_many(
-        {"user_id": user_id},
-        {"$pull": {"evidence_items": item_id}}
-    )
+    for area in item.get("competency_areas", []):
+        await db.competency_progress.update_many(
+            {"user_id": user_id, "competency_area": area},
+            {"$pull": {"evidence_items": item_id}}
+        )
     
     return {"message": "Portfolio item deleted successfully"}
+
+def format_file_size(size_bytes: int) -> str:
+    """Format file size for human readability"""
+    if size_bytes == 0:
+        return "0 B"
+    
+    size_names = ["B", "KB", "MB", "GB"]
+    i = 0
+    while size_bytes >= 1024 and i < len(size_names) - 1:
+        size_bytes /= 1024.0
+        i += 1
+    
+    return f"{size_bytes:.1f} {size_names[i]}"
 
 # Include the router in the main app
 app.include_router(api_router)
