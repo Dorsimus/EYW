@@ -273,6 +273,18 @@ backend:
         - agent: "testing"
         - comment: "✅ COMPREHENSIVE CROSS-FUNCTIONAL COLLABORATION BACKEND TESTING COMPLETED SUCCESSFULLY! Ran 21 tests with 95.2% success rate (20/21 passed). **CRITICAL SUCCESSES:** 1) ✅ GET /api/competencies endpoint - cross_functional_collaboration structure PERFECT with all 4 new sub-competencies correctly defined: understanding_other_department, unified_resident_experience, communication_across_departments, stakeholder_relationship_building, 2) ✅ User competency progress calculation working correctly with new structure - all 4 sub-competencies tracked with 0/0 tasks initially, 3) ✅ Admin task management can handle all new sub-competency areas perfectly - successfully created, updated, and deleted tasks across all 4 areas, 4) ✅ Backend-frontend alignment is PERFECT - exact match with refined frontend requirements including correct competency key 'cross_functional_collaboration', name, description, and all sub-competency names, 5) ✅ No regressions in other competency areas (leadership, financial, operational all working correctly). **MINOR ISSUE:** 3 existing tasks still use old 'cross_functional' key instead of 'cross_functional_collaboration' and have old sub-competency names - these need updating but don't affect core functionality. **OVERALL ASSESSMENT:** Backend implementation is working excellently and matches frontend requirements. Main task essentially complete with just minor cleanup needed for existing tasks."
 
+  - task: "Frontend Data Loading Fix - Refined Competency Display"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "IMPLEMENTED: Fixed critical frontend data loading issue where competency views showed old framework details instead of new streamlined structures. Root cause was loadUserData function being called before setupRefinedCompetencies completed, causing backend progress data to overwrite detailed local frontend competency structure. Fix: 1) Added await to setupRefinedCompetencies call, 2) Modified setupRefinedCompetencies to return competencies object, 3) Updated loadUserData to accept refined competencies parameter, 4) Pass refined competencies from initialization to loadUserData. This ensures frontend uses complete local refined competency structure with only progress updates merged from backend."
+
 frontend:
   - task: "Admin Login Modal"
     implemented: true
