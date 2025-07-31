@@ -2354,10 +2354,10 @@ const App = () => {
       setUser(userData);
       
       // Set up local refined competency structure first
-      await setupRefinedCompetencies();
+      const refinedCompetencies = await setupRefinedCompetencies();
       
       // Then load progress data from backend
-      await loadUserData(userData.id);
+      await loadUserData(userData.id, refinedCompetencies);
       console.log('User initialization completed successfully');
     } catch (error) {
       console.error('Error initializing user:', error);
