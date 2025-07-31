@@ -3899,14 +3899,17 @@ const App = () => {
     return refinedCompetencies;
   };
 
-  const loadUserData = async (userId) => {
+  const loadUserData = async (userId, refinedCompetencies = null) => {
     try {
       // Load competencies progress from backend
       const compResponse = await axios.get(`${API}/users/${userId}/competencies`);
       const backendProgress = compResponse.data;
       
+      // Use provided refined competencies or current state
+      const baseCompetencies = refinedCompetencies || competencies;
+      
       // Merge backend progress with local refined competency structure
-      const mergedCompetencies = { ...competencies };
+      const mergedCompetencies = { ...baseCompetencies };
       
       // Update progress data from backend while keeping local structure
       Object.keys(backendProgress).forEach(areaKey => {
