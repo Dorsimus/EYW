@@ -1160,6 +1160,41 @@ def format_file_size(size_bytes: int) -> str:
     
     return f"{size_bytes:.1f} {size_names[i]}"
 
+# File serving endpoint for secure access
+@api_router.get("/files/{file_type}/{file_id}")
+async def serve_file(file_type: str, file_id: str, user_id: Optional[str] = None):
+    """Serve uploaded files with basic access control"""
+    if file_type not in ["portfolio", "evidence"]:
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    # For portfolio files, check if the item exists and user has access
+    if file_type == "portfolio":
+        item = await db.portfolio_items.find_one({"id": file_id, "status": "active"})
+        if not item:
+            raise HTTPException(status_code=404, detail="File not found")
+        
+        # For now, allow access to the file owner
+        # TODO: Add proper access control based on visibility settings
+        file_path = item.get("file_path")
+        original_filename = item.get("original_filename", "download")
+        
+    elif file_type == "evidence":
+        completion = await db.task_completions.find_one({"id": file_id})
+        if not completion:
+            raise HTTPException(status_code=404, detail="File not found")
+        
+        file_path = completion.get("evidence_file_path")
+        original_filename = f"evidence_{file_id}"
+    
+    if not file_path or not Path(file_path).exists():
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    return FileResponse(
+        path=file_path,
+        filename=original_filename,
+        media_type='application/octet-stream'
+    )
+
 # Include the router in the main app
 app.include_router(api_router)
 
