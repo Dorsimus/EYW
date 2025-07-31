@@ -2373,7 +2373,7 @@ const App = () => {
 
   const setupRefinedCompetencies = async () => {
     // Set up the refined local competency structure
-    setCompetencies({
+    const refinedCompetencies = {
       leadership_supervision: {
         name: "Leadership & Supervision",
         description: "Leadership Isn't a Title, It's How You Show Up Every Day",
