@@ -4502,6 +4502,7 @@ const App = () => {
       formData.append('description', newPortfolioItem.description);
       formData.append('competency_areas', JSON.stringify(newPortfolioItem.competency_areas));
       formData.append('tags', JSON.stringify(newPortfolioItem.tags));
+      formData.append('visibility', 'private'); // Default to private
       
       if (newPortfolioItem.file) {
         formData.append('file', newPortfolioItem.file);
