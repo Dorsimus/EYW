@@ -1195,6 +1195,65 @@ async def serve_file(file_type: str, file_id: str, user_id: Optional[str] = None
         media_type='application/octet-stream'
     )
 
+# Storage management endpoints
+@api_router.get("/admin/storage/stats")
+async def get_storage_stats(admin_user = Depends(get_current_admin)):
+    """Get storage usage statistics"""
+    def get_directory_size(directory: Path) -> tuple[int, int]:
+        """Get total size and file count of directory"""
+        total_size = 0
+        file_count = 0
+        
+        if directory.exists():
+            for file_path in directory.rglob("*"):
+                if file_path.is_file():
+                    total_size += file_path.stat().st_size
+                    file_count += 1
+        
+        return total_size, file_count
+    
+    # Get stats for each directory
+    portfolio_size, portfolio_files = get_directory_size(PORTFOLIO_DIR)
+    evidence_size, evidence_files = get_directory_size(EVIDENCE_DIR)
+    temp_size, temp_files = get_directory_size(TEMP_DIR)
+    
+    total_size = portfolio_size + evidence_size + temp_size
+    total_files = portfolio_files + evidence_files + temp_files
+    
+    # Get database stats
+    portfolio_items_count = await db.portfolio_items.count_documents({"status": "active"})
+    evidence_items_count = await db.task_completions.count_documents({"evidence_file_path": {"$ne": None}})
+    
+    return {
+        "total_storage_bytes": total_size,
+        "total_storage_formatted": format_file_size(total_size),
+        "total_files": total_files,
+        "breakdown": {
+            "portfolio": {
+                "size_bytes": portfolio_size,
+                "size_formatted": format_file_size(portfolio_size),
+                "file_count": portfolio_files,
+                "db_records": portfolio_items_count
+            },
+            "evidence": {
+                "size_bytes": evidence_size,
+                "size_formatted": format_file_size(evidence_size),
+                "file_count": evidence_files,
+                "db_records": evidence_items_count
+            },
+            "temp": {
+                "size_bytes": temp_size,
+                "size_formatted": format_file_size(temp_size),
+                "file_count": temp_files
+            }
+        },
+        "constraints": {
+            "max_file_size": format_file_size(MAX_FILE_SIZE),
+            "allowed_extensions": list(ALLOWED_EXTENSIONS),
+            "total_allowed_mime_types": len(ALLOWED_MIME_TYPES)
+        }
+    }
+
 # Include the router in the main app
 app.include_router(api_router)
 
