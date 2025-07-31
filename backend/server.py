@@ -787,7 +787,21 @@ async def create_admin(user_data: UserCreate):
 # User Management Routes
 @api_router.post("/users", response_model=User)
 async def create_user(user_data: UserCreate):
-    user = User(**user_data.dict())
+    # Check if user with this email already exists
+    existing = await db.users.find_one({"email": user_data.email})
+    if existing:
+        # If user already exists, return existing user
+        return User(**serialize_doc(existing))
+    
+    # Create user with provided ID if available, otherwise generate UUID
+    user_dict = user_data.dict()
+    if user_data.id:
+        # Check if user with this ID already exists
+        existing_id = await db.users.find_one({"id": user_data.id})
+        if existing_id:
+            return User(**serialize_doc(existing_id))
+    
+    user = User(**user_dict)
     if user_data.password and user_data.is_admin:
         user.password_hash = get_password_hash(user_data.password)
     
