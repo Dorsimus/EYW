@@ -1041,7 +1041,7 @@ async def seed_sample_tasks():
     
     return {"message": f"Seeded {len(SAMPLE_TASKS)} sample tasks"}
 
-# Portfolio routes (unchanged)
+# Enhanced Portfolio routes with secure file handling
 @api_router.post("/users/{user_id}/portfolio")
 async def create_portfolio_item(
     user_id: str,
@@ -1049,6 +1049,7 @@ async def create_portfolio_item(
     description: str = Form(...),
     competency_areas: str = Form("[]"),
     tags: str = Form("[]"),
+    visibility: str = Form("private"),
     file: UploadFile = File(None)
 ):
     try:
@@ -1057,24 +1058,34 @@ async def create_portfolio_item(
     except json.JSONDecodeError:
         raise HTTPException(status_code=400, detail="Invalid JSON in competency_areas or tags")
     
+    # Validate visibility
+    if visibility not in ["private", "managers", "mentors", "public"]:
+        visibility = "private"
+    
     portfolio_item = PortfolioItem(
         user_id=user_id,
         title=title,
         description=description,
         competency_areas=competency_areas_list,
-        tags=tags_list
+        tags=tags_list,
+        visibility=visibility
     )
     
-    # Handle file upload if provided
+    # Handle file upload if provided using our enhanced system
     if file:
-        file_extension = Path(file.filename).suffix if file.filename else ""
-        file_path = UPLOAD_DIR / f"{portfolio_item.id}{file_extension}"
-        
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
-        
-        portfolio_item.file_path = str(file_path)
-        portfolio_item.file_type = file.content_type or "application/octet-stream"
+        try:
+            file_data = await save_uploaded_file(file, "portfolio", user_id, portfolio_item.id)
+            
+            portfolio_item.file_path = file_data["file_path"]
+            portfolio_item.original_filename = file_data["original_filename"]
+            portfolio_item.secure_filename = file_data["secure_filename"]
+            portfolio_item.file_size = file_data["file_size"]
+            portfolio_item.mime_type = file_data["mime_type"]
+            
+        except HTTPException:
+            raise  # Re-raise validation errors
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
     
     await db.portfolio_items.insert_one(portfolio_item.dict())
     
@@ -1086,7 +1097,7 @@ async def create_portfolio_item(
                 {"$addToSet": {"evidence_items": portfolio_item.id}}
             )
     
-    return portfolio_item
+    return serialize_doc(portfolio_item.dict())
 
 @api_router.get("/users/{user_id}/portfolio", response_model=List[PortfolioItem])
 async def get_user_portfolio(user_id: str):
