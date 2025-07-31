@@ -507,8 +507,8 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Frontend Data Loading Fix - Refined Competency Display"
     - "Cross-Functional Collaboration Framework Refinement"
-    - "Cross-Functional Collaboration Framework Backend Sync"
     - "Strategic Thinking Framework Refinement"
   stuck_tasks: []
   test_all: false
