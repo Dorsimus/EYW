@@ -919,15 +919,15 @@ async def complete_task(
         notes=notes
     )
     
-    # Handle file upload if provided
+    # Handle file upload if provided using enhanced system
     if file:
-        file_extension = Path(file.filename).suffix if file.filename else ""
-        file_path = UPLOAD_DIR / f"{completion.id}{file_extension}"
-        
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
-        
-        completion.evidence_file_path = str(file_path)
+        try:
+            file_data = await save_uploaded_file(file, "evidence", user_id, completion.id)
+            completion.evidence_file_path = file_data["file_path"]
+        except HTTPException:
+            raise  # Re-raise validation errors
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Evidence file upload failed: {str(e)}")
     
     await db.task_completions.insert_one(completion.dict())
     
