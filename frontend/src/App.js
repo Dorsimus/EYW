@@ -2337,20 +2337,24 @@ const App = () => {
           }
         }
       }
-      
-      // If no stored user or stored user doesn't exist, create new one
-      if (!userData) {
-        console.log('Creating new user...');
-        const userPayload = {
-          email: "demo@earnwings.com",
-          name: "Demo Navigator",
-          role: "participant",
-          level: "navigator"
-        };
-        console.log('User payload:', userPayload);
         
-        const createResponse = await axios.post(`${API}/users`, userPayload, axiosConfig);
-        userData = createResponse.data;
+        # If no demo user exists, create one with the consistent demo ID
+        if not userData:
+          console.log('Creating demo user with consistent ID...');
+          const userPayload = {
+            id: "demo-user-123", // Use consistent demo ID
+            email: "demo@earnwings.com",
+            name: "Demo Navigator",
+            role: "participant",
+            level: "navigator"
+          };
+          console.log('User payload:', userPayload);
+          
+          const createResponse = await axios.post(`${API}/users`, userPayload, axiosConfig);
+          userData = createResponse.data;
+          console.log('Created demo user:', userData);
+          setStoredUserId(userData.id);
+        }
         console.log('Created new user:', userData);
         setStoredUserId(userData.id);
         
