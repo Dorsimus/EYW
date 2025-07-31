@@ -4523,8 +4523,10 @@ const App = () => {
         file: null
       });
       
-      // Reload data
-      await loadUserData(user.id);
+      // Reload portfolio data directly
+      const portfolioResponse = await axios.get(`${API}/users/${user.id}/portfolio`);
+      setPortfolio(portfolioResponse.data);
+      
       setCurrentView('portfolio');
     } catch (error) {
       console.error('Error adding portfolio item:', error);
