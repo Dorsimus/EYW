@@ -328,8 +328,16 @@ class PortfolioItem(BaseModel):
     description: str
     competency_areas: List[str] = []  # which competencies this supports
     file_path: Optional[str] = None
-    file_type: str = "document"  # document, image, video, etc.
+    original_filename: Optional[str] = None
+    secure_filename: Optional[str] = None
+    file_size: Optional[int] = None
+    mime_type: Optional[str] = None
+    file_type: str = "portfolio"  # portfolio, evidence, temp
+    visibility: str = "private"  # private, managers, mentors, public
+    tags: List[str] = []
     upload_date: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    status: str = "active"  # active, archived, deleted
     tags: List[str] = []
 
 class PortfolioItemCreate(BaseModel):
