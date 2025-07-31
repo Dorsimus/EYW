@@ -2338,8 +2338,8 @@ const App = () => {
         }
       }
         
-        # If no demo user exists, create one with the consistent demo ID
-        if not userData:
+        // If no demo user exists, create one with the consistent demo ID
+        if (!userData) {
           console.log('Creating demo user with consistent ID...');
           const userPayload = {
             id: "demo-user-123", // Use consistent demo ID
