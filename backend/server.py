@@ -238,6 +238,7 @@ class User(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class UserCreate(BaseModel):
+    id: Optional[str] = None  # Allow optional ID for demo users
     email: str
     name: str
     role: str = "participant"
