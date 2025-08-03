@@ -9181,7 +9181,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) =
                           </span>
                         </div>
                         <div className="text-sm text-gray-500 mb-3">
-                          📅 {entry.date.toLocaleDateString()} • Source: {entry.source.replace('_', ' ')}
+                          📅 {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'} • Source: {entry.source ? entry.source.replace('_', ' ') : 'manual entry'}
                         </div>
                       </div>
                     </div>
