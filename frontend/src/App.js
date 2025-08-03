@@ -4080,20 +4080,37 @@ const App = () => {
         formData.append('file', file);
       }
       
-      await axios.post(`${API}/users/${user.id}/task-completions`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      // Submit task completion
+      const response = await axios.post(`${API}/users/${user.id}/tasks/complete`, formData);
       
-      // Reload data
-      await loadUserData(user.id);
+      // Get task details for automatic portfolio/flightbook creation
+      const taskData = competencyTasks.find(t => t.id === taskId);
+      const competencyArea = selectedCompetency?.area;
+      
+      if (taskData && competencyArea) {
+        // Automatically create portfolio item if there's evidence/file
+        if (evidenceDescription.trim() || file) {
+          console.log('Creating portfolio item from task completion...');
+          await createPortfolioFromTaskCompletion(taskData, competencyArea, evidenceDescription, file);
+        }
+        
+        // Automatically create flightbook entry if there are notes/reflections
+        if (evidenceDescription.trim()) {
+          console.log('Creating flightbook entry from task completion...');
+          await createFlightbookFromTaskCompletion(taskData, competencyArea, evidenceDescription);
+        }
+      }
+      
+      // Reload competency progress and portfolio
       if (selectedCompetency) {
         await loadCompetencyTasks(selectedCompetency.area, selectedCompetency.sub);
       }
+      await reloadPortfolio();
+      
+      return response.data;
     } catch (error) {
       console.error('Error completing task:', error);
-      alert('Error completing task: ' + error.response?.data?.detail || error.message);
+      throw error;
     }
   };
 
