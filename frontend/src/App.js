@@ -9521,9 +9521,19 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) =
                             <button className="text-sm text-gray-600 hover:text-gray-800">✏️ Edit</button>
                             <button className="text-sm text-green-600 hover:text-green-800">📁 Add to Portfolio</button>
                             <button className="text-sm text-purple-600 hover:text-purple-800">🔗 Link to Task</button>
+                            {entry.version_history && entry.version_history.length > 1 && (
+                              <button className="text-sm text-indigo-600 hover:text-indigo-800">📚 View History (v{entry.version})</button>
+                            )}
                           </div>
                           <div className="text-xs text-gray-500">
-                            Last updated: {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'}
+                            Last updated: {entry.updated_at && entry.updated_at.toLocaleDateString ? 
+                              entry.updated_at.toLocaleDateString() : 
+                              (entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent')}
+                            {entry.version && entry.version > 1 && (
+                              <span className="ml-2 px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium">
+                                v{entry.version}
+                              </span>
+                            )}
                           </div>
                         </div>
                       </div>
