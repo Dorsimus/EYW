@@ -8752,4 +8752,152 @@ const AdminAnalyticsView = ({ stats, tasks, users }) => {
   );
 };
 
+// My Leadership Flightbook View Component
+const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) => {
+  // Extract journal entries and reflections from various sources
+  const getJournalEntries = () => {
+    // For now, we'll create a placeholder structure
+    // Later, we'll integrate with task completion notes, portfolio reflections, etc.
+    const entries = [];
+    
+    // Example structure for future integration
+    const exampleEntries = [
+      {
+        id: 'entry-1',
+        date: new Date(),
+        competency: 'leadership_supervision',
+        type: 'reflection',
+        title: 'Team Meeting Leadership Reflection',
+        content: 'Today I facilitated a challenging team meeting where we had to discuss budget cuts...',
+        tags: ['team-management', 'difficult-conversations'],
+        source: 'task_completion'
+      },
+      {
+        id: 'entry-2', 
+        date: new Date(Date.now() - 86400000), // Yesterday
+        competency: 'financial_management',
+        type: 'learning',
+        title: 'Budget Analysis Insights',
+        content: 'While reviewing the quarterly budget, I discovered patterns in our maintenance costs...',
+        tags: ['budget-analysis', 'cost-management'],
+        source: 'portfolio_reflection'
+      }
+    ];
+    
+    return exampleEntries;
+  };
+
+  const journalEntries = getJournalEntries();
+
+  const getCompetencyColor = (competencyKey) => {
+    const colorMap = {
+      'leadership_supervision': 'blue',
+      'financial_management': 'green', 
+      'operational_management': 'purple',
+      'cross_functional_collaboration': 'orange',
+      'strategic_thinking': 'red'
+    };
+    return colorMap[competencyKey] || 'gray';
+  };
+
+  return (
+    <div className="space-y-8">
+      {/* Header Section */}
+      <div className="text-center">
+        <h2 className="text-4xl font-bold text-gray-900 mb-2">✈️ My Leadership Flightbook</h2>
+        <p className="text-lg text-gray-600 mb-4">Your personal journey log of leadership experiences, insights, and growth moments</p>
+        <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
+          <span className="text-blue-800 font-medium">{journalEntries.length} Flight Log Entries</span>
+        </div>
+      </div>
+
+      {journalEntries.length > 0 ? (
+        <div className="space-y-6">
+          {/* Quick Actions */}
+          <div className="flex justify-center space-x-4">
+            <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+              ✏️ New Flight Log Entry
+            </button>
+            <button className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+              📈 View Growth Timeline
+            </button>
+            <button className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+              📄 Export Flightbook
+            </button>
+          </div>
+
+          {/* Journal Entries Timeline */}
+          <div className="space-y-6">
+            {journalEntries.map((entry) => {
+              const color = getCompetencyColor(entry.competency);
+              const competencyName = competencies[entry.competency]?.name || entry.competency;
+              
+              return (
+                <div key={entry.id} className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+                  <div className={`border-l-4 border-${color}-500 p-6`}>
+                    {/* Entry Header */}
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3 mb-2">
+                          <h3 className="text-xl font-semibold text-gray-900">{entry.title}</h3>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-800`}>
+                            {competencyName}
+                          </span>
+                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                            {entry.type}
+                          </span>
+                        </div>
+                        <div className="text-sm text-gray-500 mb-3">
+                          📅 {entry.date.toLocaleDateString()} • Source: {entry.source.replace('_', ' ')}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Entry Content */}
+                    <div className="prose max-w-none mb-4">
+                      <p className="text-gray-700 leading-relaxed">{entry.content}</p>
+                    </div>
+
+                    {/* Tags */}
+                    {entry.tags && entry.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {entry.tags.map(tag => (
+                          <span key={tag} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Entry Actions */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                      <div className="flex space-x-3">
+                        <button className="text-sm text-blue-600 hover:text-blue-800">✏️ Edit</button>
+                        <button className="text-sm text-green-600 hover:text-green-800">📁 Add to Portfolio</button>
+                        <button className="text-sm text-purple-600 hover:text-purple-800">🔗 Link to Task</button>
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        Last updated: {entry.date.toLocaleDateString()}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <div className="text-center py-12">
+          <div className="text-6xl text-gray-300 mb-4">✈️</div>
+          <h3 className="text-xl font-medium text-gray-900 mb-2">Your Leadership Flightbook is ready for takeoff!</h3>
+          <p className="text-gray-600 mb-6">Start documenting your leadership journey, insights, and growth moments.</p>
+          <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+            ✏️ Write Your First Flight Log Entry
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default App;
