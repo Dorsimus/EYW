@@ -9071,6 +9071,12 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) =
       // Get entries from localStorage (journal reflections)
       const storedEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
       
+      // Convert date strings back to Date objects for stored entries
+      const processedStoredEntries = storedEntries.map(entry => ({
+        ...entry,
+        date: entry.date ? new Date(entry.date) : new Date()
+      }));
+      
       // Example structure for existing sample data
       const exampleEntries = [
         {
@@ -9096,13 +9102,13 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) =
       ];
       
       // Combine stored entries with example entries
-      const allEntries = [...storedEntries, ...exampleEntries];
+      const allEntries = [...processedStoredEntries, ...exampleEntries];
       
       // Sort by date (most recent first)
       const sorted = allEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
       setFlightbookEntries(sorted);
       
-      console.log(`Loaded ${allEntries.length} flightbook entries (${storedEntries.length} from journal, ${exampleEntries.length} examples)`);
+      console.log(`Loaded ${allEntries.length} flightbook entries (${processedStoredEntries.length} from journal, ${exampleEntries.length} examples)`);
     } catch (error) {
       console.error('Error loading flightbook entries:', error);
       setFlightbookEntries([]);
