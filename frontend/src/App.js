@@ -7717,8 +7717,15 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
   );
 };
 
-// Enhanced Portfolio View Component with Competency Organization
+// Enhanced Portfolio View Component with Accordion Organization
 const PortfolioView = ({ portfolio, setCurrentView, competencies }) => {
+  const [expandedSections, setExpandedSections] = useState({});
+  
+  // Reload portfolio when component mounts
+  useEffect(() => {
+    reloadPortfolio();
+  }, []);
+
   // Helper function to get competency color scheme
   const getCompetencyColor = (competencyKey) => {
     const colorMap = {
@@ -7734,6 +7741,23 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies }) => {
   // Helper function to get competency display name
   const getCompetencyName = (competencyKey) => {
     return competencies[competencyKey]?.name || competencyKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  };
+
+  // Function to handle document viewing
+  const handleDocumentView = (item) => {
+    if (item.file_path) {
+      // Create a download/view link for the file
+      const fileUrl = `${API}/files/portfolio/${item.id}`;
+      window.open(fileUrl, '_blank');
+    }
+  };
+
+  // Toggle section expansion
+  const toggleSection = (sectionKey) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [sectionKey]: !prev[sectionKey]
+    }));
   };
 
   // Group portfolio items by competency areas
@@ -7761,182 +7785,198 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies }) => {
   const totalItems = portfolio.length;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header Section */}
       <div className="text-center">
         <h2 className="text-4xl font-bold text-gray-900 mb-2">📁 Your Portfolio</h2>
         <p className="text-lg text-gray-600 mb-4">Document your learning journey and career advancement</p>
-        <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
-          <span className="text-blue-800 font-medium">{totalItems} Portfolio Items</span>
+        <div className="flex justify-center space-x-4">
+          <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
+            <span className="text-blue-800 font-medium">{totalItems} Portfolio Items</span>
+          </div>
+          <button 
+            onClick={() => setCurrentView('add-portfolio')}
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+          >
+            ➕ Add New Item
+          </button>
         </div>
       </div>
 
       {totalItems > 0 ? (
-        <div className="space-y-8">
-          {/* Quick Actions */}
-          <div className="flex justify-center space-x-4">
-            <button 
-              onClick={() => setCurrentView('add-portfolio')}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-            >
-              ➕ Add New Item
-            </button>
-            <button className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-              🔍 Search & Filter
-            </button>
-          </div>
-
-          {/* Competency-Organized Sections */}
+        <div className="space-y-4">
+          {/* Competency-Organized Accordion Sections */}
           {Object.entries(organized).map(([competencyKey, items]) => {
             const color = getCompetencyColor(competencyKey);
             const competencyName = getCompetencyName(competencyKey);
             const itemCount = items.length;
+            const isExpanded = expandedSections[competencyKey];
 
             return (
-              <div key={competencyKey} className="space-y-4">
-                {/* Competency Section Header */}
-                <div className={`border-l-4 border-${color}-500 bg-${color}-50 p-4 rounded-r-lg`}>
+              <div key={competencyKey} className="bg-white rounded-lg shadow border">
+                {/* Competency Section Header - Clickable */}
+                <button
+                  onClick={() => toggleSection(competencyKey)}
+                  className={`w-full p-4 text-left border-l-4 border-${color}-500 bg-${color}-50 rounded-t-lg hover:bg-${color}-100 transition-colors`}
+                >
                   <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className={`text-xl font-bold text-${color}-900`}>
-                        {competencyName}
-                      </h3>
-                      <p className={`text-${color}-700 text-sm`}>
-                        {itemCount} {itemCount === 1 ? 'item' : 'items'} in this competency area
-                      </p>
+                    <div className="flex items-center space-x-3">
+                      <span className="text-2xl">
+                        {isExpanded ? '📂' : '📁'}
+                      </span>
+                      <div>
+                        <h3 className={`text-lg font-bold text-${color}-900`}>
+                          {competencyName}
+                        </h3>
+                        <p className={`text-sm text-${color}-700`}>
+                          {itemCount} document{itemCount !== 1 ? 's' : ''}
+                        </p>
+                      </div>
                     </div>
-                    <div className={`bg-${color}-100 text-${color}-800 px-3 py-1 rounded-full text-sm font-medium`}>
-                      {itemCount}
+                    <div className="flex items-center space-x-2">
+                      <div className={`bg-${color}-100 text-${color}-800 px-3 py-1 rounded-full text-sm font-medium`}>
+                        {itemCount}
+                      </div>
+                      <span className={`text-${color}-600 text-lg`}>
+                        {isExpanded ? '▼' : '▶'}
+                      </span>
                     </div>
                   </div>
-                </div>
+                </button>
 
-                {/* Portfolio Items Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pl-4">
-                  {items.map(item => (
-                    <div key={`${competencyKey}-${item.id}`} className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow border-l-4" style={{borderLeftColor: `var(--${color}-500)`}}>
-                      <div className="p-6">
-                        <div className="flex items-start justify-between mb-3">
-                          <h4 className="text-lg font-semibold text-gray-900 flex-1">{item.title}</h4>
-                          <div className="text-sm text-gray-400">
-                            {item.file_path ? '📎' : '📝'}
-                          </div>
-                        </div>
-                        
-                        <p className="text-gray-600 text-sm mb-4 line-clamp-3">{item.description}</p>
-                        
-                        {/* File Information */}
-                        {item.file_path && (
-                          <div className="mb-4 p-2 bg-gray-50 rounded-md">
-                            <div className="flex items-center justify-between text-xs text-gray-600">
-                              <span>📄 {item.original_filename}</span>
-                              {item.file_size_formatted && (
-                                <span>{item.file_size_formatted}</span>
+                {/* Expandable Content */}
+                {isExpanded && (
+                  <div className="border-t border-gray-200">
+                    <div className="p-4 space-y-3">
+                      {items.map(item => (
+                        <div 
+                          key={item.id} 
+                          className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        >
+                          <div className="flex items-center space-x-3 flex-1">
+                            {/* Document Icon */}
+                            <div className="text-2xl">
+                              {item.file_path ? '📄' : '📝'}
+                            </div>
+                            
+                            {/* Document Info */}
+                            <div className="flex-1 min-w-0">
+                              <h4 className="text-sm font-semibold text-gray-900 truncate">
+                                {item.title}
+                              </h4>
+                              <p className="text-xs text-gray-600 truncate">
+                                {item.description}
+                              </p>
+                              {item.file_path && (
+                                <p className="text-xs text-blue-600">
+                                  📎 {item.original_filename} 
+                                  {item.file_size_formatted && ` (${item.file_size_formatted})`}
+                                </p>
                               )}
                             </div>
                           </div>
-                        )}
-                        
-                        {/* Multiple Competency Tags (if item belongs to multiple areas) */}
-                        {item.competency_areas.length > 1 && (
-                          <div className="flex flex-wrap gap-1 mb-4">
-                            {item.competency_areas.filter(area => area !== competencyKey).map(area => (
-                              <span key={area} className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-${getCompetencyColor(area)}-100 text-${getCompetencyColor(area)}-800`}>
-                                Also in: {getCompetencyName(area)}
-                              </span>
-                            ))}
+
+                          {/* Action Buttons */}
+                          <div className="flex items-center space-x-2">
+                            {item.file_path && (
+                              <button
+                                onClick={() => handleDocumentView(item)}
+                                className="px-3 py-1 text-xs font-medium text-blue-600 bg-blue-100 rounded hover:bg-blue-200 transition-colors"
+                              >
+                                📖 View
+                              </button>
+                            )}
+                            <div className="text-xs text-gray-500">
+                              {new Date(item.upload_date).toLocaleDateString()}
+                            </div>
                           </div>
-                        )}
-                        
-                        {/* Tags */}
-                        {item.tags && item.tags.length > 0 && (
-                          <div className="flex flex-wrap gap-1 mb-4">
-                            {item.tags.map(tag => (
-                              <span key={tag} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                #{tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                        
-                        {/* Footer */}
-                        <div className="flex justify-between items-center text-xs text-gray-500 mt-4 pt-4 border-t">
-                          <span>📅 {new Date(item.upload_date).toLocaleDateString()}</span>
-                          <span className={`px-2 py-1 rounded text-${color}-600 bg-${color}-50`}>
-                            {item.visibility || 'private'}
-                          </span>
                         </div>
-                      </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
               </div>
             );
           })}
 
           {/* Unassigned Items Section */}
           {unassigned.length > 0 && (
-            <div className="space-y-4">
-              <div className="border-l-4 border-gray-400 bg-gray-50 p-4 rounded-r-lg">
+            <div className="bg-white rounded-lg shadow border">
+              <button
+                onClick={() => toggleSection('unassigned')}
+                className="w-full p-4 text-left border-l-4 border-gray-400 bg-gray-50 rounded-t-lg hover:bg-gray-100 transition-colors"
+              >
                 <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">
-                      📋 Unassigned Items
-                    </h3>
-                    <p className="text-gray-700 text-sm">
-                      {unassigned.length} {unassigned.length === 1 ? 'item' : 'items'} not linked to specific competencies
-                    </p>
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">
+                      {expandedSections['unassigned'] ? '📂' : '📁'}
+                    </span>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900">
+                        📋 Unassigned Items
+                      </h3>
+                      <p className="text-sm text-gray-700">
+                        {unassigned.length} document{unassigned.length !== 1 ? 's' : ''} not linked to competencies
+                      </p>
+                    </div>
                   </div>
-                  <div className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">
-                    {unassigned.length}
+                  <div className="flex items-center space-x-2">
+                    <div className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">
+                      {unassigned.length}
+                    </div>
+                    <span className="text-gray-600 text-lg">
+                      {expandedSections['unassigned'] ? '▼' : '▶'}
+                    </span>
                   </div>
                 </div>
-              </div>
+              </button>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pl-4">
-                {unassigned.map(item => (
-                  <div key={item.id} className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow border-l-4 border-gray-400">
-                    <div className="p-6">
-                      <div className="flex items-start justify-between mb-3">
-                        <h4 className="text-lg font-semibold text-gray-900 flex-1">{item.title}</h4>
-                        <div className="text-sm text-gray-400">
-                          {item.file_path ? '📎' : '📝'}
-                        </div>
-                      </div>
-                      
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-3">{item.description}</p>
-                      
-                      {item.file_path && (
-                        <div className="mb-4 p-2 bg-gray-50 rounded-md">
-                          <div className="flex items-center justify-between text-xs text-gray-600">
-                            <span>📄 {item.original_filename}</span>
-                            {item.file_size_formatted && (
-                              <span>{item.file_size_formatted}</span>
+              {expandedSections['unassigned'] && (
+                <div className="border-t border-gray-200">
+                  <div className="p-4 space-y-3">
+                    {unassigned.map(item => (
+                      <div 
+                        key={item.id} 
+                        className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                      >
+                        <div className="flex items-center space-x-3 flex-1">
+                          <div className="text-2xl">
+                            {item.file_path ? '📄' : '📝'}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-sm font-semibold text-gray-900 truncate">
+                              {item.title}
+                            </h4>
+                            <p className="text-xs text-gray-600 truncate">
+                              {item.description}
+                            </p>
+                            {item.file_path && (
+                              <p className="text-xs text-blue-600">
+                                📎 {item.original_filename}
+                                {item.file_size_formatted && ` (${item.file_size_formatted})`}
+                              </p>
                             )}
                           </div>
                         </div>
-                      )}
-                      
-                      {item.tags && item.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mb-4">
-                          {item.tags.map(tag => (
-                            <span key={tag} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                              #{tag}
-                            </span>
-                          ))}
+                        
+                        <div className="flex items-center space-x-2">
+                          {item.file_path && (
+                            <button
+                              onClick={() => handleDocumentView(item)}
+                              className="px-3 py-1 text-xs font-medium text-blue-600 bg-blue-100 rounded hover:bg-blue-200 transition-colors"
+                            >
+                              📖 View
+                            </button>
+                          )}
+                          <div className="text-xs text-gray-500">
+                            {new Date(item.upload_date).toLocaleDateString()}
+                          </div>
                         </div>
-                      )}
-                      
-                      <div className="flex justify-between items-center text-xs text-gray-500 mt-4 pt-4 border-t">
-                        <span>📅 {new Date(item.upload_date).toLocaleDateString()}</span>
-                        <span className="px-2 py-1 rounded text-gray-600 bg-gray-50">
-                          {item.visibility || 'private'}
-                        </span>
                       </div>
-                    </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
             </div>
           )}
         </div>
