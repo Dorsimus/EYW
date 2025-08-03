@@ -5356,6 +5356,8 @@ const App = () => {
             competencies={competencies}
             portfolio={portfolio}
             setCurrentView={setCurrentView}
+            competencyTaskProgress={competencyTaskProgress}
+            setCompetencyTaskProgress={setCompetencyTaskProgress}
             key={`flightbook-${Date.now()}`} // Force re-render to reload entries
           />
         )}
