@@ -9579,9 +9579,38 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) =
                           </div>
                         </div>
 
-                        <div className="prose max-w-none mb-4">
-                          <p className="text-gray-700 leading-relaxed">{entry.content}</p>
-                        </div>
+                        {/* Content display or editing interface */}
+                        {editingEntry === entry.id ? (
+                          // Editing mode
+                          <div className="mb-4">
+                            <textarea
+                              value={editContent}
+                              onChange={(e) => setEditContent(e.target.value)}
+                              className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              rows="6"
+                              placeholder="Edit your reflection..."
+                            />
+                            <div className="flex space-x-2 mt-3">
+                              <button
+                                onClick={() => saveEditedEntry(entry.id)}
+                                className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700"
+                              >
+                                💾 Save Changes
+                              </button>
+                              <button
+                                onClick={cancelEditing}
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-400"
+                              >
+                                ❌ Cancel
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          // Display mode
+                          <div className="prose max-w-none mb-4">
+                            <p className="text-gray-700 leading-relaxed">{entry.content}</p>
+                          </div>
+                        )}
 
                         {entry.tags && entry.tags.length > 0 && (
                           <div className="flex flex-wrap gap-2 mb-4">
