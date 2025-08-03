@@ -6822,7 +6822,12 @@ const CompetenciesView = ({
                                                 rows="3"
                                                 value={getCompetencyTaskNotes(areaKey, subKey, `${activityKey}_reflection`) || ''}
                                                 onChange={(e) => {
-                                                  onCompleteCompetencyTask(areaKey, subKey, `${activityKey}_reflection`, e.target.value, 'reflection');
+                                                  // Only update localStorage on change, don't create flightbook entries yet
+                                                  onJournalReflectionChange(areaKey, subKey, `${activityKey}_reflection`, e.target.value, 'reflection');
+                                                }}
+                                                onBlur={(e) => {
+                                                  // Create or update flightbook entry when user finishes editing
+                                                  onJournalReflectionComplete(areaKey, subKey, `${activityKey}_reflection`, e.target.value, 'reflection');
                                                 }}
                                               />
                                             </div>
