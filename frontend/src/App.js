@@ -5224,6 +5224,7 @@ const App = () => {
             competencies={competencies}
             portfolio={portfolio}
             setCurrentView={setCurrentView}
+            key={`flightbook-${Date.now()}`} // Force re-render to reload entries
           />
         )}
         
