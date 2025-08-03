@@ -9219,7 +9219,9 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) =
       // Convert date strings back to Date objects for stored entries
       const processedStoredEntries = storedEntries.map(entry => ({
         ...entry,
-        date: entry.date ? new Date(entry.date) : new Date()
+        date: entry.date ? new Date(entry.date) : new Date(),
+        updated_at: entry.updated_at ? new Date(entry.updated_at) : (entry.date ? new Date(entry.date) : new Date()),
+        created_at: entry.created_at ? new Date(entry.created_at) : (entry.date ? new Date(entry.date) : new Date())
       }));
       
       // Example structure for existing sample data
