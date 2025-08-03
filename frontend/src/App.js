@@ -4900,7 +4900,7 @@ const App = () => {
       if (subKey === 'curiosity_ignition' && competencyData?.curiosity_ignition?.reflection_prompts) {
         const promptIndex = parseInt(taskId.replace('prompt_', ''));
         promptText = competencyData.curiosity_ignition.reflection_prompts[promptIndex] || '';
-        entryTitle = promptText ? `Journal: ${promptText.substring(0, 50)}...` : 'Curiosity Reflection';
+        entryTitle = promptText ? `${promptText}` : 'Curiosity Reflection';
       }
       // Check if this is a monthly activity reflection
       else if (taskId.includes('_reflection') && competencyData?.sub_competencies?.[subKey]?.monthly_activities) {
