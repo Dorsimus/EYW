@@ -6010,6 +6010,8 @@ const CompetenciesView = ({
   onCompleteTask,
   competencyTaskProgress,
   onCompleteCompetencyTask,
+  onJournalReflectionChange,
+  onJournalReflectionComplete,
   isCompetencyTaskComplete,
   getCompetencyTaskNotes,
 
