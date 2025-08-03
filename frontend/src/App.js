@@ -4837,6 +4837,55 @@ const App = () => {
     }, 500);
   };
 
+  // Function to automatically create flightbook entry from journal reflection
+  const createFlightbookFromJournalReflection = async (areaKey, subKey, taskId, notes) => {
+    if (!user?.id || !notes || notes.trim().length === 0) return null;
+
+    try {
+      // Get the specific prompt text
+      const competencyData = competencies[areaKey];
+      let promptText = '';
+      
+      // Check if this is a curiosity ignition prompt
+      if (subKey === 'curiosity_ignition' && competencyData?.curiosity_ignition?.reflection_prompts) {
+        const promptIndex = parseInt(taskId.replace('prompt_', ''));
+        promptText = competencyData.curiosity_ignition.reflection_prompts[promptIndex] || '';
+      }
+      
+      // Create flightbook entry structure
+      const flightbookEntry = {
+        id: `journal_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        title: promptText ? `Journal: ${promptText.substring(0, 50)}...` : 'Leadership Reflection',
+        content: notes,
+        competency: areaKey,
+        type: 'journal_reflection',
+        source: 'competency_journal',
+        original_prompt: promptText,
+        tags: ['journal', 'reflection', 'auto-generated'],
+        date: new Date(),
+        competency_area: areaKey,
+        sub_competency: subKey,
+        task_id: taskId
+      };
+
+      console.log('Creating flightbook entry:', flightbookEntry);
+      
+      // Store in localStorage for now (later we'll add backend API)
+      const existingEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+      existingEntries.push(flightbookEntry);
+      localStorage.setItem('flightbook_entries', JSON.stringify(existingEntries));
+      
+      // TODO: Later add backend API call to save flightbook entry
+      // await axios.post(`${API}/users/${user.id}/flightbook`, flightbookEntry);
+      
+      console.log('Flightbook entry created successfully');
+      return flightbookEntry;
+    } catch (error) {
+      console.error('Error creating flightbook entry from journal reflection:', error);
+      return null;
+    }
+  };
+
   const updateCompetencyProgressWithData = (progressData) => {
     console.log('Updating competency progress with provided data...');
     const updatedCompetencies = { ...competencies };
