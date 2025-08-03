@@ -3978,6 +3978,22 @@ const App = () => {
     }
   };
 
+  // Function to reload portfolio data
+  const reloadPortfolio = async () => {
+    if (!user?.id) return;
+    
+    try {
+      console.log(`Reloading portfolio for user: ${user.id}`);
+      const portfolioResponse = await axios.get(`${API}/users/${user.id}/portfolio`);
+      console.log('Portfolio reload response:', portfolioResponse.data);
+      setPortfolio(portfolioResponse.data);
+      console.log(`Successfully reloaded ${portfolioResponse.data.length} portfolio items`);
+    } catch (error) {
+      console.error('Error reloading portfolio:', error);
+      setPortfolio([]);
+    }
+  };
+
   const loadCompetencyTasks = async (competencyArea, subCompetency) => {
     try {
       if (!user?.id) return;
