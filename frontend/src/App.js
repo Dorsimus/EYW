@@ -3960,9 +3960,18 @@ const App = () => {
       
       setCompetencies(mergedCompetencies);
       
-      // Load portfolio
-      const portfolioResponse = await axios.get(`${API}/users/${userId}/portfolio`);
-      setPortfolio(portfolioResponse.data);
+      // Load portfolio with separate error handling
+      try {
+        console.log(`Loading portfolio for user: ${userId}`);
+        const portfolioResponse = await axios.get(`${API}/users/${userId}/portfolio`);
+        console.log('Portfolio response:', portfolioResponse.data);
+        setPortfolio(portfolioResponse.data);
+        console.log(`Successfully loaded ${portfolioResponse.data.length} portfolio items`);
+      } catch (portfolioError) {
+        console.error('Error loading portfolio:', portfolioError);
+        // Initialize with empty portfolio if loading fails
+        setPortfolio([]);
+      }
     } catch (error) {
       console.error('Error loading user data:', error);
       // Keep using local refined competency structure if backend fails
