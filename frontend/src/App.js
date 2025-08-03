@@ -9310,10 +9310,8 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
 
   // Start editing an entry
   const startEditing = (entry) => {
-    console.log('startEditing called with entry:', entry.id, 'Current editingEntry:', editingEntry);
     setEditingEntry(entry.id);
     setEditContent(entry.content);
-    console.log('Set editing state - editingEntry:', entry.id, 'editContent length:', entry.content?.length);
   };
 
   // Cancel editing
