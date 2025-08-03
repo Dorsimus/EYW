@@ -4804,7 +4804,7 @@ const App = () => {
     setCompetencies(updatedCompetencies);
   };
 
-  const handleCompleteCompetencyTask = (areaKey, subKey, taskId, notes = '', taskType = 'course') => {
+  const handleCompleteCompetencyTask = async (areaKey, subKey, taskId, notes = '', taskType = 'course') => {
     console.log(`Completing task: ${areaKey} -> ${subKey} -> ${taskId}`);
     const taskKey = `${areaKey}_${subKey}_${taskId}`;
     const updatedProgress = {
@@ -4820,6 +4820,13 @@ const App = () => {
     console.log('Updated progress object:', updatedProgress);
     setCompetencyTaskProgress(updatedProgress);
     localStorage.setItem('competency_task_progress', JSON.stringify(updatedProgress));
+    
+    // Automatically create flightbook entry for journal reflections
+    if (taskType === 'curiosity_reflection' && notes && notes.trim().length > 10) {
+      console.log('Creating flightbook entry from journal reflection...');
+      await createFlightbookFromJournalReflection(areaKey, subKey, taskId, notes);
+    }
+    
     setShowTaskModal(null);
     setTaskNotes('');
     
