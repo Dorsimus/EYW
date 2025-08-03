@@ -9237,6 +9237,13 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
 
         return processedEntry;
       });
+
+      // Save back to localStorage if any titles were fixed
+      const hasFixedTitles = processedStoredEntries.some(entry => entry.title !== storedEntries.find(orig => orig.id === entry.id)?.title);
+      if (hasFixedTitles) {
+        console.log('Saving entries with fixed titles back to localStorage');
+        localStorage.setItem('flightbook_entries', JSON.stringify(processedStoredEntries));
+      }
       
       // Example structure for existing sample data
       const exampleEntries = [
