@@ -7766,10 +7766,14 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
   // Group portfolio items by competency areas
   const organizePortfolioByCompetency = () => {
     const organized = {};
+    const culminatingProject = [];
     const unassigned = [];
 
     portfolio.forEach(item => {
-      if (item.competency_areas && item.competency_areas.length > 0) {
+      // Check if this is a culminating project item
+      if (item.tags && item.tags.includes('culminating-project')) {
+        culminatingProject.push(item);
+      } else if (item.competency_areas && item.competency_areas.length > 0) {
         item.competency_areas.forEach(competencyKey => {
           if (!organized[competencyKey]) {
             organized[competencyKey] = [];
@@ -7781,10 +7785,10 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
       }
     });
 
-    return { organized, unassigned };
+    return { organized, culminatingProject, unassigned };
   };
 
-  const { organized, unassigned } = organizePortfolioByCompetency();
+  const { organized, culminatingProject, unassigned } = organizePortfolioByCompetency();
   const totalItems = portfolio.length;
 
   return (
