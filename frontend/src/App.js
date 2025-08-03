@@ -9519,7 +9519,11 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                           </div>
 
                           {/* Content display or editing interface */}
-                          {editingEntry === entry.id ? (
+                          {(() => {
+                            const isEditing = editingEntry === entry.id;
+                            console.log(`Render check for entry ${entry.id}: editingEntry=${editingEntry}, isEditing=${isEditing}`);
+                            return isEditing;
+                          })() ? (
                             // Editing mode
                             <div className="mb-4">
                               <textarea
