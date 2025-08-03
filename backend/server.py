@@ -841,6 +841,12 @@ async def get_user_competencies(user_id: str):
     for comp in competencies:
         comp = serialize_doc(comp)  # Serialize the document
         area = comp["competency_area"]
+        
+        # Handle case where competency area doesn't exist in current structure (legacy data)
+        if area not in NAVIGATOR_COMPETENCIES:
+            print(f"Warning: Competency area '{area}' not found in current structure, skipping...")
+            continue
+            
         if area not in organized:
             organized[area] = {
                 "name": NAVIGATOR_COMPETENCIES[area]["name"],
