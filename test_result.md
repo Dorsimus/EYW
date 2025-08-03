@@ -617,8 +617,10 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus: []
-  stuck_tasks: []
+  current_focus:
+    - "Cross-Integration System: Competency Journal Entries → Leadership Flightbook"
+  stuck_tasks:
+    - "Cross-Integration System: Competency Journal Entries → Leadership Flightbook"
   test_all: false
   test_priority: "high_first"
 
