@@ -9511,7 +9511,12 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) =
                           {/* Entry Actions */}
                           <div className="flex items-center justify-between pt-3 border-t border-gray-200">
                             <div className="flex space-x-3">
-                              <button className={`text-sm text-${color}-600 hover:text-${color}-800`}>✏️ Edit</button>
+                              <button 
+                                onClick={() => startEditing(entry)}
+                                className={`text-sm text-${color}-600 hover:text-${color}-800`}
+                              >
+                                ✏️ Edit
+                              </button>
                               <button className="text-sm text-green-600 hover:text-green-800">📁 Add to Portfolio</button>
                               <button className="text-sm text-purple-600 hover:text-purple-800">🔗 Link to Task</button>
                             </div>
