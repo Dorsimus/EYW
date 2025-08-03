@@ -7718,13 +7718,15 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
 };
 
 // Enhanced Portfolio View Component with Accordion Organization
-const PortfolioView = ({ portfolio, setCurrentView, competencies }) => {
+const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfolio }) => {
   const [expandedSections, setExpandedSections] = useState({});
   
   // Reload portfolio when component mounts
   useEffect(() => {
-    reloadPortfolio();
-  }, []);
+    if (reloadPortfolio) {
+      reloadPortfolio();
+    }
+  }, [reloadPortfolio]);
 
   // Helper function to get competency color scheme
   const getCompetencyColor = (competencyKey) => {
