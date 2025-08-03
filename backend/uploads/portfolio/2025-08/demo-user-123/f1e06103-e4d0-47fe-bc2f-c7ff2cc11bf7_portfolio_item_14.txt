@@ -1,0 +1,7 @@
+Portfolio Item 14: Unassigned Portfolio Item
+
+Description: Portfolio item without specific competency area assignment
+
+Competency Areas: 
+
+Tags: unassigned, general

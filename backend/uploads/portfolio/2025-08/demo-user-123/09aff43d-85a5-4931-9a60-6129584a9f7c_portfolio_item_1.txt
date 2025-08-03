@@ -1,0 +1,7 @@
+Portfolio Item 1: Leadership Team Meeting Minutes
+
+Description: Documentation of weekly leadership team meetings and decisions
+
+Competency Areas: leadership_supervision
+
+Tags: leadership, meetings, documentation
