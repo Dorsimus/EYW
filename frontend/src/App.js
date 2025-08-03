@@ -7,8 +7,16 @@ const API = `${BACKEND_URL}/api`;
 
 // Mock current user - in real app this would come from authentication
 // Use localStorage to persist the demo user ID across sessions
-const getStoredUserId = () => localStorage.getItem('demo_user_id');
-const setStoredUserId = (id) => localStorage.setItem('demo_user_id', id);
+// Function to store user ID in localStorage (always use demo-user-123 for consistency)
+const setStoredUserId = (userId) => {
+  // Always store demo-user-123 for consistent demo experience
+  localStorage.setItem('demo_user_id', 'demo-user-123');
+};
+
+const getStoredUserId = () => {
+  // Always return demo-user-123 for consistent demo experience
+  return 'demo-user-123';
+};
 
 // Helper function to get competency color class
 const getCompetencyClass = (areaKey) => {
