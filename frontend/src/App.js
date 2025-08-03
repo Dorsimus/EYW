@@ -9340,6 +9340,9 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     // For now, just navigate to competencies - user can then find their reflection
     // In the future we could enhance this to auto-expand and highlight the specific prompt
   };
+
+  // Save edited entry
+  const saveEditedEntry = (entryId) => {
     try {
       const existingEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
       const entryIndex = existingEntries.findIndex(entry => entry.id === entryId);
