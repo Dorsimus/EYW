@@ -9289,6 +9289,79 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) =
     }));
   };
 
+  // Start editing an entry
+  const startEditing = (entry) => {
+    setEditingEntry(entry.id);
+    setEditContent(entry.content);
+  };
+
+  // Cancel editing
+  const cancelEditing = () => {
+    setEditingEntry(null);
+    setEditContent('');
+  };
+
+  // Save edited entry
+  const saveEditedEntry = async (entryId) => {
+    try {
+      const existingEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+      const entryIndex = existingEntries.findIndex(entry => entry.id === entryId);
+      
+      if (entryIndex >= 0) {
+        const existingEntry = existingEntries[entryIndex];
+        
+        // Only update if content has actually changed
+        if (existingEntry.content !== editContent.trim()) {
+          // Initialize version history if it doesn't exist
+          if (!existingEntry.version_history) {
+            existingEntry.version_history = [{
+              version: 1,
+              content: existingEntry.content,
+              updated_at: existingEntry.date || existingEntry.created_at || new Date(),
+              change_summary: 'Original version'
+            }];
+          }
+          
+          // Add current content to version history
+          existingEntry.version_history.push({
+            version: existingEntry.version_history.length + 1,
+            content: editContent.trim(),
+            updated_at: new Date(),
+            change_summary: 'Updated via Flightbook edit'
+          });
+          
+          // Update the main entry
+          existingEntry.content = editContent.trim();
+          existingEntry.updated_at = new Date();
+          existingEntry.version = (existingEntry.version_history.length);
+          
+          // Save back to localStorage
+          localStorage.setItem('flightbook_entries', JSON.stringify(existingEntries));
+          
+          // Update competency_task_progress if this is a journal reflection
+          if (existingEntry.entry_key) {
+            const competencyProgress = JSON.parse(localStorage.getItem('competency_task_progress') || '{}');
+            if (competencyProgress[existingEntry.entry_key]) {
+              competencyProgress[existingEntry.entry_key].notes = editContent.trim();
+              localStorage.setItem('competency_task_progress', JSON.stringify(competencyProgress));
+            }
+          }
+          
+          console.log(`Flightbook entry updated (v${existingEntry.version}):`, existingEntry.title);
+          
+          // Reload entries to reflect changes
+          loadFlightbookEntries();
+        }
+      }
+      
+      // Exit edit mode
+      setEditingEntry(null);
+      setEditContent('');
+    } catch (error) {
+      console.error('Error saving edited entry:', error);
+    }
+  };
+
   // Group flightbook entries by competency areas
   const organizeFlightbookByCompetency = () => {
     const organized = {};
