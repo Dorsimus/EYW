@@ -9058,40 +9058,59 @@ const AdminAnalyticsView = ({ stats, tasks, users }) => {
 
 // My Leadership Flightbook View Component
 const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) => {
+  const [flightbookEntries, setFlightbookEntries] = useState([]);
+  
+  // Load flightbook entries when component mounts
+  useEffect(() => {
+    loadFlightbookEntries();
+  }, []);
+
+  const loadFlightbookEntries = () => {
+    try {
+      // Get entries from localStorage (journal reflections)
+      const storedEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+      
+      // Example structure for existing sample data
+      const exampleEntries = [
+        {
+          id: 'entry-1',
+          date: new Date(Date.now() - 86400000), // Yesterday
+          competency: 'leadership_supervision',
+          type: 'reflection',
+          title: 'Team Meeting Leadership Reflection',
+          content: 'Today I facilitated a challenging team meeting where we had to discuss budget cuts. I noticed how important it was to acknowledge everyone\'s concerns first before moving to solutions. The team responded much better when I started by validating their feelings.',
+          tags: ['team-management', 'difficult-conversations'],
+          source: 'task_completion'
+        },
+        {
+          id: 'entry-2', 
+          date: new Date(Date.now() - 172800000), // 2 days ago
+          competency: 'financial_management',
+          type: 'learning',
+          title: 'Budget Analysis Insights',
+          content: 'While reviewing the quarterly budget, I discovered patterns in our maintenance costs that could save us $15K annually. The key was looking at timing - we were doing preventive maintenance right before peak seasons when costs are highest.',
+          tags: ['budget-analysis', 'cost-management'],
+          source: 'portfolio_reflection'
+        }
+      ];
+      
+      // Combine stored entries with example entries
+      const allEntries = [...storedEntries, ...exampleEntries];
+      
+      // Sort by date (most recent first)
+      const sorted = allEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setFlightbookEntries(sorted);
+      
+      console.log(`Loaded ${allEntries.length} flightbook entries (${storedEntries.length} from journal, ${exampleEntries.length} examples)`);
+    } catch (error) {
+      console.error('Error loading flightbook entries:', error);
+      setFlightbookEntries([]);
+    }
+  };
+
   // Extract journal entries and reflections from various sources
   const getJournalEntries = () => {
-    // Get entries from localStorage (journal reflections)
-    const storedEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
-    
-    // Example structure for existing sample data
-    const exampleEntries = [
-      {
-        id: 'entry-1',
-        date: new Date(Date.now() - 86400000), // Yesterday
-        competency: 'leadership_supervision',
-        type: 'reflection',
-        title: 'Team Meeting Leadership Reflection',
-        content: 'Today I facilitated a challenging team meeting where we had to discuss budget cuts. I noticed how important it was to acknowledge everyone\'s concerns first before moving to solutions. The team responded much better when I started by validating their feelings.',
-        tags: ['team-management', 'difficult-conversations'],
-        source: 'task_completion'
-      },
-      {
-        id: 'entry-2', 
-        date: new Date(Date.now() - 172800000), // 2 days ago
-        competency: 'financial_management',
-        type: 'learning',
-        title: 'Budget Analysis Insights',
-        content: 'While reviewing the quarterly budget, I discovered patterns in our maintenance costs that could save us $15K annually. The key was looking at timing - we were doing preventive maintenance right before peak seasons when costs are highest.',
-        tags: ['budget-analysis', 'cost-management'],
-        source: 'portfolio_reflection'
-      }
-    ];
-    
-    // Combine stored entries with example entries
-    const allEntries = [...storedEntries, ...exampleEntries];
-    
-    // Sort by date (most recent first)
-    return allEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
+    return flightbookEntries;
   };
 
   const journalEntries = getJournalEntries();
