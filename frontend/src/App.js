@@ -9220,13 +9220,23 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
       // Get entries from localStorage (journal reflections)
       const storedEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
       
-      // Convert date strings back to Date objects for stored entries
-      const processedStoredEntries = storedEntries.map(entry => ({
-        ...entry,
-        date: entry.date ? new Date(entry.date) : new Date(),
-        updated_at: entry.updated_at ? new Date(entry.updated_at) : (entry.date ? new Date(entry.date) : new Date()),
-        created_at: entry.created_at ? new Date(entry.created_at) : (entry.date ? new Date(entry.date) : new Date())
-      }));
+      // Convert date strings back to Date objects for stored entries and fix truncated titles
+      const processedStoredEntries = storedEntries.map(entry => {
+        const processedEntry = {
+          ...entry,
+          date: entry.date ? new Date(entry.date) : new Date(),
+          updated_at: entry.updated_at ? new Date(entry.updated_at) : (entry.date ? new Date(entry.date) : new Date()),
+          created_at: entry.created_at ? new Date(entry.created_at) : (entry.date ? new Date(entry.date) : new Date())
+        };
+
+        // Fix truncated titles for existing entries
+        if (entry.title && entry.title.includes('...') && entry.original_prompt) {
+          console.log('Fixing truncated title for entry:', entry.id);
+          processedEntry.title = entry.original_prompt;
+        }
+
+        return processedEntry;
+      });
       
       // Example structure for existing sample data
       const exampleEntries = [
