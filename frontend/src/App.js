@@ -9060,35 +9060,38 @@ const AdminAnalyticsView = ({ stats, tasks, users }) => {
 const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) => {
   // Extract journal entries and reflections from various sources
   const getJournalEntries = () => {
-    // For now, we'll create a placeholder structure
-    // Later, we'll integrate with task completion notes, portfolio reflections, etc.
-    const entries = [];
+    // Get entries from localStorage (journal reflections)
+    const storedEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
     
-    // Example structure for future integration
+    // Example structure for existing sample data
     const exampleEntries = [
       {
         id: 'entry-1',
-        date: new Date(),
+        date: new Date(Date.now() - 86400000), // Yesterday
         competency: 'leadership_supervision',
         type: 'reflection',
         title: 'Team Meeting Leadership Reflection',
-        content: 'Today I facilitated a challenging team meeting where we had to discuss budget cuts...',
+        content: 'Today I facilitated a challenging team meeting where we had to discuss budget cuts. I noticed how important it was to acknowledge everyone\'s concerns first before moving to solutions. The team responded much better when I started by validating their feelings.',
         tags: ['team-management', 'difficult-conversations'],
         source: 'task_completion'
       },
       {
         id: 'entry-2', 
-        date: new Date(Date.now() - 86400000), // Yesterday
+        date: new Date(Date.now() - 172800000), // 2 days ago
         competency: 'financial_management',
         type: 'learning',
         title: 'Budget Analysis Insights',
-        content: 'While reviewing the quarterly budget, I discovered patterns in our maintenance costs...',
+        content: 'While reviewing the quarterly budget, I discovered patterns in our maintenance costs that could save us $15K annually. The key was looking at timing - we were doing preventive maintenance right before peak seasons when costs are highest.',
         tags: ['budget-analysis', 'cost-management'],
         source: 'portfolio_reflection'
       }
     ];
     
-    return exampleEntries;
+    // Combine stored entries with example entries
+    const allEntries = [...storedEntries, ...exampleEntries];
+    
+    // Sort by date (most recent first)
+    return allEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
   };
 
   const journalEntries = getJournalEntries();
