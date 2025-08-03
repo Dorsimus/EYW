@@ -5330,6 +5330,8 @@ const App = () => {
             onCompleteTask={completeTask}
             competencyTaskProgress={competencyTaskProgress}
             onCompleteCompetencyTask={handleCompleteCompetencyTask}
+            onJournalReflectionChange={handleJournalReflectionChange}
+            onJournalReflectionComplete={handleJournalReflectionComplete}
             isCompetencyTaskComplete={isCompetencyTaskComplete}
             getCompetencyTaskNotes={getCompetencyTaskNotes}
 
