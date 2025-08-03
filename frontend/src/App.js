@@ -4838,37 +4838,62 @@ const App = () => {
   };
 
   // Function to automatically create flightbook entry from journal reflection
-  const createFlightbookFromJournalReflection = async (areaKey, subKey, taskId, notes) => {
+  const createFlightbookFromJournalReflection = async (areaKey, subKey, taskId, notes, taskType = 'curiosity_reflection') => {
     if (!user?.id || !notes || notes.trim().length === 0) return null;
 
     try {
-      // Get the specific prompt text
+      // Get the specific prompt text or activity description
       const competencyData = competencies[areaKey];
       let promptText = '';
+      let entryTitle = 'Leadership Reflection';
       
       // Check if this is a curiosity ignition prompt
       if (subKey === 'curiosity_ignition' && competencyData?.curiosity_ignition?.reflection_prompts) {
         const promptIndex = parseInt(taskId.replace('prompt_', ''));
         promptText = competencyData.curiosity_ignition.reflection_prompts[promptIndex] || '';
+        entryTitle = promptText ? `Journal: ${promptText.substring(0, 50)}...` : 'Curiosity Reflection';
+      }
+      // Check if this is a monthly activity reflection
+      else if (taskId.includes('_reflection') && competencyData?.sub_competencies?.[subKey]?.monthly_activities) {
+        const activityKey = taskId.replace('_reflection', '');
+        const monthlyActivities = competencyData.sub_competencies[subKey].monthly_activities;
+        
+        // Find the activity by searching through months
+        for (const activity of monthlyActivities) {
+          if (activity.id === activityKey) {
+            promptText = activity.reflection || activity.journal_prompt || activity.curiosity_question || '';
+            entryTitle = `Monthly Activity: ${activity.title}`;
+            break;
+          }
+        }
+      } 
+      // Handle task evidence/notes
+      else if (taskType === 'task_evidence') {
+        entryTitle = `Task Evidence: ${taskId}`;
+        promptText = 'Task completion evidence and learning notes';
+      }
+      // Generic reflection
+      else {
+        entryTitle = `${taskType.replace('_', ' ')}: ${subKey.replace('_', ' ')}`;
       }
       
       // Create flightbook entry structure
       const flightbookEntry = {
         id: `journal_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        title: promptText ? `Journal: ${promptText.substring(0, 50)}...` : 'Leadership Reflection',
+        title: entryTitle,
         content: notes,
         competency: areaKey,
-        type: 'journal_reflection',
-        source: 'competency_journal',
+        type: taskType.replace('_', '_'),
+        source: 'competency_work',
         original_prompt: promptText,
-        tags: ['journal', 'reflection', 'auto-generated'],
+        tags: [taskType.replace('_', '-'), 'reflection', 'auto-generated'],
         date: new Date(),
         competency_area: areaKey,
         sub_competency: subKey,
         task_id: taskId
       };
 
-      console.log('Creating flightbook entry:', flightbookEntry);
+      console.log('Creating flightbook entry:', entryTitle);
       
       // Store in localStorage for now (later we'll add backend API)
       const existingEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
@@ -4878,7 +4903,7 @@ const App = () => {
       // TODO: Later add backend API call to save flightbook entry
       // await axios.post(`${API}/users/${user.id}/flightbook`, flightbookEntry);
       
-      console.log('Flightbook entry created successfully');
+      console.log(`Flightbook entry created successfully: ${entryTitle}`);
       return flightbookEntry;
     } catch (error) {
       console.error('Error creating flightbook entry from journal reflection:', error);
