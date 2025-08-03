@@ -5080,6 +5080,7 @@ const App = () => {
             portfolio={portfolio} 
             setCurrentView={setCurrentView} 
             competencies={competencies}
+            reloadPortfolio={reloadPortfolio}
           />
         )}
         
