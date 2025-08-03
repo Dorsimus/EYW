@@ -6397,7 +6397,12 @@ const CompetenciesView = ({
                               rows="2"
                               value={getCompetencyTaskNotes(areaKey, 'curiosity_ignition', `prompt_${index}`) || ''}
                               onChange={(e) => {
-                                onCompleteCompetencyTask(areaKey, 'curiosity_ignition', `prompt_${index}`, e.target.value, 'curiosity_reflection');
+                                // Only update localStorage on change, don't create flightbook entries yet
+                                onJournalReflectionChange(areaKey, 'curiosity_ignition', `prompt_${index}`, e.target.value, 'curiosity_reflection');
+                              }}
+                              onBlur={(e) => {
+                                // Create or update flightbook entry when user finishes editing
+                                onJournalReflectionComplete(areaKey, 'curiosity_ignition', `prompt_${index}`, e.target.value, 'curiosity_reflection');
                               }}
                             />
                           </div>
