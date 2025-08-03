@@ -9590,8 +9590,13 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                               >
                                 ✏️ Edit
                               </button>
-                              <button className="text-sm text-green-600 hover:text-green-800">📁 Add to Portfolio</button>
-                              <button className="text-sm text-purple-600 hover:text-purple-800">🔗 Link to Task</button>
+                              <button 
+                                onClick={() => navigateToOriginalTask(entry)}
+                                className="text-sm text-purple-600 hover:text-purple-800"
+                                title="Navigate to original competency section"
+                              >
+                                🔗 Link to Task
+                              </button>
                             </div>
                             <div className="text-xs text-gray-500">
                               Last updated: {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'}
