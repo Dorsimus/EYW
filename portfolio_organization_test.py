@@ -80,8 +80,18 @@ class PortfolioOrganizationTester:
             return False, {"error": str(e)}
 
     def setup_test_user(self):
-        """Create a test user for portfolio testing"""
+        """Create a test user for portfolio testing or use existing demo user"""
+        # First try to use existing demo user
+        demo_user_id = "demo-user-123"
+        success, response = self.run_test("Get Demo User", "GET", f"users/{demo_user_id}", 200)
+        if success:
+            self.user_id = demo_user_id
+            print(f"   Using existing demo user with ID: {self.user_id}")
+            return True, response
+        
+        # If demo user doesn't exist, create a new test user with explicit ID
         user_data = {
+            "id": f"portfolio_test_{datetime.now().strftime('%H%M%S')}",
             "email": f"portfolio_test_{datetime.now().strftime('%H%M%S')}@earnwings.com",
             "name": "Portfolio Test User",
             "role": "participant",
