@@ -4821,10 +4821,10 @@ const App = () => {
     setCompetencyTaskProgress(updatedProgress);
     localStorage.setItem('competency_task_progress', JSON.stringify(updatedProgress));
     
-    // Automatically create flightbook entry for journal reflections
-    if (taskType === 'curiosity_reflection' && notes && notes.trim().length > 10) {
-      console.log('Creating flightbook entry from journal reflection...');
-      await createFlightbookFromJournalReflection(areaKey, subKey, taskId, notes);
+    // Automatically create flightbook entry for ANY meaningful journal/reflection entry
+    if (notes && notes.trim().length > 10) {
+      console.log(`Creating flightbook entry from ${taskType} with content:`, notes.substring(0, 50) + '...');
+      await createFlightbookFromJournalReflection(areaKey, subKey, taskId, notes, taskType);
     }
     
     setShowTaskModal(null);
