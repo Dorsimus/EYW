@@ -523,6 +523,21 @@ frontend:
         - agent: "testing"
         - comment: "🎯 FINAL ULTRA-SUBTLE PROFESSIONAL DESIGN VERIFICATION COMPLETED WITH MAXIMUM ELEGANCE! Comprehensive testing of all ultra-subtle design refinements confirms PERFECT implementation: **ULTRA-SUBTLE NAVIGATION:** ✅ Inactive buttons maintain perfect Redstone Gray backgrounds (rgba(239, 239, 239, 0.9)) with professional dark gray text (#4a5568), ✅ Active button shows barely-there red gradient (rgba(255, 52, 67, 0.12) to rgba(225, 40, 54, 0.08)) - ultra-subtle as requested, ✅ Hover effects whisper-soft with gentle wiggle animation and minimal color changes (rgba(255, 52, 67, 0.08) to 0.06), ✅ All text remains perfectly readable with professional dark gray (#374151). **PROFESSIONAL USER INTERFACE:** ✅ User avatar uses whisper-soft gradient background (rgba(1, 39, 162, 0.08) to rgba(255, 52, 67, 0.06)) with minimal border and shadow, ✅ Admin button has identical sophisticated styling with professional appearance, ✅ All interactive elements maintain gentle, refined appearance. **UNDERSTATED COMPETENCY COLORS:** ✅ Financial Management shows CRITICAL SUCCESS with subtle green border (rgba(5, 150, 105, 0.7)) - no longer pink/purple!, ✅ All competency areas maintain ultra-subtle color identity: Leadership (blue 0.7 opacity), Operational (orange 0.7 opacity), Cross-functional (purple 0.7 opacity), Strategic (red 0.7 opacity), ✅ Progress bars use soft color gradients, ✅ Overall appearance whisper-soft and professional. **PROFESSIONAL CONSISTENCY:** ✅ Enterprise-ready appearance confirmed with 75% subtlety score, ✅ No harsh color transitions anywhere, ✅ Interface feels calm, professional, and elegant, ✅ Color coding functional but understated, ✅ Premium sophisticated impression throughout. **INTERACTION EXCELLENCE:** ✅ Hover effects minimal but present (1.02 scale transforms), ✅ Animations smooth and gentle with wiggle effects, ✅ No jarring visual changes, ✅ Professional feel maintained in all interactions. **FINAL RESULT:** Maximum elegance and professional sophistication achieved! All colors whisper-soft and enterprise-appropriate. Design has reached ultimate subtlety while maintaining full functionality. Ultra-subtle design refinements perfectly implemented!"
 
+  - task: "Bidirectional Sync and Full Title Display Fix"
+    implemented: true
+    working: false
+    file: "frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "IDENTIFIED: Two issues reported by user: 1) Entry titles still showing truncated prompts like 'Journal: What does leadership look like when no one's watch...' instead of full questions, 2) Bidirectional editing not working - changes made in Flightbook don't appear in original Competency section textareas. Root causes: Existing entries were created with old truncated logic, and Flightbook editing only updates localStorage but not React state."
+        - working: false  
+        - agent: "main"
+        - comment: "IMPLEMENTED: Fixed both issues: 1) ✅ TITLE REGENERATION: Added logic in loadFlightbookEntries to detect truncated titles (containing '...') and regenerate them using original_prompt field, saves corrected entries back to localStorage, 2) ✅ BIDIRECTIONAL SYNC: Enhanced LeadershipFlightbookView to accept competencyTaskProgress and setCompetencyTaskProgress props from main App component, 3) ✅ REACT STATE UPDATE: Modified saveEditedEntry function to update both localStorage AND React state when editing from Flightbook, ensuring competency textareas reflect changes, 4) ✅ PROPS PASSING: Updated App component to pass competencyTaskProgress and setCompetencyTaskProgress to LeadershipFlightbookView. Ready for testing."
+
   - task: "Flightbook Full Prompt Display and Bidirectional Editing"
     implemented: true
     working: true
