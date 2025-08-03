@@ -850,6 +850,12 @@ async def get_user_competencies(user_id: str):
             }
         
         sub_comp = comp["sub_competency"]
+        
+        # Handle case where sub-competency doesn't exist in current structure (legacy data)
+        if sub_comp not in NAVIGATOR_COMPETENCIES[area]["sub_competencies"]:
+            print(f"Warning: Sub-competency '{sub_comp}' not found in area '{area}', skipping...")
+            continue
+            
         organized[area]["sub_competencies"][sub_comp] = {
             "name": NAVIGATOR_COMPETENCIES[area]["sub_competencies"][sub_comp],
             "completion_percentage": comp["completion_percentage"],
