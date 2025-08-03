@@ -7671,55 +7671,228 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
   );
 };
 
-// Portfolio View Component  
-const PortfolioView = ({ portfolio, setCurrentView }) => {
+// Enhanced Portfolio View Component with Competency Organization
+const PortfolioView = ({ portfolio, setCurrentView, competencies }) => {
+  // Helper function to get competency color scheme
+  const getCompetencyColor = (competencyKey) => {
+    const colorMap = {
+      'leadership_supervision': 'blue',
+      'financial_management': 'green', 
+      'operational_management': 'purple',
+      'cross_functional_collaboration': 'orange',
+      'strategic_thinking': 'red'
+    };
+    return colorMap[competencyKey] || 'gray';
+  };
+
+  // Helper function to get competency display name
+  const getCompetencyName = (competencyKey) => {
+    return competencies[competencyKey]?.name || competencyKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  };
+
+  // Group portfolio items by competency areas
+  const organizePortfolioByCompetency = () => {
+    const organized = {};
+    const unassigned = [];
+
+    portfolio.forEach(item => {
+      if (item.competency_areas && item.competency_areas.length > 0) {
+        item.competency_areas.forEach(competencyKey => {
+          if (!organized[competencyKey]) {
+            organized[competencyKey] = [];
+          }
+          organized[competencyKey].push(item);
+        });
+      } else {
+        unassigned.push(item);
+      }
+    });
+
+    return { organized, unassigned };
+  };
+
+  const { organized, unassigned } = organizePortfolioByCompetency();
+  const totalItems = portfolio.length;
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      {/* Header Section */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">📁 Your Portfolio</h2>
-        <p className="text-lg text-gray-600">Document your learning journey and career advancement</p>
+        <h2 className="text-4xl font-bold text-gray-900 mb-2">📁 Your Portfolio</h2>
+        <p className="text-lg text-gray-600 mb-4">Document your learning journey and career advancement</p>
+        <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
+          <span className="text-blue-800 font-medium">{totalItems} Portfolio Items</span>
+        </div>
       </div>
 
-      {portfolio.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {portfolio.map(item => (
-            <div key={item.id} className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-lg font-semibold text-gray-900 flex-1">{item.title}</h3>
-                  <div className="text-sm text-gray-400">
-                    {item.file_path ? '📎' : '📝'}
+      {totalItems > 0 ? (
+        <div className="space-y-8">
+          {/* Quick Actions */}
+          <div className="flex justify-center space-x-4">
+            <button 
+              onClick={() => setCurrentView('add-portfolio')}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+            >
+              ➕ Add New Item
+            </button>
+            <button className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+              🔍 Search & Filter
+            </button>
+          </div>
+
+          {/* Competency-Organized Sections */}
+          {Object.entries(organized).map(([competencyKey, items]) => {
+            const color = getCompetencyColor(competencyKey);
+            const competencyName = getCompetencyName(competencyKey);
+            const itemCount = items.length;
+
+            return (
+              <div key={competencyKey} className="space-y-4">
+                {/* Competency Section Header */}
+                <div className={`border-l-4 border-${color}-500 bg-${color}-50 p-4 rounded-r-lg`}>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className={`text-xl font-bold text-${color}-900`}>
+                        {competencyName}
+                      </h3>
+                      <p className={`text-${color}-700 text-sm`}>
+                        {itemCount} {itemCount === 1 ? 'item' : 'items'} in this competency area
+                      </p>
+                    </div>
+                    <div className={`bg-${color}-100 text-${color}-800 px-3 py-1 rounded-full text-sm font-medium`}>
+                      {itemCount}
+                    </div>
                   </div>
                 </div>
-                
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">{item.description}</p>
-                
-                {item.competency_areas.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {item.competency_areas.map(area => (
-                      <span key={area} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        {area}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                
-                {item.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {item.tags.map(tag => (
-                      <span key={tag} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                
-                <div className="text-xs text-gray-500 mt-4">
-                  Uploaded: {new Date(item.upload_date).toLocaleDateString()}
+
+                {/* Portfolio Items Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pl-4">
+                  {items.map(item => (
+                    <div key={`${competencyKey}-${item.id}`} className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow border-l-4" style={{borderLeftColor: `var(--${color}-500)`}}>
+                      <div className="p-6">
+                        <div className="flex items-start justify-between mb-3">
+                          <h4 className="text-lg font-semibold text-gray-900 flex-1">{item.title}</h4>
+                          <div className="text-sm text-gray-400">
+                            {item.file_path ? '📎' : '📝'}
+                          </div>
+                        </div>
+                        
+                        <p className="text-gray-600 text-sm mb-4 line-clamp-3">{item.description}</p>
+                        
+                        {/* File Information */}
+                        {item.file_path && (
+                          <div className="mb-4 p-2 bg-gray-50 rounded-md">
+                            <div className="flex items-center justify-between text-xs text-gray-600">
+                              <span>📄 {item.original_filename}</span>
+                              {item.file_size_formatted && (
+                                <span>{item.file_size_formatted}</span>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Multiple Competency Tags (if item belongs to multiple areas) */}
+                        {item.competency_areas.length > 1 && (
+                          <div className="flex flex-wrap gap-1 mb-4">
+                            {item.competency_areas.filter(area => area !== competencyKey).map(area => (
+                              <span key={area} className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-${getCompetencyColor(area)}-100 text-${getCompetencyColor(area)}-800`}>
+                                Also in: {getCompetencyName(area)}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        
+                        {/* Tags */}
+                        {item.tags && item.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-4">
+                            {item.tags.map(tag => (
+                              <span key={tag} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        
+                        {/* Footer */}
+                        <div className="flex justify-between items-center text-xs text-gray-500 mt-4 pt-4 border-t">
+                          <span>📅 {new Date(item.upload_date).toLocaleDateString()}</span>
+                          <span className={`px-2 py-1 rounded text-${color}-600 bg-${color}-50`}>
+                            {item.visibility || 'private'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
+            );
+          })}
+
+          {/* Unassigned Items Section */}
+          {unassigned.length > 0 && (
+            <div className="space-y-4">
+              <div className="border-l-4 border-gray-400 bg-gray-50 p-4 rounded-r-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      📋 Unassigned Items
+                    </h3>
+                    <p className="text-gray-700 text-sm">
+                      {unassigned.length} {unassigned.length === 1 ? 'item' : 'items'} not linked to specific competencies
+                    </p>
+                  </div>
+                  <div className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">
+                    {unassigned.length}
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pl-4">
+                {unassigned.map(item => (
+                  <div key={item.id} className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow border-l-4 border-gray-400">
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-3">
+                        <h4 className="text-lg font-semibold text-gray-900 flex-1">{item.title}</h4>
+                        <div className="text-sm text-gray-400">
+                          {item.file_path ? '📎' : '📝'}
+                        </div>
+                      </div>
+                      
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-3">{item.description}</p>
+                      
+                      {item.file_path && (
+                        <div className="mb-4 p-2 bg-gray-50 rounded-md">
+                          <div className="flex items-center justify-between text-xs text-gray-600">
+                            <span>📄 {item.original_filename}</span>
+                            {item.file_size_formatted && (
+                              <span>{item.file_size_formatted}</span>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {item.tags && item.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mb-4">
+                          {item.tags.map(tag => (
+                            <span key={tag} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      
+                      <div className="flex justify-between items-center text-xs text-gray-500 mt-4 pt-4 border-t">
+                        <span>📅 {new Date(item.upload_date).toLocaleDateString()}</span>
+                        <span className="px-2 py-1 rounded text-gray-600 bg-gray-50">
+                          {item.visibility || 'private'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
+          )}
         </div>
       ) : (
         <div className="text-center py-12">
