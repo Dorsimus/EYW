@@ -5050,6 +5050,14 @@ const App = () => {
           />
         )}
         
+        {currentView === 'flightbook' && !isAdmin && (
+          <LeadershipFlightbookView 
+            competencies={competencies}
+            portfolio={portfolio}
+            setCurrentView={setCurrentView}
+          />
+        )}
+        
         {currentView === 'core-values' && !isAdmin && (
           <CoreValuesView 
             coreValues={coreValues}
