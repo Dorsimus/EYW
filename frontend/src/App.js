@@ -9082,9 +9082,10 @@ const AdminAnalyticsView = ({ stats, tasks, users }) => {
   );
 };
 
-// My Leadership Flightbook View Component
+// My Leadership Flightbook View Component with Accordion Organization
 const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) => {
   const [flightbookEntries, setFlightbookEntries] = useState([]);
+  const [expandedSections, setExpandedSections] = useState({});
   
   // Load flightbook entries when component mounts
   useEffect(() => {
@@ -9140,13 +9141,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) =
     }
   };
 
-  // Extract journal entries and reflections from various sources
-  const getJournalEntries = () => {
-    return flightbookEntries;
-  };
-
-  const journalEntries = getJournalEntries();
-
+  // Helper function to get competency color scheme (same as Portfolio)
   const getCompetencyColor = (competencyKey) => {
     const colorMap = {
       'leadership_supervision': 'blue',
@@ -9158,114 +9153,267 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) =
     return colorMap[competencyKey] || 'gray';
   };
 
+  // Helper function to get competency display name
+  const getCompetencyName = (competencyKey) => {
+    return competencies[competencyKey]?.name || competencyKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  };
+
+  // Toggle section expansion
+  const toggleSection = (sectionKey) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [sectionKey]: !prev[sectionKey]
+    }));
+  };
+
+  // Group flightbook entries by competency areas
+  const organizeFlightbookByCompetency = () => {
+    const organized = {};
+    const unassigned = [];
+
+    flightbookEntries.forEach(entry => {
+      const competencyKey = entry.competency || entry.competency_area;
+      if (competencyKey && competencies[competencyKey]) {
+        if (!organized[competencyKey]) {
+          organized[competencyKey] = [];
+        }
+        organized[competencyKey].push(entry);
+      } else {
+        unassigned.push(entry);
+      }
+    });
+
+    return { organized, unassigned };
+  };
+
+  // Extract journal entries and reflections from various sources
+  const getJournalEntries = () => {
+    return flightbookEntries;
+  };
+
+  const { organized, unassigned } = organizeFlightbookByCompetency();
+  const journalEntries = getJournalEntries();
+  const totalEntries = journalEntries.length;
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header Section */}
       <div className="text-center">
         <h2 className="text-4xl font-bold text-gray-900 mb-2">✈️ My Leadership Flightbook</h2>
         <p className="text-lg text-gray-600 mb-4">Your personal journey log of leadership experiences, insights, and growth moments</p>
-        <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
-          <span className="text-blue-800 font-medium">{journalEntries.length} Flight Log Entries</span>
+        <div className="flex justify-center space-x-4">
+          <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
+            <span className="text-blue-800 font-medium">{totalEntries} Flight Log Entries</span>
+          </div>
+          <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+            ✏️ New Flight Log Entry
+          </button>
+          <button 
+            onClick={() => {
+              // Test function to create a sample flightbook entry
+              const testEntry = {
+                id: `test_${Date.now()}`,
+                title: 'Test: Manual Flightbook Entry',
+                content: 'This is a test entry to verify the flightbook system is working correctly.',
+                competency: 'leadership_supervision',
+                type: 'manual_test',
+                source: 'manual_entry',
+                tags: ['test', 'manual'],
+                date: new Date()
+              };
+              const existingEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+              existingEntries.push(testEntry);
+              localStorage.setItem('flightbook_entries', JSON.stringify(existingEntries));
+              loadFlightbookEntries(); // Reload to show new entry
+              console.log('Test flightbook entry created');
+            }}
+            className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          >
+            🧪 Test Entry
+          </button>
         </div>
       </div>
 
-      {journalEntries.length > 0 ? (
-        <div className="space-y-6">
-          {/* Quick Actions */}
-          <div className="flex justify-center space-x-4">
-            <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-              ✏️ New Flight Log Entry
-            </button>
-            <button 
-              onClick={() => {
-                // Test function to create a sample flightbook entry
-                const testEntry = {
-                  id: `test_${Date.now()}`,
-                  title: 'Test: Manual Flightbook Entry',
-                  content: 'This is a test entry to verify the flightbook system is working correctly.',
-                  competency: 'leadership_supervision',
-                  type: 'manual_test',
-                  source: 'manual_entry',
-                  tags: ['test', 'manual'],
-                  date: new Date()
-                };
-                const existingEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
-                existingEntries.push(testEntry);
-                localStorage.setItem('flightbook_entries', JSON.stringify(existingEntries));
-                loadFlightbookEntries(); // Reload to show new entry
-                console.log('Test flightbook entry created');
-              }}
-              className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-            >
-              🧪 Test Entry
-            </button>
-            <button className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-              📈 View Growth Timeline
-            </button>
-            <button className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-              📄 Export Flightbook
-            </button>
-          </div>
+      {totalEntries > 0 ? (
+        <div className="space-y-4">
+          {/* Competency-Organized Accordion Sections */}
+          {Object.entries(organized).map(([competencyKey, entries]) => {
+            const color = getCompetencyColor(competencyKey);
+            const competencyName = getCompetencyName(competencyKey);
+            const entryCount = entries.length;
+            const isExpanded = expandedSections[competencyKey];
 
-          {/* Journal Entries Timeline */}
-          <div className="space-y-6">
-            {journalEntries.map((entry) => {
-              const color = getCompetencyColor(entry.competency);
-              const competencyName = competencies[entry.competency]?.name || entry.competency;
-              
-              return (
-                <div key={entry.id} className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
-                  <div className={`border-l-4 border-${color}-500 p-6`}>
-                    {/* Entry Header */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-3 mb-2">
-                          <h3 className="text-xl font-semibold text-gray-900">{entry.title}</h3>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-800`}>
-                            {competencyName}
-                          </span>
-                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                            {entry.type}
-                          </span>
-                        </div>
-                        <div className="text-sm text-gray-500 mb-3">
-                          📅 {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'} • Source: {entry.source ? entry.source.replace('_', ' ') : 'manual entry'}
-                        </div>
+            return (
+              <div key={competencyKey} className="bg-white rounded-lg shadow border">
+                {/* Competency Section Header - Clickable */}
+                <button
+                  onClick={() => toggleSection(competencyKey)}
+                  className={`w-full p-4 text-left border-l-4 border-${color}-500 bg-${color}-50 rounded-t-lg hover:bg-${color}-100 transition-colors`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-2xl">
+                        {isExpanded ? '✈️' : '🛩️'}
+                      </span>
+                      <div>
+                        <h3 className={`text-lg font-bold text-${color}-900`}>
+                          {competencyName}
+                        </h3>
+                        <p className={`text-sm text-${color}-700`}>
+                          {entryCount} flight log {entryCount !== 1 ? 'entries' : 'entry'}
+                        </p>
                       </div>
                     </div>
-
-                    {/* Entry Content */}
-                    <div className="prose max-w-none mb-4">
-                      <p className="text-gray-700 leading-relaxed">{entry.content}</p>
-                    </div>
-
-                    {/* Tags */}
-                    {entry.tags && entry.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {entry.tags.map(tag => (
-                          <span key={tag} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
-                            #{tag}
-                          </span>
-                        ))}
+                    <div className="flex items-center space-x-2">
+                      <div className={`bg-${color}-100 text-${color}-800 px-3 py-1 rounded-full text-sm font-medium`}>
+                        {entryCount}
                       </div>
-                    )}
-
-                    {/* Entry Actions */}
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                      <div className="flex space-x-3">
-                        <button className="text-sm text-blue-600 hover:text-blue-800">✏️ Edit</button>
-                        <button className="text-sm text-green-600 hover:text-green-800">📁 Add to Portfolio</button>
-                        <button className="text-sm text-purple-600 hover:text-purple-800">🔗 Link to Task</button>
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        Last updated: {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'}
-                      </div>
+                      <span className={`text-${color}-600 text-lg`}>
+                        {isExpanded ? '▼' : '▶'}
+                      </span>
                     </div>
                   </div>
+                </button>
+
+                {/* Expandable Content */}
+                {isExpanded && (
+                  <div className="border-t border-gray-200">
+                    <div className="p-4 space-y-4">
+                      {entries.map((entry) => (
+                        <div key={entry.id} className={`p-4 border-l-4 border-${color}-500 bg-${color}-25 rounded-r-lg`}>
+                          {/* Entry Header */}
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-3 mb-2">
+                                <h4 className="text-lg font-semibold text-gray-900">{entry.title}</h4>
+                                <span className={`px-2 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-800`}>
+                                  {entry.type?.replace('_', ' ') || 'reflection'}
+                                </span>
+                              </div>
+                              <div className="text-sm text-gray-500 mb-3">
+                                📅 {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'} • Source: {entry.source ? entry.source.replace('_', ' ') : 'manual entry'}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Entry Content */}
+                          <div className="prose max-w-none mb-4">
+                            <p className="text-gray-700 leading-relaxed">{entry.content}</p>
+                          </div>
+
+                          {/* Tags */}
+                          {entry.tags && entry.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mb-4">
+                              {entry.tags.map(tag => (
+                                <span key={tag} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                                  #{tag}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Entry Actions */}
+                          <div className="flex items-center justify-between pt-3 border-t border-gray-200">
+                            <div className="flex space-x-3">
+                              <button className={`text-sm text-${color}-600 hover:text-${color}-800`}>✏️ Edit</button>
+                              <button className="text-sm text-green-600 hover:text-green-800">📁 Add to Portfolio</button>
+                              <button className="text-sm text-purple-600 hover:text-purple-800">🔗 Link to Task</button>
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              Last updated: {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
+          {/* Unassigned Entries Section */}
+          {unassigned.length > 0 && (
+            <div className="bg-white rounded-lg shadow border">
+              <button
+                onClick={() => toggleSection('unassigned')}
+                className="w-full p-4 text-left border-l-4 border-gray-400 bg-gray-50 rounded-t-lg hover:bg-gray-100 transition-colors"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">
+                      {expandedSections['unassigned'] ? '✈️' : '🛩️'}
+                    </span>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900">
+                        📋 General Reflections
+                      </h3>
+                      <p className="text-sm text-gray-700">
+                        {unassigned.length} {unassigned.length !== 1 ? 'entries' : 'entry'} not linked to specific competencies
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">
+                      {unassigned.length}
+                    </div>
+                    <span className="text-gray-600 text-lg">
+                      {expandedSections['unassigned'] ? '▼' : '▶'}
+                    </span>
+                  </div>
                 </div>
-              );
-            })}
-          </div>
+              </button>
+
+              {expandedSections['unassigned'] && (
+                <div className="border-t border-gray-200">
+                  <div className="p-4 space-y-4">
+                    {unassigned.map((entry) => (
+                      <div key={entry.id} className="p-4 border-l-4 border-gray-400 bg-gray-25 rounded-r-lg">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-3 mb-2">
+                              <h4 className="text-lg font-semibold text-gray-900">{entry.title}</h4>
+                              <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                {entry.type?.replace('_', ' ') || 'reflection'}
+                              </span>
+                            </div>
+                            <div className="text-sm text-gray-500 mb-3">
+                              📅 {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'} • Source: {entry.source ? entry.source.replace('_', ' ') : 'manual entry'}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="prose max-w-none mb-4">
+                          <p className="text-gray-700 leading-relaxed">{entry.content}</p>
+                        </div>
+
+                        {entry.tags && entry.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {entry.tags.map(tag => (
+                              <span key={tag} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        <div className="flex items-center justify-between pt-3 border-t border-gray-200">
+                          <div className="flex space-x-3">
+                            <button className="text-sm text-gray-600 hover:text-gray-800">✏️ Edit</button>
+                            <button className="text-sm text-green-600 hover:text-green-800">📁 Add to Portfolio</button>
+                            <button className="text-sm text-purple-600 hover:text-purple-800">🔗 Link to Task</button>
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            Last updated: {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       ) : (
         <div className="text-center py-12">
