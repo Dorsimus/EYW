@@ -7812,6 +7812,87 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
 
       {totalItems > 0 ? (
         <div className="space-y-4">
+          {/* Culminating Project Section - Featured at Top */}
+          {culminatingProject.length > 0 && (
+            <div className="bg-white rounded-lg shadow border border-yellow-200">
+              <button
+                onClick={() => toggleSection('culminating_project')}
+                className="w-full p-4 text-left border-l-4 border-yellow-500 bg-yellow-50 rounded-t-lg hover:bg-yellow-100 transition-colors"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-2xl">
+                      {expandedSections['culminating_project'] ? '🏆' : '🎯'}
+                    </span>
+                    <div>
+                      <h3 className="text-lg font-bold text-yellow-900">
+                        🎯 Culminating Project
+                      </h3>
+                      <p className="text-sm text-yellow-700">
+                        {culminatingProject.length} project document{culminatingProject.length !== 1 ? 's' : ''} • Your capstone leadership project
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
+                      {culminatingProject.length}
+                    </div>
+                    <span className="text-yellow-600 text-lg">
+                      {expandedSections['culminating_project'] ? '▼' : '▶'}
+                    </span>
+                  </div>
+                </div>
+              </button>
+
+              {expandedSections['culminating_project'] && (
+                <div className="border-t border-gray-200">
+                  <div className="p-4 space-y-3">
+                    {culminatingProject.map(item => (
+                      <div 
+                        key={item.id} 
+                        className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors border border-yellow-200"
+                      >
+                        <div className="flex items-center space-x-3 flex-1">
+                          <div className="text-2xl">
+                            {item.file_path ? '📋' : '📝'}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-sm font-semibold text-gray-900 truncate">
+                              {item.title}
+                            </h4>
+                            <p className="text-xs text-gray-600 truncate">
+                              {item.description}
+                            </p>
+                            {item.file_path && (
+                              <p className="text-xs text-yellow-600 font-medium">
+                                📎 {item.original_filename} 
+                                {item.file_size_formatted && ` (${item.file_size_formatted})`}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          {item.file_path && (
+                            <button
+                              onClick={() => handleDocumentView(item)}
+                              className="px-3 py-1 text-xs font-medium text-yellow-700 bg-yellow-200 rounded hover:bg-yellow-300 transition-colors"
+                            >
+                              📖 View
+                            </button>
+                          )}
+                          <div className="text-xs text-gray-500">
+                            {new Date(item.upload_date).toLocaleDateString()}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Competency-Organized Accordion Sections */}
           {Object.entries(organized).map(([competencyKey, items]) => {
             const color = getCompetencyColor(competencyKey);
