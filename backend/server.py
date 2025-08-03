@@ -966,6 +966,49 @@ async def complete_task(
     
     return completion
 
+# Alternative endpoint for the new API structure
+@api_router.post("/users/{user_id}/tasks/complete")
+async def complete_task_new(
+    user_id: str,
+    task_id: str = Form(...),
+    evidence_description: str = Form(""),
+    notes: str = Form(""),
+    file: UploadFile = File(None)
+):
+    # Check if task exists
+    task = await db.tasks.find_one({"id": task_id})
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    
+    # Check if already completed
+    existing = await db.task_completions.find_one({"user_id": user_id, "task_id": task_id})
+    if existing:
+        raise HTTPException(status_code=400, detail="Task already completed")
+    
+    completion = TaskCompletion(
+        user_id=user_id,
+        task_id=task_id,
+        evidence_description=evidence_description,
+        notes=notes
+    )
+    
+    # Handle file upload if provided using enhanced system
+    if file:
+        try:
+            file_data = await save_uploaded_file(file, "evidence", user_id, completion.id)
+            completion.evidence_file_path = file_data["file_path"]
+        except HTTPException:
+            raise  # Re-raise validation errors
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Evidence file upload failed: {str(e)}")
+    
+    await db.task_completions.insert_one(completion.dict())
+    
+    # Update competency progress
+    await update_all_competency_progress(user_id)
+    
+    return serialize_doc(completion.dict())
+
 # Admin Task Management Routes
 @api_router.post("/admin/tasks", response_model=Task)
 async def admin_create_task(task_data: TaskCreate, admin_user = Depends(get_current_admin)):
