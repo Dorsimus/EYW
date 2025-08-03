@@ -9205,6 +9205,8 @@ const AdminAnalyticsView = ({ stats, tasks, users }) => {
 const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) => {
   const [flightbookEntries, setFlightbookEntries] = useState([]);
   const [expandedSections, setExpandedSections] = useState({});
+  const [editingEntry, setEditingEntry] = useState(null);
+  const [editContent, setEditContent] = useState('');
   
   // Load flightbook entries when component mounts
   useEffect(() => {
