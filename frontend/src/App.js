@@ -9204,7 +9204,7 @@ const AdminAnalyticsView = ({ stats, tasks, users }) => {
 };
 
 // My Leadership Flightbook View Component with Accordion Organization
-const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView }) => {
+const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, competencyTaskProgress, setCompetencyTaskProgress }) => {
   const [flightbookEntries, setFlightbookEntries] = useState([]);
   const [expandedSections, setExpandedSections] = useState({});
   const [editingEntry, setEditingEntry] = useState(null);
