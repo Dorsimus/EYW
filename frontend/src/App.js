@@ -5042,7 +5042,11 @@ const App = () => {
         )}
         
         {currentView === 'portfolio' && !isAdmin && (
-          <PortfolioView portfolio={portfolio} setCurrentView={setCurrentView} />
+          <PortfolioView 
+            portfolio={portfolio} 
+            setCurrentView={setCurrentView} 
+            competencies={competencies}
+          />
         )}
         
         {currentView === 'core-values' && !isAdmin && (
