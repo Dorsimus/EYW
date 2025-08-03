@@ -3994,6 +3994,68 @@ const App = () => {
     }
   };
 
+  // Function to automatically create portfolio item from task completion
+  const createPortfolioFromTaskCompletion = async (taskData, competencyArea, evidenceDescription, evidenceFile = null) => {
+    if (!user?.id) return null;
+
+    try {
+      const portfolioData = {
+        title: `${taskData.title} - Evidence`,
+        description: evidenceDescription,
+        competency_areas: [competencyArea],
+        tags: ['task-evidence', 'auto-generated'],
+        visibility: 'private'
+      };
+
+      const formData = new FormData();
+      Object.keys(portfolioData).forEach(key => {
+        if (key === 'competency_areas' || key === 'tags') {
+          formData.append(key, JSON.stringify(portfolioData[key]));
+        } else {
+          formData.append(key, portfolioData[key]);
+        }
+      });
+
+      if (evidenceFile) {
+        formData.append('file', evidenceFile);
+      }
+
+      const response = await axios.post(`${API}/users/${user.id}/portfolio`, formData);
+      console.log('Auto-created portfolio item from task completion:', response.data);
+      
+      return response.data;
+    } catch (error) {
+      console.error('Error creating portfolio item from task completion:', error);
+      return null;
+    }
+  };
+
+  // Function to automatically create flightbook entry from task completion
+  const createFlightbookFromTaskCompletion = async (taskData, competencyArea, notes) => {
+    if (!user?.id || !notes || notes.trim().length === 0) return null;
+
+    try {
+      // This will be expanded when we implement the full flightbook backend
+      const flightbookEntry = {
+        title: `${taskData.title} - Reflection`,
+        content: notes,
+        competency: competencyArea,
+        type: 'task_reflection',
+        source: 'task_completion',
+        tags: ['task-reflection', 'auto-generated'],
+        date: new Date()
+      };
+
+      console.log('Would create flightbook entry:', flightbookEntry);
+      // TODO: Implement backend endpoint for flightbook entries
+      
+      return flightbookEntry;
+    } catch (error) {
+      console.error('Error creating flightbook entry from task completion:', error);
+      return null;
+    }
+  };
+
   const loadCompetencyTasks = async (competencyArea, subCompetency) => {
     try {
       if (!user?.id) return;
