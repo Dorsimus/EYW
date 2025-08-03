@@ -9320,8 +9320,26 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     setEditContent('');
   };
 
-  // Save edited entry
-  const saveEditedEntry = async (entryId) => {
+  // Navigate to the original competency location for a flightbook entry
+  const navigateToOriginalTask = (entry) => {
+    if (!entry.competency_area || !entry.sub_competency || !entry.task_id) {
+      console.log('Cannot navigate - missing location data for entry:', entry.id);
+      return;
+    }
+
+    console.log(`Navigating to competency: ${entry.competency_area} -> ${entry.sub_competency} -> ${entry.task_id}`);
+    
+    // Set current view to competencies
+    setCurrentView('competencies');
+    
+    // We could add more sophisticated navigation here, like:
+    // - Auto-expanding the correct competency area
+    // - Scrolling to the specific reflection prompt
+    // - Highlighting the relevant textarea temporarily
+    
+    // For now, just navigate to competencies - user can then find their reflection
+    // In the future we could enhance this to auto-expand and highlight the specific prompt
+  };
     try {
       const existingEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
       const entryIndex = existingEntries.findIndex(entry => entry.id === entryId);
