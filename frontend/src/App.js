@@ -9580,38 +9580,53 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                                   </div>
                                 </div>
 
-                          {/* Content display or editing interface */}
-                          {editingEntry === entry.id ? (
-                            // Editing mode
-                            <div className="mb-4">
-                              <textarea
-                                value={editContent}
-                                onChange={(e) => setEditContent(e.target.value)}
-                                className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                rows="6"
-                                placeholder="Edit your reflection..."
-                              />
-                              <div className="flex space-x-2 mt-3">
-                                <button
-                                  onClick={() => saveEditedEntry(entry.id)}
-                                  className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700"
-                                >
-                                  💾 Save Changes
-                                </button>
-                                <button
-                                  onClick={cancelEditing}
-                                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-400"
-                                >
-                                  ❌ Cancel
-                                </button>
-                              </div>
-                            </div>
-                          ) : (
-                            // Display mode
-                            <div className="prose max-w-none mb-4">
-                              <p className="text-gray-700 leading-relaxed">{entry.content}</p>
-                            </div>
-                          )}
+                                {/* Journal Content Area */}
+                                {editingEntry === entry.id ? (
+                                  // Editing mode with journal styling
+                                  <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                    <div className="flex items-center space-x-2 mb-3">
+                                      <span className="text-blue-600">✍️</span>
+                                      <span className="text-sm font-medium text-blue-800">Editing Entry</span>
+                                    </div>
+                                    <textarea
+                                      value={editContent}
+                                      onChange={(e) => setEditContent(e.target.value)}
+                                      className="w-full p-4 border-2 border-blue-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white font-serif leading-relaxed resize-none"
+                                      rows="6"
+                                      placeholder="Edit your reflection..."
+                                      style={{
+                                        backgroundImage: 'repeating-linear-gradient(transparent, transparent 22px, #e5e7eb 22px, #e5e7eb 24px)',
+                                        lineHeight: '24px',
+                                        paddingTop: '12px'
+                                      }}
+                                    />
+                                    <div className="flex space-x-3 mt-4">
+                                      <button
+                                        onClick={() => saveEditedEntry(entry.id)}
+                                        className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 transition-colors shadow-sm"
+                                      >
+                                        <span className="mr-2">💾</span>Save Changes
+                                      </button>
+                                      <button
+                                        onClick={cancelEditing}
+                                        className="inline-flex items-center px-4 py-2 bg-gray-400 text-white rounded-md text-sm font-medium hover:bg-gray-500 transition-colors shadow-sm"
+                                      >
+                                        <span className="mr-2">❌</span>Cancel
+                                      </button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  // Display mode with handwritten feel
+                                  <div className="mb-6 p-4 bg-cream-25 rounded-lg relative">
+                                    <div className="absolute left-6 top-0 bottom-0 w-px bg-red-300 opacity-60"></div>
+                                    <div className="pl-6">
+                                      <p className="text-gray-800 leading-relaxed font-serif text-base whitespace-pre-wrap" 
+                                         style={{lineHeight: '1.8'}}>
+                                        {entry.content}
+                                      </p>
+                                    </div>
+                                  </div>
+                                )}
 
                           {/* Tags */}
                           {entry.tags && entry.tags.length > 0 && (
