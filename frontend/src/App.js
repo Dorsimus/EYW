@@ -5257,7 +5257,23 @@ const App = () => {
               >
                 <div className="flex items-center space-x-3">
                   <div className="redstone-icon">
-                    {tab.icon}
+                    {tab.isImage ? (
+                      <img 
+                        src={tab.icon} 
+                        alt={tab.label}
+                        className="w-5 h-5 object-contain"
+                        onError={(e) => {
+                          // Fallback to heart emoji if image fails to load
+                          e.target.style.display = 'none';
+                          e.target.nextElementSibling.style.display = 'block';
+                        }}
+                      />
+                    ) : (
+                      tab.icon
+                    )}
+                    {tab.isImage && (
+                      <span className="text-lg" style={{ display: 'none' }}>💖</span>
+                    )}
                   </div>
                   <span className="font-semibold text-sm">
                     {tab.label}
