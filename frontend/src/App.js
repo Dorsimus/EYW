@@ -72,22 +72,22 @@ const App = () => {
     believers: {
       title: "WE ARE BELIEVERS",
       description: "We believe in ourselves, our team members, our communities, and our company. By bringing an all-in attitude, we affect positive change through an adaptable mindset. Our belief drives us to embody the unwavering energy necessary to achieve our goals. Believers get things done and inspire others to achieve more than seems possible.",
-      icon: "🌟"
+      icon: "https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/o4ei194w_We%20Are%20Believers.png"
     },
     communicate: {
       title: "WE COMMUNICATE AUTHENTICALLY WITH CARE", 
       description: "We champion diverse ideas and contributions of our people and encourage curiosity in learning about others. We foster clear, honest, and transparent dialogue. We seek to understand, assume positive intent, treat people with respect, and respond in a timely manner. Care is at the heart of respectful communication.",
-      icon: "💬"
+      icon: "https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/d5l6vrag_We%20Communicate%20Authentically%20With%20Care.png"
     },
     course: {
       title: "WE STAY THE COURSE",
       description: "We demonstrate relentless optimism, grit, and unyielding determination. In ever-changing market conditions, we recalibrate, sharpen our focus, foster alignment, and dig in together to win. Our purpose, values, and long-term goals define our \"True North,\" and inspire our course.",
-      icon: "🧭"
+      icon: "https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/42zs31nd_We%20Stay%20the%20Course.png"
     },
     performance: {
       title: "WE DRIVE PERFORMANCE", 
       description: "We are goal driven, results oriented, and have a high bar of performance. We empower our teams, hold each other accountable, and achieve expected results. We value leadership mindsets, innovation, and continuous improvement. Our purpose, strategy, and culture drive performance through our relentless commitment to our people and world-class service.",
-      icon: "🚀"
+      icon: "https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/j5pkaliy_We%20Drive%20Performance.png"
     }
   };
 
