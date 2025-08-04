@@ -9621,8 +9621,8 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
       day: 'numeric' 
     });
 
-    // Get user name (placeholder for now - this would come from user profile)
-    const userName = user?.name || user?.email || "Navigator";
+    // Get user name (placeholder for now - this would come from user profile)  
+    const userName = "Navigator"; // This will be dynamic when user profiles are implemented
     const userLevel = "Navigator"; // This will be dynamic as users advance
 
     let html = `
