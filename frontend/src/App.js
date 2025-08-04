@@ -9542,8 +9542,8 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                               </div>
                             </div>
                             
-                            {/* Journal Entry Card */}
-                            <div className="bg-white rounded-xl shadow-md border-l-4 border-amber-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
+                            {/* Journal Entry Card - Color-Matched Border */}
+                            <div className={`bg-white rounded-xl shadow-md border-l-4 border-${color}-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative overflow-hidden`}>
                               {/* Paper texture overlay */}
                               <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gray-50 to-gray-100 opacity-20 pointer-events-none"></div>
                               
