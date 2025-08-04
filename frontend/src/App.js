@@ -4924,22 +4924,13 @@ const App = () => {
 
   // Function to automatically create or update flightbook entry from journal reflection
   const createOrUpdateFlightbookFromJournalReflection = async (areaKey, subKey, taskId, notes, taskType = 'curiosity_reflection') => {
-    console.log(`[DEBUG] createOrUpdateFlightbookFromJournalReflection called:`, { areaKey, subKey, taskId, taskType });
-    console.log(`[DEBUG] User check:`, { user: user?.id, notes: notes?.length });
-    
-    if (!user?.id || !notes || notes.trim().length === 0) {
-      console.log(`[DEBUG] Early return - missing data:`, { hasUserId: !!user?.id, hasNotes: !!notes, notesLength: notes?.length });
-      return null;
-    }
+    if (!user?.id || !notes || notes.trim().length === 0) return null;
 
     try {
-      console.log(`[DEBUG] Proceeding with flightbook entry creation...`);
       // Get the specific prompt text or activity description
       const competencyData = competencies[areaKey];
       let promptText = '';
       let entryTitle = 'Leadership Reflection';
-      
-      console.log(`[DEBUG] Competency data check:`, { areaKey, hasCompetencyData: !!competencyData });
       
       // Check if this is a curiosity ignition prompt
       if (subKey === 'curiosity_ignition' && competencyData?.curiosity_ignition?.reflection_prompts) {
