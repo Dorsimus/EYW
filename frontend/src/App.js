@@ -9812,7 +9812,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
         </div>
       )}
     </div>
-  );
+  )
 };
 
 export default App;
