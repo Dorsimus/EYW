@@ -9599,7 +9599,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     }, 1000);
   };
 
-  // Generate enhanced print-optimized HTML content with professional branding
+  // Generate enhanced print-optimized HTML content with consolidated first page layout
   const generatePrintableFlightbook = () => {
     const currentDate = new Date().toLocaleDateString('en-US', { 
       weekday: 'long', 
@@ -9613,50 +9613,34 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     const userLevel = "Navigator"; // This will be dynamic as users advance
 
     let html = `
-      <!-- Professional Cover Page with Prominent EYW Logo -->
-      <div class="cover-page">
-        <div class="cover-content">
-          <!-- Prominent EYW Logo - The Star of the Page -->
-          <div class="logo-section">
-            <img src="https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/mfvf0rvf_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png" 
-                 alt="Earn Your Wings Logo" 
-                 class="eyw-cover-logo" />
-          </div>
-          
-          <!-- Program Title Below Logo -->
-          <div class="program-title-section">
-            <h1 class="cover-program-title">Earn Your Wings</h1>
-            <h2 class="cover-company-name">Redstone Development</h2>
-          </div>
-          
-          <!-- Document Information Near Bottom -->
-          <div class="document-info-section">
-            <h1 class="cover-document-title">Leadership Flightbook</h1>
-            <h2 class="cover-level-badge">Navigator Level</h2>
-            <p class="cover-subtitle">Personal Journey Log of Leadership Experiences, Insights, and Growth Moments</p>
-            
-            <!-- User and Date Info -->
-            <div class="cover-user-info">
-              <p class="cover-user-name">${userName}</p>
-              <p class="cover-export-date">Exported ${currentDate}</p>
-            </div>
-          </div>
+      <!-- Consolidated First Page Header -->
+      <div class="first-page-header">
+        <!-- Program Title at Top -->
+        <h1 class="header-program-title">Earn Your Wings</h1>
+        <h2 class="header-company-name">Redstone Employee Development</h2>
+        
+        <!-- EYW Logo - Same Position -->
+        <div class="header-logo-section">
+          <img src="https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/mfvf0rvf_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png" 
+               alt="Earn Your Wings Logo" 
+               class="eyw-header-logo" />
         </div>
-      </div>
-      
-      <!-- Page Break Before Content -->
-      <div class="page-break"></div>
-      
-      <!-- Content Summary Page -->
-      <div class="summary-page">
-        <div class="summary-header">
-          <h1 class="summary-title">My Leadership Journey</h1>
-          <p class="summary-info">${totalEntries} Total ${totalEntries === 1 ? 'Entry' : 'Entries'} • ${userLevel} Level • ${currentDate}</p>
+        
+        <!-- Document Information -->
+        <h1 class="header-document-title">Leadership Flightbook</h1>
+        <div class="header-level-badge">Navigator Level</div>
+        <p class="header-subtitle">Personal Journey Log of Leadership Experiences, Insights, and Growth Moments</p>
+        
+        <!-- User and Export Info -->
+        <div class="header-export-info">
+          <span class="info-user">${userName}</span> • 
+          <span class="info-date">${currentDate}</span> • 
+          <span class="info-entries">${totalEntries} ${totalEntries === 1 ? 'Entry' : 'Entries'}</span>
         </div>
+        
+        <!-- Divider before content -->
+        <div class="content-divider"></div>
       </div>
-      
-      <!-- Page Break Before Competency Content -->
-      <div class="page-break"></div>
     `;
 
     // Add each competency section
