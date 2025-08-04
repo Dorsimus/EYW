@@ -257,7 +257,7 @@ const App = () => {
       console.log('Admin demo environment ready with 5 tasks and 4 users');
     } else {
       // Regular user demo data
-      setUser({
+      const userData = {
         id: "demo-user-123",
         email: "demo@earnwings.com", 
         name: "Demo Navigator",
@@ -265,7 +265,11 @@ const App = () => {
         level: "navigator",
         is_admin: false,
         created_at: new Date().toISOString()
-      });
+      };
+      
+      setUser(userData);
+      // Store user data in localStorage so bidirectional sync functions can access it
+      localStorage.setItem('user', JSON.stringify(userData));
       
       // Set demo competencies with PROPER structure matching what UI expects
       setCompetencies({
