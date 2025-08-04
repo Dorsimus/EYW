@@ -9571,32 +9571,66 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
   };
 
   const handleExportPDF = () => {
-    // Create a new window with professional branded print layout
-    const printWindow = window.open('', '_blank');
-    const printContent = generatePrintableFlightbook();
-    
-    printWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Leadership Flightbook - Navigator Level - ${new Date().toLocaleDateString()}</title>
-          <style>
-            ${getPrintStyles()}
-          </style>
-        </head>
-        <body>
-          ${printContent}
-        </body>
-      </html>
-    `);
-    
-    printWindow.document.close();
-    
-    // Wait for content and images to load, then print
-    setTimeout(() => {
-      printWindow.print();
-      // Don't auto-close so user can save as PDF
-    }, 1000);
+    try {
+      // Create a new window with professional branded print layout
+      const printWindow = window.open('', '_blank');
+      
+      // Check if pop-up was blocked
+      if (!printWindow || printWindow.closed || typeof printWindow.closed === 'undefined') {
+        // Pop-up blocked - provide user feedback with instructions
+        alert(`📄 PDF Export - Pop-up Blocked!
+
+Your browser blocked the PDF export window. To export your Leadership Flightbook:
+
+1. Look for a pop-up blocker icon in your address bar
+2. Click it and select "Always allow pop-ups from this site"
+3. Try clicking "Export PDF" again
+
+Alternative: Press Ctrl+P (Cmd+P on Mac) to print this page directly.`);
+        return;
+      }
+      
+      const printContent = generatePrintableFlightbook();
+      
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Leadership Flightbook - Navigator Level - ${new Date().toLocaleDateString()}</title>
+            <style>
+              ${getPrintStyles()}
+            </style>
+          </head>
+          <body>
+            ${printContent}
+          </body>
+        </html>
+      `);
+      
+      printWindow.document.close();
+      
+      // Wait for content and images to load, then print
+      setTimeout(() => {
+        try {
+          printWindow.print();
+          // Don't auto-close so user can save as PDF
+        } catch (printError) {
+          console.error('Print dialog error:', printError);
+          alert('PDF export window opened successfully! Please use the browser\'s print function to save as PDF.');
+        }
+      }, 1000);
+      
+    } catch (error) {
+      console.error('PDF export error:', error);
+      alert(`❌ PDF Export Error
+
+There was an issue creating your PDF. Please try:
+1. Refreshing the page and trying again
+2. Using a different browser
+3. Checking that pop-ups are enabled for this site
+
+Error: ${error.message}`);
+    }
   };
 
   // Generate enhanced print-optimized HTML content with consolidated first page layout
