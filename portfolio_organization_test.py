@@ -6,7 +6,7 @@ from datetime import datetime
 import io
 
 class PortfolioOrganizationTester:
-    def __init__(self, base_url="https://190b5148-8276-48d3-8f7c-e31d248916c6.preview.emergentagent.com"):
+    def __init__(self, base_url="https://dfa066c0-2724-4f8c-87ee-696b2f1f82b7.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.tests_run = 0
