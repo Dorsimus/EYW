@@ -9845,31 +9845,15 @@ Total Entries: ${totalEntries}
             🧪 Test Entry
           </button>
           
-          {/* Export/Print Buttons */}
+          {/* Export PDF Button */}
           {totalEntries > 0 && (
-            <>
-              <button 
-                onClick={handlePrintFlightbook}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                title="Print your Flightbook"
-              >
-                🖨️ Print
-              </button>
-              <button 
-                onClick={handleExportPDF}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                title="Export as PDF"
-              >
-                📄 Export PDF
-              </button>
-              <button 
-                onClick={handleExportText}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                title="Export as text file"
-              >
-                📝 Export Text
-              </button>
-            </>
+            <button 
+              onClick={handleExportPDF}
+              className="inline-flex items-center px-6 py-3 border border-blue-300 text-sm font-medium rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors shadow-sm"
+              title="Export your Leadership Flightbook as PDF"
+            >
+              📄 Export PDF
+            </button>
           )}
         </div>
       </div>
