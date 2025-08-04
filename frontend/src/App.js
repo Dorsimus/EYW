@@ -8984,7 +8984,23 @@ const CoreValuesView = ({
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
-                    <div className="text-3xl">{value.icon}</div>
+                    <div className="w-16 h-16 flex-shrink-0">
+                      <img 
+                        src={value.icon} 
+                        alt={value.title}
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          // Fallback to emoji if image fails to load
+                          e.target.style.display = 'none';
+                          e.target.nextElementSibling.style.display = 'block';
+                        }}
+                      />
+                      <div className="text-3xl hidden">
+                        {valueKey === 'believers' ? '🌟' : 
+                         valueKey === 'communicate' ? '💬' : 
+                         valueKey === 'course' ? '🧭' : '🚀'}
+                      </div>
+                    </div>
                     <div className="flex-1">
                       <h3 className="text-xl font-bold text-gray-900 mb-2">{value.title}</h3>
                       <p className="text-gray-600 leading-relaxed">{value.description}</p>
