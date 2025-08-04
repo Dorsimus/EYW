@@ -396,6 +396,21 @@ backend:
         - agent: "testing"
         - comment: "✅ COMPREHENSIVE TESTING COMPLETED SUCCESSFULLY! Enhanced PDF cover page with prominent EYW winged emblem working excellently with 100% success rate. **CRITICAL VERIFICATION:** 1) ✅ EYW Winged Emblem perfectly displayed as star of page at 432px x 432px (≥4.5 inches) with drop shadow and glow animation, 2) ✅ All text elements properly positioned and styled - 'Earn Your Wings' in red, 'Leadership Flightbook' in blue, 'Navigator Level' red gradient badge, 3) ✅ Full-page layout with proper page structure (2 page breaks found), 4) ✅ PDF export opens in new window with title 'Leadership Flightbook - Navigator Level', 5) ✅ All CSS styling and animations working correctly. The EYW winged emblem is indeed the stunning centerpiece it deserves to be! All review requirements met perfectly."
 
+  - task: "PDF Export Button Click Handler Fix"
+    implemented: true
+    working: true
+    file: "frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "User reported PDF export button present but not triggering when clicked. Investigation revealed button was technically working but modern pop-up blockers were silently preventing window.open() from creating print window with no user feedback."
+        - working: true
+        - agent: "main"
+        - comment: "IMPLEMENTED: Enhanced PDF export functionality with comprehensive error handling and user feedback: 1) ✅ Pop-up blocker detection - checks if window.open() was blocked and provides clear instructions to user, 2) ✅ User feedback alerts with step-by-step instructions for enabling pop-ups, 3) ✅ Try-catch error handling for both window creation and print dialog, 4) ✅ Enhanced button styling with hover effects and better tooltip, 5) ✅ Fallback instructions for manual printing. Function now gracefully handles blocked pop-ups and guides users to resolve the issue."
+
 frontend:
   - task: "Admin Login Modal"
     implemented: true
