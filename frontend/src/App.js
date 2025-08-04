@@ -9571,9 +9571,32 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
   };
 
   const handleExportPDF = () => {
-    // For PDF export, we'll use the browser's print to PDF functionality
-    handlePrintFlightbook();
-    alert('💡 Tip: Choose "Save as PDF" from your printer options to export your Flightbook as a PDF file!');
+    // Create a new window with professional branded print layout
+    const printWindow = window.open('', '_blank');
+    const printContent = generatePrintableFlightbook();
+    
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Leadership Flightbook - Navigator Level - ${new Date().toLocaleDateString()}</title>
+          <style>
+            ${getPrintStyles()}
+          </style>
+        </head>
+        <body>
+          ${printContent}
+        </body>
+      </html>
+    `);
+    
+    printWindow.document.close();
+    
+    // Wait for content and images to load, then print
+    setTimeout(() => {
+      printWindow.print();
+      // Don't auto-close so user can save as PDF
+    }, 1000);
   };
 
   const handleExportText = () => {
