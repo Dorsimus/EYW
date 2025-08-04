@@ -9756,88 +9756,194 @@ Total Entries: ${totalEntries}
     return text;
   };
 
-  // CSS styles for print version
+  // Enhanced CSS styles for professional branded print version
   const getPrintStyles = () => {
     return `
       @media print {
         body { margin: 0; }
         .no-print { display: none !important; }
+        .document-header { page-break-after: avoid; }
+        .competency-section { page-break-inside: avoid; }
+        .entry { page-break-inside: avoid; }
       }
       
       body {
-        font-family: 'Times New Roman', serif;
-        line-height: 1.6;
-        color: #333;
+        font-family: 'Georgia', 'Times New Roman', serif;
+        line-height: 1.5;
+        color: #1f2937;
         max-width: 8.5in;
         margin: 0 auto;
-        padding: 0.5in;
+        padding: 0.75in;
+        background: #fff;
       }
       
-      .flightbook-header {
-        text-align: center;
-        border-bottom: 3px solid #2563eb;
-        padding-bottom: 1rem;
+      /* Professional Header Styling */
+      .document-header {
         margin-bottom: 2rem;
         page-break-after: avoid;
       }
       
-      .flightbook-header h1 {
-        font-size: 2.5rem;
+      .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+      }
+      
+      .brand-section {
+        display: flex;
+        align-items: center;
+        flex: 1;
+      }
+      
+      .brand-logo {
+        margin-right: 1rem;
+        flex-shrink: 0;
+      }
+      
+      .eyw-logo {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+      }
+      
+      .program-title {
+        font-size: 1.75rem;
+        font-weight: bold;
+        color: #dc2626;
+        margin: 0 0 0.25rem 0;
+        letter-spacing: -0.025em;
+      }
+      
+      .company-name {
+        font-size: 1.1rem;
+        color: #6b7280;
+        margin: 0;
+        font-weight: normal;
+      }
+      
+      .user-section {
+        text-align: right;
+        flex-shrink: 0;
+      }
+      
+      .user-name {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #111827;
+        margin-bottom: 0.25rem;
+      }
+      
+      .export-date {
+        font-size: 0.9rem;
+        color: #6b7280;
+      }
+      
+      .header-divider {
+        height: 3px;
+        background: linear-gradient(to right, #dc2626, #b91c1c, #991b1b);
+        margin: 1.5rem 0;
+        border-radius: 2px;
+      }
+      
+      .document-title-section {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+      
+      .document-title {
+        font-size: 2.25rem;
         color: #1e40af;
         margin: 0 0 0.5rem 0;
         font-weight: bold;
       }
       
-      .subtitle {
+      .level-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+        color: white;
+        padding: 0.375rem 1rem;
+        border-radius: 1rem;
+        font-size: 1rem;
+        font-weight: bold;
+        margin: 0 0 1rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      
+      .document-subtitle {
         font-size: 1.1rem;
-        color: #64748b;
+        color: #6b7280;
         font-style: italic;
         margin: 0 0 0.5rem 0;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
       }
       
-      .export-info {
+      .summary-info {
         font-size: 0.9rem;
-        color: #6b7280;
+        color: #9ca3af;
         margin: 0;
+        font-weight: 500;
       }
       
+      /* Competency Section Styling */
       .competency-section {
-        margin: 2rem 0;
+        margin: 2.5rem 0;
         page-break-inside: avoid;
       }
       
-      .competency-title {
-        font-size: 1.5rem;
-        color: #1e40af;
-        border-bottom: 2px solid #e5e7eb;
-        padding-bottom: 0.5rem;
-        margin-bottom: 0.5rem;
+      .competency-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
         page-break-after: avoid;
       }
       
-      .entry-count {
-        font-size: 0.9rem;
-        color: #6b7280;
-        margin-bottom: 1rem;
+      .competency-header.purple-theme { background: linear-gradient(135deg, #a855f7, #9333ea); }
+      .competency-header.blue-theme { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+      .competency-header.green-theme { background: linear-gradient(135deg, #10b981, #059669); }
+      .competency-header.orange-theme { background: linear-gradient(135deg, #f59e0b, #d97706); }
+      .competency-header.indigo-theme { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+      .competency-header.red-theme { background: linear-gradient(135deg, #ef4444, #dc2626); }
+      
+      .competency-title {
+        font-size: 1.5rem;
+        color: white;
+        margin: 0;
         font-weight: bold;
       }
       
+      .entry-count {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+        font-weight: bold;
+      }
+      
+      /* Entry Styling */
       .entry {
-        margin: 1.5rem 0;
+        margin: 1.75rem 0;
+        padding: 1.25rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        background: #fafafa;
         page-break-inside: avoid;
-        border-left: 4px solid #e5e7eb;
-        padding-left: 1rem;
       }
       
       .entry-header {
         display: flex;
         align-items: flex-start;
-        margin-bottom: 0.75rem;
+        margin-bottom: 1rem;
       }
       
       .entry-number {
-        background: #2563eb;
-        color: white;
         width: 2rem;
         height: 2rem;
         border-radius: 50%;
@@ -9845,22 +9951,47 @@ Total Entries: ${totalEntries}
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        font-size: 0.9rem;
+        font-size: 0.875rem;
         margin-right: 1rem;
         flex-shrink: 0;
+        color: white;
       }
       
+      .entry-number.purple-badge { background: #a855f7; }
+      .entry-number.blue-badge { background: #3b82f6; }
+      .entry-number.green-badge { background: #10b981; }
+      .entry-number.orange-badge { background: #f59e0b; }
+      .entry-number.indigo-badge { background: #6366f1; }
+      .entry-number.red-badge { background: #ef4444; }
+      
       .entry-title {
-        font-size: 1.1rem;
+        font-size: 1.125rem;
         color: #111827;
-        margin: 0 0 0.25rem 0;
+        margin: 0 0 0.5rem 0;
         font-weight: bold;
+        line-height: 1.4;
       }
       
       .entry-meta {
-        font-size: 0.85rem;
+        font-size: 0.875rem;
         color: #6b7280;
         margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .entry-separator {
+        color: #d1d5db;
+      }
+      
+      .version-indicator {
+        background: #e5e7eb;
+        color: #6b7280;
+        padding: 0.125rem 0.375rem;
+        border-radius: 0.25rem;
+        font-size: 0.75rem;
+        font-weight: bold;
       }
       
       .entry-content {
@@ -9868,6 +9999,50 @@ Total Entries: ${totalEntries}
         line-height: 1.7;
         font-size: 1rem;
         padding-left: 3rem;
+        text-align: justify;
+      }
+      
+      /* Footer Styling */
+      .document-footer {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 2px solid #e5e7eb;
+        text-align: center;
+      }
+      
+      .footer-line {
+        height: 2px;
+        background: linear-gradient(to right, transparent, #dc2626, transparent);
+        margin-bottom: 1rem;
+      }
+      
+      .footer-text {
+        font-size: 0.9rem;
+        color: #6b7280;
+        margin: 0 0 0.5rem 0;
+        font-weight: 500;
+      }
+      
+      .wings-brand {
+        color: #dc2626;
+        font-weight: bold;
+      }
+      
+      .redstone-brand {
+        color: #991b1b;
+        font-weight: bold;
+      }
+      
+      .level-indicator {
+        color: #1e40af;
+        font-weight: bold;
+      }
+      
+      .confidential {
+        font-size: 0.75rem;
+        color: #9ca3af;
+        font-style: italic;
+        margin: 0;
       }
     `;
   };
