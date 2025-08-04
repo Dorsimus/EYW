@@ -9599,19 +9599,6 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     }, 1000);
   };
 
-  const handleExportText = () => {
-    const textContent = generateTextFlightbook();
-    const blob = new Blob([textContent], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `Leadership-Flightbook-${new Date().toISOString().split('T')[0]}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  };
-
   // Generate enhanced print-optimized HTML content with professional branding
   const generatePrintableFlightbook = () => {
     const currentDate = new Date().toLocaleDateString('en-US', { 
@@ -9715,7 +9702,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     return html;
   };
 
-  // Generate plain text version
+  // Generate enhanced text version (for future use if needed)
   const generateTextFlightbook = () => {
     const currentDate = new Date().toLocaleDateString('en-US', { 
       weekday: 'long', 
