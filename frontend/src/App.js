@@ -9333,10 +9333,11 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
   // Helper function to get competency color scheme (same as Portfolio)
   const getCompetencyColor = (competencyKey) => {
     const colorMap = {
+      'core_values': 'purple',
       'leadership_supervision': 'blue',
       'financial_management': 'green', 
-      'operational_management': 'purple',
-      'cross_functional_collaboration': 'orange',
+      'operational_management': 'orange',
+      'cross_functional_collaboration': 'indigo',
       'strategic_thinking': 'red'
     };
     return colorMap[competencyKey] || 'gray';
