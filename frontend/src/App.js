@@ -2398,6 +2398,12 @@ const App = () => {
   const setupRefinedCompetencies = async () => {
     // Set up the refined local competency structure
     const refinedCompetencies = {
+      core_values: {
+        name: "Core Values", 
+        description: "Living Our Values Through Personal Stories",
+        philosophy: "Our core values come alive through the stories we tell and the experiences we share. This section captures your personal moments of living these values in action.",
+        focus: "Personal stories and experiences demonstrating core values"
+      },
       leadership_supervision: {
         name: "Leadership & Supervision",
         description: "Leadership Isn't a Title, It's How You Show Up Every Day",
