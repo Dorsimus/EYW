@@ -4115,7 +4115,7 @@ const App = () => {
   };
 
   // Core Values Functions
-  const handleAddCoreValueEntry = (valueKey) => {
+  const handleAddCoreValueEntry = async (valueKey) => {
     if (!newEntry.story.trim()) return;
     
     const entry = {
@@ -4132,6 +4132,32 @@ const App = () => {
     
     setCoreValueEntries(updatedEntries);
     localStorage.setItem('core_value_entries', JSON.stringify(updatedEntries));
+    
+    // Also create a Flightbook entry for this Core Value story
+    const coreValueTitle = coreValues[valueKey]?.title || valueKey;
+    const flightbookEntry = {
+      id: `core_value_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      title: `Core Value: ${coreValueTitle}`,
+      content: newEntry.story,
+      competency: 'core_values',
+      competency_area: 'core_values',
+      sub_competency: valueKey,
+      task_id: `story_${entry.id}`,
+      type: 'core_value_story',
+      source: 'core_values_section',
+      tags: ['core-values', 'personal-story', valueKey.replace('_', '-')],
+      date: new Date(),
+      created_at: new Date(),
+      updated_at: new Date(),
+      version: 1
+    };
+
+    // Add to Flightbook
+    const existingFlightbookEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+    existingFlightbookEntries.push(flightbookEntry);
+    localStorage.setItem('flightbook_entries', JSON.stringify(existingFlightbookEntries));
+    
+    console.log('Core Value story added to Flightbook:', coreValueTitle);
     
     // Reset form
     setNewEntry({ value: '', story: '', date: '' });
