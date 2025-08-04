@@ -9533,10 +9533,10 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                       <div className="pl-10 pr-4 py-6 space-y-8">
                         {entries.map((entry, index) => (
                           <div key={entry.id} className="relative group">
-                            {/* Entry Number Tab */}
-                            <div className="absolute -left-4 top-3 w-6 h-10 bg-gradient-to-br from-amber-300 to-amber-400 rounded-r-lg shadow-md border border-amber-500">
+                            {/* Entry Number Tab - Color-Matched */}
+                            <div className={`absolute -left-4 top-3 w-6 h-10 bg-gradient-to-br from-${color}-300 to-${color}-400 rounded-r-lg shadow-md border border-${color}-500`}>
                               <div className="flex items-center justify-center h-full">
-                                <span className="text-xs font-bold text-amber-900 transform rotate-90">
+                                <span className={`text-xs font-bold text-${color}-900 transform rotate-90`}>
                                   {index + 1}
                                 </span>
                               </div>
