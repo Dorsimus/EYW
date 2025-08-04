@@ -9693,7 +9693,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
         <div class="footer-line"></div>
         <p class="footer-text">
           <span class="wings-brand">Earn Your Wings</span> • 
-          <span class="redstone-brand">Redstone Development</span> • 
+          <span class="redstone-brand">Redstone Employee Development</span> • 
           <span class="level-indicator">${userLevel} Level Leadership Journey</span>
         </p>
         <p class="confidential">This document contains personal reflections and professional development insights.</p>
