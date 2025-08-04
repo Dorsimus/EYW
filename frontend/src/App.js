@@ -6726,12 +6726,13 @@ const CompetenciesView = ({
                                         )}
                                         
                                         {/* Document Section */}
-                                        <div className="mb-4">
-                                          <h6 className="text-sm font-semibold text-gray-700 mb-2 block">📄 Document:</h6>
-                                          <div className="bg-yellow-50 p-3 rounded border border-yellow-100">
-                                            <p className="text-sm text-gray-800 mb-3">
-                                              {monthActivity.document}
-                                            </p>
+                                        {monthActivity.document && (
+                                          <div className="mb-4">
+                                            <h6 className="text-sm font-semibold text-gray-700 mb-2 block">📄 Document:</h6>
+                                            <div className="bg-yellow-50 p-3 rounded border border-yellow-100">
+                                              <p className="text-sm text-gray-800 mb-3">
+                                                {monthActivity.document}
+                                              </p>
                                             
                                             {/* Document Action Buttons */}
                                             <div className="flex items-center space-x-2 flex-wrap gap-2">
