@@ -9612,7 +9612,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     window.URL.revokeObjectURL(url);
   };
 
-  // Generate print-optimized HTML content
+  // Generate enhanced print-optimized HTML content with professional branding
   const generatePrintableFlightbook = () => {
     const currentDate = new Date().toLocaleDateString('en-US', { 
       weekday: 'long', 
@@ -9621,35 +9621,72 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
       day: 'numeric' 
     });
 
+    // Get user name (placeholder for now - this would come from user profile)
+    const userName = user?.name || user?.email || "Navigator";
+    const userLevel = "Navigator"; // This will be dynamic as users advance
+
     let html = `
-      <div class="flightbook-header">
-        <h1>✈️ My Leadership Flightbook</h1>
-        <p class="subtitle">Personal Journey Log of Leadership Experiences, Insights, and Growth Moments</p>
-        <p class="export-info">Exported on ${currentDate} • ${totalEntries} Total Entries</p>
+      <!-- Professional Header with Branding -->
+      <div class="document-header">
+        <div class="header-top">
+          <div class="brand-section">
+            <div class="brand-logo">
+              <img src="https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/bnn45ktt_Redstone_Symbol_RGB_Crimson.png" alt="EYW Logo" class="eyw-logo" />
+            </div>
+            <div class="brand-text">
+              <h1 class="program-title">Earn Your Wings</h1>
+              <h2 class="company-name">Redstone Employee Development</h2>
+            </div>
+          </div>
+          <div class="user-section">
+            <div class="user-name">${userName}</div>
+            <div class="export-date">${currentDate}</div>
+          </div>
+        </div>
+        
+        <div class="header-divider"></div>
+        
+        <div class="document-title-section">
+          <h1 class="document-title">✈️ My Leadership Flightbook</h1>
+          <h2 class="level-badge">${userLevel} Level</h2>
+          <p class="document-subtitle">Personal Journey Log of Leadership Experiences, Insights, and Growth Moments</p>
+          <p class="summary-info">${totalEntries} Total ${totalEntries === 1 ? 'Entry' : 'Entries'} • Exported ${currentDate}</p>
+        </div>
       </div>
     `;
 
     // Add each competency section
     Object.entries(organized).forEach(([competencyKey, entries]) => {
       const competencyName = getCompetencyName(competencyKey);
+      const competencyColor = getCompetencyColor(competencyKey);
       
       html += `
-        <div class="competency-section">
-          <h2 class="competency-title">${competencyName}</h2>
-          <p class="entry-count">${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}</p>
+        <div class="competency-section" data-competency="${competencyKey}">
+          <div class="competency-header ${competencyColor}-theme">
+            <h2 class="competency-title">${competencyName}</h2>
+            <div class="entry-count">${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}</div>
+          </div>
       `;
 
       entries.forEach((entry, index) => {
+        const entryDate = entry.date ? new Date(entry.date).toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric', 
+          year: 'numeric'
+        }) : 'Recent';
+        
         html += `
           <div class="entry">
             <div class="entry-header">
-              <div class="entry-number">${index + 1}</div>
+              <div class="entry-number ${competencyColor}-badge">${index + 1}</div>
               <div class="entry-info">
                 <h3 class="entry-title">${entry.title}</h3>
-                <p class="entry-meta">
-                  ${entry.date ? new Date(entry.date).toLocaleDateString() : 'Recent'} • 
-                  ${entry.type ? entry.type.replace('_', ' ') : 'Reflection'}
-                </p>
+                <div class="entry-meta">
+                  <span class="entry-date">${entryDate}</span>
+                  <span class="entry-separator">•</span>
+                  <span class="entry-type">${entry.type ? entry.type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'Reflection'}</span>
+                  ${entry.version && entry.version > 1 ? `<span class="version-indicator">v${entry.version}</span>` : ''}
+                </div>
               </div>
             </div>
             <div class="entry-content">
@@ -9661,6 +9698,19 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
 
       html += `</div>`;
     });
+
+    // Add footer
+    html += `
+      <div class="document-footer">
+        <div class="footer-line"></div>
+        <p class="footer-text">
+          <span class="wings-brand">Earn Your Wings</span> • 
+          <span class="redstone-brand">Redstone Employee Development</span> • 
+          <span class="level-indicator">${userLevel} Level Leadership Journey</span>
+        </p>
+        <p class="confidential">This document contains personal reflections and professional development insights.</p>
+      </div>
+    `;
 
     return html;
   };
