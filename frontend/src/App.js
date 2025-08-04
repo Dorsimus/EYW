@@ -8997,8 +8997,18 @@ const CoreValuesView = ({
       {/* Header */}
       <div className="text-center mb-8">
         <div className="flex items-center justify-center mb-4">
-          <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white font-black text-2xl mr-6 shadow-lg">
-            💖
+          <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center text-white font-black text-2xl mr-6 shadow-lg p-2">
+            <img 
+              src="https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/bnn45ktt_Redstone_Symbol_RGB_Crimson.png"
+              alt="Redstone Core Values"
+              className="w-full h-full object-contain filter brightness-0 invert"
+              onError={(e) => {
+                // Fallback to heart emoji if image fails to load
+                e.target.style.display = 'none';
+                e.target.nextElementSibling.style.display = 'block';
+              }}
+            />
+            <span className="text-2xl font-black" style={{ display: 'none' }}>💖</span>
           </div>
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Core Values</h1>
