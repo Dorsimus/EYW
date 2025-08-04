@@ -9760,142 +9760,200 @@ Total Entries: ${totalEntries}
     return text;
   };
 
-  // Enhanced CSS styles for professional branded print version
+  // Enhanced CSS styles for professional branded print version with prominent cover page
   const getPrintStyles = () => {
     return `
       @media print {
         body { margin: 0; }
         .no-print { display: none !important; }
-        .document-header { page-break-after: avoid; }
+        .cover-page, .summary-page { page-break-after: always; }
         .competency-section { page-break-inside: avoid; }
         .entry { page-break-inside: avoid; }
+        .page-break { page-break-before: always; }
       }
       
       body {
         font-family: 'Georgia', 'Times New Roman', serif;
         line-height: 1.5;
         color: #1f2937;
-        max-width: 8.5in;
-        margin: 0 auto;
-        padding: 0.75in;
+        margin: 0;
+        padding: 0;
         background: #fff;
       }
       
-      /* Professional Header Styling */
-      .document-header {
-        margin-bottom: 2rem;
-        page-break-after: avoid;
-      }
-      
-      .header-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 1rem;
-      }
-      
-      .brand-section {
+      /* COVER PAGE STYLING - EYW Logo as the Star */
+      .cover-page {
+        height: 100vh;
         display: flex;
         align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+        page-break-after: always;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .cover-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2in 1in;
+        box-sizing: border-box;
+      }
+      
+      /* EYW Logo Section - THE STAR */
+      .logo-section {
         flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: -1in; /* Pull up slightly from center */
       }
       
-      .brand-logo {
-        margin-right: 1rem;
-        flex-shrink: 0;
-      }
-      
-      .eyw-logo {
-        width: 48px;
-        height: 48px;
+      .eyw-cover-logo {
+        width: 4.5in;
+        height: 4.5in;
         object-fit: contain;
+        filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15));
+        animation: subtle-glow 3s ease-in-out infinite alternate;
       }
       
-      .program-title {
-        font-size: 1.75rem;
+      @keyframes subtle-glow {
+        from { filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15)); }
+        to { filter: drop-shadow(0 25px 50px rgba(220,38,38,0.2)) drop-shadow(0 20px 40px rgba(0,0,0,0.15)); }
+      }
+      
+      /* Program Title Section - Below Logo */
+      .program-title-section {
+        margin: 0.75in 0;
+        text-align: center;
+      }
+      
+      .cover-program-title {
+        font-size: 3rem;
         font-weight: bold;
         color: #dc2626;
-        margin: 0 0 0.25rem 0;
-        letter-spacing: -0.025em;
-      }
-      
-      .company-name {
-        font-size: 1.1rem;
-        color: #6b7280;
-        margin: 0;
-        font-weight: normal;
-      }
-      
-      .user-section {
-        text-align: right;
-        flex-shrink: 0;
-      }
-      
-      .user-name {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #111827;
-        margin-bottom: 0.25rem;
-      }
-      
-      .export-date {
-        font-size: 0.9rem;
-        color: #6b7280;
-      }
-      
-      .header-divider {
-        height: 3px;
-        background: linear-gradient(to right, #dc2626, #b91c1c, #991b1b);
-        margin: 1.5rem 0;
-        border-radius: 2px;
-      }
-      
-      .document-title-section {
-        text-align: center;
-        margin-bottom: 1rem;
-      }
-      
-      .document-title {
-        font-size: 2.25rem;
-        color: #1e40af;
         margin: 0 0 0.5rem 0;
-        font-weight: bold;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
       }
       
-      .level-badge {
-        display: inline-block;
-        background: linear-gradient(135deg, #dc2626, #b91c1c);
-        color: white;
-        padding: 0.375rem 1rem;
-        border-radius: 1rem;
-        font-size: 1rem;
-        font-weight: bold;
+      .cover-company-name {
+        font-size: 1.5rem;
+        color: #1f2937;
+        margin: 0;
+        font-weight: 300;
+        letter-spacing: 0.05em;
+        opacity: 0.8;
+      }
+      
+      /* Document Information Section - Near Bottom */
+      .document-info-section {
+        text-align: center;
+        margin-bottom: 0.5in;
+      }
+      
+      .cover-document-title {
+        font-size: 2.5rem;
+        color: #1e40af;
         margin: 0 0 1rem 0;
-        text-transform: uppercase;
+        font-weight: bold;
         letter-spacing: 0.05em;
       }
       
-      .document-subtitle {
-        font-size: 1.1rem;
+      .cover-level-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 2rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 0 0 1.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        box-shadow: 0 10px 30px rgba(220,38,38,0.3);
+      }
+      
+      .cover-subtitle {
+        font-size: 1.25rem;
         color: #6b7280;
         font-style: italic;
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 2rem 0;
         max-width: 600px;
         margin-left: auto;
         margin-right: auto;
+        line-height: 1.6;
+      }
+      
+      .cover-user-info {
+        border-top: 2px solid #e5e7eb;
+        padding-top: 1rem;
+        margin-top: 1rem;
+      }
+      
+      .cover-user-name {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #111827;
+        margin: 0 0 0.5rem 0;
+      }
+      
+      .cover-export-date {
+        font-size: 1rem;
+        color: #9ca3af;
+        margin: 0;
+      }
+      
+      /* Page Break */
+      .page-break {
+        page-break-before: always;
+        height: 0;
+      }
+      
+      /* SUMMARY PAGE STYLING */
+      .summary-page {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        page-break-after: always;
+        padding: 2in 1in;
+        box-sizing: border-box;
+      }
+      
+      .summary-header {
+        text-align: center;
+      }
+      
+      .summary-title {
+        font-size: 3rem;
+        color: #1e40af;
+        margin: 0 0 1rem 0;
+        font-weight: bold;
       }
       
       .summary-info {
-        font-size: 0.9rem;
-        color: #9ca3af;
+        font-size: 1.25rem;
+        color: #6b7280;
         margin: 0;
         font-weight: 500;
       }
       
-      /* Competency Section Styling */
+      /* CONTENT PAGES STYLING */
       .competency-section {
         margin: 2.5rem 0;
         page-break-inside: avoid;
+        max-width: 8.5in;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 0.75in;
       }
       
       .competency-header {
@@ -10012,6 +10070,11 @@ Total Entries: ${totalEntries}
         padding-top: 2rem;
         border-top: 2px solid #e5e7eb;
         text-align: center;
+        max-width: 8.5in;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 0.75in;
+        padding-right: 0.75in;
       }
       
       .footer-line {
