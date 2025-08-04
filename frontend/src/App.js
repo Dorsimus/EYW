@@ -9535,10 +9535,10 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                       <div className="pl-12 pr-4 py-6 space-y-8">
                         {entries.map((entry, index) => (
                           <div key={entry.id} className="relative group">
-                            {/* Enhanced Entry Number Tab - More Prominent */}
-                            <div className={`absolute -left-5 top-2 w-8 h-14 bg-gradient-to-br from-${color}-400 via-${color}-500 to-${color}-600 rounded-r-xl shadow-lg border-2 border-${color}-600 z-10`}>
+                            {/* Enhanced Entry Number Tab - Properly Oriented */}
+                            <div className={`absolute -left-6 top-2 w-8 h-14 bg-gradient-to-br from-${color}-400 via-${color}-500 to-${color}-600 rounded-l-xl shadow-lg border-2 border-${color}-600 z-10`}>
                               <div className="flex items-center justify-center h-full relative">
-                                <div className={`absolute inset-0 bg-gradient-to-br from-white to-transparent opacity-20 rounded-r-xl`}></div>
+                                <div className={`absolute inset-0 bg-gradient-to-br from-white to-transparent opacity-20 rounded-l-xl`}></div>
                                 <span className={`text-sm font-bold text-white transform rotate-90 z-10 drop-shadow-sm`}>
                                   {index + 1}
                                 </span>
