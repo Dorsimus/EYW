@@ -9458,8 +9458,9 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     const organized = {};
     const unassigned = [];
 
-    // Define consistent competency order (matches Competencies and Portfolio sections)
+    // Define consistent competency order (matches Competencies and Portfolio sections + Core Values)
     const competencyOrder = [
+      'core_values',
       'leadership_supervision',
       'financial_management', 
       'operational_management',
