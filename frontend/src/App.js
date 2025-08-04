@@ -9532,7 +9532,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                       </div>
                       
                       {/* Journal Entries */}
-                      <div className="pl-10 pr-4 py-6 space-y-8">
+                      <div className="pl-12 pr-4 py-6 space-y-8">
                         {entries.map((entry, index) => (
                           <div key={entry.id} className="relative group">
                             {/* Enhanced Entry Number Tab - More Prominent */}
