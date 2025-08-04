@@ -9516,74 +9516,68 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                   </div>
                 </button>
 
-                {/* Expandable Content - Journal Style */}
+                {/* Expandable Content - Enhanced Journal Style */}
                 {isExpanded && (
-                  <div className="border-t border-gray-200 bg-gradient-to-br from-amber-50 to-yellow-50">
+                  <div className="border-t border-gray-200 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50">
                     {/* Journal Binding Effect */}
                     <div className="relative">
-                      <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-amber-200 to-amber-100 border-r border-amber-300">
-                        <div className="flex flex-col items-center justify-start pt-4 space-y-3">
-                          {Array.from({length: Math.min(entries.length, 8)}).map((_, i) => (
-                            <div key={i} className="w-1 h-4 bg-amber-400 rounded-full opacity-70"></div>
+                      <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-amber-300 via-amber-200 to-amber-100 border-r-2 border-amber-400">
+                        <div className="flex flex-col items-center justify-start pt-6 space-y-4">
+                          {Array.from({length: Math.min(entries.length, 6)}).map((_, i) => (
+                            <div key={i} className="w-1.5 h-6 bg-amber-500 rounded-full opacity-80"></div>
                           ))}
                         </div>
                       </div>
                       
-                      {/* Journal Pages */}
-                      <div className="pl-12 pr-6 py-6 space-y-6">
+                      {/* Journal Entries */}
+                      <div className="pl-10 pr-4 py-6 space-y-8">
                         {entries.map((entry, index) => (
-                          <div key={entry.id} className="relative">
-                            {/* Entry Tab */}
-                            <div className="absolute -left-6 top-4 w-8 h-12 bg-gradient-to-br from-amber-200 to-amber-300 rounded-r-lg shadow-md border-r border-amber-400">
+                          <div key={entry.id} className="relative group">
+                            {/* Entry Number Tab */}
+                            <div className="absolute -left-4 top-3 w-6 h-10 bg-gradient-to-br from-amber-300 to-amber-400 rounded-r-lg shadow-md border border-amber-500">
                               <div className="flex items-center justify-center h-full">
-                                <span className="text-xs font-bold text-amber-800 transform rotate-90">
+                                <span className="text-xs font-bold text-amber-900 transform rotate-90">
                                   {index + 1}
                                 </span>
                               </div>
                             </div>
                             
                             {/* Journal Entry Card */}
-                            <div className="relative bg-white rounded-lg shadow-lg border border-gray-200 transform hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                              {/* Paper Lines Effect */}
-                              <div className="absolute left-16 top-0 bottom-0 w-px bg-red-200 opacity-40"></div>
-                              <div className="absolute left-20 top-0 bottom-0 w-px bg-blue-200 opacity-30"></div>
+                            <div className="bg-white rounded-xl shadow-md border-l-4 border-amber-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
+                              {/* Paper texture overlay */}
+                              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gray-50 to-gray-100 opacity-20 pointer-events-none"></div>
                               
                               <div className="p-6 relative z-10">
-                                {/* Entry Header with Journal Styling */}
-                                <div className="flex items-start justify-between mb-4 pb-3 border-b border-dashed border-gray-300">
-                                  <div className="flex-1">
-                                    <div className="flex items-center space-x-3 mb-2">
-                                      <div className="flex items-center space-x-2">
-                                        <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
+                                {/* Entry Header */}
+                                <div className="border-b border-dashed border-gray-300 pb-4 mb-4">
+                                  <div className="flex items-start justify-between">
+                                    <div className="flex-1">
+                                      <div className="flex items-center space-x-3 mb-2">
+                                        <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
                                         <h4 className="text-lg font-semibold text-gray-800 font-serif leading-relaxed">
                                           {entry.title}
                                         </h4>
                                       </div>
-                                      <span className={`px-3 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-700 border border-${color}-200`}>
-                                        {entry.type?.replace('_', ' ') || 'reflection'}
-                                      </span>
-                                    </div>
-                                    <div className="text-sm text-gray-600 flex items-center space-x-4">
-                                      <span className="flex items-center space-x-1">
-                                        <span className="text-amber-600">📅</span>
-                                        <span className="font-medium">
-                                          {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'}
+                                      <div className="flex items-center space-x-4 text-sm text-gray-600">
+                                        <span className="flex items-center space-x-1">
+                                          <span className="text-amber-600">📅</span>
+                                          <span>{entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'}</span>
                                         </span>
-                                      </span>
-                                      <span className="flex items-center space-x-1">
-                                        <span className="text-blue-600">✍️</span>
-                                        <span className="italic">
-                                          {entry.source ? entry.source.replace('_', ' ') : 'manual entry'}
+                                        <span className="flex items-center space-x-1">
+                                          <span className="text-blue-600">✍️</span>
+                                          <span className="italic">{entry.source ? entry.source.replace('_', ' ') : 'manual entry'}</span>
                                         </span>
-                                      </span>
+                                      </div>
                                     </div>
+                                    <span className={`px-3 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-700 border border-${color}-200 ml-4`}>
+                                      {entry.type?.replace('_', ' ') || 'reflection'}
+                                    </span>
                                   </div>
                                 </div>
 
-                                {/* Journal Content Area */}
+                                {/* Content Area */}
                                 {editingEntry === entry.id ? (
-                                  // Editing mode with journal styling
-                                  <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                  <div className="mb-6 p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
                                     <div className="flex items-center space-x-2 mb-3">
                                       <span className="text-blue-600">✍️</span>
                                       <span className="text-sm font-medium text-blue-800">Editing Entry</span>
@@ -9594,74 +9588,59 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                                       className="w-full p-4 border-2 border-blue-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white font-serif leading-relaxed resize-none"
                                       rows="6"
                                       placeholder="Edit your reflection..."
-                                      style={{
-                                        backgroundImage: 'repeating-linear-gradient(transparent, transparent 22px, #e5e7eb 22px, #e5e7eb 24px)',
-                                        lineHeight: '24px',
-                                        paddingTop: '12px'
-                                      }}
                                     />
                                     <div className="flex space-x-3 mt-4">
                                       <button
                                         onClick={() => saveEditedEntry(entry.id)}
-                                        className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md text-sm font-medium hover:bg-green-700 transition-colors shadow-sm"
+                                        className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors shadow-sm"
                                       >
-                                        <span className="mr-2">💾</span>Save Changes
+                                        💾 Save Changes
                                       </button>
                                       <button
                                         onClick={cancelEditing}
-                                        className="inline-flex items-center px-4 py-2 bg-gray-400 text-white rounded-md text-sm font-medium hover:bg-gray-500 transition-colors shadow-sm"
+                                        className="inline-flex items-center px-4 py-2 bg-gray-400 text-white rounded-lg text-sm font-medium hover:bg-gray-500 transition-colors shadow-sm"
                                       >
-                                        <span className="mr-2">❌</span>Cancel
+                                        ❌ Cancel
                                       </button>
                                     </div>
                                   </div>
                                 ) : (
-                                  // Display mode with handwritten feel
-                                  <div className="mb-6 p-4 bg-cream-25 rounded-lg relative">
-                                    <div className="absolute left-6 top-0 bottom-0 w-px bg-red-300 opacity-60"></div>
-                                    <div className="pl-6">
-                                      <p className="text-gray-800 leading-relaxed font-serif text-base whitespace-pre-wrap" 
-                                         style={{lineHeight: '1.8'}}>
+                                  <div className="mb-6 p-4 bg-gradient-to-br from-yellow-25 to-orange-25 rounded-lg relative">
+                                    <div className="absolute left-4 top-0 bottom-0 w-px bg-red-300 opacity-50"></div>
+                                    <div className="pl-4">
+                                      <p className="text-gray-800 leading-relaxed font-serif text-base whitespace-pre-wrap">
                                         {entry.content}
                                       </p>
                                     </div>
                                   </div>
                                 )}
 
-                          {/* Tags */}
-                          {entry.tags && entry.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mb-4">
-                              {entry.tags.map(tag => (
-                                <span key={tag} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
-                                  #{tag}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-
-                          {/* Entry Actions */}
-                          <div className="flex items-center justify-between pt-3 border-t border-gray-200">
-                            <div className="flex space-x-3">
-                              <button 
-                                onClick={() => startEditing(entry)}
-                                className={`text-sm text-${color}-600 hover:text-${color}-800`}
-                              >
-                                ✏️ Edit
-                              </button>
-                              <button 
-                                onClick={() => navigateToOriginalTask(entry)}
-                                className="text-sm text-purple-600 hover:text-purple-800"
-                                title="Navigate to original competency section"
-                              >
-                                🔗 Link to Task
-                              </button>
-                            </div>
-                            <div className="text-xs text-gray-500">
-                              Last updated: {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'}
+                                {/* Entry Actions */}
+                                <div className="flex items-center justify-between pt-3 border-t border-gray-200">
+                                  <div className="flex space-x-3">
+                                    <button 
+                                      onClick={() => startEditing(entry)}
+                                      className={`text-sm text-${color}-600 hover:text-${color}-800 font-medium`}
+                                    >
+                                      ✏️ Edit
+                                    </button>
+                                    <button 
+                                      onClick={() => navigateToOriginalTask(entry)}
+                                      className="text-sm text-purple-600 hover:text-purple-800 font-medium"
+                                      title="Navigate to original competency section"
+                                    >
+                                      🔗 Link to Task
+                                    </button>
+                                  </div>
+                                  <div className="text-xs text-gray-500">
+                                    {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'}
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}
