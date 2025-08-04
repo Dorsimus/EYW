@@ -6469,8 +6469,6 @@ const CompetenciesView = ({
                                 onJournalReflectionChange(areaKey, 'curiosity_ignition', `prompt_${index}`, e.target.value, 'curiosity_reflection');
                               }}
                               onBlur={(e) => {
-                                console.log(`[SIMPLE BLUR TEST] Basic onBlur fired!`);
-                                console.log(`[BLUR DEBUG] onBlur fired for prompt ${index}`, e.target.value);
                                 // Create or update flightbook entry when user finishes editing
                                 onJournalReflectionComplete(areaKey, 'curiosity_ignition', `prompt_${index}`, e.target.value, 'curiosity_reflection');
                               }}
