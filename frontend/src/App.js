@@ -9411,10 +9411,19 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     }
   };
 
-  // Group flightbook entries by competency areas
+  // Group flightbook entries by competency areas with consistent ordering
   const organizeFlightbookByCompetency = () => {
     const organized = {};
     const unassigned = [];
+
+    // Define consistent competency order (matches Competencies and Portfolio sections)
+    const competencyOrder = [
+      'leadership_supervision',
+      'financial_management', 
+      'operational_management',
+      'cross_functional_collaboration',
+      'strategic_thinking'
+    ];
 
     flightbookEntries.forEach(entry => {
       const competencyKey = entry.competency || entry.competency_area;
@@ -9428,7 +9437,24 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
       }
     });
 
-    return { organized, unassigned };
+    // Sort entries within each competency by date (newest first)
+    Object.keys(organized).forEach(competencyKey => {
+      organized[competencyKey].sort((a, b) => {
+        const dateA = new Date(a.date || a.created_at || 0);
+        const dateB = new Date(b.date || b.created_at || 0);
+        return dateB - dateA; // Newest first
+      });
+    });
+
+    // Return organized entries in the defined order
+    const orderedOrganized = {};
+    competencyOrder.forEach(competencyKey => {
+      if (organized[competencyKey] && organized[competencyKey].length > 0) {
+        orderedOrganized[competencyKey] = organized[competencyKey];
+      }
+    });
+
+    return { organized: orderedOrganized, unassigned };
   };
 
   // Extract journal entries and reflections from various sources
