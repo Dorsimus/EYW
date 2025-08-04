@@ -9744,200 +9744,131 @@ Total Entries: ${totalEntries}
     return text;
   };
 
-  // Enhanced CSS styles for professional branded print version with prominent cover page
+  // Enhanced CSS styles for consolidated first page layout with print-optimized design
   const getPrintStyles = () => {
     return `
       @media print {
         body { margin: 0; }
         .no-print { display: none !important; }
-        .cover-page, .summary-page { page-break-after: always; }
         .competency-section { page-break-inside: avoid; }
         .entry { page-break-inside: avoid; }
-        .page-break { page-break-before: always; }
       }
       
       body {
         font-family: 'Georgia', 'Times New Roman', serif;
-        line-height: 1.5;
+        line-height: 1.4;
         color: #1f2937;
         margin: 0;
-        padding: 0;
+        padding: 0.75in;
         background: #fff;
+        max-width: 8.5in;
+        margin: 0 auto;
       }
       
-      /* COVER PAGE STYLING - EYW Logo as the Star */
-      .cover-page {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      /* CONSOLIDATED FIRST PAGE HEADER */
+      .first-page-header {
         text-align: center;
-        background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
-        page-break-after: always;
-        padding: 0;
-        margin: 0;
+        margin-bottom: 2rem;
+        page-break-after: avoid;
       }
       
-      .cover-content {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        padding: 2in 1in;
-        box-sizing: border-box;
+      /* Program Title at Top - Dark Gray, Half Size */
+      .header-program-title {
+        font-size: 1.75rem;
+        font-weight: bold;
+        color: #374151;
+        margin: 0 0 0.5rem 0;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
       }
       
-      /* EYW Logo Section - THE STAR */
-      .logo-section {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: -1in; /* Pull up slightly from center */
+      /* Company Name - Dark Gray, Same Size */
+      .header-company-name {
+        font-size: 1.1rem;
+        color: #374151;
+        margin: 0 0 1.5rem 0;
+        font-weight: normal;
+        letter-spacing: 0.025em;
       }
       
-      .eyw-cover-logo {
+      /* EYW Logo - Same Position, Perfect Size */
+      .header-logo-section {
+        margin: 1.5rem 0;
+      }
+      
+      .eyw-header-logo {
         width: 4.5in;
         height: 4.5in;
         object-fit: contain;
-        filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15));
-        animation: subtle-glow 3s ease-in-out infinite alternate;
+        filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15));
       }
       
-      @keyframes subtle-glow {
-        from { filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15)); }
-        to { filter: drop-shadow(0 25px 50px rgba(220,38,38,0.2)) drop-shadow(0 20px 40px rgba(0,0,0,0.15)); }
-      }
-      
-      /* Program Title Section - Below Logo */
-      .program-title-section {
-        margin: 0.75in 0;
-        text-align: center;
-      }
-      
-      .cover-program-title {
-        font-size: 3rem;
-        font-weight: bold;
-        color: #dc2626;
-        margin: 0 0 0.5rem 0;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-      }
-      
-      .cover-company-name {
-        font-size: 1.5rem;
-        color: #1f2937;
-        margin: 0;
-        font-weight: 300;
-        letter-spacing: 0.05em;
-        opacity: 0.8;
-      }
-      
-      /* Document Information Section - Near Bottom */
-      .document-info-section {
-        text-align: center;
-        margin-bottom: 0.5in;
-      }
-      
-      .cover-document-title {
-        font-size: 2.5rem;
+      /* Leadership Flightbook - Blue, Good Sizing */
+      .header-document-title {
+        font-size: 2.25rem;
         color: #1e40af;
-        margin: 0 0 1rem 0;
+        margin: 1.5rem 0 1rem 0;
         font-weight: bold;
-        letter-spacing: 0.05em;
       }
       
-      .cover-level-badge {
+      /* Navigator Level - Button Style for Print */
+      .header-level-badge {
         display: inline-block;
-        background: linear-gradient(135deg, #dc2626, #b91c1c);
-        color: white;
-        padding: 0.75rem 2rem;
-        border-radius: 2rem;
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin: 0 0 1.5rem 0;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        box-shadow: 0 10px 30px rgba(220,38,38,0.3);
+        background: #dc2626 !important;
+        background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+        color: white !important;
+        padding: 0.5rem 1.5rem !important;
+        border-radius: 1.5rem !important;
+        font-size: 1.25rem !important;
+        font-weight: bold !important;
+        margin: 0 0 1rem 0 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        border: none !important;
+        box-shadow: 0 4px 12px rgba(220,38,38,0.25) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       
-      .cover-subtitle {
-        font-size: 1.25rem;
+      /* Personal Journey Subtitle */
+      .header-subtitle {
+        font-size: 1rem;
         color: #6b7280;
         font-style: italic;
-        margin: 0 0 2rem 0;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-        line-height: 1.6;
-      }
-      
-      .cover-user-info {
-        border-top: 2px solid #e5e7eb;
-        padding-top: 1rem;
-        margin-top: 1rem;
-      }
-      
-      .cover-user-name {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #111827;
-        margin: 0 0 0.5rem 0;
-      }
-      
-      .cover-export-date {
-        font-size: 1rem;
-        color: #9ca3af;
-        margin: 0;
-      }
-      
-      /* Page Break */
-      .page-break {
-        page-break-before: always;
-        height: 0;
-      }
-      
-      /* SUMMARY PAGE STYLING */
-      .summary-page {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        page-break-after: always;
-        padding: 2in 1in;
-        box-sizing: border-box;
-      }
-      
-      .summary-header {
-        text-align: center;
-      }
-      
-      .summary-title {
-        font-size: 3rem;
-        color: #1e40af;
         margin: 0 0 1rem 0;
-        font-weight: bold;
-      }
-      
-      .summary-info {
-        font-size: 1.25rem;
-        color: #6b7280;
-        margin: 0;
-        font-weight: 500;
-      }
-      
-      /* CONTENT PAGES STYLING */
-      .competency-section {
-        margin: 2.5rem 0;
-        page-break-inside: avoid;
-        max-width: 8.5in;
+        line-height: 1.5;
+        max-width: 500px;
         margin-left: auto;
         margin-right: auto;
-        padding: 0 0.75in;
+      }
+      
+      /* User Name - Export Date - Entry Count */
+      .header-export-info {
+        font-size: 0.9rem;
+        color: #9ca3af;
+        margin: 1rem 0;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+      }
+      
+      .info-user, .info-date, .info-entries {
+        color: #6b7280;
+      }
+      
+      /* Content Divider */
+      .content-divider {
+        height: 2px;
+        background: linear-gradient(to right, transparent, #dc2626, transparent);
+        margin: 2rem 0;
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      /* CONTENT SECTIONS STYLING */
+      .competency-section {
+        margin: 2rem 0;
+        page-break-inside: avoid;
       }
       
       .competency-header {
@@ -9945,86 +9876,119 @@ Total Entries: ${totalEntries}
         justify-content: space-between;
         align-items: center;
         margin-bottom: 1.5rem;
-        padding: 1rem;
+        padding: 0.75rem 1rem;
         border-radius: 0.5rem;
         page-break-after: avoid;
       }
       
-      .competency-header.purple-theme { background: linear-gradient(135deg, #a855f7, #9333ea); }
-      .competency-header.blue-theme { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-      .competency-header.green-theme { background: linear-gradient(135deg, #10b981, #059669); }
-      .competency-header.orange-theme { background: linear-gradient(135deg, #f59e0b, #d97706); }
-      .competency-header.indigo-theme { background: linear-gradient(135deg, #6366f1, #4f46e5); }
-      .competency-header.red-theme { background: linear-gradient(135deg, #ef4444, #dc2626); }
+      .competency-header.purple-theme { 
+        background: linear-gradient(135deg, #a855f7, #9333ea) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .competency-header.blue-theme { 
+        background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .competency-header.green-theme { 
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .competency-header.orange-theme { 
+        background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .competency-header.indigo-theme { 
+        background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .competency-header.red-theme { 
+        background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
       
       .competency-title {
-        font-size: 1.5rem;
-        color: white;
+        font-size: 1.25rem;
+        color: white !important;
         margin: 0;
         font-weight: bold;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       
       .entry-count {
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
+        background: rgba(255, 255, 255, 0.25) !important;
+        color: white !important;
         padding: 0.25rem 0.75rem;
         border-radius: 1rem;
-        font-size: 0.875rem;
+        font-size: 0.8rem;
         font-weight: bold;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       
       /* Entry Styling */
       .entry {
-        margin: 1.75rem 0;
-        padding: 1.25rem;
+        margin: 1.5rem 0;
+        padding: 1rem;
         border: 1px solid #e5e7eb;
-        border-radius: 0.5rem;
-        background: #fafafa;
+        border-radius: 0.375rem;
+        background: #fafafa !important;
         page-break-inside: avoid;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       
       .entry-header {
         display: flex;
         align-items: flex-start;
-        margin-bottom: 1rem;
+        margin-bottom: 0.75rem;
       }
       
       .entry-number {
-        width: 2rem;
-        height: 2rem;
+        width: 1.75rem;
+        height: 1.75rem;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        font-size: 0.875rem;
-        margin-right: 1rem;
+        font-size: 0.8rem;
+        margin-right: 0.75rem;
         flex-shrink: 0;
-        color: white;
+        color: white !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       
-      .entry-number.purple-badge { background: #a855f7; }
-      .entry-number.blue-badge { background: #3b82f6; }
-      .entry-number.green-badge { background: #10b981; }
-      .entry-number.orange-badge { background: #f59e0b; }
-      .entry-number.indigo-badge { background: #6366f1; }
-      .entry-number.red-badge { background: #ef4444; }
+      .entry-number.purple-badge { background: #a855f7 !important; }
+      .entry-number.blue-badge { background: #3b82f6 !important; }
+      .entry-number.green-badge { background: #10b981 !important; }
+      .entry-number.orange-badge { background: #f59e0b !important; }
+      .entry-number.indigo-badge { background: #6366f1 !important; }
+      .entry-number.red-badge { background: #ef4444 !important; }
       
       .entry-title {
-        font-size: 1.125rem;
+        font-size: 1rem;
         color: #111827;
         margin: 0 0 0.5rem 0;
         font-weight: bold;
-        line-height: 1.4;
+        line-height: 1.3;
       }
       
       .entry-meta {
-        font-size: 0.875rem;
+        font-size: 0.8rem;
         color: #6b7280;
         margin: 0;
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        flex-wrap: wrap;
       }
       
       .entry-separator {
@@ -10032,43 +9996,43 @@ Total Entries: ${totalEntries}
       }
       
       .version-indicator {
-        background: #e5e7eb;
-        color: #6b7280;
+        background: #e5e7eb !important;
+        color: #6b7280 !important;
         padding: 0.125rem 0.375rem;
         border-radius: 0.25rem;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         font-weight: bold;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       
       .entry-content {
         color: #374151;
-        line-height: 1.7;
-        font-size: 1rem;
-        padding-left: 3rem;
+        line-height: 1.6;
+        font-size: 0.9rem;
+        padding-left: 2.5rem;
         text-align: justify;
       }
       
       /* Footer Styling */
       .document-footer {
-        margin-top: 3rem;
-        padding-top: 2rem;
-        border-top: 2px solid #e5e7eb;
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e5e7eb;
         text-align: center;
-        max-width: 8.5in;
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: 0.75in;
-        padding-right: 0.75in;
       }
       
       .footer-line {
-        height: 2px;
+        height: 1px;
         background: linear-gradient(to right, transparent, #dc2626, transparent);
         margin-bottom: 1rem;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
       }
       
       .footer-text {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         color: #6b7280;
         margin: 0 0 0.5rem 0;
         font-weight: 500;
@@ -10090,7 +10054,7 @@ Total Entries: ${totalEntries}
       }
       
       .confidential {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         color: #9ca3af;
         font-style: italic;
         margin: 0;
