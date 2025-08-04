@@ -9641,6 +9641,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
         <!-- Divider before content -->
         <div class="content-divider"></div>
       </div>
+    `;
 
     // Add each competency section (starting on same page)
     Object.entries(organized).forEach(([competencyKey, entries]) => {
