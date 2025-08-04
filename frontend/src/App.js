@@ -6806,6 +6806,7 @@ const CompetenciesView = ({
                                             )}
                                           </div>
                                         </div>
+                                        )}
                                         
                                         {/* Reflection/Journal Prompt */}
                                         {(monthActivity.reflection || monthActivity.journal_prompt || monthActivity.curiosity_question) && (
