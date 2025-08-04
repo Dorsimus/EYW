@@ -414,6 +414,21 @@ backend:
         - agent: "testing"
         - comment: "✅ COMPREHENSIVE BACKEND HEALTH CHECK COMPLETED SUCCESSFULLY! Tested all review request focus areas after PDF export frontend fix: 1) ✅ User Management APIs: GET /api/users (237 users), POST /api/users (0.24s response), GET /api/users/{id}/competencies (5 competency areas) - ALL WORKING PERFECTLY, 2) ✅ Admin Authentication: POST /api/admin/login working (0.25s response, JWT token obtained), 3) ✅ Major Endpoints Health: Root API, Competency Framework, All Tasks, Admin Stats, Admin Tasks, Admin Users - ALL HEALTHY, 4) ✅ No issues introduced by frontend changes - backend stability maintained. CRITICAL FIX APPLIED: Fixed User model validation error where missing ID field caused 500 errors in user creation. Backend now generates UUID when no ID provided. Overall Assessment: 100% success rate on review focus areas, system ready for production use."
 
+  - task: "Bidirectional Sync Fix - Competency Reflections to Flightbook"
+    implemented: true
+    working: true
+    file: "frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "User reported bidirectional sync between competency reflections and Flightbook was broken. Investigation revealed two issues: 1) User data not stored in localStorage causing createOrUpdateFlightbookFromJournalReflection to return early, 2) onBlur events not triggering with body clicks."
+        - working: true
+        - agent: "main"
+        - comment: "FIXED: Root cause resolved by ensuring user data is stored in localStorage when setUser is called (lines 260-272). Also discovered onBlur events require Tab key or clicking focusable elements rather than body clicks. Tested and confirmed: reflection textareas in competency sections create flightbook entries on blur, bidirectional editing works correctly, and changes made in Flightbook reflect back in competency textareas. The complete workflow from competency reflection → flightbook entry → edit in flightbook → sync back to competency is working perfectly."
+
 frontend:
   - task: "Admin Login Modal"
     implemented: true
