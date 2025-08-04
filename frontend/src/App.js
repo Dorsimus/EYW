@@ -9613,33 +9613,50 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     const userLevel = "Navigator"; // This will be dynamic as users advance
 
     let html = `
-      <!-- Professional Header with Branding -->
-      <div class="document-header">
-        <div class="header-top">
-          <div class="brand-section">
-            <div class="brand-logo">
-              <img src="https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/bnn45ktt_Redstone_Symbol_RGB_Crimson.png" alt="EYW Logo" class="eyw-logo" />
-            </div>
-            <div class="brand-text">
-              <h1 class="program-title">Earn Your Wings</h1>
-              <h2 class="company-name">Redstone Employee Development</h2>
+      <!-- Professional Cover Page with Prominent EYW Logo -->
+      <div class="cover-page">
+        <div class="cover-content">
+          <!-- Prominent EYW Logo - The Star of the Page -->
+          <div class="logo-section">
+            <img src="https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/mfvf0rvf_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png" 
+                 alt="Earn Your Wings Logo" 
+                 class="eyw-cover-logo" />
+          </div>
+          
+          <!-- Program Title Below Logo -->
+          <div class="program-title-section">
+            <h1 class="cover-program-title">Earn Your Wings</h1>
+            <h2 class="cover-company-name">Redstone Development</h2>
+          </div>
+          
+          <!-- Document Information Near Bottom -->
+          <div class="document-info-section">
+            <h1 class="cover-document-title">Leadership Flightbook</h1>
+            <h2 class="cover-level-badge">Navigator Level</h2>
+            <p class="cover-subtitle">Personal Journey Log of Leadership Experiences, Insights, and Growth Moments</p>
+            
+            <!-- User and Date Info -->
+            <div class="cover-user-info">
+              <p class="cover-user-name">${userName}</p>
+              <p class="cover-export-date">Exported ${currentDate}</p>
             </div>
           </div>
-          <div class="user-section">
-            <div class="user-name">${userName}</div>
-            <div class="export-date">${currentDate}</div>
-          </div>
-        </div>
-        
-        <div class="header-divider"></div>
-        
-        <div class="document-title-section">
-          <h1 class="document-title">✈️ My Leadership Flightbook</h1>
-          <h2 class="level-badge">${userLevel} Level</h2>
-          <p class="document-subtitle">Personal Journey Log of Leadership Experiences, Insights, and Growth Moments</p>
-          <p class="summary-info">${totalEntries} Total ${totalEntries === 1 ? 'Entry' : 'Entries'} • Exported ${currentDate}</p>
         </div>
       </div>
+      
+      <!-- Page Break Before Content -->
+      <div class="page-break"></div>
+      
+      <!-- Content Summary Page -->
+      <div class="summary-page">
+        <div class="summary-header">
+          <h1 class="summary-title">My Leadership Journey</h1>
+          <p class="summary-info">${totalEntries} Total ${totalEntries === 1 ? 'Entry' : 'Entries'} • ${userLevel} Level • ${currentDate}</p>
+        </div>
+      </div>
+      
+      <!-- Page Break Before Competency Content -->
+      <div class="page-break"></div>
     `;
 
     // Add each competency section
@@ -9692,7 +9709,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
         <div class="footer-line"></div>
         <p class="footer-text">
           <span class="wings-brand">Earn Your Wings</span> • 
-          <span class="redstone-brand">Redstone Employee Development</span> • 
+          <span class="redstone-brand">Redstone Development</span> • 
           <span class="level-indicator">${userLevel} Level Leadership Journey</span>
         </p>
         <p class="confidential">This document contains personal reflections and professional development insights.</p>
