@@ -9821,30 +9821,6 @@ Total Entries: ${totalEntries}
           <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
             ✏️ New Flight Log Entry
           </button>
-          <button 
-            onClick={() => {
-              // Test function to create a sample flightbook entry
-              const testEntry = {
-                id: `test_${Date.now()}`,
-                title: 'Test: Manual Flightbook Entry',
-                content: 'This is a test entry to verify the flightbook system is working correctly.',
-                competency: 'leadership_supervision',
-                type: 'manual_test',
-                source: 'manual_entry',
-                tags: ['test', 'manual'],
-                date: new Date()
-              };
-              const existingEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
-              existingEntries.push(testEntry);
-              localStorage.setItem('flightbook_entries', JSON.stringify(existingEntries));
-              loadFlightbookEntries(); // Reload to show new entry
-              console.log('Test flightbook entry created');
-            }}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-          >
-            🧪 Test Entry
-          </button>
-          
           {/* Export PDF Button */}
           {totalEntries > 0 && (
             <button 
