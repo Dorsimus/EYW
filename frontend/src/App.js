@@ -8056,7 +8056,10 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
 
   // Helper function to get competency display name
   const getCompetencyName = (competencyKey) => {
-    return competencies[competencyKey]?.name || competencyKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    const nameMap = {
+      'core_values': 'Core Values'
+    };
+    return nameMap[competencyKey] || competencies[competencyKey]?.name || competencyKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   };
 
   // Function to handle document viewing
