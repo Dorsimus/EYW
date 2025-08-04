@@ -9025,7 +9025,7 @@ const CoreValuesView = ({
                           e.target.nextElementSibling.style.display = 'block';
                         }}
                       />
-                      <div className="text-3xl hidden">
+                      <div className="text-3xl" style={{ display: 'none' }}>
                         {valueKey === 'believers' ? '🌟' : 
                          valueKey === 'communicate' ? '💬' : 
                          valueKey === 'course' ? '🧭' : '🚀'}
