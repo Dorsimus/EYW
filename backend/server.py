@@ -802,6 +802,8 @@ async def create_user(user_data: UserCreate):
     
     # Create user with provided ID if available, otherwise generate UUID
     user_dict = user_data.dict()
+    if not user_dict.get('id'):
+        user_dict['id'] = str(uuid.uuid4())
     user = User(**user_dict)
     if user_data.password and user_data.is_admin:
         user.password_hash = get_password_hash(user_data.password)
