@@ -9543,11 +9543,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                             </div>
                             
                             {/* Journal Entry Card */}
-                            <div className={`
-                              relative bg-white rounded-lg shadow-lg border border-gray-200 
-                              transform hover:shadow-xl transition-all duration-300 hover:-translate-y-1
-                              before:absolute before:inset-0 before:bg-gradient-to-br before:from-transparent before:to-gray-50 before:opacity-30 before:rounded-lg before:pointer-events-none
-                            `}>
+                            <div className="relative bg-white rounded-lg shadow-lg border border-gray-200 transform hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                               {/* Paper Lines Effect */}
                               <div className="absolute left-16 top-0 bottom-0 w-px bg-red-200 opacity-40"></div>
                               <div className="absolute left-20 top-0 bottom-0 w-px bg-blue-200 opacity-30"></div>
