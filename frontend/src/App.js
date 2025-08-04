@@ -10122,8 +10122,8 @@ Total Entries: ${totalEntries}
           {totalEntries > 0 && (
             <button 
               onClick={handleExportPDF}
-              className="inline-flex items-center px-6 py-3 border border-blue-300 text-sm font-medium rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors shadow-sm"
-              title="Export your Leadership Flightbook as PDF"
+              className="inline-flex items-center px-6 py-3 border border-blue-300 text-sm font-medium rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 hover:border-blue-400 transition-all duration-200 shadow-sm hover:shadow-md transform hover:scale-105 active:scale-95"
+              title="Export your Leadership Flightbook as PDF - Opens in new window for printing/saving"
             >
               📄 Export PDF
             </button>
