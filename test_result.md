@@ -903,6 +903,7 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Consolidated First Page PDF Layout with All Elements"
     - "Core Values Section Refinements and Flightbook Integration Fixes - Final Verification"
   stuck_tasks:
     - "Core Values Section Refinements and Flightbook Integration Fixes - Final Verification"
