@@ -9521,10 +9521,12 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                   <div className={`border-t border-gray-200 bg-gradient-to-br from-${color}-50 via-${color}-25 to-orange-50`}>
                     {/* Journal Binding Effect - Color-Matched */}
                     <div className="relative">
-                      <div className={`absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-${color}-300 via-${color}-200 to-${color}-100 border-r-2 border-${color}-400`}>
-                        <div className="flex flex-col items-center justify-start pt-6 space-y-4">
+                      <div className={`absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-${color}-400 via-${color}-300 to-${color}-200 border-r-3 border-${color}-500 shadow-inner`}>
+                        <div className="flex flex-col items-center justify-start pt-6 space-y-4 relative">
+                          {/* Binding texture effect */}
+                          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white to-transparent opacity-10"></div>
                           {Array.from({length: Math.min(entries.length, 6)}).map((_, i) => (
-                            <div key={i} className={`w-1.5 h-6 bg-${color}-500 rounded-full opacity-80`}></div>
+                            <div key={i} className={`w-2 h-8 bg-${color}-600 rounded-full opacity-90 shadow-sm z-10`}></div>
                           ))}
                         </div>
                       </div>
