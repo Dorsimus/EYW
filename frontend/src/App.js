@@ -9553,7 +9553,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                                   <div className="flex items-start justify-between">
                                     <div className="flex-1">
                                       <div className="flex items-center space-x-3 mb-2">
-                                        <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                                        <div className={`w-2 h-2 bg-${color}-500 rounded-full`}></div>
                                         <h4 className="text-lg font-semibold text-gray-800 font-serif leading-relaxed">
                                           {entry.title}
                                         </h4>
