@@ -4859,6 +4859,7 @@ const App = () => {
 
   // Function to handle when user finishes editing a journal reflection (onBlur)
   const handleJournalReflectionComplete = async (areaKey, subKey, taskId, notes, taskType = 'curiosity_reflection') => {
+    console.log(`[DEBUG] handleJournalReflectionComplete called:`, { areaKey, subKey, taskId, notes: notes?.substring(0, 30), taskType });
     console.log(`Finalizing journal reflection: ${areaKey} -> ${subKey} -> ${taskId}`);
     const taskKey = `${areaKey}_${subKey}_${taskId}`;
     
@@ -4875,11 +4876,15 @@ const App = () => {
     
     setCompetencyTaskProgress(updatedProgress);
     localStorage.setItem('competency_task_progress', JSON.stringify(updatedProgress));
+    console.log(`[DEBUG] Competency progress updated for ${taskKey}`);
     
     // Create or update flightbook entry for ANY meaningful journal/reflection entry
     if (notes && notes.trim().length > 10) {
-      console.log(`Creating/updating flightbook entry from ${taskType} with content:`, notes.substring(0, 50) + '...');
+      console.log(`[DEBUG] Creating/updating flightbook entry from ${taskType} with content:`, notes.substring(0, 50) + '...');
+      console.log(`[DEBUG] Current user:`, user);
       await createOrUpdateFlightbookFromJournalReflection(areaKey, subKey, taskId, notes, taskType);
+    } else {
+      console.log(`[DEBUG] Notes too short or empty, not creating flightbook entry:`, { length: notes?.length, notes });
     }
     
     // Update competency progress percentages
