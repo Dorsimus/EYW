@@ -9457,6 +9457,265 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     return { organized: orderedOrganized, unassigned };
   };
 
+  // Print/Export Functions
+  const handlePrintFlightbook = () => {
+    // Create a new window with print-optimized styling
+    const printWindow = window.open('', '_blank');
+    const printContent = generatePrintableFlightbook();
+    
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>My Leadership Flightbook - ${new Date().toLocaleDateString()}</title>
+          <style>
+            ${getPrintStyles()}
+          </style>
+        </head>
+        <body>
+          ${printContent}
+        </body>
+      </html>
+    `);
+    
+    printWindow.document.close();
+    
+    // Wait a moment for content to load, then print
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 500);
+  };
+
+  const handleExportPDF = () => {
+    // For PDF export, we'll use the browser's print to PDF functionality
+    handlePrintFlightbook();
+    alert('💡 Tip: Choose "Save as PDF" from your printer options to export your Flightbook as a PDF file!');
+  };
+
+  const handleExportText = () => {
+    const textContent = generateTextFlightbook();
+    const blob = new Blob([textContent], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Leadership-Flightbook-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
+  // Generate print-optimized HTML content
+  const generatePrintableFlightbook = () => {
+    const currentDate = new Date().toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+
+    let html = `
+      <div class="flightbook-header">
+        <h1>✈️ My Leadership Flightbook</h1>
+        <p class="subtitle">Personal Journey Log of Leadership Experiences, Insights, and Growth Moments</p>
+        <p class="export-info">Exported on ${currentDate} • ${totalEntries} Total Entries</p>
+      </div>
+    `;
+
+    // Add each competency section
+    Object.entries(organized).forEach(([competencyKey, entries]) => {
+      const competencyName = getCompetencyName(competencyKey);
+      
+      html += `
+        <div class="competency-section">
+          <h2 class="competency-title">${competencyName}</h2>
+          <p class="entry-count">${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}</p>
+      `;
+
+      entries.forEach((entry, index) => {
+        html += `
+          <div class="entry">
+            <div class="entry-header">
+              <div class="entry-number">${index + 1}</div>
+              <div class="entry-info">
+                <h3 class="entry-title">${entry.title}</h3>
+                <p class="entry-meta">
+                  ${entry.date ? new Date(entry.date).toLocaleDateString() : 'Recent'} • 
+                  ${entry.type ? entry.type.replace('_', ' ') : 'Reflection'}
+                </p>
+              </div>
+            </div>
+            <div class="entry-content">
+              ${entry.content.replace(/\n/g, '<br>')}
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+    });
+
+    return html;
+  };
+
+  // Generate plain text version
+  const generateTextFlightbook = () => {
+    const currentDate = new Date().toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+
+    let text = `MY LEADERSHIP FLIGHTBOOK
+====================================
+Personal Journey Log of Leadership Experiences, Insights, and Growth Moments
+
+Exported on: ${currentDate}
+Total Entries: ${totalEntries}
+
+====================================
+
+`;
+
+    Object.entries(organized).forEach(([competencyKey, entries]) => {
+      const competencyName = getCompetencyName(competencyKey);
+      
+      text += `${competencyName.toUpperCase()}\n`;
+      text += `${'='.repeat(competencyName.length)}\n`;
+      text += `${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}\n\n`;
+
+      entries.forEach((entry, index) => {
+        text += `${index + 1}. ${entry.title}\n`;
+        text += `   Date: ${entry.date ? new Date(entry.date).toLocaleDateString() : 'Recent'}\n`;
+        text += `   Type: ${entry.type ? entry.type.replace('_', ' ') : 'Reflection'}\n`;
+        text += `   Content:\n   ${entry.content.replace(/\n/g, '\n   ')}\n\n`;
+        text += `   ${'-'.repeat(50)}\n\n`;
+      });
+
+      text += '\n';
+    });
+
+    return text;
+  };
+
+  // CSS styles for print version
+  const getPrintStyles = () => {
+    return `
+      @media print {
+        body { margin: 0; }
+        .no-print { display: none !important; }
+      }
+      
+      body {
+        font-family: 'Times New Roman', serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 8.5in;
+        margin: 0 auto;
+        padding: 0.5in;
+      }
+      
+      .flightbook-header {
+        text-align: center;
+        border-bottom: 3px solid #2563eb;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+        page-break-after: avoid;
+      }
+      
+      .flightbook-header h1 {
+        font-size: 2.5rem;
+        color: #1e40af;
+        margin: 0 0 0.5rem 0;
+        font-weight: bold;
+      }
+      
+      .subtitle {
+        font-size: 1.1rem;
+        color: #64748b;
+        font-style: italic;
+        margin: 0 0 0.5rem 0;
+      }
+      
+      .export-info {
+        font-size: 0.9rem;
+        color: #6b7280;
+        margin: 0;
+      }
+      
+      .competency-section {
+        margin: 2rem 0;
+        page-break-inside: avoid;
+      }
+      
+      .competency-title {
+        font-size: 1.5rem;
+        color: #1e40af;
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+        page-break-after: avoid;
+      }
+      
+      .entry-count {
+        font-size: 0.9rem;
+        color: #6b7280;
+        margin-bottom: 1rem;
+        font-weight: bold;
+      }
+      
+      .entry {
+        margin: 1.5rem 0;
+        page-break-inside: avoid;
+        border-left: 4px solid #e5e7eb;
+        padding-left: 1rem;
+      }
+      
+      .entry-header {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 0.75rem;
+      }
+      
+      .entry-number {
+        background: #2563eb;
+        color: white;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9rem;
+        margin-right: 1rem;
+        flex-shrink: 0;
+      }
+      
+      .entry-title {
+        font-size: 1.1rem;
+        color: #111827;
+        margin: 0 0 0.25rem 0;
+        font-weight: bold;
+      }
+      
+      .entry-meta {
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin: 0;
+      }
+      
+      .entry-content {
+        color: #374151;
+        line-height: 1.7;
+        font-size: 1rem;
+        padding-left: 3rem;
+      }
+    `;
+  };
+
   // Extract journal entries and reflections from various sources
   const getJournalEntries = () => {
     return flightbookEntries;
