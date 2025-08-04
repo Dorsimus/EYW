@@ -9516,26 +9516,73 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
                   </div>
                 </button>
 
-                {/* Expandable Content */}
+                {/* Expandable Content - Journal Style */}
                 {isExpanded && (
-                  <div className="border-t border-gray-200">
-                    <div className="p-4 space-y-4">
-                      {entries.map((entry) => (
-                        <div key={entry.id} className={`p-4 border-l-4 border-${color}-500 bg-${color}-25 rounded-r-lg`}>
-                          {/* Entry Header */}
-                          <div className="flex items-start justify-between mb-3">
-                            <div className="flex-1">
-                              <div className="flex items-center space-x-3 mb-2">
-                                <h4 className="text-lg font-semibold text-gray-900">{entry.title}</h4>
-                                <span className={`px-2 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-800`}>
-                                  {entry.type?.replace('_', ' ') || 'reflection'}
+                  <div className="border-t border-gray-200 bg-gradient-to-br from-amber-50 to-yellow-50">
+                    {/* Journal Binding Effect */}
+                    <div className="relative">
+                      <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-amber-200 to-amber-100 border-r border-amber-300">
+                        <div className="flex flex-col items-center justify-start pt-4 space-y-3">
+                          {Array.from({length: Math.min(entries.length, 8)}).map((_, i) => (
+                            <div key={i} className="w-1 h-4 bg-amber-400 rounded-full opacity-70"></div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* Journal Pages */}
+                      <div className="pl-12 pr-6 py-6 space-y-6">
+                        {entries.map((entry, index) => (
+                          <div key={entry.id} className="relative">
+                            {/* Entry Tab */}
+                            <div className="absolute -left-6 top-4 w-8 h-12 bg-gradient-to-br from-amber-200 to-amber-300 rounded-r-lg shadow-md border-r border-amber-400">
+                              <div className="flex items-center justify-center h-full">
+                                <span className="text-xs font-bold text-amber-800 transform rotate-90">
+                                  {index + 1}
                                 </span>
                               </div>
-                              <div className="text-sm text-gray-500 mb-3">
-                                📅 {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'} • Source: {entry.source ? entry.source.replace('_', ' ') : 'manual entry'}
-                              </div>
                             </div>
-                          </div>
+                            
+                            {/* Journal Entry Card */}
+                            <div className={`
+                              relative bg-white rounded-lg shadow-lg border border-gray-200 
+                              transform hover:shadow-xl transition-all duration-300 hover:-translate-y-1
+                              before:absolute before:inset-0 before:bg-gradient-to-br before:from-transparent before:to-gray-50 before:opacity-30 before:rounded-lg before:pointer-events-none
+                            `}>
+                              {/* Paper Lines Effect */}
+                              <div className="absolute left-16 top-0 bottom-0 w-px bg-red-200 opacity-40"></div>
+                              <div className="absolute left-20 top-0 bottom-0 w-px bg-blue-200 opacity-30"></div>
+                              
+                              <div className="p-6 relative z-10">
+                                {/* Entry Header with Journal Styling */}
+                                <div className="flex items-start justify-between mb-4 pb-3 border-b border-dashed border-gray-300">
+                                  <div className="flex-1">
+                                    <div className="flex items-center space-x-3 mb-2">
+                                      <div className="flex items-center space-x-2">
+                                        <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
+                                        <h4 className="text-lg font-semibold text-gray-800 font-serif leading-relaxed">
+                                          {entry.title}
+                                        </h4>
+                                      </div>
+                                      <span className={`px-3 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-700 border border-${color}-200`}>
+                                        {entry.type?.replace('_', ' ') || 'reflection'}
+                                      </span>
+                                    </div>
+                                    <div className="text-sm text-gray-600 flex items-center space-x-4">
+                                      <span className="flex items-center space-x-1">
+                                        <span className="text-amber-600">📅</span>
+                                        <span className="font-medium">
+                                          {entry.date && entry.date.toLocaleDateString ? entry.date.toLocaleDateString() : 'Recent'}
+                                        </span>
+                                      </span>
+                                      <span className="flex items-center space-x-1">
+                                        <span className="text-blue-600">✍️</span>
+                                        <span className="italic">
+                                          {entry.source ? entry.source.replace('_', ' ') : 'manual entry'}
+                                        </span>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
 
                           {/* Content display or editing interface */}
                           {editingEntry === entry.id ? (
