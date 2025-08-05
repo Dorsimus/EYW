@@ -5979,8 +5979,8 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
               🎯
             </div>
             <div>
-              <h3 className="text-3xl font-bold text-gray-800">Top Competency Areas</h3>
-              <p className="mt-1" style={{color: '#333333'}}>Track your professional development progress</p>
+              <h3 className="text-3xl font-bold text-gray-800">Your Competency Areas</h3>
+              <p className="mt-1" style={{color: '#333333'}}>Track your professional development progress across all areas</p>
             </div>
           </div>
           
