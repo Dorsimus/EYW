@@ -429,6 +429,21 @@ backend:
         - agent: "main"
         - comment: "FIXED: Root cause resolved by ensuring user data is stored in localStorage when setUser is called (lines 260-272). Also discovered onBlur events require Tab key or clicking focusable elements rather than body clicks. Tested and confirmed: reflection textareas in competency sections create flightbook entries on blur, bidirectional editing works correctly, and changes made in Flightbook reflect back in competency textareas. The complete workflow from competency reflection → flightbook entry → edit in flightbook → sync back to competency is working perfectly."
 
+  - task: "Bidirectional Sync Comprehensive Validation - All Reflection Fields"
+    implemented: true
+    working: false
+    file: "frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "USER REPORTED CRITICAL ISSUE: Multiple areas where reflection notes were made but did NOT carry over to Flightbook. Need comprehensive testing of ALL free-form fields to identify which areas are missing the bidirectional sync functionality. Requirement: Any free-form field → Flightbook, Any uploadable item → Portfolio."
+        - working: false
+        - agent: "main"
+        - comment: "ISSUE IDENTIFIED: Previous testing showed 50% success rate (2/4 areas working). Working areas: Curiosity Ignition Reflection Prompts, Monthly Activity Reflections. Missing areas: Task Evidence/Notes in completion modals, Culminating Project Notes. User reports additional areas where reflections are not syncing. Need comprehensive audit of ALL reflection fields and fix missing integrations."
+
 frontend:
   - task: "Admin Login Modal"
     implemented: true
