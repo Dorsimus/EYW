@@ -6503,10 +6503,6 @@ const CompetenciesView = ({
 
             {(expandedArea === areaKey || expandedArea?.startsWith(`${areaKey}_`)) && (
               <div className="px-6 py-4 bg-gray-50">
-
-                
-
-                
                 <div className="grid grid-cols-1 gap-6">
                   {Object.entries(areaData.sub_competencies).map(([subKey, subData]) => (
                     <div key={subKey} className="sub-competency-card bg-white rounded-lg shadow-sm border border-gray-200" data-subkey={`${areaKey}_${subKey}`}>
