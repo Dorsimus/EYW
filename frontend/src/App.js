@@ -6505,50 +6505,7 @@ const CompetenciesView = ({
               <div className="px-6 py-4 bg-gray-50">
 
                 
-                {/* Curiosity Ignition Section for Leadership & Supervision */}
-                {areaKey === 'leadership_supervision' && areaData.curiosity_ignition && (
-                  <div className="mb-6 p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg border-l-4 border-orange-400">
-                    <h4 className="font-semibold text-orange-900 mb-3 flex items-center">
-                      🔥 {areaData.curiosity_ignition.title}
-                    </h4>
-                    <p className="text-sm text-orange-800 mb-3">
-                      {areaData.curiosity_ignition.description}
-                    </p>
-                    <p className="text-xs text-orange-700 mb-4 font-medium">
-                      ⏱️ {areaData.curiosity_ignition.time_required}
-                    </p>
-                    
-                    <div className="mb-4">
-                      <h5 className="font-semibold text-orange-900 mb-2">💭 Reflection Prompts:</h5>
-                      <div className="space-y-2">
-                        {areaData.curiosity_ignition.reflection_prompts.map((prompt, index) => (
-                          <div key={index} className="bg-white p-3 rounded border border-orange-200">
-                            <p className="text-sm text-orange-800 font-medium mb-2">{index + 1}. "{prompt}"</p>
-                            <textarea
-                              placeholder="Write your reflection here..."
-                              className="w-full p-2 border border-orange-200 rounded text-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                              rows="2"
-                              value={getCompetencyTaskNotes(areaKey, 'curiosity_ignition', `prompt_${index}`) || ''}
-                              onChange={(e) => {
-                                // Only update localStorage on change, don't create flightbook entries yet
-                                onJournalReflectionChange(areaKey, 'curiosity_ignition', `prompt_${index}`, e.target.value, 'curiosity_reflection');
-                              }}
-                              onBlur={(e) => {
-                                // Create or update flightbook entry when user finishes editing
-                                onJournalReflectionComplete(areaKey, 'curiosity_ignition', `prompt_${index}`, e.target.value, 'curiosity_reflection');
-                              }}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div className="bg-orange-100 p-3 rounded border border-orange-200">
-                      <h5 className="font-semibold text-orange-900 mb-2">📝 Setup Requirement:</h5>
-                      <p className="text-sm text-orange-800">{areaData.curiosity_ignition.setup_requirement}</p>
-                    </div>
-                  </div>
-                )}
+
                 
                 {/* Integration Activities Section for Leadership & Supervision */}
                 {areaKey === 'leadership_supervision' && areaData.integration_activities && (
