@@ -7383,19 +7383,19 @@ const CompetenciesView = ({
                   ))}
                 </div>
                 
-                {/* Validation Criteria for Leadership & Supervision */}
-                {areaKey === 'leadership_supervision' && areaData.validation_criteria && (
+                {/* Validation Criteria for all competency areas */}
+                {areaData.validation_criteria && (
                   <div className="mt-6 p-4 bg-green-50 rounded-lg border-l-4 border-green-400">
                     <h4 className="font-semibold text-green-900 mb-3">✅ Competency Validation & Advancement Criteria</h4>
                     
-                    {/* Mastery Gates */}
-                    {areaData.validation_criteria.mastery_gates && (
+                    {/* Mastery Evidence Portfolio */}
+                    {areaData.validation_criteria.mastery_evidence_portfolio && (
                       <div className="mb-4">
-                        <h5 className="font-medium text-green-800 mb-2">Leadership & Supervision Mastery Gates:</h5>
+                        <h5 className="font-medium text-green-800 mb-2">{areaData.name} Mastery Evidence:</h5>
                         <ul className="text-sm text-green-700 space-y-1 ml-4">
-                          {areaData.validation_criteria.mastery_gates.map((gate, index) => (
+                          {areaData.validation_criteria.mastery_evidence_portfolio.map((evidence, index) => (
                             <li key={index} className="list-disc">
-                              {gate}
+                              {evidence}
                             </li>
                           ))}
                         </ul>
@@ -7406,11 +7406,8 @@ const CompetenciesView = ({
                     {areaData.validation_criteria.portfolio_defense && (
                       <div className="mb-4">
                         <h5 className="font-medium text-green-800 mb-2">
-                          🎤 {areaData.validation_criteria.portfolio_defense.title}
+                          🎤 Portfolio Defense ({areaData.validation_criteria.portfolio_defense.duration})
                         </h5>
-                        <p className="text-sm text-green-700 mb-2">
-                          {areaData.validation_criteria.portfolio_defense.duration}
-                        </p>
                         <ul className="text-sm text-green-700 space-y-1 ml-4">
                           {areaData.validation_criteria.portfolio_defense.components.map((component, index) => (
                             <li key={index} className="list-disc">
@@ -7424,7 +7421,7 @@ const CompetenciesView = ({
                     {/* CM Readiness Indicators */}
                     {areaData.validation_criteria.cm_readiness_indicators && (
                       <div>
-                        <h5 className="font-medium text-green-800 mb-2">🏆 Community Manager Readiness - Leadership Indicators:</h5>
+                        <h5 className="font-medium text-green-800 mb-2">🏆 Community Manager Readiness Indicators:</h5>
                         <ul className="text-sm text-green-700 space-y-1 ml-4">
                           {areaData.validation_criteria.cm_readiness_indicators.map((indicator, index) => (
                             <li key={index} className="list-disc">
