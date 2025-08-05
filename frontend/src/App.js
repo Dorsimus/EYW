@@ -5842,6 +5842,34 @@ const AdminLoginModal = ({ onLogin, onClose }) => {
 
 // Dashboard View Component
 const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewCompetencyTasks, setCurrentView }) => {
+  // Color mapping for competencies
+  const getCompetencyColor = (competencyKey) => {
+    const colorMap = {
+      'core_values': { primary: '#8b5cf6', gradient: 'from-purple-500 to-purple-600' },
+      'leadership_supervision': { primary: '#3b82f6', gradient: 'from-blue-500 to-blue-600' },
+      'financial_management': { primary: '#10b981', gradient: 'from-green-500 to-green-600' }, 
+      'operational_management': { primary: '#f97316', gradient: 'from-orange-500 to-orange-600' },
+      'cross_functional_collaboration': { primary: '#6366f1', gradient: 'from-indigo-500 to-indigo-600' },
+      'strategic_thinking': { primary: '#ef4444', gradient: 'from-red-500 to-red-600' }
+    };
+    return colorMap[competencyKey] || { primary: '#6b7280', gradient: 'from-gray-500 to-gray-600' };
+  };
+
+  // Navigate to competencies view and expand specific area
+  const navigateToCompetency = (competencyKey) => {
+    setCurrentView('competencies');
+    // Small delay to allow view to load, then scroll to competency
+    setTimeout(() => {
+      const element = document.getElementById(`competency-${competencyKey}`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Simulate click to expand if needed
+        const button = element.querySelector('button');
+        if (button) button.click();
+      }
+    }, 100);
+  };
+
   const getTopCompetencies = () => {
     return Object.entries(competencies)
       .sort(([,a], [,b]) => (b.overall_progress || 0) - (a.overall_progress || 0))
