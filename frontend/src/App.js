@@ -6026,33 +6026,6 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                       </div>
                     </div>
                   </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {Object.entries(area.sub_competencies).slice(0, 4).map(([subKey, subData]) => (
-                    <div
-                      key={subKey}
-                      onClick={() => onViewCompetencyTasks(key, subKey)}
-                      className="cursor-pointer bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md hover:border-gray-300 transition-all duration-200 transform hover:scale-[1.02]"
-                    >
-                      <div className="flex justify-between items-center">
-                        <div className="flex-1">
-                          <div className="flex items-center mb-2">
-                            <div className={`w-3 h-3 bg-gradient-to-r ${competencyColors.gradient} rounded-full mr-2`}></div>
-                            <div className="font-semibold text-gray-800">
-                              {typeof subData === 'string' ? subData : (subData?.name || subKey)}
-                            </div>
-                          </div>
-                          <div className="text-sm ml-5" style={{color: '#333333'}}>
-                            {(subData?.completed_tasks || 0)}/{(subData?.total_tasks || 0)} tasks • {Math.round(subData?.progress_percentage || 0)}% complete
-                          </div>
-                        </div>
-                        <div className="ml-4 text-lg font-bold" style={{color: '#0127a2'}}>
-                          {Math.round(subData?.progress_percentage || 0)}%
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  </div>
                 </div>
               );
             })}
