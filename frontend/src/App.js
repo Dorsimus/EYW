@@ -6459,7 +6459,7 @@ const CompetenciesView = ({
                         handleJournalReflectionChange('program_foundations', 'curiosity_assessment', `prompt_${index}`, e.target.value);
                       }}
                       onBlur={(e) => {
-                        onJournalReflectionComplete('program_foundations', 'curiosity_assessment', `prompt_${index}`, e.target.value, 'leadership_curiosity');
+                        handleJournalReflectionComplete('program_foundations', 'curiosity_assessment', `prompt_${index}`, e.target.value, 'leadership_curiosity');
                       }}
                     />
                   </div>
