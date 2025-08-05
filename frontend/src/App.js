@@ -5987,7 +5987,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                 <div key={key} className="relative">
                   <div 
                     onClick={() => navigateToCompetency(key)}
-                    className="cursor-pointer hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] p-6 bg-white rounded-xl border border-gray-200"
+                    className="cursor-pointer hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] p-6 bg-white rounded-xl border border-gray-200 mb-4"
                   >
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex-1">
@@ -6005,7 +6005,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                     </div>
                     
                     {/* Progress Visualization */}
-                    <div className="relative mb-6">
+                    <div className="relative">
                       <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
                         <div 
                           className={`h-full bg-gradient-to-r ${competencyColors.gradient} rounded-full transition-all duration-1000`}
@@ -6015,7 +6015,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                     </div>
                   </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {Object.entries(area.sub_competencies).slice(0, 4).map(([subKey, subData]) => (
                     <div
                       key={subKey}
