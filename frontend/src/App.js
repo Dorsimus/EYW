@@ -9514,7 +9514,14 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
 
     flightbookEntries.forEach(entry => {
       const competencyKey = entry.competency || entry.competency_area;
-      if (competencyKey && competencies[competencyKey]) {
+      // Handle core_values entries specifically, plus other known competencies
+      const isKnownCompetency = competencyKey && (
+        competencyOrder.includes(competencyKey) || 
+        competencies[competencyKey] ||
+        competencyKey === 'core_values'
+      );
+      
+      if (isKnownCompetency) {
         if (!organized[competencyKey]) {
           organized[competencyKey] = [];
         }
