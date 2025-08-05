@@ -6397,6 +6397,79 @@ const CompetenciesView = ({
         <p className="text-lg text-gray-600">Complete tasks to build competency mastery</p>
       </div>
 
+      {/* Core Philosophy Section */}
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg shadow-md border border-blue-200">
+        <div className="px-8 py-6">
+          <div className="flex items-center mb-4">
+            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-4">
+              <span className="text-white text-xl">🎯</span>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900">Core Philosophy</h3>
+              <p className="text-sm text-gray-600">The foundation of the Navigator development experience</p>
+            </div>
+          </div>
+          <div className="bg-white rounded-lg p-6 border border-blue-100">
+            <p className="text-gray-700 leading-relaxed">
+              <strong>The Navigator Leadership & Supervision development transforms department supervisors into inspiring people leaders through their daily work.</strong> Every task builds real leadership skills while creating tangible value for residents and the property. This is learning in action, not learning in addition.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Program Foundations Section */}
+      <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-lg shadow-md border border-orange-200">
+        <div className="px-8 py-6">
+          <div className="flex items-center mb-4">
+            <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-yellow-600 rounded-lg flex items-center justify-center mr-4">
+              <span className="text-white text-xl">🚀</span>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900">Program Foundations</h3>
+              <p className="text-sm text-gray-600">Essential setup and orientation for your development journey</p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Leadership Curiosity Assessment */}
+            <div className="bg-white rounded-lg p-6 border border-orange-100">
+              <h4 className="font-semibold text-orange-900 mb-3">🤔 Leadership Curiosity Assessment</h4>
+              <p className="text-sm text-orange-800 mb-4">Before diving in, spark curiosity about your leadership journey (5 minutes of thinking)</p>
+              
+              <div className="space-y-3">
+                {[
+                  "What's one leadership moment from this week that I keep thinking about?",
+                  "If I could ask any great leader three questions, what would they be?",
+                  "What does leadership look like when no one's watching?",
+                  "How do I want people to feel after working with me?"
+                ].map((prompt, index) => (
+                  <div key={index} className="bg-orange-50 p-3 rounded border-l-4 border-orange-300">
+                    <p className="text-sm text-orange-800">{prompt}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Setup Requirements */}
+            <div className="bg-white rounded-lg p-6 border border-orange-100">
+              <h4 className="font-semibold text-orange-900 mb-3">⚙️ Setup Requirements</h4>
+              <div className="bg-orange-50 p-4 rounded border-l-4 border-orange-300">
+                <p className="text-sm text-orange-800">Create a simple place to capture leadership observations, questions, and 'aha moments' throughout the program.</p>
+              </div>
+              
+              <div className="mt-4">
+                <h5 className="font-medium text-orange-800 mb-2">Integration Activities</h5>
+                <div className="space-y-2 text-sm text-orange-700">
+                  <div>📅 <strong>Weekly CM Shadowing:</strong> ~30 minutes per week</div>
+                  <div>🤝 <strong>Cross-Department Exchange:</strong> Monthly experiences</div>
+                  <div>📖 <strong>Leadership Curiosity Journal:</strong> Daily observations</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="space-y-4">
         {Object.entries(competencies).map(([areaKey, areaData]) => (
           <div key={areaKey} id={`competency-${areaKey}`} className={`bg-white rounded-lg shadow overflow-hidden ${getCompetencyClass(areaKey)}`}>
