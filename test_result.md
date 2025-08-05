@@ -49,16 +49,17 @@
 ##
 ## test_plan:
 ##   current_focus:
-##     - "Task name 1"
-##     - "Task name 2"
+##     - "Critical JavaScript Runtime Error Fix"
+##     - "Bidirectional Sync Function Accessibility"
+##     - "Complete Reflection-to-Flightbook Sync Restoration"
 ##   stuck_tasks:
-##     - "Task name with persistent issues"
+##     - "Bidirectional Sync Comprehensive Validation - All Reflection Fields"
 ##   test_all: false
-##   test_priority: "high_first"  # or "sequential" or "stuck_first"
+##   test_priority: "critical_first"
 ##
 ## agent_communication:
-##     -agent: "main"  # or "testing" or "user"
-##     -message: "Communication message between agents"
+##     -agent: "main"
+##     -message: "CRITICAL PRIORITY: Investigating JavaScript runtime errors preventing handleJournalReflectionChange and handleJournalReflectionComplete functions from being accessible to React components. Functions exist in code but ReferenceError occurs at runtime. Testing showed 100% failure rate for all reflection fields. Will examine App.js structure, component rendering, and function scope issues to restore bidirectional sync functionality."
 
 # Protocol Guidelines for Main agent
 #
