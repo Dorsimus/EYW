@@ -6419,96 +6419,111 @@ const CompetenciesView = ({
 
       {/* Program Foundations Section */}
       <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-lg shadow-md border border-orange-200">
-        <div className="px-8 py-6">
-          <div className="flex items-center mb-6">
-            <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-yellow-600 rounded-lg flex items-center justify-center mr-4">
-              <span className="text-white text-xl">🚀</span>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900">Program Foundations</h3>
-              <p className="text-sm text-gray-600">Essential setup and orientation for your development journey</p>
-            </div>
-          </div>
-          
-          {/* Leadership Curiosity Assessment - Full Width with Writing Space */}
-          <div className="mb-8">
-            <div className="bg-white rounded-lg p-6 border border-orange-200 shadow-sm">
-              <div className="flex items-center mb-4">
-                <span className="text-2xl mr-3">🤔</span>
-                <div>
-                  <h4 className="text-xl font-bold text-orange-900">Leadership Curiosity Assessment</h4>
-                  <p className="text-sm text-orange-700">Before diving in, spark curiosity about your leadership journey (15-20 minutes of reflection)</p>
-                </div>
+        <div 
+          className="px-8 py-6 cursor-pointer hover:bg-gradient-to-r hover:from-orange-100 hover:to-yellow-100 transition-all duration-200"
+          onClick={() => setExpandedArea(expandedArea === 'program_foundations' ? null : 'program_foundations')}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-yellow-600 rounded-lg flex items-center justify-center mr-4">
+                <span className="text-white text-xl">🚀</span>
               </div>
-              
-              <div className="space-y-6">
-                {[
-                  "What's one leadership moment from this week that I keep thinking about?",
-                  "If I could ask any great leader three questions, what would they be?", 
-                  "What does leadership look like when no one's watching?",
-                  "How do I want people to feel after working with me?"
-                ].map((prompt, index) => (
-                  <div key={index} className="bg-orange-50 rounded-lg p-4 border-l-4 border-orange-400">
-                    <p className="text-sm font-medium text-orange-900 mb-3">{index + 1}. {prompt}</p>
-                    <textarea
-                      placeholder="Take your time to reflect and write your thoughts here..."
-                      className="w-full p-3 border border-orange-200 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
-                      rows="4"
-                      value={getCompetencyTaskNotes('program_foundations', 'curiosity_assessment', `prompt_${index}`) || ''}
-                      onChange={(e) => {
-                        handleJournalReflectionChange('program_foundations', 'curiosity_assessment', `prompt_${index}`, e.target.value);
-                      }}
-                      onBlur={(e) => {
-                        handleJournalReflectionComplete('program_foundations', 'curiosity_assessment', `prompt_${index}`, e.target.value, 'leadership_curiosity');
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-6 bg-gradient-to-r from-orange-100 to-yellow-100 p-4 rounded-lg border-l-4 border-orange-500">
-                <h5 className="font-semibold text-orange-900 mb-2">💡 Reflection Tip:</h5>
-                <p className="text-sm text-orange-800">There are no right or wrong answers. This is your starting point for thinking about leadership. These reflections will be captured in your Leadership Flightbook to look back on as you grow.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Setup Requirements - Separate Section */}
-          <div className="bg-white rounded-lg p-6 border border-orange-200 shadow-sm">
-            <div className="flex items-center mb-4">
-              <span className="text-2xl mr-3">⚙️</span>
               <div>
-                <h4 className="text-xl font-bold text-orange-900">Setup Requirements</h4>
-                <p className="text-sm text-orange-700">Simple preparation to maximize your development experience</p>
+                <h3 className="text-2xl font-bold text-gray-900">Program Foundations</h3>
+                <p className="text-sm text-gray-600">Essential setup and orientation for your development journey</p>
               </div>
             </div>
-            
-            <div className="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-300 mb-4">
-              <p className="text-sm text-orange-800 font-medium">Create a simple place to capture leadership observations, questions, and 'aha moments' throughout the program.</p>
-              <p className="text-xs text-orange-700 mt-2">💡 Your Leadership Flightbook will automatically capture your reflections and growth!</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
-                <div className="text-2xl mb-2">📅</div>
-                <h5 className="font-semibold text-orange-800 mb-1">Weekly CM Shadowing</h5>
-                <p className="text-xs text-orange-700">~30 minutes per week</p>
-              </div>
-              
-              <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
-                <div className="text-2xl mb-2">🤝</div>
-                <h5 className="font-semibold text-orange-800 mb-1">Cross-Department Exchange</h5>
-                <p className="text-xs text-orange-700">Monthly experiences</p>
-              </div>
-              
-              <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
-                <div className="text-2xl mb-2">📖</div>
-                <h5 className="font-semibold text-orange-800 mb-1">Leadership Curiosity Journal</h5>
-                <p className="text-xs text-orange-700">Daily observations</p>
-              </div>
+            <div className="flex items-center text-orange-600">
+              <span className="text-2xl font-bold mr-2">
+                {expandedArea === 'program_foundations' ? '▼' : '▶'}
+              </span>
             </div>
           </div>
         </div>
+        
+        {/* Collapsible Content */}
+        {expandedArea === 'program_foundations' && (
+          <div className="px-8 pb-6">
+            {/* Leadership Curiosity Assessment - Full Width with Writing Space */}
+            <div className="mb-8">
+              <div className="bg-white rounded-lg p-6 border border-orange-200 shadow-sm">
+                <div className="flex items-center mb-4">
+                  <span className="text-2xl mr-3">🤔</span>
+                  <div>
+                    <h4 className="text-xl font-bold text-orange-900">Leadership Curiosity Assessment</h4>
+                    <p className="text-sm text-orange-700">Before diving in, spark curiosity about your leadership journey (15-20 minutes of reflection)</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-6">
+                  {[
+                    "What's one leadership moment from this week that I keep thinking about?",
+                    "If I could ask any great leader three questions, what would they be?", 
+                    "What does leadership look like when no one's watching?",
+                    "How do I want people to feel after working with me?"
+                  ].map((prompt, index) => (
+                    <div key={index} className="bg-orange-50 rounded-lg p-4 border-l-4 border-orange-400">
+                      <p className="text-sm font-medium text-orange-900 mb-3">{index + 1}. {prompt}</p>
+                      <textarea
+                        placeholder="Take your time to reflect and write your thoughts here..."
+                        className="w-full p-3 border border-orange-200 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
+                        rows="4"
+                        value={getCompetencyTaskNotes('program_foundations', 'curiosity_assessment', `prompt_${index}`) || ''}
+                        onChange={(e) => {
+                          handleJournalReflectionChange('program_foundations', 'curiosity_assessment', `prompt_${index}`, e.target.value);
+                        }}
+                        onBlur={(e) => {
+                          handleJournalReflectionComplete('program_foundations', 'curiosity_assessment', `prompt_${index}`, e.target.value, 'leadership_curiosity');
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-6 bg-gradient-to-r from-orange-100 to-yellow-100 p-4 rounded-lg border-l-4 border-orange-500">
+                  <h5 className="font-semibold text-orange-900 mb-2">💡 Reflection Tip:</h5>
+                  <p className="text-sm text-orange-800">There are no right or wrong answers. This is your starting point for thinking about leadership. These reflections will be captured in your Leadership Flightbook to look back on as you grow.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Setup Requirements - Separate Section */}
+            <div className="bg-white rounded-lg p-6 border border-orange-200 shadow-sm">
+              <div className="flex items-center mb-4">
+                <span className="text-2xl mr-3">⚙️</span>
+                <div>
+                  <h4 className="text-xl font-bold text-orange-900">Setup Requirements</h4>
+                  <p className="text-sm text-orange-700">Simple preparation to maximize your development experience</p>
+                </div>
+              </div>
+              
+              <div className="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-300 mb-4">
+                <p className="text-sm text-orange-800 font-medium">Create a simple place to capture leadership observations, questions, and 'aha moments' throughout the program.</p>
+                <p className="text-xs text-orange-700 mt-2">💡 Your Leadership Flightbook will automatically capture your reflections and growth!</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
+                  <div className="text-2xl mb-2">📅</div>
+                  <h5 className="font-semibold text-orange-800 mb-1">Weekly CM Shadowing</h5>
+                  <p className="text-xs text-orange-700">~30 minutes per week</p>
+                </div>
+                
+                <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
+                  <div className="text-2xl mb-2">🤝</div>
+                  <h5 className="font-semibold text-orange-800 mb-1">Cross-Department Exchange</h5>
+                  <p className="text-xs text-orange-700">Monthly experiences</p>
+                </div>
+                
+                <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
+                  <div className="text-2xl mb-2">📖</div>
+                  <h5 className="font-semibold text-orange-800 mb-1">Leadership Curiosity Journal</h5>
+                  <p className="text-xs text-orange-700">Daily observations</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="space-y-4">
