@@ -6503,15 +6503,7 @@ const CompetenciesView = ({
 
             {(expandedArea === areaKey || expandedArea?.startsWith(`${areaKey}_`)) && (
               <div className="px-6 py-4 bg-gray-50">
-                {/* Philosophy Section for Leadership & Supervision */}
-                {areaKey === 'leadership_supervision' && areaData.philosophy && (
-                  <div className="mb-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
-                    <h4 className="font-semibold text-blue-900 mb-2">🎯 Core Philosophy</h4>
-                    <p className="text-sm text-blue-800 leading-relaxed">
-                      {areaData.philosophy}
-                    </p>
-                  </div>
-                )}
+
                 
                 {/* Curiosity Ignition Section for Leadership & Supervision */}
                 {areaKey === 'leadership_supervision' && areaData.curiosity_ignition && (
