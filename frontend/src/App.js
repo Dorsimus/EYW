@@ -6040,9 +6040,10 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                       </div>
                     </div>
                   ))}
+                  </div>
                 </div>
-                </div>
-            )}
+              );
+            })}
           </div>
         </div>
       </div>
