@@ -5985,16 +5985,8 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
           </div>
           
           <div className="space-y-8">
-            {/* Debug info for competencies */}
-            {Object.keys(competencies).length === 0 && (
-              <div className="text-gray-500 text-center py-8">
-                <p>No competency data available yet. Please check back once competencies are loaded.</p>
-              </div>
-            )}
-            
             {getTopCompetencies().map(([key, area]) => {
               const competencyColors = getCompetencyColor(key);
-              console.log(`Rendering competency card: ${key}`, area?.name, competencyColors);
               return (
                 <div key={key} className="relative">
                   <div 
