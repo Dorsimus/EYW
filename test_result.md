@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "CURRENT CRITICAL ISSUE: Duplicate Flightbook entries bug where typing 'testing my reflections' creates separate entries for each keystroke instead of one final entry. Problem identified: onChange events in reflection textareas (lines 6291, 6711 in App.js) trigger flightbook entry creation on every keystroke. Need to change to onBlur events and implement entry UPDATE logic instead of creating new entries each time. User also requested simple version history system."
+user_problem_statement: "CRITICAL BIDIRECTIONAL SYNC FAILURE: Recent comprehensive frontend testing revealed 100% failure rate for bidirectional sync system due to JavaScript runtime errors. The handleJournalReflectionChange and handleJournalReflectionComplete functions exist in App.js (lines 4844 and 4861) but are not accessible to React components, causing all reflection fields to fail. Console shows 'ReferenceError: handleJournalReflectionChange is not defined' and 'handleJournalReflectionComplete is not defined'. This is preventing ANY free-form journaling areas from syncing to Flightbook and ANY upload items from syncing to Portfolio. Need to investigate and fix JavaScript runtime/scope/binding issues preventing function accessibility."
 
 backend:
   - task: "User Creation API"
