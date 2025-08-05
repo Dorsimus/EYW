@@ -5871,7 +5871,11 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
   };
 
   const getTopCompetencies = () => {
-    return Object.entries(competencies)
+    const entries = Object.entries(competencies);
+    // If we have competencies data, show top 3 by progress, otherwise show first 3
+    if (entries.length === 0) return [];
+    
+    return entries
       .sort(([,a], [,b]) => (b.overall_progress || 0) - (a.overall_progress || 0))
       .slice(0, 3);
   };
