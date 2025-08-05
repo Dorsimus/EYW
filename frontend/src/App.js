@@ -6470,10 +6470,10 @@ const CompetenciesView = ({
                         rows="4"
                         value={getCompetencyTaskNotes('program_foundations', 'curiosity_assessment', `prompt_${index}`) || ''}
                         onChange={(e) => {
-                          handleJournalReflectionChange('program_foundations', 'curiosity_assessment', `prompt_${index}`, e.target.value);
+                          onJournalReflectionChange('program_foundations', 'curiosity_assessment', `prompt_${index}`, e.target.value);
                         }}
                         onBlur={(e) => {
-                          handleJournalReflectionComplete('program_foundations', 'curiosity_assessment', `prompt_${index}`, e.target.value, 'leadership_curiosity');
+                          onJournalReflectionComplete('program_foundations', 'curiosity_assessment', `prompt_${index}`, e.target.value, 'leadership_curiosity');
                         }}
                       />
                     </div>
