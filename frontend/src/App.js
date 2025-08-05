@@ -6421,7 +6421,7 @@ const CompetenciesView = ({
 
       <div className="space-y-4">
         {Object.entries(competencies).map(([areaKey, areaData]) => (
-          <div key={areaKey} className={`bg-white rounded-lg shadow overflow-hidden ${getCompetencyClass(areaKey)}`}>
+          <div key={areaKey} id={`competency-${areaKey}`} className={`bg-white rounded-lg shadow overflow-hidden ${getCompetencyClass(areaKey)}`}>
             <div 
               className="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50"
               onClick={() => setExpandedArea(expandedArea === areaKey ? null : areaKey)}
