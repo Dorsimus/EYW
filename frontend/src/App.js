@@ -6020,12 +6020,12 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
                     <div
                       key={subKey}
                       onClick={() => onViewCompetencyTasks(key, subKey)}
-                      className="redstone-sub-competency"
+                      className="cursor-pointer bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md hover:border-gray-300 transition-all duration-200 transform hover:scale-[1.02]"
                     >
                       <div className="flex justify-between items-center">
                         <div className="flex-1">
                           <div className="flex items-center mb-2">
-                            <div className="w-3 h-3 rounded-full mr-2" style={{background: 'linear-gradient(135deg, #10b981 0%, #0127a2 100%)'}}></div>
+                            <div className={`w-3 h-3 bg-gradient-to-r ${competencyColors.gradient} rounded-full mr-2`}></div>
                             <div className="font-semibold text-gray-800">
                               {typeof subData === 'string' ? subData : (subData?.name || subKey)}
                             </div>
