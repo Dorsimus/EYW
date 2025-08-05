@@ -11,7 +11,7 @@ import io
 from datetime import datetime
 
 class FocusedPortfolioTester:
-    def __init__(self, base_url="https://dfa066c0-2724-4f8c-87ee-696b2f1f82b7.preview.emergentagent.com"):
+    def __init__(self, base_url="https://b30c84c9-22c7-4573-80d3-8236f39befba.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.demo_user_id = "demo-user-123"
