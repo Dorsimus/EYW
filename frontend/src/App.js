@@ -6411,7 +6411,7 @@ const CompetenciesView = ({
           </div>
           <div className="bg-white rounded-lg p-6 border border-blue-100">
             <p className="text-gray-700 leading-relaxed">
-              <strong>The Navigator Leadership & Supervision development transforms department supervisors into inspiring people leaders through their daily work.</strong> Every task builds real leadership skills while creating tangible value for residents and the property. This is learning in action, not learning in addition.
+              <strong>The Navigator path transforms you from a department supervisor into an inspiring people leader through your daily work.</strong> Every task builds fundamental leadership skills while creating tangible value for residents and the property. This is learning in action, not learning in addition.
             </p>
           </div>
         </div>
