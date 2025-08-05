@@ -5985,42 +5985,51 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
           </div>
           
           <div className="space-y-8">
-            {getTopCompetencies().map(([key, area]) => {
-              const competencyColors = getCompetencyColor(key);
-              return (
-                <div key={key} className="relative">
-                  <div 
-                    onClick={() => navigateToCompetency(key)}
-                    className="cursor-pointer hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] p-6 bg-white rounded-xl border border-gray-200 mb-4"
-                  >
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex-1">
-                        <div className="flex items-center mb-2">
-                          <div className={`w-4 h-4 bg-gradient-to-r ${competencyColors.gradient} rounded-lg mr-3`}></div>
-                          <h4 className="text-xl font-bold text-gray-800 hover:text-gray-900 transition-colors">{area.name}</h4>
+            {getTopCompetencies().length > 0 ? (
+              getTopCompetencies().map(([key, area]) => {
+                const competencyColors = getCompetencyColor(key);
+                return (
+                  <div key={key} className="relative">
+                    <div 
+                      onClick={() => navigateToCompetency(key)}
+                      className="cursor-pointer hover:shadow-lg transition-all duration-200 transform hover:scale-[1.02] p-6 bg-white rounded-xl border border-gray-200 mb-4"
+                    >
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex-1">
+                          <div className="flex items-center mb-2">
+                            <div className={`w-4 h-4 bg-gradient-to-r ${competencyColors.gradient} rounded-lg mr-3`}></div>
+                            <h4 className="text-xl font-bold text-gray-800 hover:text-gray-900 transition-colors">{area.name}</h4>
+                          </div>
+                          <p className="text-gray-600 text-base">{area.description}</p>
+                          <div className="mt-2 text-sm text-gray-500 italic">Click to explore this competency area →</div>
                         </div>
-                        <p className="text-gray-600 text-base">{area.description}</p>
-                        <div className="mt-2 text-sm text-gray-500 italic">Click to explore this competency area →</div>
+                        <div className="text-right ml-6">
+                          <div className="text-3xl font-bold" style={{color: competencyColors.primary}}>{Math.round(area.overall_progress || 0)}%</div>
+                          <div className="text-sm font-medium" style={{color: '#333333'}}>Complete</div>
+                        </div>
                       </div>
-                      <div className="text-right ml-6">
-                        <div className="text-3xl font-bold" style={{color: competencyColors.primary}}>{Math.round(area.overall_progress || 0)}%</div>
-                        <div className="text-sm font-medium" style={{color: '#333333'}}>Complete</div>
-                      </div>
-                    </div>
-                    
-                    {/* Progress Visualization */}
-                    <div className="relative">
-                      <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
-                        <div 
-                          className={`h-full bg-gradient-to-r ${competencyColors.gradient} rounded-full transition-all duration-1000`}
-                          style={{ width: `${area.overall_progress || 0}%` }}
-                        />
+                      
+                      {/* Progress Visualization */}
+                      <div className="relative">
+                        <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
+                          <div 
+                            className={`h-full bg-gradient-to-r ${competencyColors.gradient} rounded-full transition-all duration-1000`}
+                            style={{ width: `${area.overall_progress || 0}%` }}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className="text-center py-12 bg-gray-50 rounded-lg">
+                <div className="text-gray-400 mb-4">🎯</div>
+                <p className="text-gray-600 mb-2">Competency areas are being loaded...</p>
+                <p className="text-sm text-gray-500">Available keys: {Object.keys(competencies).join(', ') || 'None'}</p>
+                <p className="text-sm text-gray-500">Total entries: {Object.keys(competencies).length}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
