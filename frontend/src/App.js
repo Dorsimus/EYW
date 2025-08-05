@@ -9744,6 +9744,54 @@ Error: ${error.message}`);
         <p class="confidential">This document contains personal reflections and professional development insights.</p>
       </div>
     `;
+    
+    // Add unassigned entries section if there are any
+    if (unassigned && unassigned.length > 0) {
+      html += `
+        <div class="competency-section" data-competency="unassigned">
+          <div class="competency-header general-theme">
+            <h2 class="competency-title">📋 General Reflections</h2>
+            <div class="entry-count">${unassigned.length} ${unassigned.length === 1 ? 'entry' : 'entries'}</div>
+          </div>
+      `;
+
+      unassigned.forEach((entry, index) => {
+        const entryDate = entry.date ? new Date(entry.date).toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric', 
+          year: 'numeric'
+        }) : 'Recent';
+        
+        html += `
+          <div class="entry">
+            <div class="entry-header">
+              <div class="entry-number general-badge">${index + 1}</div>
+              <div class="entry-info">
+                <h3 class="entry-title">${entry.title}</h3>
+                <div class="entry-meta">
+                  <span class="entry-date">${entryDate}</span>
+                  <span class="entry-separator">•</span>
+                  <span class="entry-type">${entry.type ? entry.type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'Reflection'}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="entry-content">
+              <p>${entry.content}</p>
+              ${entry.original_prompt ? `
+                <div class="entry-prompt">
+                  <strong>Prompt:</strong> <em>${entry.original_prompt}</em>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      });
+
+      html += `
+        </div>
+      `;
+    }
 
     return html;
   };
