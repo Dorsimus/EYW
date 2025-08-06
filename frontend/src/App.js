@@ -5441,12 +5441,13 @@ const App = () => {
               </button>
             ))}
             
-            {/* ADMIN NAVIGATION - FIXED: Only one dashboard */}
+            {/* ADMIN NAVIGATION */}
             {isAdmin && [
-              { key: 'admin-dashboard', label: 'Dashboard', icon: '🎛️' },
-              { key: 'admin-tasks', label: 'Tasks', icon: '⚙️' },
-              { key: 'admin-users', label: 'Users', icon: '👥' },
-              { key: 'admin-analytics', label: 'Analytics', icon: '📈' }
+              { key: 'admin-dashboard', label: 'Admin Dashboard', icon: '🎛️' },
+              { key: 'admin-users-enhanced', label: 'Users', icon: '👥' },
+              { key: 'admin-content-management', label: 'Content', icon: '📚' },
+              { key: 'admin-level-management', label: 'Levels', icon: '🎮' },
+              { key: 'admin-testing-tools', label: 'Testing', icon: '🧪' }
             ].map((tab) => (
               <button
                 key={tab.key}
@@ -5463,6 +5464,23 @@ const App = () => {
                 </div>
               </button>
             ))}
+            
+            {/* Admin Logout Button */}
+            {isAdmin && (
+              <button
+                onClick={adminLogout}
+                className="redstone-nav-tab logout-tab"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="redstone-icon">
+                    🚪
+                  </div>
+                  <span className="font-semibold text-sm">
+                    Logout
+                  </span>
+                </div>
+              </button>
+            )}
             </div>
             
             {/* Navigator Program / Level Status - Right Side */}
