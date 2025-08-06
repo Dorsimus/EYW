@@ -2267,16 +2267,6 @@ const App = () => {
     }
   }, []);
 
-  // Emergency loading fix - force loading to false after 3 seconds
-  useEffect(() => {
-    const emergencyTimeout = setTimeout(() => {
-      console.log('🚨 Emergency timeout: Forcing loading to false');
-      setLoading(false);
-    }, 3000);
-
-    return () => clearTimeout(emergencyTimeout);
-  }, []);
-
   // Handle admin token changes - FIXED: Stable admin state management  
   useEffect(() => {
     if (adminToken && !isAdmin) {
