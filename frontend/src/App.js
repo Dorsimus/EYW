@@ -5886,33 +5886,33 @@ const App = () => {
         </div>
       )}
 
-      {/* Step 3: Simple Notification System */}
+      {/* Step 3: Simple Notification System - Step 4: Mobile Enhanced */}
       {notifications.length > 0 && (
-        <div className="fixed bottom-4 right-4 z-50 space-y-2">
+        <div className="fixed bottom-4 right-4 z-50 space-y-2 notification-mobile sm:bottom-4 sm:right-4 sm:left-auto sm:max-w-sm">
           {notifications.slice(-3).map((notification) => (
             <div
               key={notification.id}
-              className={`max-w-sm bg-white rounded-lg shadow-lg border-l-4 px-4 py-3 transition-all duration-300 ease-in-out ${
+              className={`bg-white rounded-lg shadow-lg border-l-4 px-4 py-3 transition-all duration-300 ease-in-out ${
                 notification.type === 'success' 
                   ? 'border-green-400 text-green-800' 
                   : 'border-red-400 text-red-800'
-              } 
-              sm:max-w-sm max-w-xs text-xs sm:text-sm`}
+              } max-w-xs sm:max-w-sm text-sm`}
             >
               <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <span className="mr-2">
+                <div className="flex items-center flex-1 mr-2">
+                  <span className="mr-2 text-base">
                     {notification.type === 'success' ? '✅' : '❌'}
                   </span>
-                  <span className="font-medium">
+                  <span className="font-medium text-sm leading-tight">
                     {notification.message}
                   </span>
                 </div>
                 <button
                   onClick={() => removeNotification(notification.id)}
-                  className="ml-2 text-gray-400 hover:text-gray-600 text-xs touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
+                  className="text-gray-400 hover:text-gray-600 touch-target flex items-center justify-center min-h-[44px] min-w-[44px] -m-2"
+                  aria-label="Close notification"
                 >
-                  ×
+                  <span className="text-lg">×</span>
                 </button>
               </div>
             </div>
