@@ -123,10 +123,12 @@ const App = () => {
           console.log(`💾 Data saved with backup: ${key}`);
         } catch (backupError) {
           console.warn(`⚠️ Backup save failed for ${key}:`, backupError);
+          showErrorMessage(`Backup save failed for ${key}. Your data is still saved locally.`);
         }
       }, 0);
     } catch (error) {
       console.error(`❌ Error saving data for ${key}:`, error);
+      showErrorMessage(`Failed to save ${key}. Please try again.`);
     }
   };
 
@@ -137,12 +139,15 @@ const App = () => {
       if (backupData) {
         localStorage.setItem(key, backupData);
         console.log(`🔄 Successfully recovered ${key} from backup`);
+        showSuccessMessage(`Successfully recovered ${key} from backup!`);
         return true;
       }
       console.log(`⚠️ No backup found for ${key}`);
+      showErrorMessage(`No backup found for ${key}.`);
       return false;
     } catch (error) {
       console.error(`❌ Error recovering ${key}:`, error);
+      showErrorMessage(`Failed to recover ${key} from backup. Please contact support.`);
       return false;
     }
   };
