@@ -4521,11 +4521,16 @@ const AuthenticatedApp = () => {
 
   // USER MANAGEMENT FUNCTIONS FOR ENHANCED ADMIN PANEL
   const createUser = async (userData) => {
+    if (!hasAdminAccess) {
+      console.log('No admin access for creating users');
+      return false;
+    }
+
     try {
       console.log('Creating user in demo mode:', userData);
       
       // In demo mode, we simulate user creation by adding to allUsers state
-      if (isAdmin && adminToken) {
+      if (hasAdminAccess) {
         const newUser = {
           ...userData,
           id: userData.id || `user-${Date.now()}`,
@@ -4546,7 +4551,8 @@ const AuthenticatedApp = () => {
         return newUser;
       } else {
         // Production mode - make API call
-        const headers = { Authorization: `Bearer ${adminToken}` };
+        const token = await getToken();
+        const headers = { Authorization: `Bearer ${token}` };
         const response = await axios.post(`${API}/users`, userData, { headers });
         await loadAdminData(); // Reload admin data
         return response.data;
