@@ -5486,6 +5486,115 @@ const AuthenticatedApp = () => {
             setCurrentView={setCurrentView}
           />
         )}
+        
+        {/* Admin Access Information View */}
+        {currentView === 'admin-info' && !isAdmin && (
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              {/* Header */}
+              <div className="text-center mb-8">
+                <div className="flex justify-center mb-4">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span className="text-3xl">🛠️</span>
+                  </div>
+                </div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Tools & Content Management</h1>
+                <p className="text-lg text-gray-600">Comprehensive platform administration for authorized users</p>
+              </div>
+
+              {/* Available Admin Tools */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
+                  <div className="text-3xl mb-3">🎛️</div>
+                  <h3 className="font-bold text-gray-900 mb-2">Admin Dashboard</h3>
+                  <p className="text-sm text-gray-600">Platform overview, statistics, and system monitoring</p>
+                </div>
+                
+                <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
+                  <div className="text-3xl mb-3">👥</div>
+                  <h3 className="font-bold text-gray-900 mb-2">User Management</h3>
+                  <p className="text-sm text-gray-600">Create, edit, and manage user accounts and progress</p>
+                </div>
+                
+                <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 text-center">
+                  <div className="text-3xl mb-3">📚</div>
+                  <h3 className="font-bold text-gray-900 mb-2">Content Management</h3>
+                  <p className="text-sm text-gray-600">Create and edit tasks, courses, and resources</p>
+                </div>
+                
+                <div className="bg-orange-50 border border-orange-200 rounded-lg p-6 text-center">
+                  <div className="text-3xl mb-3">🎮</div>
+                  <h3 className="font-bold text-gray-900 mb-2">Level Management</h3>
+                  <p className="text-sm text-gray-600">Configure levels, requirements, and progressions</p>
+                </div>
+                
+                <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+                  <div className="text-3xl mb-3">🧪</div>
+                  <h3 className="font-bold text-gray-900 mb-2">Testing Tools</h3>
+                  <p className="text-sm text-gray-600">System diagnostics and troubleshooting utilities</p>
+                </div>
+                
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
+                  <div className="text-3xl mb-3">📊</div>
+                  <h3 className="font-bold text-gray-900 mb-2">Analytics</h3>
+                  <p className="text-sm text-gray-600">Reports, insights, and performance metrics</p>
+                </div>
+              </div>
+
+              {/* How to Get Admin Access */}
+              <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">🔑 How to Get Admin Access</h2>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Contact Administrator</h3>
+                      <p className="text-gray-600 text-sm">Reach out to your platform administrator to request admin access</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Provide Account Details</h3>
+                      <p className="text-gray-600 text-sm">Share your registered email: <strong>{user?.emailAddresses?.[0]?.emailAddress}</strong></p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Admin Assigns Role</h3>
+                      <p className="text-gray-600 text-sm">Administrator adds admin role to your account through Clerk dashboard</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-sm">4</div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Access Granted</h3>
+                      <p className="text-gray-600 text-sm">Sign out and back in to see admin navigation and tools</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Current User Info */}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Your Account Status</h3>
+                    <p className="text-sm text-gray-600">Role: Regular User • Access Level: Standard</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-gray-500">User ID: {user?.id}</p>
+                    <p className="text-sm text-gray-500">Email: {user?.emailAddresses?.[0]?.emailAddress}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
 
       {/* Admin login modal removed - using Clerk authentication */}
