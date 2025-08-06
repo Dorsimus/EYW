@@ -223,7 +223,7 @@ const EnhancedUserManagement = ({ users, onUpdateUser, onCreateUser, onApproveLe
       }
     });
 
-  const handleCreateUser = () => {
+  const handleCreateUser = async () => {
     if (!newUser.name || !newUser.email) {
       alert('Please fill in name and email');
       return;
@@ -237,21 +237,29 @@ const EnhancedUserManagement = ({ users, onUpdateUser, onCreateUser, onApproveLe
       role: 'participant'
     };
 
-    // Call the parent's create user function (this would be passed as a prop)
-    // For now, we'll simulate adding to the users array
-    console.log('Creating user:', userData);
-    
-    // Close modal and reset form
-    setShowAddUserModal(false);
-    setNewUser({
-      name: '',
-      email: '',
-      level: 3,
-      overall_progress: 0
-    });
-    
-    // In a real implementation, this would call onCreateUser(userData)
-    alert(`User ${userData.name} would be created successfully!`);
+    try {
+      // Call the parent's create user function
+      if (onCreateUser) {
+        await onCreateUser(userData);
+        console.log('User created successfully:', userData);
+        alert(`User ${userData.name} created successfully!`);
+      } else {
+        console.log('Creating user (demo mode):', userData);
+        alert(`User ${userData.name} would be created successfully!`);
+      }
+      
+      // Close modal and reset form
+      setShowAddUserModal(false);
+      setNewUser({
+        name: '',
+        email: '',
+        level: 3,
+        overall_progress: 0
+      });
+    } catch (error) {
+      console.error('Error creating user:', error);
+      alert('Failed to create user. Please try again.');
+    }
   };
 
   return (
