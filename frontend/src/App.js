@@ -10624,6 +10624,13 @@ Total Entries: ${totalEntries}
           </button>
         </div>
       )}
+
+      {/* Simple Auto-Save Status Indicator */}
+      {saveStatus && (
+        <div className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-opacity">
+          {saveStatus}
+        </div>
+      )}
     </div>
   );
 };
