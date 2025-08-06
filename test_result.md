@@ -103,7 +103,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Integrate AI-powered recommendations section into the dashboard render by finding the correct placement for the new AI insights UI. Complete the AI dashboard integration and set up backend AI service integration using OpenAI for real AI capabilities with content analysis, learning pattern recognition, personalized recommendations, and predictive analytics."
+user_problem_statement: "Integrate Clerk.com authentication system for user authentication and credential management to replace existing demo authentication. Frontend React integration with proper authentication components and backend FastAPI integration with JWT token validation from Clerk. Maintain compatibility with existing admin panel and user management functionality while implementing secure user login capabilities."
 
 backend:
   - task: "AI-Powered Learning Analytics Backend Integration"
