@@ -50,7 +50,7 @@ const AuthenticationPrompt = () => {
           <img
             src="https://customer-assets.emergentagent.com/job_earnyourwings/artifacts/ybtb01sj_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png"
             alt="Earn Your Wings"
-            className="w-80 h-80 mx-auto"
+            className="w-80 mx-auto"
             style={{ filter: 'drop-shadow(0 6px 12px rgba(0,0,0,0.15))' }}
           />
         </div>
