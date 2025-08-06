@@ -5898,7 +5898,8 @@ const App = () => {
         </div>
       )}
 
-      {/* Enhanced Notification System */}
+      {/* Notification System Temporarily Disabled for Testing */}
+      {/*
       {notifications.length > 0 && (
         <div className="fixed top-4 right-4 z-50 space-y-2">
           {notifications.map((notification) => (
@@ -5940,7 +5941,6 @@ const App = () => {
         </div>
       )}
 
-      {/* Enhanced Loading State */}
       {isLoading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-60">
           <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
@@ -5956,6 +5956,8 @@ const App = () => {
           </div>
         </div>
       )}
+      */}
+      
     </div>
   );
 };
