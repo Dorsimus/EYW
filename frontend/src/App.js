@@ -108,6 +108,22 @@ const App = () => {
   const [showTaskModal, setShowTaskModal] = useState(null);
   const [taskNotes, setTaskNotes] = useState('');
 
+  // Simple data persistence functions
+  const saveDataWithBackup = (key, data) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch (error) {
+      console.error(`Error saving data for ${key}:`, error);
+    }
+  };
+
+  // Notification system (simplified)
+  const [notifications, setNotifications] = useState([]);
+  
+  const removeNotification = (id) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
+
   const competencyOptions = [
     { area: 'leadership_supervision', subs: ['team_motivation', 'delegation', 'performance_management', 'coaching_development', 'team_building', 'conflict_resolution', 'difficult_conversations', 'cross_dept_communication', 'resident_resolution', 'crisis_leadership'] },
     { area: 'financial_management', subs: ['budget_creation', 'variance_analysis', 'cost_control', 'roi_decisions', 'revenue_impact', 'pl_understanding', 'kpi_tracking', 'financial_forecasting', 'capex_planning', 'vendor_cost_mgmt'] },
