@@ -296,12 +296,9 @@ def delete_file(file_path: str) -> bool:
     except Exception as e:
         logging.error(f"Failed to delete file {file_path}: {str(e)}")
     return False
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
+# Legacy password utilities - kept for potential data migration
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-security = HTTPBearer()
 
-# Password utilities
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
