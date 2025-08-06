@@ -284,15 +284,13 @@ const AuthenticatedApp = () => {
     { area: 'strategic_thinking', subs: ['seeing_patterns_anticipating_trends', 'innovation_continuous_improvement', 'problem_solving_future_focus', 'planning_goal_achievement'] }
   ];
 
-  // BYPASS DEMO ENVIRONMENT: Set admin on page load if token exists
+  // BYPASS DEMO ENVIRONMENT: Set admin view if user has admin role
   useEffect(() => {
     console.log('Setting up demo environment...');
     
-    // Check if we have admin token
-    const existingToken = localStorage.getItem('admin_token');
-    if (existingToken) {
-      console.log('Found existing admin token, setting admin state...');
-      setIsAdmin(true);
+    // Check if user has admin access via Clerk
+    if (hasAdminAccess) {
+      console.log('User has admin access, setting admin view...');
       setCurrentView('admin-dashboard');
       
       // Set all admin demo data including REAL COMPETENCY TASKS
@@ -305,7 +303,7 @@ const AuthenticatedApp = () => {
       });
       
       // Load tasks from actual competencies data
-      console.log('Loading tasks from competencies for existing admin session...');
+      console.log('Loading tasks from competencies for admin user...');
       const realTasks = getAllTasksFromCompetencies(competencies);
       console.log(`Loaded ${realTasks.length} tasks from competencies`);
       setAllTasks(realTasks);
