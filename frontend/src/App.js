@@ -5754,67 +5754,6 @@ const App = () => {
           </div>
         </div>
       )}
-
-      {/* Notification System Temporarily Disabled for Testing */}
-      {/*
-      {notifications.length > 0 && (
-        <div className="fixed top-4 right-4 z-50 space-y-2">
-          {notifications.map((notification) => (
-            <div
-              key={notification.id}
-              className={`max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden transform transition-all duration-300 ease-in-out ${
-                notification.type === 'success' ? 'border-l-4 border-green-400' :
-                notification.type === 'error' ? 'border-l-4 border-red-400' :
-                notification.type === 'warning' ? 'border-l-4 border-yellow-400' :
-                'border-l-4 border-blue-400'
-              }`}
-            >
-              <div className="p-4">
-                <div className="flex items-start">
-                  <div className="flex-shrink-0">
-                    {notification.type === 'success' && <span className="text-green-400">✅</span>}
-                    {notification.type === 'error' && <span className="text-red-400">❌</span>}
-                    {notification.type === 'warning' && <span className="text-yellow-400">⚠️</span>}
-                    {notification.type === 'info' && <span className="text-blue-400">ℹ️</span>}
-                  </div>
-                  <div className="ml-3 w-0 flex-1 pt-0.5">
-                    <p className="text-sm font-medium text-gray-900">
-                      {notification.message}
-                    </p>
-                  </div>
-                  <div className="ml-4 flex-shrink-0 flex">
-                    <button
-                      className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none"
-                      onClick={() => removeNotification(notification.id)}
-                    >
-                      <span className="sr-only">Close</span>
-                      <span className="h-5 w-5">×</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {isLoading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-60">
-          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-            <div className="flex items-center space-x-4">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-              <div>
-                <p className="text-gray-900 font-medium">Processing...</p>
-                {loadingMessage && (
-                  <p className="text-gray-600 text-sm">{loadingMessage}</p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      */}
-      
     </div>
   );
 };
