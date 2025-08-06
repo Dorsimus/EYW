@@ -4727,11 +4727,197 @@ const App = () => {
     }
   };
 
+  // EXTRACT REAL TASKS FROM COMPETENCIES FOR ADMIN PANEL
+  const getAllTasksFromCompetencies = (competenciesData) => {
+    const allTasks = [];
+    
+    Object.entries(competenciesData).forEach(([areaKey, area]) => {
+      // Skip core_values as it's handled differently
+      if (areaKey === 'core_values') return;
+      
+      // Add Curiosity Ignition as a task
+      if (area.curiosity_ignition) {
+        allTasks.push({
+          id: `${areaKey}_curiosity_ignition`,
+          title: area.curiosity_ignition.title,
+          description: area.curiosity_ignition.description,
+          task_type: 'assessment',
+          competency_area: areaKey,
+          sub_competency: 'curiosity_ignition',
+          estimated_hours: 0.25,
+          instructions: `Reflection prompts: ${area.curiosity_ignition.reflection_prompts?.join(', ')}`,
+          active: true,
+          required: true
+        });
+      }
+      
+      // Add tasks from sub_competencies
+      if (area.sub_competencies) {
+        Object.entries(area.sub_competencies).forEach(([subKey, subComp]) => {
+          // Add foundation courses
+          if (subComp.foundation_courses) {
+            subComp.foundation_courses.forEach((course, index) => {
+              allTasks.push({
+                id: `${areaKey}_${subKey}_course_${index}`,
+                title: course.title,
+                description: course.description,
+                task_type: 'course_link',
+                competency_area: areaKey,
+                sub_competency: subKey,
+                estimated_hours: course.duration === '1 hour' ? 1 : 0.5,
+                external_link: course.url || '#',
+                instructions: `Platform: ${course.platform}`,
+                active: true,
+                required: true
+              });
+            });
+          }
+          
+          // Add monthly activities
+          if (subComp.monthly_activities) {
+            subComp.monthly_activities.forEach((activity, index) => {
+              allTasks.push({
+                id: `${areaKey}_${subKey}_activity_${index}`,
+                title: activity.title,
+                description: activity.in_flow_activity,
+                task_type: 'project',
+                competency_area: areaKey,
+                sub_competency: subKey,
+                estimated_hours: 0.5,
+                instructions: `Journal Prompt: ${activity.journal_prompt}`,
+                document_section: activity.document_section?.title,
+                active: true,
+                required: true
+              });
+            });
+          }
+          
+          // Add Dive Deeper resources
+          if (subComp.dive_deeper_resources) {
+            subComp.dive_deeper_resources.forEach((resource, index) => {
+              allTasks.push({
+                id: `${areaKey}_${subKey}_resource_${index}`,
+                title: resource.title,
+                description: resource.description,
+                task_type: resource.type === 'course' ? 'course_link' : 'reading',
+                competency_area: areaKey,
+                sub_competency: subKey,
+                estimated_hours: resource.duration === '1 hour' ? 1 : 0.25,
+                external_link: resource.url || '#',
+                instructions: resource.why_this_matters,
+                active: true,
+                required: false
+              });
+            });
+          }
+        });
+      }
+      
+      // Add Culminating Project
+      if (area.culminating_project) {
+        allTasks.push({
+          id: `${areaKey}_culminating_project`,
+          title: area.culminating_project.title,
+          description: area.culminating_project.challenge,
+          task_type: 'project',
+          competency_area: areaKey,
+          sub_competency: 'culminating_project',
+          estimated_hours: 20, // Major project
+          instructions: `Options: ${area.culminating_project.options?.join(' | ')}`,
+          active: true,
+          required: true,
+          is_culminating: true
+        });
+      }
+    });
+    
+    return allTasks;
+  };
+
+  // UPDATE TASK IN COMPETENCIES DATA
+  const updateTaskInCompetencies = (taskId, updatedTaskData) => {
+    setCompetencies(prevCompetencies => {
+      const updatedCompetencies = JSON.parse(JSON.stringify(prevCompetencies));
+      
+      // Find and update the task in the competencies structure
+      const parts = taskId.split('_');
+      const areaKey = parts[0];
+      const area = updatedCompetencies[areaKey];
+      
+      if (!area) return prevCompetencies;
+      
+      // Handle Curiosity Ignition updates
+      if (taskId.includes('curiosity_ignition')) {
+        if (area.curiosity_ignition) {
+          area.curiosity_ignition.title = updatedTaskData.title;
+          area.curiosity_ignition.description = updatedTaskData.description;
+        }
+      }
+      // Handle Culminating Project updates
+      else if (taskId.includes('culminating_project')) {
+        if (area.culminating_project) {
+          area.culminating_project.title = updatedTaskData.title;
+          area.culminating_project.challenge = updatedTaskData.description;
+        }
+      }
+      // Handle sub-competency tasks
+      else {
+        const subKey = parts[1];
+        const subComp = area.sub_competencies?.[subKey];
+        
+        if (subComp) {
+          // Update course
+          if (taskId.includes('_course_')) {
+            const courseIndex = parseInt(parts[parts.length - 1]);
+            if (subComp.foundation_courses && subComp.foundation_courses[courseIndex]) {
+              subComp.foundation_courses[courseIndex].title = updatedTaskData.title;
+              subComp.foundation_courses[courseIndex].description = updatedTaskData.description;
+              subComp.foundation_courses[courseIndex].url = updatedTaskData.external_link;
+            }
+          }
+          // Update activity
+          else if (taskId.includes('_activity_')) {
+            const activityIndex = parseInt(parts[parts.length - 1]);
+            if (subComp.monthly_activities && subComp.monthly_activities[activityIndex]) {
+              subComp.monthly_activities[activityIndex].title = updatedTaskData.title;
+              subComp.monthly_activities[activityIndex].in_flow_activity = updatedTaskData.description;
+            }
+          }
+          // Update resource
+          else if (taskId.includes('_resource_')) {
+            const resourceIndex = parseInt(parts[parts.length - 1]);
+            if (subComp.dive_deeper_resources && subComp.dive_deeper_resources[resourceIndex]) {
+              subComp.dive_deeper_resources[resourceIndex].title = updatedTaskData.title;
+              subComp.dive_deeper_resources[resourceIndex].description = updatedTaskData.description;
+              subComp.dive_deeper_resources[resourceIndex].url = updatedTaskData.external_link;
+            }
+          }
+        }
+      }
+      
+      // Save updated competencies to localStorage
+      localStorage.setItem('competencies', JSON.stringify(updatedCompetencies));
+      
+      return updatedCompetencies;
+    });
+  };
+
+  // ENHANCED TASK MANAGEMENT FOR ADMIN PANEL
   const updateTask = async (taskId, taskData) => {
     try {
-      const headers = { Authorization: `Bearer ${adminToken}` };
-      await axios.put(`${API}/admin/tasks/${taskId}`, taskData, { headers });
-      await loadAdminData(); // Reload admin data
+      console.log('Updating task:', taskId, taskData);
+      
+      // Update in competencies structure
+      updateTaskInCompetencies(taskId, taskData);
+      
+      // Update in allTasks state
+      setAllTasks(prevTasks => 
+        prevTasks.map(task => 
+          task.id === taskId ? { ...task, ...taskData } : task
+        )
+      );
+      
+      console.log('Task updated successfully');
       return true;
     } catch (error) {
       console.error('Error updating task:', error);
