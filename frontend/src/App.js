@@ -130,6 +130,23 @@ const App = () => {
     }
   };
 
+  // Data recovery function for emergency use
+  const recoverDataFromBackup = (key) => {
+    try {
+      const backupData = sessionStorage.getItem(`backup_${key}`);
+      if (backupData) {
+        localStorage.setItem(key, backupData);
+        console.log(`🔄 Successfully recovered ${key} from backup`);
+        return true;
+      }
+      console.log(`⚠️ No backup found for ${key}`);
+      return false;
+    } catch (error) {
+      console.error(`❌ Error recovering ${key}:`, error);
+      return false;
+    }
+  };
+
   // Notification system (simplified)
   const [notifications, setNotifications] = useState([]);
   
