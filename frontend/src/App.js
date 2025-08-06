@@ -4937,7 +4937,7 @@ const App = () => {
     };
     
     setCompetencyTaskProgress(updatedProgress);
-    localStorage.setItem('competency_task_progress', JSON.stringify(updatedProgress));
+    saveDataWithBackup('competency_task_progress', updatedProgress);
   };
 
   // Function to handle when user finishes editing a journal reflection (onBlur)
