@@ -5470,6 +5470,8 @@ const App = () => {
             overallProgress={getOverallProgress()}
             onViewCompetencyTasks={loadCompetencyTasks}
             setCurrentView={setCurrentView}
+            showSuccessMessage={showSuccessMessage}
+            showErrorMessage={showErrorMessage}
           />
         )}
         
