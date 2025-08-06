@@ -149,9 +149,16 @@ const App = () => {
 
   // Notification system (simplified)
   const [notifications, setNotifications] = useState([]);
+  const [saveStatus, setSaveStatus] = useState(''); // For auto-save indicators
   
   const removeNotification = (id) => {
     setNotifications(prev => prev.filter(n => n.id !== id));
+  };
+
+  // Simple save status indicator
+  const showSaveStatus = (message, duration = 2000) => {
+    setSaveStatus(message);
+    setTimeout(() => setSaveStatus(''), duration);
   };
 
   const competencyOptions = [
