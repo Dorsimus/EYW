@@ -5001,34 +5001,43 @@ const App = () => {
 
   // Function to handle when user finishes editing a journal reflection (onBlur)
   const handleJournalReflectionComplete = async (areaKey, subKey, taskId, notes, taskType = 'curiosity_reflection') => {
-    console.log(`Finalizing journal reflection: ${areaKey} -> ${subKey} -> ${taskId}`);
-    const taskKey = `${areaKey}_${subKey}_${taskId}`;
-    
-    // Update task as completed
-    const updatedProgress = {
-      ...competencyTaskProgress,
-      [taskKey]: {
-        completed: true,
-        completedAt: new Date().toISOString(),
-        notes: notes,
-        taskType: taskType
+    try {
+      console.log(`Finalizing journal reflection: ${areaKey} -> ${subKey} -> ${taskId}`);
+      const taskKey = `${areaKey}_${subKey}_${taskId}`;
+      
+      // Update task as completed
+      const updatedProgress = {
+        ...competencyTaskProgress,
+        [taskKey]: {
+          completed: true,
+          completedAt: new Date().toISOString(),
+          notes: notes,
+          taskType: taskType
+        }
+      };
+      
+      setCompetencyTaskProgress(updatedProgress);
+      saveDataWithBackup('competency_task_progress', updatedProgress);
+      
+      // Create or update flightbook entry for ANY meaningful journal/reflection entry
+      if (notes && notes.trim().length > 10) {
+        console.log(`Creating/updating flightbook entry from ${taskType} with content:`, notes.substring(0, 50) + '...');
+        await createOrUpdateFlightbookFromJournalReflection(areaKey, subKey, taskId, notes, taskType);
+        
+        // Show success notification
+        showNotification('✨ Reflection saved to your Leadership Flightbook!', 'success', 3000);
+      } else if (notes && notes.trim().length > 0) {
+        showNotification('💭 Reflection saved! Add more details to include it in your Flightbook.', 'info', 3000);
       }
-    };
-    
-    setCompetencyTaskProgress(updatedProgress);
-    saveDataWithBackup('competency_task_progress', updatedProgress);
-    
-    // Create or update flightbook entry for ANY meaningful journal/reflection entry
-    if (notes && notes.trim().length > 10) {
-      console.log(`Creating/updating flightbook entry from ${taskType} with content:`, notes.substring(0, 50) + '...');
-      await createOrUpdateFlightbookFromJournalReflection(areaKey, subKey, taskId, notes, taskType);
+      
+      // Update competency progress percentages
+      setTimeout(() => {
+        console.log('Triggering progress update with fresh data...');
+        updateCompetencyProgressWithData(updatedProgress);
+      }, 500);
+    } catch (error) {
+      handleError(error, 'Saving reflection');
     }
-    
-    // Update competency progress percentages
-    setTimeout(() => {
-      console.log('Triggering progress update with fresh data...');
-      updateCompetencyProgressWithData(updatedProgress);
-    }, 500);
   };
 
   const handleCompleteCompetencyTask = async (areaKey, subKey, taskId, notes = '', taskType = 'course') => {
