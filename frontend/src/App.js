@@ -4751,6 +4751,55 @@ const App = () => {
     }
   };
 
+  // USER MANAGEMENT FUNCTIONS FOR ENHANCED ADMIN PANEL
+  const createUser = async (userData) => {
+    try {
+      const headers = { Authorization: `Bearer ${adminToken}` };
+      const response = await axios.post(`${API}/users`, userData, { headers });
+      await loadAdminData(); // Reload admin data
+      return response.data;
+    } catch (error) {
+      console.error('Error creating user:', error);
+      throw error;
+    }
+  };
+
+  const updateUser = async (userId, userData) => {
+    try {
+      const headers = { Authorization: `Bearer ${adminToken}` };
+      await axios.put(`${API}/users/${userId}`, userData, { headers });
+      
+      // Update local state
+      setAllUsers(prevUsers => 
+        prevUsers.map(user => 
+          user.id === userId ? { ...user, ...userData } : user
+        )
+      );
+      
+      await loadAdminData(); // Reload admin data
+      return true;
+    } catch (error) {
+      console.error('Error updating user:', error);
+      throw error;
+    }
+  };
+
+  const deleteUser = async (userId) => {
+    try {
+      const headers = { Authorization: `Bearer ${adminToken}` };
+      await axios.delete(`${API}/users/${userId}`, { headers });
+      
+      // Update local state
+      setAllUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+      
+      await loadAdminData(); // Reload admin data
+      return true;
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      throw error;
+    }
+  };
+
   const handlePortfolioSubmit = async (e) => {
     e.preventDefault();
     
