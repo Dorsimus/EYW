@@ -4477,10 +4477,35 @@ const App = () => {
   // USER MANAGEMENT FUNCTIONS FOR ENHANCED ADMIN PANEL
   const createUser = async (userData) => {
     try {
-      const headers = { Authorization: `Bearer ${adminToken}` };
-      const response = await axios.post(`${API}/users`, userData, { headers });
-      await loadAdminData(); // Reload admin data
-      return response.data;
+      console.log('Creating user in demo mode:', userData);
+      
+      // In demo mode, we simulate user creation by adding to allUsers state
+      if (isAdmin && adminToken) {
+        const newUser = {
+          ...userData,
+          id: userData.id || `user-${Date.now()}`,
+          created_at: userData.created_at || new Date().toISOString(),
+          last_activity: userData.last_activity || new Date().toISOString(),
+          role: userData.role || 'participant'
+        };
+        
+        // Add to allUsers state
+        setAllUsers(prevUsers => [...prevUsers, newUser]);
+        
+        // Save to localStorage for persistence
+        const existingUsers = JSON.parse(localStorage.getItem('admin_all_users') || '[]');
+        const updatedUsers = [...existingUsers, newUser];
+        localStorage.setItem('admin_all_users', JSON.stringify(updatedUsers));
+        
+        console.log('User created successfully in demo mode:', newUser);
+        return newUser;
+      } else {
+        // Production mode - make API call
+        const headers = { Authorization: `Bearer ${adminToken}` };
+        const response = await axios.post(`${API}/users`, userData, { headers });
+        await loadAdminData(); // Reload admin data
+        return response.data;
+      }
     } catch (error) {
       console.error('Error creating user:', error);
       throw error;
