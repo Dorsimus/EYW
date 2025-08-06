@@ -91,9 +91,10 @@ const App = () => {
     }
   };
 
-  // Core Values State - with enhanced persistence
+  // Core Values State
   const [coreValueEntries, setCoreValueEntries] = useState(() => {
-    return loadDataWithRecovery('core_value_entries', {});
+    const saved = localStorage.getItem('core_value_entries');
+    return saved ? JSON.parse(saved) : {};
   });
   const [expandedValue, setExpandedValue] = useState(null);
   const [newEntry, setNewEntry] = useState({ value: '', story: '', date: '' });
