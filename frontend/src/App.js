@@ -4590,8 +4590,14 @@ const AuthenticatedApp = () => {
   };
 
   const deleteUser = async (userId) => {
+    if (!hasAdminAccess) {
+      console.log('No admin access for deleting users');
+      return false;
+    }
+
     try {
-      const headers = { Authorization: `Bearer ${adminToken}` };
+      const token = await getToken();
+      const headers = { Authorization: `Bearer ${token}` };
       await axios.delete(`${API}/users/${userId}`, { headers });
       
       // Update local state
