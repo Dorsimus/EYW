@@ -5431,7 +5431,61 @@ const App = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Admin Views */}
+        {/* ENHANCED ADMIN VIEWS */}
+        {currentView === 'admin-dashboard' && isAdmin && (
+          <EnhancedAdminDashboard 
+            stats={adminStats} 
+            onNavigate={setCurrentView}
+            users={allUsers}
+            tasks={allTasks}
+          />
+        )}
+        
+        {currentView === 'admin-users-enhanced' && isAdmin && (
+          <EnhancedUserManagement 
+            users={allUsers}
+            onUpdateUser={updateUser}
+            onApproveLevel={(userId, newLevel) => {
+              updateUser(userId, { level: newLevel, pending_level_approval: false });
+              showSuccessMessage(`User approved for Level ${newLevel}`);
+            }}
+          />
+        )}
+        
+        {currentView === 'admin-content-management' && isAdmin && (
+          <ContentManagement 
+            tasks={allTasks}
+            competencies={competencies}
+            onUpdateTask={updateTask}
+            onCreateTask={createTask}
+            onDeleteTask={deleteTask}
+          />
+        )}
+        
+        {currentView === 'admin-level-management' && isAdmin && (
+          <LevelManagement 
+            users={allUsers}
+            onUpdateUser={updateUser}
+            onApproveLevel={(userId, newLevel) => {
+              updateUser(userId, { level: newLevel, pending_level_approval: false });
+              showSuccessMessage(`User approved for Level ${newLevel}`);
+            }}
+          />
+        )}
+        
+        {currentView === 'admin-testing-tools' && isAdmin && (
+          <TestingTools 
+            users={allUsers}
+            tasks={allTasks}
+            onCreateUser={createUser}
+            onUpdateUser={updateUser}
+            onDeleteUser={deleteUser}
+            showSuccessMessage={showSuccessMessage}
+            showErrorMessage={showErrorMessage}
+          />
+        )}
+
+        {/* LEGACY ADMIN VIEWS - Keep for compatibility */}
         {currentView === 'admin-dashboard' && isAdmin && (
           <AdminDashboardView 
             stats={adminStats} 
