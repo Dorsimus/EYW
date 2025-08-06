@@ -6133,6 +6133,19 @@ const CompetenciesView = ({
       
       setCulminatingProgress(updatedProgress);
       localStorage.setItem('culminating_project_progress', JSON.stringify(updatedProgress));
+      
+      // Create flightbook entry for culminating project notes
+      if (evidenceDescription && evidenceDescription.trim().length > 10) {
+        console.log(`Creating flightbook entry from culminating project task ${taskId} with content:`, evidenceDescription.substring(0, 50) + '...');
+        await createOrUpdateFlightbookFromJournalReflection(
+          'culminating_project', 
+          'capstone_project', 
+          `task_${taskId}`, 
+          evidenceDescription.trim(), 
+          'culminating_project'
+        );
+      }
+      
       setSelectedCulminatingTask(null);
       
       console.log(`Culminating project task ${taskId} marked complete`);
