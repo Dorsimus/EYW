@@ -242,7 +242,13 @@ const EnhancedUserManagement = ({ users, onUpdateUser, onCreateUser, onApproveLe
       if (onCreateUser) {
         await onCreateUser(userData);
         console.log('User created successfully:', userData);
-        alert(`User ${userData.name} created successfully!`);
+        
+        // Force a small delay and page refresh to update the user list display
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+        
+        alert(`User ${userData.name} created successfully! Page will refresh to show updated user list.`);
       } else {
         console.log('Creating user (demo mode):', userData);
         alert(`User ${userData.name} would be created successfully!`);
