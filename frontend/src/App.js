@@ -8623,9 +8623,24 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
                     {culminatingProject.map(item => (
                       <div 
                         key={item.id} 
-                        className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors border border-yellow-200"
+                        className={`flex items-center justify-between p-3 rounded-lg transition-colors border ${
+                          selectedItems.has(item.id)
+                            ? 'bg-blue-50 border-blue-300'
+                            : 'bg-yellow-50 hover:bg-yellow-100 border-yellow-200'
+                        }`}
                       >
-                        <div className="flex items-center space-x-3 flex-1">
+                        {/* Selection Checkbox */}
+                        <div className="flex items-center space-x-3">
+                          <label className="flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={selectedItems.has(item.id)}
+                              onChange={() => toggleItemSelection(item.id)}
+                              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 touch-target"
+                            />
+                          </label>
+                          
+                          {/* File Icon and Info */}
                           <div className="text-2xl">
                             {item.file_path ? '📋' : '📝'}
                           </div>
@@ -8645,16 +8660,39 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
                           </div>
                         </div>
                         
+                        {/* Enhanced Action Buttons */}
                         <div className="flex items-center space-x-2">
                           {item.file_path && (
                             <button
                               onClick={() => handleDocumentView(item)}
-                              className="px-3 py-1 text-xs font-medium text-yellow-700 bg-yellow-200 rounded hover:bg-yellow-300 transition-colors"
+                              className="px-2 py-1 text-xs font-medium text-yellow-700 bg-yellow-200 rounded hover:bg-yellow-300 transition-colors touch-target"
+                              title="View Document"
                             >
-                              📖 View
+                              👁️ View
                             </button>
                           )}
-                          <div className="text-xs text-gray-500">
+                          <button
+                            onClick={() => handleItemAction(item, 'edit')}
+                            className="px-2 py-1 text-xs font-medium text-blue-700 bg-blue-200 rounded hover:bg-blue-300 transition-colors touch-target"
+                            title="Edit Item"
+                          >
+                            ✏️ Edit
+                          </button>
+                          <button
+                            onClick={() => handleItemAction(item, 'duplicate')}
+                            className="px-2 py-1 text-xs font-medium text-green-700 bg-green-200 rounded hover:bg-green-300 transition-colors touch-target"
+                            title="Duplicate Item"
+                          >
+                            📄 Copy
+                          </button>
+                          <button
+                            onClick={() => handleItemAction(item, 'delete')}
+                            className="px-2 py-1 text-xs font-medium text-red-700 bg-red-200 rounded hover:bg-red-300 transition-colors touch-target"
+                            title="Delete Item"
+                          >
+                            🗑️ Delete
+                          </button>
+                          <div className="text-xs text-gray-500 ml-2">
                             {new Date(item.upload_date).toLocaleDateString()}
                           </div>
                         </div>
