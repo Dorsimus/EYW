@@ -8313,6 +8313,12 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
 // Enhanced Portfolio View Component with Accordion Organization
 const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfolio }) => {
   const [expandedSections, setExpandedSections] = useState({});
+  const [selectedItems, setSelectedItems] = useState(new Set());
+  const [showBulkActions, setShowBulkActions] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('date');
+  const [viewMode, setViewMode] = useState('list'); // 'list' or 'grid'
   
   // Reload portfolio when component mounts
   useEffect(() => {
@@ -8320,6 +8326,88 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
       reloadPortfolio();
     }
   }, [reloadPortfolio]);
+
+  // Enhanced bulk actions for selected items
+  const handleBulkAction = async (action) => {
+    try {
+      if (action === 'delete') {
+        if (confirm(`Are you sure you want to delete ${selectedItems.size} item(s)?`)) {
+          for (const itemId of selectedItems) {
+            await deletePortfolioItem(itemId);
+          }
+          showSuccessMessage(`Successfully deleted ${selectedItems.size} item(s)`);
+          setSelectedItems(new Set());
+          setShowBulkActions(false);
+          if (reloadPortfolio) reloadPortfolio();
+        }
+      } else if (action === 'download') {
+        // Download selected items
+        showSuccessMessage('Download feature coming soon!');
+      }
+    } catch (error) {
+      showErrorMessage(`Failed to ${action} items. Please try again.`);
+    }
+  };
+
+  // Enhanced individual item actions
+  const handleItemAction = async (item, action) => {
+    try {
+      if (action === 'edit') {
+        setEditingItem(item);
+      } else if (action === 'delete') {
+        if (confirm(`Are you sure you want to delete "${item.title}"?`)) {
+          await deletePortfolioItem(item.id);
+          showSuccessMessage('Portfolio item deleted successfully');
+          if (reloadPortfolio) reloadPortfolio();
+        }
+      } else if (action === 'duplicate') {
+        // Create a copy of the item
+        const duplicatedItem = {
+          ...item,
+          title: `${item.title} (Copy)`,
+          id: undefined, // Let backend assign new ID
+        };
+        setCurrentView('add-portfolio');
+        // You could pass the duplicated item to the form here
+        showSuccessMessage('Item ready to duplicate - opening form');
+      }
+    } catch (error) {
+      showErrorMessage(`Failed to ${action} item. Please try again.`);
+    }
+  };
+
+  // Delete portfolio item function
+  const deletePortfolioItem = async (itemId) => {
+    const response = await fetch(`${import.meta.env.REACT_APP_BACKEND_URL}/api/portfolio/${itemId}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete portfolio item');
+    }
+  };
+
+  // Enhanced selection handling
+  const toggleItemSelection = (itemId) => {
+    const newSelected = new Set(selectedItems);
+    if (newSelected.has(itemId)) {
+      newSelected.delete(itemId);
+    } else {
+      newSelected.add(itemId);
+    }
+    setSelectedItems(newSelected);
+    setShowBulkActions(newSelected.size > 0);
+  };
+
+  // Select all items in current view
+  const toggleSelectAll = () => {
+    if (selectedItems.size === portfolio.length) {
+      setSelectedItems(new Set());
+      setShowBulkActions(false);
+    } else {
+      setSelectedItems(new Set(portfolio.map(item => item.id)));
+      setShowBulkActions(true);
+    }
+  };
 
   // Helper function to get competency color scheme
   const getCompetencyColor = (competencyKey) => {
