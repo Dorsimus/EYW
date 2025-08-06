@@ -8479,20 +8479,107 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
 
   return (
     <div className="space-y-6">
-      {/* Header Section */}
+      {/* Enhanced Header Section */}
       <div className="text-center">
-        <h2 className="text-4xl font-bold text-gray-900 mb-2">📁 Your Portfolio</h2>
-        <p className="text-lg text-gray-600 mb-4">Document your learning journey and career advancement</p>
-        <div className="flex justify-center space-x-4">
+        <h2 className="text-4xl font-bold text-gray-900 mb-2">📁 Your Enhanced Portfolio</h2>
+        <p className="text-lg text-gray-600 mb-4">Advanced document management for your learning journey</p>
+        
+        {/* Portfolio Statistics */}
+        <div className="flex justify-center space-x-4 mb-6">
           <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg">
             <span className="text-blue-800 font-medium">{totalItems} Portfolio Items</span>
           </div>
+          {selectedItems.size > 0 && (
+            <div className="inline-flex items-center px-4 py-2 bg-green-50 rounded-lg">
+              <span className="text-green-800 font-medium">{selectedItems.size} Selected</span>
+            </div>
+          )}
           <button 
             onClick={() => setCurrentView('add-portfolio')}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 touch-target"
           >
             ➕ Add New Item
           </button>
+        </div>
+
+        {/* Enhanced Controls Bar */}
+        <div className="bg-white rounded-lg shadow p-4 mb-6">
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+            {/* Search and Filter Controls */}
+            <div className="flex flex-col sm:flex-row gap-3 items-center">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search portfolio items..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 w-64"
+                />
+                <span className="absolute left-2 top-2 text-gray-400">🔍</span>
+              </div>
+              
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="date">Sort by Date</option>
+                <option value="title">Sort by Title</option>
+                <option value="competency">Sort by Competency</option>
+                <option value="size">Sort by File Size</option>
+              </select>
+              
+              <div className="flex rounded-md shadow-sm">
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`px-3 py-2 text-sm font-medium rounded-l-md border ${
+                    viewMode === 'list' 
+                      ? 'bg-blue-50 text-blue-700 border-blue-500' 
+                      : 'bg-white text-gray-500 border-gray-300'
+                  }`}
+                >
+                  📋 List
+                </button>
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`px-3 py-2 text-sm font-medium rounded-r-md border-l-0 border ${
+                    viewMode === 'grid' 
+                      ? 'bg-blue-50 text-blue-700 border-blue-500' 
+                      : 'bg-white text-gray-500 border-gray-300'
+                  }`}
+                >
+                  📊 Grid
+                </button>
+              </div>
+            </div>
+
+            {/* Selection and Bulk Actions */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={toggleSelectAll}
+                className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md hover:bg-gray-50"
+              >
+                {selectedItems.size === portfolio.length ? '☑️ Deselect All' : '☐ Select All'}
+              </button>
+              
+              {showBulkActions && (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => handleBulkAction('download')}
+                    className="px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 border border-blue-300 rounded-md hover:bg-blue-50"
+                  >
+                    💾 Download
+                  </button>
+                  <button
+                    onClick={() => handleBulkAction('delete')}
+                    className="px-3 py-2 text-sm font-medium text-red-600 hover:text-red-800 border border-red-300 rounded-md hover:bg-red-50"
+                  >
+                    🗑️ Delete
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
