@@ -147,18 +147,48 @@ const App = () => {
     }
   };
 
-  // Notification system (simplified)
+  // Simple notification system (Step 3 Enhancement)
   const [notifications, setNotifications] = useState([]);
-  const [saveStatus, setSaveStatus] = useState(''); // For auto-save indicators
+  const [saveStatus, setSaveStatus] = useState(''); // For auto-save indicators (disabled)
   
   const removeNotification = (id) => {
     setNotifications(prev => prev.filter(n => n.id !== id));
   };
 
-  // Simple save status indicator
-  const showSaveStatus = (message, duration = 2000) => {
-    setSaveStatus(message);
-    setTimeout(() => setSaveStatus(''), duration);
+  // Simple success notification function
+  const showSuccessMessage = (message, duration = 3000) => {
+    const id = Date.now();
+    const notification = {
+      id,
+      message,
+      type: 'success',
+      timestamp: new Date()
+    };
+    
+    setNotifications(prev => [...prev, notification]);
+    
+    // Auto-remove after duration
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n.id !== id));
+    }, duration);
+  };
+
+  // Simple error notification function  
+  const showErrorMessage = (message, duration = 5000) => {
+    const id = Date.now();
+    const notification = {
+      id,
+      message,
+      type: 'error', 
+      timestamp: new Date()
+    };
+    
+    setNotifications(prev => [...prev, notification]);
+    
+    // Auto-remove after duration
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n.id !== id));
+    }, duration);
   };
 
   const competencyOptions = [
