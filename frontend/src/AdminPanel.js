@@ -191,6 +191,13 @@ const EnhancedUserManagement = ({ users, onUpdateUser, onApproveLevel }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [filterLevel, setFilterLevel] = useState('all');
   const [sortBy, setSortBy] = useState('progress');
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [newUser, setNewUser] = useState({
+    name: '',
+    email: '',
+    level: 3,
+    overall_progress: 0
+  });
 
   const levels = [
     { id: 1, name: 'Runway Ready', status: 'locked' },
@@ -215,6 +222,37 @@ const EnhancedUserManagement = ({ users, onUpdateUser, onApproveLevel }) => {
           return 0;
       }
     });
+
+  const handleCreateUser = () => {
+    if (!newUser.name || !newUser.email) {
+      alert('Please fill in name and email');
+      return;
+    }
+
+    const userData = {
+      ...newUser,
+      id: `user-${Date.now()}`,
+      created_at: new Date().toISOString(),
+      last_activity: new Date().toISOString(),
+      role: 'participant'
+    };
+
+    // Call the parent's create user function (this would be passed as a prop)
+    // For now, we'll simulate adding to the users array
+    console.log('Creating user:', userData);
+    
+    // Close modal and reset form
+    setShowAddUserModal(false);
+    setNewUser({
+      name: '',
+      email: '',
+      level: 3,
+      overall_progress: 0
+    });
+    
+    // In a real implementation, this would call onCreateUser(userData)
+    alert(`User ${userData.name} would be created successfully!`);
+  };
 
   return (
     <div className="space-y-6">
@@ -242,6 +280,15 @@ const EnhancedUserManagement = ({ users, onUpdateUser, onApproveLevel }) => {
             <option value="name">Sort by Name</option>
             <option value="level">Sort by Level</option>
           </select>
+          
+          {/* ADD USER BUTTON */}
+          <button
+            onClick={() => setShowAddUserModal(true)}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+          >
+            <span className="mr-2">➕</span>
+            Add User
+          </button>
         </div>
       </div>
 
