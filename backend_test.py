@@ -11,7 +11,7 @@ from datetime import datetime
 from typing import Dict, List, Any
 
 # Backend URL from environment
-BACKEND_URL = "https://c2a0e12f-1224-4828-9864-215c6645b635.preview.emergentagent.com/api"
+BACKEND_URL = "https://b86dfd40-d4ab-4416-9c99-c971de272169.preview.emergentagent.com/api"
 
 class AIAnalyticsTestSuite:
     def __init__(self):

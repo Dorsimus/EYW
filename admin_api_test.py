@@ -9,7 +9,7 @@ import json
 from datetime import datetime
 
 class AdminAPITester:
-    def __init__(self, base_url="https://c2a0e12f-1224-4828-9864-215c6645b635.preview.emergentagent.com"):
+    def __init__(self, base_url="https://b86dfd40-d4ab-4416-9c99-c971de272169.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.admin_token = None
