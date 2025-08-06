@@ -2481,7 +2481,7 @@ const AuthenticatedApp = () => {
         }
       
       console.log('Setting user data and loading user data...');
-      setUser(userData);
+      setLocalUser(userData);
       
       // Set up local refined competency structure first
       const refinedCompetencies = await setupRefinedCompetencies();
