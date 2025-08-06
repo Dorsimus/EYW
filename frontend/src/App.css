@@ -4,6 +4,63 @@
 
 /* Custom styles for the Earn Your Wings platform */
 
+/* Step 4: Mobile Responsiveness Enhancements */
+
+/* Mobile-optimized touch targets */
+@media (max-width: 768px) {
+  /* Navigation improvements */
+  .redstone-nav-tab {
+    min-height: 48px !important;
+    padding: 12px 16px !important;
+    touch-action: manipulation;
+  }
+  
+  /* Button improvements */
+  button {
+    min-height: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Textarea improvements */
+  textarea {
+    min-height: 120px !important;
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    padding: 16px !important;
+    touch-action: manipulation;
+  }
+  
+  /* Input improvements */
+  input {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* Modal improvements */
+  .modal-content {
+    margin: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+  
+  /* Notification improvements */
+  .notification-mobile {
+    bottom: 16px !important;
+    right: 16px !important;
+    left: 16px !important;
+    max-width: none !important;
+  }
+}
+
+/* Touch-optimized interactive elements */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .App {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
