@@ -116,47 +116,17 @@ const App = () => {
       // Primary save to localStorage
       localStorage.setItem(key, dataString);
       
-      // Simple backup to sessionStorage
-      sessionStorage.setItem(`backup_${key}`, dataString);
-      
-      console.log(`💾 Data saved with backup: ${key}`);
+      // Simple backup to sessionStorage (non-blocking)
+      setTimeout(() => {
+        try {
+          sessionStorage.setItem(`backup_${key}`, dataString);
+          console.log(`💾 Data saved with backup: ${key}`);
+        } catch (backupError) {
+          console.warn(`⚠️ Backup save failed for ${key}:`, backupError);
+        }
+      }, 0);
     } catch (error) {
       console.error(`❌ Error saving data for ${key}:`, error);
-    }
-  };
-
-  // Data recovery function
-  const loadDataWithRecovery = (key, defaultValue = {}) => {
-    try {
-      // Try primary localStorage first
-      let data = localStorage.getItem(key);
-      if (data && data !== 'null' && data !== 'undefined') {
-        try {
-          return JSON.parse(data);
-        } catch (parseError) {
-          console.warn(`⚠️ Corrupted data in localStorage for ${key}, trying backup...`);
-        }
-      }
-      
-      // Try sessionStorage backup
-      data = sessionStorage.getItem(`backup_${key}`);
-      if (data && data !== 'null' && data !== 'undefined') {
-        try {
-          const parsedData = JSON.parse(data);
-          console.log(`🔄 Recovered data from backup: ${key}`);
-          // Restore to localStorage
-          localStorage.setItem(key, data);
-          return parsedData;
-        } catch (parseError) {
-          console.warn(`⚠️ Corrupted data in backup for ${key}`);
-        }
-      }
-      
-      console.log(`📝 Using default value for ${key}`);
-      return defaultValue;
-    } catch (error) {
-      console.error(`❌ Error loading data for ${key}:`, error);
-      return defaultValue;
     }
   };
 
