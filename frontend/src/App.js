@@ -6243,8 +6243,8 @@ const CompetenciesView = ({
           // Add new entry
           const updatedEntries = [...existingEntries, flightbookEntry];
           
-          // Save to localStorage with backup
-          saveDataWithBackup('flightbook_entries', updatedEntries);
+          // Save to localStorage
+          localStorage.setItem('flightbook_entries', JSON.stringify(updatedEntries));
           
           console.log('✅ Created flightbook entry:', entryTitle);
         } catch (error) {
