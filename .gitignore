@@ -16,8 +16,11 @@ node_modules/
 !.yarn/releases
 !.yarn/versions
 
-# Testing
+# Testing files
 /coverage
+*_test.py
+test_*.py
+*test*.json
 
 # Next.js
 /.next/
