@@ -5278,22 +5278,7 @@ const AuthenticatedApp = () => {
               </button>
             ))}
             
-            {/* Admin Logout Button */}
-            {isAdmin && (
-              <button
-                onClick={adminLogout}
-                className="redstone-nav-tab logout-tab"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="redstone-icon">
-                    🚪
-                  </div>
-                  <span className="font-semibold text-sm">
-                    Logout
-                  </span>
-                </div>
-              </button>
-            )}
+            {/* Admin logout is now handled by Clerk UserButton */}
             </div>
             
             {/* Navigator Program / Level Status - Right Side */}
