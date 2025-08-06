@@ -6037,9 +6037,59 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
     targetCompletionDate: null
   });
 
-  // AI-Powered Learning Analytics Engine
-  const getAIInsights = () => {
-    // Simulate AI analysis of user's learning patterns
+  // AI-Powered Learning Analytics Engine - Connected to Backend
+  const getAIInsights = async () => {
+    try {
+      // Get current user data
+      const flightbookEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+      const taskProgress = JSON.parse(localStorage.getItem('competency_task_progress') || '{}');
+      
+      // Prepare request for backend AI service
+      const analysisRequest = {
+        user_id: user?.id || 'demo-user-123',
+        flightbook_entries: flightbookEntries,
+        task_progress: taskProgress,
+        competencies: competencies,
+        portfolio: portfolio
+      };
+
+      // Call backend AI analysis endpoint
+      const backendUrl = import.meta.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+      const response = await fetch(`${backendUrl}/api/ai/analyze`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(analysisRequest)
+      });
+
+      if (response.ok) {
+        const aiData = await response.json();
+        
+        // Transform backend response to match frontend expectations
+        return {
+          contentAnalysis: aiData.content_analysis,
+          learningPatterns: aiData.learning_patterns,
+          recommendations: aiData.recommendations,
+          nextBestActions: aiData.recommendations.slice(0, 3),
+          strengths: aiData.content_analysis.identified_strengths,
+          growthAreas: aiData.content_analysis.growth_opportunities,
+          predictiveAnalytics: aiData.predictive_analytics
+        };
+      } else {
+        throw new Error('AI analysis failed');
+      }
+    } catch (error) {
+      console.error('AI Analysis Error:', error);
+      showErrorMessage('AI analysis temporarily unavailable. Using cached insights.');
+      
+      // Fallback to local analysis
+      return getLocalAIInsights();
+    }
+  };
+
+  // Local AI analysis fallback (when backend is unavailable)
+  const getLocalAIInsights = () => {
     const flightbookEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
     const taskProgress = JSON.parse(localStorage.getItem('competency_task_progress') || '{}');
     
@@ -6058,7 +6108,8 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
       recommendations,
       nextBestActions: recommendations.slice(0, 3),
       strengths: contentInsights.identifiedStrengths,
-      growthAreas: contentInsights.growthOpportunities
+      growthAreas: contentInsights.growthOpportunities,
+      predictiveAnalytics: getAdvancedProgressData()
     };
   };
 
