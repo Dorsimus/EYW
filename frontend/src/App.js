@@ -7387,12 +7387,20 @@ const CompetenciesView = ({
                                                       <textarea
                                                         value={parsedProgress[questionKey] || ''}
                                                         onChange={(e) => {
+                                                          // Update progress tracking
                                                           const newProgress = {
                                                             ...parsedProgress,
                                                             [questionKey]: e.target.value,
                                                             [`${questionKey}_updated`]: new Date().toISOString()
                                                           };
                                                           onCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_reflection');
+                                                          
+                                                          // Also trigger bidirectional sync
+                                                          onJournalReflectionChange(areaKey, subKey, `phase_${phase.phase}_${questionKey}`, e.target.value, 'phase_reflection');
+                                                        }}
+                                                        onBlur={(e) => {
+                                                          // Create flightbook entry when user finishes editing
+                                                          onJournalReflectionComplete(areaKey, subKey, `phase_${phase.phase}_${questionKey}`, e.target.value, 'phase_reflection');
                                                         }}
                                                         placeholder="Share your thoughts and insights..."
                                                         className="w-full p-2 border border-blue-200 rounded focus:ring-blue-500 focus:border-blue-500 text-sm"
