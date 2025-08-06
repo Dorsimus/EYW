@@ -7340,12 +7340,20 @@ const CompetenciesView = ({
                                                   <textarea
                                                     value={parsedProgress.journal_response || ''}
                                                     onChange={(e) => {
+                                                      // Update progress tracking
                                                       const newProgress = {
                                                         ...parsedProgress,
                                                         journal_response: e.target.value,
                                                         last_journal_update: new Date().toISOString()
                                                       };
                                                       onCompleteCompetencyTask(areaKey, subKey, `phase_${phase.phase}_progress`, JSON.stringify(newProgress), 'phase_journal');
+                                                      
+                                                      // Also trigger bidirectional sync
+                                                      onJournalReflectionChange(areaKey, subKey, `phase_${phase.phase}_journal`, e.target.value, 'phase_journal');
+                                                    }}
+                                                    onBlur={(e) => {
+                                                      // Create flightbook entry when user finishes editing
+                                                      onJournalReflectionComplete(areaKey, subKey, `phase_${phase.phase}_journal`, e.target.value, 'phase_journal');
                                                     }}
                                                     placeholder="Write your reflective response here... Take your time to think deeply about your leadership journey."
                                                     className="w-full p-3 border border-orange-200 rounded-md focus:ring-orange-500 focus:border-orange-500 text-sm"
