@@ -6137,7 +6137,7 @@ const CompetenciesView = ({
       // Create flightbook entry for culminating project notes
       if (evidenceDescription && evidenceDescription.trim().length > 10) {
         console.log(`Creating flightbook entry from culminating project task ${taskId} with content:`, evidenceDescription.substring(0, 50) + '...');
-        await createOrUpdateFlightbookFromJournalReflection(
+        await createFlightbookFromJournalReflection(
           'culminating_project', 
           'capstone_project', 
           `task_${taskId}`, 
