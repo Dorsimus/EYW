@@ -111,9 +111,52 @@ const App = () => {
   // Simple data persistence functions
   const saveDataWithBackup = (key, data) => {
     try {
-      localStorage.setItem(key, JSON.stringify(data));
+      const dataString = JSON.stringify(data);
+      
+      // Primary save to localStorage
+      localStorage.setItem(key, dataString);
+      
+      // Simple backup to sessionStorage
+      sessionStorage.setItem(`backup_${key}`, dataString);
+      
+      console.log(`💾 Data saved with backup: ${key}`);
     } catch (error) {
-      console.error(`Error saving data for ${key}:`, error);
+      console.error(`❌ Error saving data for ${key}:`, error);
+    }
+  };
+
+  // Data recovery function
+  const loadDataWithRecovery = (key, defaultValue = {}) => {
+    try {
+      // Try primary localStorage first
+      let data = localStorage.getItem(key);
+      if (data && data !== 'null' && data !== 'undefined') {
+        try {
+          return JSON.parse(data);
+        } catch (parseError) {
+          console.warn(`⚠️ Corrupted data in localStorage for ${key}, trying backup...`);
+        }
+      }
+      
+      // Try sessionStorage backup
+      data = sessionStorage.getItem(`backup_${key}`);
+      if (data && data !== 'null' && data !== 'undefined') {
+        try {
+          const parsedData = JSON.parse(data);
+          console.log(`🔄 Recovered data from backup: ${key}`);
+          // Restore to localStorage
+          localStorage.setItem(key, data);
+          return parsedData;
+        } catch (parseError) {
+          console.warn(`⚠️ Corrupted data in backup for ${key}`);
+        }
+      }
+      
+      console.log(`📝 Using default value for ${key}`);
+      return defaultValue;
+    } catch (error) {
+      console.error(`❌ Error loading data for ${key}:`, error);
+      return defaultValue;
     }
   };
 
