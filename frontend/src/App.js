@@ -99,9 +99,10 @@ const App = () => {
   const [newEntry, setNewEntry] = useState({ value: '', story: '', date: '' });
   const [showNewEntryForm, setShowNewEntryForm] = useState(null);
 
-  // Competency Task Progress State - with enhanced persistence
+  // Competency Task Progress State
   const [competencyTaskProgress, setCompetencyTaskProgress] = useState(() => {
-    return loadDataWithRecovery('competency_task_progress', {});
+    const saved = localStorage.getItem('competency_task_progress');
+    return saved ? JSON.parse(saved) : {};
   });
   const [showTaskModal, setShowTaskModal] = useState(null);
   const [taskNotes, setTaskNotes] = useState('');
