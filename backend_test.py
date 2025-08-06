@@ -1,1720 +1,581 @@
+#!/usr/bin/env python3
+"""
+AI-Powered Learning Analytics Backend Testing
+Test the newly implemented AI integration endpoints
+"""
+
 import requests
-import sys
 import json
 import time
 from datetime import datetime
+from typing import Dict, List, Any
 
-class TaskCompetencyAPITester:
-    def __init__(self, base_url="https://5c4e7af9-58b9-4c17-9f37-d1d722047d4c.preview.emergentagent.com"):
-        self.base_url = base_url
-        self.api_url = f"{base_url}/api"
-        self.tests_run = 0
-        self.tests_passed = 0
-        self.user_id = None
-        self.admin_token = None
-        self.admin_user = None
+# Backend URL from environment
+BACKEND_URL = "https://5c4e7af9-58b9-4c17-9f37-d1d722047d4c.preview.emergentagent.com/api"
 
-    def run_test(self, name, method, endpoint, expected_status, data=None, files=None, auth_required=False, timeout=30):
-        """Run a single API test with timeout and detailed response analysis"""
-        url = f"{self.api_url}/{endpoint}"
-        headers = {'Content-Type': 'application/json'} if not files else {}
+class AIAnalyticsTestSuite:
+    def __init__(self):
+        self.test_results = []
+        self.session = requests.Session()
+        self.session.timeout = 30
         
-        # Add authorization header if admin token is available and auth is required
-        if auth_required and self.admin_token:
-            headers['Authorization'] = f'Bearer {self.admin_token}'
-
-        self.tests_run += 1
-        print(f"\n🔍 Testing {name}...")
-        print(f"   URL: {url}")
-        if auth_required:
-            print(f"   Auth: {'✅ Token provided' if self.admin_token else '❌ No token'}")
-        
-        start_time = time.time()
-        try:
-            if method == 'GET':
-                response = requests.get(url, headers=headers, timeout=timeout)
-            elif method == 'POST':
-                if files:
-                    # Remove Content-Type for multipart/form-data
-                    if 'Content-Type' in headers:
-                        del headers['Content-Type']
-                    response = requests.post(url, data=data, files=files, headers=headers, timeout=timeout)
-                else:
-                    response = requests.post(url, json=data, headers=headers, timeout=timeout)
-            elif method == 'PUT':
-                response = requests.put(url, json=data, headers=headers, timeout=timeout)
-            elif method == 'DELETE':
-                response = requests.delete(url, headers=headers, timeout=timeout)
-
-            response_time = time.time() - start_time
-            print(f"   Response Time: {response_time:.2f}s")
-            
-            # Check CORS headers
-            cors_headers = {
-                'Access-Control-Allow-Origin': response.headers.get('Access-Control-Allow-Origin'),
-                'Access-Control-Allow-Methods': response.headers.get('Access-Control-Allow-Methods'),
-                'Access-Control-Allow-Headers': response.headers.get('Access-Control-Allow-Headers'),
-                'Access-Control-Allow-Credentials': response.headers.get('Access-Control-Allow-Credentials')
-            }
-            print(f"   CORS Headers: {cors_headers}")
-
-            success = response.status_code == expected_status
-            if success:
-                self.tests_passed += 1
-                print(f"✅ Passed - Status: {response.status_code}")
-                try:
-                    return success, response.json()
-                except:
-                    return success, response.text
-            else:
-                print(f"❌ Failed - Expected {expected_status}, got {response.status_code}")
-                print(f"   Response: {response.text[:200]}...")
-                return False, {}
-
-        except requests.exceptions.Timeout:
-            response_time = time.time() - start_time
-            print(f"❌ Failed - TIMEOUT after {response_time:.2f}s (limit: {timeout}s)")
-            print(f"   This could explain frontend hanging issues!")
-            return False, {"error": "timeout"}
-        except Exception as e:
-            response_time = time.time() - start_time
-            print(f"❌ Failed - Error after {response_time:.2f}s: {str(e)}")
-            return False, {"error": str(e)}
-
-    def test_root_endpoint(self):
-        """Test root API endpoint"""
-        return self.run_test("Root API Endpoint", "GET", "", 200)
-
-    def test_create_user_frontend_format(self):
-        """Test user creation with EXACT frontend format - HIGH PRIORITY"""
-        # This is the exact payload format that frontend sends
-        user_data = {
-            "email": "demo@earnwings.com",
-            "name": "Demo Navigator", 
-            "role": "participant",
-            "level": "navigator"
+    def log_test(self, test_name: str, success: bool, details: str, response_time: float = 0):
+        """Log test results"""
+        result = {
+            "test": test_name,
+            "success": success,
+            "details": details,
+            "response_time": f"{response_time:.2f}s",
+            "timestamp": datetime.now().isoformat()
         }
-        print(f"   Testing with EXACT frontend payload: {json.dumps(user_data)}")
-        success, response = self.run_test("Create User (Frontend Format)", "POST", "users", 200, data=user_data, timeout=10)
-        if success and 'id' in response:
-            self.user_id = response['id']
-            print(f"   Created user with ID: {self.user_id}")
-        return success, response
+        self.test_results.append(result)
+        status = "✅ PASS" if success else "❌ FAIL"
+        print(f"{status} {test_name} ({response_time:.2f}s)")
+        print(f"   {details}")
+        print()
 
-    def test_create_user_variations(self):
-        """Test user creation with different payload variations - HIGH PRIORITY"""
-        test_cases = [
-            {
-                "name": "Minimal Required Fields",
-                "data": {
-                    "email": f"minimal_{datetime.now().strftime('%H%M%S')}@earnwings.com",
-                    "name": "Minimal User"
-                }
-            },
-            {
-                "name": "All Fields Specified",
-                "data": {
-                    "email": f"full_{datetime.now().strftime('%H%M%S')}@earnwings.com",
-                    "name": "Full User",
-                    "role": "participant",
-                    "level": "navigator",
-                    "is_admin": False
-                }
-            },
-            {
-                "name": "Different Role",
-                "data": {
-                    "email": f"mentor_{datetime.now().strftime('%H%M%S')}@earnwings.com",
-                    "name": "Mentor User",
-                    "role": "mentor",
-                    "level": "navigator"
-                }
-            }
-        ]
-        
-        results = []
-        for test_case in test_cases:
-            print(f"\n   Testing: {test_case['name']}")
-            success, response = self.run_test(
-                f"Create User - {test_case['name']}", 
-                "POST", 
-                "users", 
-                200, 
-                data=test_case['data'],
-                timeout=10
-            )
-            results.append((test_case['name'], success, response))
-            
-        return results
-
-    def test_create_user(self):
-        """Test user creation - LEGACY TEST"""
-        user_data = {
-            "email": f"test_user_{datetime.now().strftime('%H%M%S')}@earnwings.com",
-            "name": "Test Navigator",
-            "role": "participant",
-            "level": "navigator"
-        }
-        success, response = self.run_test("Create User (Legacy)", "POST", "users", 200, data=user_data)
-        if success and 'id' in response:
-            if not self.user_id:  # Only set if not already set by frontend format test
-                self.user_id = response['id']
-                print(f"   Created user with ID: {self.user_id}")
-        return success, response
-
-    def test_get_user(self):
-        """Test getting user by ID"""
-        if not self.user_id:
-            print("❌ No user ID available for testing")
-            return False, {}
-        return self.run_test("Get User", "GET", f"users/{self.user_id}", 200)
-
-    def test_get_all_users(self):
-        """Test getting all users"""
-        return self.run_test("Get All Users", "GET", "users", 200)
-
-    def test_get_competency_framework(self):
-        """Test getting competency framework"""
-        return self.run_test("Get Competency Framework", "GET", "competencies", 200)
-
-    def test_seed_sample_tasks(self):
-        """Test seeding sample tasks - PRIORITY TEST"""
-        success, response = self.run_test("Seed Sample Tasks", "POST", "admin/seed-tasks", 200)
-        if success:
-            print(f"   Seeded tasks: {response.get('message', 'Unknown')}")
-        return success, response
-
-    def test_get_all_tasks(self):
-        """Test getting all tasks - PRIORITY TEST"""
-        success, response = self.run_test("Get All Tasks", "GET", "tasks", 200)
-        if success and isinstance(response, list):
-            print(f"   Found {len(response)} tasks")
-            # Print sample tasks for verification
-            for i, task in enumerate(response[:3]):
-                print(f"   Task {i+1}: {task.get('title', 'No title')} ({task.get('task_type', 'No type')})")
-        return success, response
-
-    def test_get_tasks_for_competency(self):
-        """Test getting tasks for specific competency"""
-        # Test with Leadership & Supervision -> Team Motivation
-        return self.run_test(
-            "Get Tasks for Competency", 
-            "GET", 
-            "tasks/leadership_supervision/team_motivation", 
-            200
-        )
-
-    def test_get_user_tasks_for_competency(self):
-        """Test getting user tasks for competency - PRIORITY TEST"""
-        if not self.user_id:
-            print("❌ No user ID available for testing")
-            return False, {}
-        
-        success, response = self.run_test(
-            "Get User Tasks for Competency", 
-            "GET", 
-            f"users/{self.user_id}/tasks/leadership_supervision/team_motivation", 
-            200
-        )
-        if success and isinstance(response, list):
-            print(f"   Found {len(response)} tasks for user")
-            for task in response:
-                completed_status = "✅ Completed" if task.get('completed') else "⏳ Pending"
-                print(f"   - {task.get('title', 'No title')}: {completed_status}")
-        return success, response
-
-    def test_complete_task(self):
-        """Test task completion - PRIORITY TEST"""
-        if not self.user_id:
-            print("❌ No user ID available for testing")
-            return False, {}
-
-        # First get tasks to find one to complete
-        success, tasks = self.test_get_user_tasks_for_competency()
-        if not success or not tasks:
-            print("❌ No tasks available for completion testing")
-            return False, {}
-
-        # Find first incomplete task
-        incomplete_task = None
-        for task in tasks:
-            if not task.get('completed'):
-                incomplete_task = task
-                break
-
-        if not incomplete_task:
-            print("✅ All tasks already completed - creating test scenario")
-            return True, {"message": "No incomplete tasks to test"}
-
-        # Complete the task using form data (as expected by the API)
-        task_data = {
-            'task_id': incomplete_task['id'],
-            'evidence_description': 'Test completion evidence',
-            'notes': 'Automated test completion'
-        }
-
-        # Use form data instead of JSON for this endpoint
-        url = f"{self.api_url}/users/{self.user_id}/task-completions"
-        headers = {}
-        
-        self.tests_run += 1
-        print(f"\n🔍 Testing Complete Task...")
-        print(f"   URL: {url}")
+    def test_ai_health_check(self):
+        """Test AI Health Check Endpoint"""
+        print("🏥 Testing AI Health Check Endpoint...")
         
         try:
-            response = requests.post(url, data=task_data, headers=headers)
-            success = response.status_code == 200
-            if success:
-                self.tests_passed += 1
-                print(f"✅ Passed - Status: {response.status_code}")
-                try:
-                    response_data = response.json()
-                except:
-                    response_data = response.text
+            start_time = time.time()
+            response = self.session.get(f"{BACKEND_URL}/ai/health")
+            response_time = time.time() - start_time
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Verify response structure
+                required_fields = ["status", "ai_response", "timestamp"]
+                missing_fields = [field for field in required_fields if field not in data]
+                
+                if missing_fields:
+                    self.log_test(
+                        "AI Health Check - Response Structure",
+                        False,
+                        f"Missing required fields: {missing_fields}",
+                        response_time
+                    )
+                    return False
+                
+                # Check if AI service is healthy
+                if data["status"] == "healthy":
+                    self.log_test(
+                        "AI Health Check - Service Status",
+                        True,
+                        f"AI service is healthy. Response: '{data['ai_response']}'",
+                        response_time
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        "AI Health Check - Service Status",
+                        False,
+                        f"AI service unhealthy: {data.get('error', 'Unknown error')}",
+                        response_time
+                    )
+                    return False
             else:
-                print(f"❌ Failed - Expected 200, got {response.status_code}")
-                print(f"   Response: {response.text[:200]}...")
-                response_data = {}
+                self.log_test(
+                    "AI Health Check - HTTP Status",
+                    False,
+                    f"HTTP {response.status_code}: {response.text}",
+                    response_time
+                )
+                return False
+                
         except Exception as e:
-            print(f"❌ Failed - Error: {str(e)}")
-            success = False
-            response_data = {}
-        
-        if success:
-            print(f"   Completed task: {incomplete_task.get('title', 'Unknown')}")
-        
-        return success, response_data
-
-    def test_get_user_competencies(self):
-        """Test getting user competencies with progress - PRIORITY TEST"""
-        if not self.user_id:
-            print("❌ No user ID available for testing")
-            return False, {}
-        
-        success, response = self.run_test(
-            "Get User Competencies", 
-            "GET", 
-            f"users/{self.user_id}/competencies", 
-            200
-        )
-        
-        if success and isinstance(response, dict):
-            print(f"   Found {len(response)} competency areas")
-            for area_key, area_data in response.items():
-                overall_progress = area_data.get('overall_progress', 0)
-                sub_count = len(area_data.get('sub_competencies', {}))
-                print(f"   - {area_data.get('name', area_key)}: {overall_progress}% ({sub_count} sub-competencies)")
-                
-                # Show task completion details for first few sub-competencies
-                for sub_key, sub_data in list(area_data.get('sub_competencies', {}).items())[:2]:
-                    completed = sub_data.get('completed_tasks', 0)
-                    total = sub_data.get('total_tasks', 0)
-                    percentage = sub_data.get('completion_percentage', 0)
-                    print(f"     • {sub_data.get('name', sub_key)}: {completed}/{total} tasks ({percentage:.1f}%)")
-        
-        return success, response
-
-    def test_get_user_task_completions(self):
-        """Test getting user task completions"""
-        if not self.user_id:
-            print("❌ No user ID available for testing")
-            return False, {}
-        
-        success, response = self.run_test(
-            "Get User Task Completions", 
-            "GET", 
-            f"users/{self.user_id}/task-completions", 
-            200
-        )
-        
-        if success and isinstance(response, list):
-            print(f"   Found {len(response)} completed tasks")
-        
-        return success, response
-
-    def test_create_admin_user(self):
-        """Test creating admin user"""
-        admin_data = {
-            "email": "admin@earnwings.com",
-            "name": "Admin User",
-            "role": "admin",
-            "level": "navigator",
-            "is_admin": True,
-            "password": "admin123"
-        }
-        success, response = self.run_test("Create Admin User", "POST", "admin/create", 200, data=admin_data)
-        if success:
-            print(f"   Admin user created successfully")
-        return success, response
-
-    def test_admin_login(self):
-        """Test admin login - PRIORITY TEST"""
-        login_data = {
-            "email": "admin@earnwings.com",
-            "password": "admin123"
-        }
-        success, response = self.run_test("Admin Login", "POST", "admin/login", 200, data=login_data)
-        if success and 'access_token' in response:
-            self.admin_token = response['access_token']
-            self.admin_user = response.get('user')
-            print(f"   Admin login successful, token obtained")
-            print(f"   Admin user: {self.admin_user.get('name', 'Unknown') if self.admin_user else 'No user data'}")
-        return success, response
-
-    def test_admin_stats(self):
-        """Test admin statistics endpoint - PRIORITY TEST"""
-        success, response = self.run_test("Admin Stats", "GET", "admin/stats", 200, auth_required=True)
-        if success and isinstance(response, dict):
-            print(f"   Total Users: {response.get('total_users', 'N/A')}")
-            print(f"   Total Tasks: {response.get('total_tasks', 'N/A')}")
-            print(f"   Total Completions: {response.get('total_completions', 'N/A')}")
-            print(f"   Completion Rate: {response.get('completion_rate', 'N/A')}%")
-            print(f"   Active Competency Areas: {response.get('active_competency_areas', 'N/A')}")
-        return success, response
-
-    def test_admin_get_all_tasks(self):
-        """Test admin get all tasks endpoint - PRIORITY TEST"""
-        success, response = self.run_test("Admin Get All Tasks", "GET", "admin/tasks", 200, auth_required=True)
-        if success and isinstance(response, list):
-            print(f"   Found {len(response)} tasks (including inactive)")
-            # Show sample tasks
-            for i, task in enumerate(response[:3]):
-                active_status = "Active" if task.get('active', True) else "Inactive"
-                print(f"   Task {i+1}: {task.get('title', 'No title')} ({active_status})")
-        return success, response
-
-    def test_admin_get_all_users(self):
-        """Test admin get all users endpoint - PRIORITY TEST"""
-        success, response = self.run_test("Admin Get All Users", "GET", "admin/users", 200, auth_required=True)
-        if success and isinstance(response, list):
-            print(f"   Found {len(response)} users")
-            # Show sample users with progress
-            for i, user in enumerate(response[:3]):
-                completed_tasks = user.get('completed_tasks', 0)
-                overall_progress = user.get('overall_progress', 0)
-                print(f"   User {i+1}: {user.get('name', 'No name')} - {completed_tasks} tasks, {overall_progress}% progress")
-        return success, response
-
-    def test_admin_create_task(self):
-        """Test admin create task endpoint - PRIORITY TEST"""
-        task_data = {
-            "title": "Test Admin Created Task",
-            "description": "This is a test task created by admin API",
-            "task_type": "assessment",
-            "competency_area": "leadership_supervision",
-            "sub_competency": "team_motivation",
-            "order": 99,
-            "required": False,
-            "estimated_hours": 1.0,
-            "instructions": "Complete this test task for API validation"
-        }
-        success, response = self.run_test("Admin Create Task", "POST", "admin/tasks", 200, data=task_data, auth_required=True)
-        if success and 'id' in response:
-            self.created_task_id = response['id']
-            print(f"   Created task with ID: {self.created_task_id}")
-        return success, response
-
-    def test_admin_update_task(self):
-        """Test admin update task endpoint - PRIORITY TEST"""
-        if not hasattr(self, 'created_task_id'):
-            print("❌ No task ID available for update testing")
-            return False, {}
-        
-        update_data = {
-            "title": "Updated Test Task",
-            "description": "This task has been updated via admin API",
-            "estimated_hours": 2.0
-        }
-        success, response = self.run_test(
-            "Admin Update Task", 
-            "PUT", 
-            f"admin/tasks/{self.created_task_id}", 
-            200, 
-            data=update_data, 
-            auth_required=True
-        )
-        if success:
-            print(f"   Task updated successfully")
-            print(f"   New title: {response.get('title', 'N/A')}")
-        return success, response
-
-    def test_admin_delete_task(self):
-        """Test admin delete task endpoint - PRIORITY TEST"""
-        if not hasattr(self, 'created_task_id'):
-            print("❌ No task ID available for delete testing")
-            return False, {}
-        
-        success, response = self.run_test(
-            "Admin Delete Task", 
-            "DELETE", 
-            f"admin/tasks/{self.created_task_id}", 
-            200, 
-            auth_required=True
-        )
-        if success:
-            print(f"   Task deactivated successfully")
-        return success, response
-
-    def test_portfolio_operations(self):
-        """Test portfolio operations (existing functionality)"""
-        if not self.user_id:
-            print("❌ No user ID available for testing")
-            return False, {}
-
-        # Create portfolio item
-        portfolio_data = {
-            'title': 'Test Portfolio Item',
-            'description': 'Test portfolio description',
-            'competency_areas': '["leadership_supervision"]',
-            'tags': '["test", "automation"]'
-        }
-
-        success, response = self.run_test(
-            "Create Portfolio Item", 
-            "POST", 
-            f"users/{self.user_id}/portfolio", 
-            200,
-            data=portfolio_data
-        )
-        
-        if success:
-            # Get portfolio items
-            self.run_test(
-                "Get User Portfolio", 
-                "GET", 
-                f"users/{self.user_id}/portfolio", 
-                200
+            self.log_test(
+                "AI Health Check - Connection",
+                False,
+                f"Connection error: {str(e)}",
+                0
             )
-        
-        return success, response
+            return False
 
-    def test_strategic_thinking_framework_verification(self):
-        """Test Strategic Thinking framework structure - CRITICAL TEST"""
-        print("\n🎯 CRITICAL: Strategic Thinking Framework Verification")
+    def test_ai_analysis_new_user(self):
+        """Test AI Analysis with empty flightbook entries (new user scenario)"""
+        print("🆕 Testing AI Analysis - New User Scenario...")
         
-        success, response = self.run_test(
-            "Get Competency Framework", 
-            "GET", 
-            "competencies", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Check if strategic_thinking competency exists
-        if 'strategic_thinking' not in response:
-            print("❌ CRITICAL: strategic_thinking competency area missing from backend")
-            return False, {}
-        
-        strategic_thinking = response['strategic_thinking']
-        # Updated expected structure for refined framework (4 sub-competencies)
-        expected_sub_competencies = {
-            "seeing_patterns_anticipating_trends": "Seeing Patterns & Anticipating Trends",
-            "innovation_continuous_improvement": "Innovation & Continuous Improvement Thinking",
-            "problem_solving_future_focus": "Problem-Solving with Future Focus",
-            "planning_goal_achievement": "Planning & Goal Achievement with Strategic Perspective"
-        }
-        
-        print(f"   Strategic Thinking Name: {strategic_thinking.get('name', 'Missing')}")
-        print(f"   Strategic Thinking Description: {strategic_thinking.get('description', 'Missing')}")
-        
-        # Verify sub-competencies structure
-        backend_sub_competencies = strategic_thinking.get('sub_competencies', {})
-        print(f"   Backend Sub-Competencies Count: {len(backend_sub_competencies)}")
-        print(f"   Expected Sub-Competencies Count: {len(expected_sub_competencies)}")
-        
-        # Check each expected sub-competency
-        all_match = True
-        for key, expected_name in expected_sub_competencies.items():
-            if key in backend_sub_competencies:
-                actual_name = backend_sub_competencies[key]
-                if actual_name == expected_name:
-                    print(f"   ✅ {key}: '{actual_name}' - CORRECT")
-                else:
-                    print(f"   ❌ {key}: Expected '{expected_name}', got '{actual_name}' - MISMATCH")
-                    all_match = False
-            else:
-                print(f"   ❌ {key}: MISSING from backend")
-                all_match = False
-        
-        # Check for unexpected sub-competencies
-        for key in backend_sub_competencies:
-            if key not in expected_sub_competencies:
-                print(f"   ⚠️  {key}: UNEXPECTED sub-competency in backend")
-                all_match = False
-        
-        if all_match:
-            print("   🎯 SUCCESS: Backend Strategic Thinking framework matches refined frontend requirements!")
-            return True, response
-        else:
-            print("   ❌ CRITICAL FAILURE: Backend-Frontend Strategic Thinking framework mismatch!")
-            return False, response
-
-    def test_cross_functional_framework_verification(self):
-        """Test Cross-Functional Collaboration framework structure - CRITICAL TEST"""
-        print("\n🎯 CRITICAL: Cross-Functional Framework Verification")
-        
-        success, response = self.run_test(
-            "Get Competency Framework", 
-            "GET", 
-            "competencies", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Check if cross_functional competency exists
-        if 'cross_functional' not in response:
-            print("❌ CRITICAL: cross_functional competency area missing from backend")
-            return False, {}
-        
-        cross_functional = response['cross_functional']
-        expected_sub_competencies = {
-            "interdepartmental_partnership": "Inter-Departmental Partnership & Communication",
-            "resident_experience_collaboration": "Resident Experience Collaboration",
-            "property_team_culture": "Property-Wide Team Building & Culture",
-            "stakeholder_relationship_management": "External Stakeholder Relationship Management",
-            "conflict_resolution_collaboration": "Conflict Resolution & Joint Problem Solving"
-        }
-        
-        print(f"   Cross-Functional Name: {cross_functional.get('name', 'Missing')}")
-        print(f"   Cross-Functional Description: {cross_functional.get('description', 'Missing')}")
-        
-        # Verify sub-competencies structure
-        backend_sub_competencies = cross_functional.get('sub_competencies', {})
-        print(f"   Backend Sub-Competencies Count: {len(backend_sub_competencies)}")
-        print(f"   Expected Sub-Competencies Count: {len(expected_sub_competencies)}")
-        
-        # Check each expected sub-competency
-        all_match = True
-        for key, expected_name in expected_sub_competencies.items():
-            if key in backend_sub_competencies:
-                actual_name = backend_sub_competencies[key]
-                if actual_name == expected_name:
-                    print(f"   ✅ {key}: '{actual_name}' - CORRECT")
-                else:
-                    print(f"   ❌ {key}: Expected '{expected_name}', got '{actual_name}' - MISMATCH")
-                    all_match = False
-            else:
-                print(f"   ❌ {key}: MISSING from backend")
-                all_match = False
-        
-        # Check for unexpected sub-competencies
-        for key in backend_sub_competencies:
-            if key not in expected_sub_competencies:
-                print(f"   ⚠️  {key}: UNEXPECTED sub-competency in backend")
-                all_match = False
-        
-        if all_match:
-            print("   🎯 SUCCESS: Backend Cross-Functional framework matches frontend requirements!")
-            return True, response
-        else:
-            print("   ❌ CRITICAL FAILURE: Backend-Frontend Cross-Functional framework mismatch!")
-            return False, response
-
-    def test_strategic_thinking_task_references(self):
-        """Test that existing strategic_thinking tasks reference correct sub-competency names"""
-        print("\n🔍 Strategic Thinking Task References Verification")
-        
-        success, response = self.run_test(
-            "Get All Tasks", 
-            "GET", 
-            "tasks", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Filter strategic_thinking tasks
-        strategic_thinking_tasks = [task for task in response if task.get('competency_area') == 'strategic_thinking']
-        print(f"   Found {len(strategic_thinking_tasks)} strategic_thinking tasks")
-        
-        # Updated expected sub-competencies for refined framework
-        expected_sub_competencies = {
-            "seeing_patterns_anticipating_trends",
-            "innovation_continuous_improvement", 
-            "problem_solving_future_focus",
-            "planning_goal_achievement"
-        }
-        
-        valid_references = True
-        sub_competency_counts = {}
-        
-        for task in strategic_thinking_tasks:
-            sub_comp = task.get('sub_competency')
-            title = task.get('title', 'No title')
+        try:
+            # Sample data for new user with no flightbook entries
+            request_data = {
+                "user_id": "test-new-user-001",
+                "flightbook_entries": [],
+                "task_progress": {
+                    "leadership_supervision": {"completed": 0, "total": 4},
+                    "financial_management": {"completed": 0, "total": 4},
+                    "operational_management": {"completed": 0, "total": 4},
+                    "cross_functional_collaboration": {"completed": 0, "total": 4},
+                    "strategic_thinking": {"completed": 0, "total": 4}
+                },
+                "competencies": {
+                    "leadership_supervision": {"progress": 0},
+                    "financial_management": {"progress": 0},
+                    "operational_management": {"progress": 0},
+                    "cross_functional_collaboration": {"progress": 0},
+                    "strategic_thinking": {"progress": 0}
+                },
+                "portfolio": []
+            }
             
-            if sub_comp in expected_sub_competencies:
-                print(f"   ✅ Task '{title}' -> {sub_comp} - VALID")
-                sub_competency_counts[sub_comp] = sub_competency_counts.get(sub_comp, 0) + 1
-            else:
-                print(f"   ❌ Task '{title}' -> {sub_comp} - INVALID REFERENCE")
-                valid_references = False
-        
-        # Show distribution
-        print(f"   Task Distribution Across Sub-Competencies:")
-        for sub_comp in expected_sub_competencies:
-            count = sub_competency_counts.get(sub_comp, 0)
-            print(f"     - {sub_comp}: {count} tasks")
-        
-        if valid_references:
-            print("   ✅ All strategic_thinking tasks reference valid sub-competencies")
-        else:
-            print("   ❌ Some strategic_thinking tasks have invalid sub-competency references")
-        
-        return valid_references, strategic_thinking_tasks
-
-    def test_cross_functional_task_references(self):
-        """Test that existing cross_functional tasks reference correct sub-competency names"""
-        print("\n🔍 Cross-Functional Task References Verification")
-        
-        success, response = self.run_test(
-            "Get All Tasks", 
-            "GET", 
-            "tasks", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Filter cross_functional tasks
-        cross_functional_tasks = [task for task in response if task.get('competency_area') == 'cross_functional']
-        print(f"   Found {len(cross_functional_tasks)} cross_functional tasks")
-        
-        expected_sub_competencies = {
-            "interdepartmental_partnership",
-            "resident_experience_collaboration", 
-            "property_team_culture",
-            "stakeholder_relationship_management",
-            "conflict_resolution_collaboration"
-        }
-        
-        valid_references = True
-        sub_competency_counts = {}
-        
-        for task in cross_functional_tasks:
-            sub_comp = task.get('sub_competency')
-            title = task.get('title', 'No title')
+            start_time = time.time()
+            response = self.session.post(
+                f"{BACKEND_URL}/ai/analyze",
+                json=request_data,
+                headers={"Content-Type": "application/json"}
+            )
+            response_time = time.time() - start_time
             
-            if sub_comp in expected_sub_competencies:
-                print(f"   ✅ Task '{title}' -> {sub_comp} - VALID")
-                sub_competency_counts[sub_comp] = sub_competency_counts.get(sub_comp, 0) + 1
-            else:
-                print(f"   ❌ Task '{title}' -> {sub_comp} - INVALID REFERENCE")
-                valid_references = False
-        
-        # Show distribution
-        print(f"   Task Distribution Across Sub-Competencies:")
-        for sub_comp in expected_sub_competencies:
-            count = sub_competency_counts.get(sub_comp, 0)
-            print(f"     - {sub_comp}: {count} tasks")
-        
-        if valid_references:
-            print("   ✅ All cross_functional tasks reference valid sub-competencies")
-        else:
-            print("   ❌ Some cross_functional tasks have invalid sub-competency references")
-        
-        return valid_references, cross_functional_tasks
-
-    def test_strategic_thinking_competency_progress(self):
-        """Test competency progress calculation with new Strategic Thinking structure"""
-        print("\n📊 Strategic Thinking Competency Progress Calculation")
-        
-        if not self.user_id:
-            print("❌ No user ID available for testing")
-            return False, {}
-        
-        success, response = self.run_test(
-            "Get User Competencies", 
-            "GET", 
-            f"users/{self.user_id}/competencies", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Check strategic_thinking competency progress
-        if 'strategic_thinking' not in response:
-            print("❌ strategic_thinking competency missing from user progress")
-            return False, {}
-        
-        strategic_thinking_progress = response['strategic_thinking']
-        sub_competencies = strategic_thinking_progress.get('sub_competencies', {})
-        
-        # Updated expected sub-competencies for refined framework
-        expected_sub_competencies = {
-            "seeing_patterns_anticipating_trends",
-            "innovation_continuous_improvement",
-            "problem_solving_future_focus", 
-            "planning_goal_achievement"
-        }
-        
-        print(f"   Strategic Thinking Overall Progress: {strategic_thinking_progress.get('overall_progress', 0)}%")
-        print(f"   Sub-Competencies Found: {len(sub_competencies)}")
-        
-        progress_calculation_valid = True
-        total_tasks = 0
-        total_completed = 0
-        
-        for sub_comp in expected_sub_competencies:
-            if sub_comp in sub_competencies:
-                sub_data = sub_competencies[sub_comp]
-                completed = sub_data.get('completed_tasks', 0)
-                total = sub_data.get('total_tasks', 0)
-                percentage = sub_data.get('completion_percentage', 0)
+            if response.status_code == 200:
+                data = response.json()
+                success = self.validate_ai_response_structure(data)
                 
-                print(f"   ✅ {sub_comp}: {completed}/{total} tasks ({percentage:.1f}%)")
-                total_tasks += total
-                total_completed += completed
+                if success:
+                    # Check specific new user recommendations
+                    recommendations = data.get("recommendations", [])
+                    has_beginner_recs = any(
+                        "start" in rec.get("title", "").lower() or 
+                        "begin" in rec.get("description", "").lower()
+                        for rec in recommendations
+                    )
+                    
+                    self.log_test(
+                        "AI Analysis - New User Scenario",
+                        True,
+                        f"Valid response with {len(recommendations)} recommendations. "
+                        f"Beginner-friendly: {has_beginner_recs}. "
+                        f"Engagement level: {data['content_analysis']['engagement_level']}",
+                        response_time
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        "AI Analysis - New User Response Structure",
+                        False,
+                        "Invalid response structure for new user scenario",
+                        response_time
+                    )
+                    return False
             else:
-                print(f"   ❌ {sub_comp}: MISSING from user progress")
-                progress_calculation_valid = False
-        
-        print(f"   Total Strategic Thinking Tasks: {total_tasks}")
-        print(f"   Total Completed: {total_completed}")
-        
-        if progress_calculation_valid:
-            print("   ✅ Strategic Thinking competency progress calculation working correctly")
-        else:
-            print("   ❌ Strategic Thinking competency progress calculation has issues")
-        
-        return progress_calculation_valid, response
-
-    def test_cross_functional_competency_progress(self):
-        """Test competency progress calculation with new Cross-Functional structure"""
-        print("\n📊 Cross-Functional Competency Progress Calculation")
-        
-        if not self.user_id:
-            print("❌ No user ID available for testing")
-            return False, {}
-        
-        success, response = self.run_test(
-            "Get User Competencies", 
-            "GET", 
-            f"users/{self.user_id}/competencies", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Check cross_functional competency progress
-        if 'cross_functional' not in response:
-            print("❌ cross_functional competency missing from user progress")
-            return False, {}
-        
-        cross_functional_progress = response['cross_functional']
-        sub_competencies = cross_functional_progress.get('sub_competencies', {})
-        
-        expected_sub_competencies = {
-            "interdepartmental_partnership",
-            "resident_experience_collaboration",
-            "property_team_culture", 
-            "stakeholder_relationship_management",
-            "conflict_resolution_collaboration"
-        }
-        
-        print(f"   Cross-Functional Overall Progress: {cross_functional_progress.get('overall_progress', 0)}%")
-        print(f"   Sub-Competencies Found: {len(sub_competencies)}")
-        
-        progress_calculation_valid = True
-        total_tasks = 0
-        total_completed = 0
-        
-        for sub_comp in expected_sub_competencies:
-            if sub_comp in sub_competencies:
-                sub_data = sub_competencies[sub_comp]
-                completed = sub_data.get('completed_tasks', 0)
-                total = sub_data.get('total_tasks', 0)
-                percentage = sub_data.get('completion_percentage', 0)
+                self.log_test(
+                    "AI Analysis - New User HTTP Status",
+                    False,
+                    f"HTTP {response.status_code}: {response.text}",
+                    response_time
+                )
+                return False
                 
-                print(f"   ✅ {sub_comp}: {completed}/{total} tasks ({percentage:.1f}%)")
-                total_tasks += total
-                total_completed += completed
-            else:
-                print(f"   ❌ {sub_comp}: MISSING from user progress")
-                progress_calculation_valid = False
-        
-        print(f"   Total Cross-Functional Tasks: {total_tasks}")
-        print(f"   Total Completed: {total_completed}")
-        
-        if progress_calculation_valid:
-            print("   ✅ Cross-Functional competency progress calculation working correctly")
-        else:
-            print("   ❌ Cross-Functional competency progress calculation has issues")
-        
-        return progress_calculation_valid, response
+        except Exception as e:
+            self.log_test(
+                "AI Analysis - New User Connection",
+                False,
+                f"Connection error: {str(e)}",
+                0
+            )
+            return False
 
-    def test_admin_strategic_thinking_task_management(self):
-        """Test admin can manage tasks across new Strategic Thinking sub-competency areas"""
-        print("\n🔐 Admin Strategic Thinking Task Management")
+    def test_ai_analysis_experienced_user(self):
+        """Test AI Analysis with sample flightbook entries and progress"""
+        print("👨‍💼 Testing AI Analysis - Experienced User Scenario...")
         
-        if not self.admin_token:
-            print("❌ No admin token available for testing")
-            return False, {}
+        try:
+            # Sample data for experienced user with flightbook entries
+            request_data = {
+                "user_id": "test-experienced-user-001",
+                "flightbook_entries": [
+                    {
+                        "id": "entry-001",
+                        "title": "Leadership Reflection: Team Motivation",
+                        "content": "Today I had a challenging conversation with a team member who seemed disengaged. I tried to understand their perspective and found they were feeling overwhelmed with their workload. We worked together to prioritize tasks and I offered additional support. This taught me the importance of active listening and not making assumptions about performance issues.",
+                        "competency_area": "leadership_supervision",
+                        "created_at": "2025-01-07T10:00:00Z"
+                    },
+                    {
+                        "id": "entry-002", 
+                        "title": "Financial Management: Budget Analysis",
+                        "content": "Completed my first quarterly budget review. I noticed we were over budget in maintenance costs but under in marketing. I analyzed the root causes and presented recommendations to reduce maintenance expenses through preventive measures. This experience helped me understand the interconnected nature of departmental budgets.",
+                        "competency_area": "financial_management",
+                        "created_at": "2025-01-06T14:30:00Z"
+                    },
+                    {
+                        "id": "entry-003",
+                        "title": "Cross-Functional Collaboration: Leasing & Maintenance Alignment", 
+                        "content": "Facilitated a meeting between leasing and maintenance teams to improve resident move-in processes. We identified communication gaps and established a shared checklist. The collaboration resulted in 20% faster move-in times and improved resident satisfaction scores.",
+                        "competency_area": "cross_functional_collaboration",
+                        "created_at": "2025-01-05T16:15:00Z"
+                    }
+                ],
+                "task_progress": {
+                    "leadership_supervision": {"completed": 2, "total": 4},
+                    "financial_management": {"completed": 1, "total": 4},
+                    "operational_management": {"completed": 0, "total": 4},
+                    "cross_functional_collaboration": {"completed": 1, "total": 4},
+                    "strategic_thinking": {"completed": 0, "total": 4}
+                },
+                "competencies": {
+                    "leadership_supervision": {"progress": 50},
+                    "financial_management": {"progress": 25},
+                    "operational_management": {"progress": 0},
+                    "cross_functional_collaboration": {"progress": 25},
+                    "strategic_thinking": {"progress": 0}
+                },
+                "portfolio": [
+                    {
+                        "id": "portfolio-001",
+                        "title": "Team Motivation Strategy Document",
+                        "competency_areas": ["leadership_supervision"],
+                        "upload_date": "2025-01-07T12:00:00Z"
+                    },
+                    {
+                        "id": "portfolio-002",
+                        "title": "Budget Analysis Report Q1",
+                        "competency_areas": ["financial_management"],
+                        "upload_date": "2025-01-06T15:00:00Z"
+                    }
+                ]
+            }
+            
+            start_time = time.time()
+            response = self.session.post(
+                f"{BACKEND_URL}/ai/analyze",
+                json=request_data,
+                headers={"Content-Type": "application/json"}
+            )
+            response_time = time.time() - start_time
+            
+            if response.status_code == 200:
+                data = response.json()
+                success = self.validate_ai_response_structure(data)
+                
+                if success:
+                    # Analyze the quality of insights for experienced user
+                    content_analysis = data.get("content_analysis", {})
+                    learning_patterns = data.get("learning_patterns", {})
+                    recommendations = data.get("recommendations", [])
+                    
+                    # Check if AI recognized the user's experience level
+                    engagement_level = content_analysis.get("engagement_level", "")
+                    themes = content_analysis.get("themes", [])
+                    consistency_score = learning_patterns.get("consistency_score", 0)
+                    
+                    self.log_test(
+                        "AI Analysis - Experienced User Scenario",
+                        True,
+                        f"Valid response for experienced user. "
+                        f"Engagement: {engagement_level}, "
+                        f"Consistency: {consistency_score}, "
+                        f"Themes identified: {len(themes)}, "
+                        f"Recommendations: {len(recommendations)}",
+                        response_time
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        "AI Analysis - Experienced User Response Structure",
+                        False,
+                        "Invalid response structure for experienced user scenario",
+                        response_time
+                    )
+                    return False
+            else:
+                self.log_test(
+                    "AI Analysis - Experienced User HTTP Status",
+                    False,
+                    f"HTTP {response.status_code}: {response.text}",
+                    response_time
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(
+                "AI Analysis - Experienced User Connection",
+                False,
+                f"Connection error: {str(e)}",
+                0
+            )
+            return False
+
+    def validate_ai_response_structure(self, data: Dict[str, Any]) -> bool:
+        """Validate that AI response contains all required fields with correct structure"""
         
-        # Test creating tasks for each refined sub-competency
-        expected_sub_competencies = [
-            "seeing_patterns_anticipating_trends",
-            "innovation_continuous_improvement",
-            "problem_solving_future_focus",
-            "planning_goal_achievement"
+        # Check top-level structure
+        required_sections = ["content_analysis", "learning_patterns", "recommendations", "predictive_analytics"]
+        for section in required_sections:
+            if section not in data:
+                print(f"   Missing section: {section}")
+                return False
+        
+        # Validate content_analysis structure
+        content_analysis = data["content_analysis"]
+        required_content_fields = ["sentiment", "engagement_level", "themes", "identified_strengths", "growth_opportunities", "key_insights"]
+        for field in required_content_fields:
+            if field not in content_analysis:
+                print(f"   Missing content_analysis field: {field}")
+                return False
+        
+        # Validate learning_patterns structure
+        learning_patterns = data["learning_patterns"]
+        required_pattern_fields = ["consistency_score", "reflection_depth", "preferred_competency", "learning_velocity", "engagement_trends"]
+        for field in required_pattern_fields:
+            if field not in learning_patterns:
+                print(f"   Missing learning_patterns field: {field}")
+                return False
+        
+        # Validate recommendations structure
+        recommendations = data["recommendations"]
+        if not isinstance(recommendations, list):
+            print("   Recommendations should be a list")
+            return False
+        
+        for i, rec in enumerate(recommendations):
+            required_rec_fields = ["type", "priority", "title", "description", "action", "icon", "ai_reason"]
+            for field in required_rec_fields:
+                if field not in rec:
+                    print(f"   Missing recommendation[{i}] field: {field}")
+                    return False
+        
+        # Validate predictive_analytics structure
+        predictive_analytics = data["predictive_analytics"]
+        required_pred_fields = ["predicted_completion_weeks", "learning_momentum", "weekly_velocity", "confidence_score", "next_milestone"]
+        for field in required_pred_fields:
+            if field not in predictive_analytics:
+                print(f"   Missing predictive_analytics field: {field}")
+                return False
+        
+        return True
+
+    def test_ai_error_handling(self):
+        """Test AI service error handling and fallback system"""
+        print("🛡️ Testing AI Error Handling...")
+        
+        try:
+            # Test with invalid request data to trigger fallback
+            invalid_request_data = {
+                "user_id": "test-error-handling-001",
+                "flightbook_entries": "invalid_data_type",  # Should be list
+                "task_progress": None,  # Should be dict
+                "competencies": [],  # Should be dict
+                "portfolio": "invalid"  # Should be list
+            }
+            
+            start_time = time.time()
+            response = self.session.post(
+                f"{BACKEND_URL}/ai/analyze",
+                json=invalid_request_data,
+                headers={"Content-Type": "application/json"}
+            )
+            response_time = time.time() - start_time
+            
+            # The service should either handle gracefully or return a proper error
+            if response.status_code == 200:
+                data = response.json()
+                # If it returns 200, it should still have valid structure (fallback)
+                success = self.validate_ai_response_structure(data)
+                
+                self.log_test(
+                    "AI Error Handling - Fallback System",
+                    success,
+                    f"Service handled invalid input gracefully with fallback response" if success else "Fallback response has invalid structure",
+                    response_time
+                )
+                return success
+            elif response.status_code == 422:
+                # Validation error is acceptable
+                self.log_test(
+                    "AI Error Handling - Input Validation",
+                    True,
+                    f"Service properly validated input and returned HTTP 422",
+                    response_time
+                )
+                return True
+            else:
+                self.log_test(
+                    "AI Error Handling - Unexpected Response",
+                    False,
+                    f"Unexpected HTTP {response.status_code}: {response.text}",
+                    response_time
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(
+                "AI Error Handling - Connection",
+                False,
+                f"Connection error: {str(e)}",
+                0
+            )
+            return False
+
+    def test_ai_response_quality(self):
+        """Test the quality and relevance of AI responses"""
+        print("🎯 Testing AI Response Quality...")
+        
+        try:
+            # Test with rich data to evaluate AI analysis quality
+            rich_request_data = {
+                "user_id": "test-quality-assessment-001",
+                "flightbook_entries": [
+                    {
+                        "id": "quality-entry-001",
+                        "title": "Leadership Challenge: Conflict Resolution",
+                        "content": "Had to mediate a conflict between two team members over project responsibilities. I used active listening techniques, helped them understand each other's perspectives, and facilitated a compromise. The experience taught me that most conflicts stem from miscommunication rather than actual disagreements. I plan to implement regular team check-ins to prevent similar issues.",
+                        "competency_area": "leadership_supervision",
+                        "created_at": "2025-01-07T09:00:00Z"
+                    },
+                    {
+                        "id": "quality-entry-002",
+                        "title": "Strategic Thinking: Market Analysis",
+                        "content": "Completed comprehensive analysis of local rental market trends. Identified opportunity for premium amenity packages based on competitor gaps. Presented findings to management with ROI projections. This exercise enhanced my ability to think strategically about market positioning and resident value propositions.",
+                        "competency_area": "strategic_thinking",
+                        "created_at": "2025-01-06T11:30:00Z"
+                    }
+                ],
+                "task_progress": {
+                    "leadership_supervision": {"completed": 3, "total": 4},
+                    "financial_management": {"completed": 2, "total": 4},
+                    "operational_management": {"completed": 1, "total": 4},
+                    "cross_functional_collaboration": {"completed": 2, "total": 4},
+                    "strategic_thinking": {"completed": 1, "total": 4}
+                },
+                "competencies": {
+                    "leadership_supervision": {"progress": 75},
+                    "financial_management": {"progress": 50},
+                    "operational_management": {"progress": 25},
+                    "cross_functional_collaboration": {"progress": 50},
+                    "strategic_thinking": {"progress": 25}
+                },
+                "portfolio": [
+                    {
+                        "id": "quality-portfolio-001",
+                        "title": "Conflict Resolution Framework",
+                        "competency_areas": ["leadership_supervision"],
+                        "upload_date": "2025-01-07T10:00:00Z"
+                    },
+                    {
+                        "id": "quality-portfolio-002",
+                        "title": "Market Analysis Report",
+                        "competency_areas": ["strategic_thinking"],
+                        "upload_date": "2025-01-06T12:00:00Z"
+                    }
+                ]
+            }
+            
+            start_time = time.time()
+            response = self.session.post(
+                f"{BACKEND_URL}/ai/analyze",
+                json=rich_request_data,
+                headers={"Content-Type": "application/json"}
+            )
+            response_time = time.time() - start_time
+            
+            if response.status_code == 200:
+                data = response.json()
+                success = self.validate_ai_response_structure(data)
+                
+                if success:
+                    # Evaluate quality of AI insights
+                    content_analysis = data["content_analysis"]
+                    recommendations = data["recommendations"]
+                    
+                    # Check if AI identified relevant themes
+                    themes = content_analysis.get("themes", [])
+                    strengths = content_analysis.get("identified_strengths", [])
+                    
+                    # Check if recommendations are actionable and specific
+                    actionable_recs = [rec for rec in recommendations if len(rec.get("action", "")) > 10]
+                    high_priority_recs = [rec for rec in recommendations if rec.get("priority") == "high"]
+                    
+                    quality_score = (
+                        len(themes) * 10 +  # Themes identified
+                        len(strengths) * 10 +  # Strengths identified
+                        len(actionable_recs) * 15 +  # Actionable recommendations
+                        len(high_priority_recs) * 5  # High priority recommendations
+                    )
+                    
+                    self.log_test(
+                        "AI Response Quality Assessment",
+                        quality_score >= 50,  # Minimum quality threshold
+                        f"Quality score: {quality_score}/100. "
+                        f"Themes: {len(themes)}, Strengths: {len(strengths)}, "
+                        f"Actionable recs: {len(actionable_recs)}, High priority: {len(high_priority_recs)}",
+                        response_time
+                    )
+                    return quality_score >= 50
+                else:
+                    self.log_test(
+                        "AI Response Quality - Structure",
+                        False,
+                        "Invalid response structure affects quality assessment",
+                        response_time
+                    )
+                    return False
+            else:
+                self.log_test(
+                    "AI Response Quality - HTTP Status",
+                    False,
+                    f"HTTP {response.status_code}: {response.text}",
+                    response_time
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(
+                "AI Response Quality - Connection",
+                False,
+                f"Connection error: {str(e)}",
+                0
+            )
+            return False
+
+    def run_comprehensive_test_suite(self):
+        """Run all AI analytics tests"""
+        print("🚀 Starting AI-Powered Learning Analytics Test Suite")
+        print("=" * 60)
+        
+        test_methods = [
+            self.test_ai_health_check,
+            self.test_ai_analysis_new_user,
+            self.test_ai_analysis_experienced_user,
+            self.test_ai_error_handling,
+            self.test_ai_response_quality
         ]
         
-        created_task_ids = []
-        all_successful = True
+        passed_tests = 0
+        total_tests = len(test_methods)
         
-        for i, sub_comp in enumerate(expected_sub_competencies):
-            task_data = {
-                "title": f"Test Strategic Thinking Task - {sub_comp.replace('_', ' ').title()}",
-                "description": f"Test task for {sub_comp} sub-competency area",
-                "task_type": "assessment",
-                "competency_area": "strategic_thinking",
-                "sub_competency": sub_comp,
-                "order": i + 1,
-                "required": True,
-                "estimated_hours": 2.0,
-                "instructions": f"Complete this test task for {sub_comp} validation"
-            }
-            
-            success, response = self.run_test(
-                f"Admin Create Strategic Thinking Task - {sub_comp}", 
-                "POST", 
-                "admin/tasks", 
-                200, 
-                data=task_data, 
-                auth_required=True
-            )
-            
-            if success and 'id' in response:
-                created_task_ids.append(response['id'])
-                print(f"   ✅ Created task for {sub_comp}: {response['id']}")
-            else:
-                print(f"   ❌ Failed to create task for {sub_comp}")
-                all_successful = False
+        for test_method in test_methods:
+            try:
+                if test_method():
+                    passed_tests += 1
+            except Exception as e:
+                print(f"❌ CRITICAL ERROR in {test_method.__name__}: {str(e)}")
         
-        # Test updating one of the created tasks
-        if created_task_ids:
-            test_task_id = created_task_ids[0]
-            update_data = {
-                "title": "Updated Strategic Thinking Test Task",
-                "estimated_hours": 3.0
-            }
-            
-            success, response = self.run_test(
-                "Admin Update Strategic Thinking Task", 
-                "PUT", 
-                f"admin/tasks/{test_task_id}", 
-                200, 
-                data=update_data, 
-                auth_required=True
-            )
-            
-            if success:
-                print(f"   ✅ Successfully updated strategic thinking task")
-            else:
-                print(f"   ❌ Failed to update strategic thinking task")
-                all_successful = False
+        print("=" * 60)
+        print(f"🎯 AI ANALYTICS TEST RESULTS: {passed_tests}/{total_tests} tests passed")
+        print(f"📊 Success Rate: {(passed_tests/total_tests)*100:.1f}%")
         
-        # Clean up - deactivate created test tasks
-        for task_id in created_task_ids:
-            self.run_test(
-                f"Admin Delete Test Task", 
-                "DELETE", 
-                f"admin/tasks/{task_id}", 
-                200, 
-                auth_required=True
-            )
-        
-        if all_successful:
-            print("   ✅ Admin can successfully manage Strategic Thinking tasks across all refined sub-competencies")
+        if passed_tests == total_tests:
+            print("✅ ALL AI ANALYTICS TESTS PASSED - System ready for production!")
+        elif passed_tests >= total_tests * 0.8:
+            print("⚠️ MOST TESTS PASSED - Minor issues need attention")
         else:
-            print("   ❌ Admin task management has issues with Strategic Thinking sub-competencies")
+            print("❌ MULTIPLE TEST FAILURES - Significant issues require fixing")
         
-        return all_successful, {"created_tasks": len(created_task_ids)}
-
-    def test_admin_cross_functional_task_management(self):
-        """Test admin can manage tasks across new Cross-Functional sub-competency areas"""
-        print("\n🔐 Admin Cross-Functional Task Management")
-        
-        if not self.admin_token:
-            print("❌ No admin token available for testing")
-            return False, {}
-        
-        # Test creating tasks for each new sub-competency
-        expected_sub_competencies = [
-            "interdepartmental_partnership",
-            "resident_experience_collaboration",
-            "property_team_culture",
-            "stakeholder_relationship_management", 
-            "conflict_resolution_collaboration"
-        ]
-        
-        created_task_ids = []
-        all_successful = True
-        
-        for i, sub_comp in enumerate(expected_sub_competencies):
-            task_data = {
-                "title": f"Test Cross-Functional Task - {sub_comp.replace('_', ' ').title()}",
-                "description": f"Test task for {sub_comp} sub-competency area",
-                "task_type": "assessment",
-                "competency_area": "cross_functional",
-                "sub_competency": sub_comp,
-                "order": i + 1,
-                "required": True,
-                "estimated_hours": 2.0,
-                "instructions": f"Complete this test task for {sub_comp} validation"
-            }
-            
-            success, response = self.run_test(
-                f"Admin Create Cross-Functional Task - {sub_comp}", 
-                "POST", 
-                "admin/tasks", 
-                200, 
-                data=task_data, 
-                auth_required=True
-            )
-            
-            if success and 'id' in response:
-                created_task_ids.append(response['id'])
-                print(f"   ✅ Created task for {sub_comp}: {response['id']}")
-            else:
-                print(f"   ❌ Failed to create task for {sub_comp}")
-                all_successful = False
-        
-        # Test updating one of the created tasks
-        if created_task_ids:
-            test_task_id = created_task_ids[0]
-            update_data = {
-                "title": "Updated Cross-Functional Test Task",
-                "estimated_hours": 3.0
-            }
-            
-            success, response = self.run_test(
-                "Admin Update Cross-Functional Task", 
-                "PUT", 
-                f"admin/tasks/{test_task_id}", 
-                200, 
-                data=update_data, 
-                auth_required=True
-            )
-            
-            if success:
-                print(f"   ✅ Successfully updated cross-functional task")
-            else:
-                print(f"   ❌ Failed to update cross-functional task")
-                all_successful = False
-        
-        # Clean up - deactivate created test tasks
-        for task_id in created_task_ids:
-            self.run_test(
-                f"Admin Delete Test Task", 
-                "DELETE", 
-                f"admin/tasks/{task_id}", 
-                200, 
-                auth_required=True
-            )
-        
-        if all_successful:
-            print("   ✅ Admin can successfully manage Cross-Functional tasks across all sub-competencies")
-        else:
-            print("   ❌ Admin task management has issues with Cross-Functional sub-competencies")
-        
-        return all_successful, {"created_tasks": len(created_task_ids)}
-
-    def test_strategic_thinking_backend_frontend_alignment(self):
-        """Test that backend structure matches frontend Strategic Thinking framework"""
-        print("\n🔄 Strategic Thinking Backend-Frontend Alignment Verification")
-        
-        # Get competency framework from backend
-        success, framework = self.run_test(
-            "Get Competency Framework", 
-            "GET", 
-            "competencies", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Get user competencies to test the full data flow
-        if self.user_id:
-            success, user_competencies = self.run_test(
-                "Get User Competencies", 
-                "GET", 
-                f"users/{self.user_id}/competencies", 
-                200
-            )
-        else:
-            user_competencies = {}
-        
-        # Expected frontend structure for refined framework
-        expected_structure = {
-            "name": "Strategic Thinking & Planning",
-            "description": "Think Beyond Today - Lead for Tomorrow",
-            "sub_competencies": {
-                "seeing_patterns_anticipating_trends": "Seeing Patterns & Anticipating Trends",
-                "innovation_continuous_improvement": "Innovation & Continuous Improvement Thinking",
-                "problem_solving_future_focus": "Problem-Solving with Future Focus",
-                "planning_goal_achievement": "Planning & Goal Achievement with Strategic Perspective"
-            }
-        }
-        
-        # Verify framework structure
-        strategic_thinking = framework.get('strategic_thinking', {})
-        alignment_issues = []
-        
-        # Check name
-        if strategic_thinking.get('name') != expected_structure['name']:
-            alignment_issues.append(f"Name mismatch: expected '{expected_structure['name']}', got '{strategic_thinking.get('name')}'")
-        
-        # Check description
-        if strategic_thinking.get('description') != expected_structure['description']:
-            alignment_issues.append(f"Description mismatch: expected '{expected_structure['description']}', got '{strategic_thinking.get('description')}'")
-        
-        # Check sub-competencies
-        backend_sub_comps = strategic_thinking.get('sub_competencies', {})
-        expected_sub_comps = expected_structure['sub_competencies']
-        
-        if len(backend_sub_comps) != len(expected_sub_comps):
-            alignment_issues.append(f"Sub-competency count mismatch: expected {len(expected_sub_comps)}, got {len(backend_sub_comps)}")
-        
-        for key, expected_name in expected_sub_comps.items():
-            if key not in backend_sub_comps:
-                alignment_issues.append(f"Missing sub-competency: {key}")
-            elif backend_sub_comps[key] != expected_name:
-                alignment_issues.append(f"Sub-competency name mismatch for {key}: expected '{expected_name}', got '{backend_sub_comps[key]}'")
-        
-        # Check user competency data structure alignment
-        if user_competencies and 'strategic_thinking' in user_competencies:
-            user_strategic_thinking = user_competencies['strategic_thinking']
-            user_sub_comps = user_strategic_thinking.get('sub_competencies', {})
-            
-            for key in expected_sub_comps.keys():
-                if key not in user_sub_comps:
-                    alignment_issues.append(f"User competency missing sub-competency: {key}")
-        
-        # Report results
-        if not alignment_issues:
-            print("   ✅ PERFECT ALIGNMENT: Backend structure exactly matches refined frontend requirements!")
-            print(f"   - Competency name: ✅ '{strategic_thinking.get('name')}'")
-            print(f"   - Description: ✅ '{strategic_thinking.get('description')}'")
-            print(f"   - Sub-competencies: ✅ {len(backend_sub_comps)} areas correctly defined")
-            print(f"   - User progress structure: ✅ Aligned")
-            return True, {"alignment": "perfect", "issues": []}
-        else:
-            print("   ❌ ALIGNMENT ISSUES FOUND:")
-            for issue in alignment_issues:
-                print(f"     - {issue}")
-            return False, {"alignment": "issues", "issues": alignment_issues}
-
-    def test_backend_frontend_alignment(self):
-        """Test that backend structure matches frontend Cross-Functional Collaboration framework"""
-        print("\n🔄 Backend-Frontend Alignment Verification")
-        
-        # Get competency framework from backend
-        success, framework = self.run_test(
-            "Get Competency Framework", 
-            "GET", 
-            "competencies", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Get user competencies to test the full data flow
-        if self.user_id:
-            success, user_competencies = self.run_test(
-                "Get User Competencies", 
-                "GET", 
-                f"users/{self.user_id}/competencies", 
-                200
-            )
-        else:
-            user_competencies = {}
-        
-        # Expected frontend structure
-        expected_structure = {
-            "name": "Cross-Functional Collaboration",
-            "description": "We Win Together - No Department Is an Island",
-            "sub_competencies": {
-                "interdepartmental_partnership": "Inter-Departmental Partnership & Communication",
-                "resident_experience_collaboration": "Resident Experience Collaboration",
-                "property_team_culture": "Property-Wide Team Building & Culture",
-                "stakeholder_relationship_management": "External Stakeholder Relationship Management",
-                "conflict_resolution_collaboration": "Conflict Resolution & Joint Problem Solving"
-            }
-        }
-        
-        # Verify framework structure
-        cross_functional = framework.get('cross_functional', {})
-        alignment_issues = []
-        
-        # Check name
-        if cross_functional.get('name') != expected_structure['name']:
-            alignment_issues.append(f"Name mismatch: expected '{expected_structure['name']}', got '{cross_functional.get('name')}'")
-        
-        # Check description
-        if cross_functional.get('description') != expected_structure['description']:
-            alignment_issues.append(f"Description mismatch: expected '{expected_structure['description']}', got '{cross_functional.get('description')}'")
-        
-        # Check sub-competencies
-        backend_sub_comps = cross_functional.get('sub_competencies', {})
-        expected_sub_comps = expected_structure['sub_competencies']
-        
-        if len(backend_sub_comps) != len(expected_sub_comps):
-            alignment_issues.append(f"Sub-competency count mismatch: expected {len(expected_sub_comps)}, got {len(backend_sub_comps)}")
-        
-        for key, expected_name in expected_sub_comps.items():
-            if key not in backend_sub_comps:
-                alignment_issues.append(f"Missing sub-competency: {key}")
-            elif backend_sub_comps[key] != expected_name:
-                alignment_issues.append(f"Sub-competency name mismatch for {key}: expected '{expected_name}', got '{backend_sub_comps[key]}'")
-        
-        # Check user competency data structure alignment
-        if user_competencies and 'cross_functional' in user_competencies:
-            user_cross_functional = user_competencies['cross_functional']
-            user_sub_comps = user_cross_functional.get('sub_competencies', {})
-            
-            for key in expected_sub_comps.keys():
-                if key not in user_sub_comps:
-                    alignment_issues.append(f"User competency missing sub-competency: {key}")
-        
-        # Report results
-        if not alignment_issues:
-            print("   ✅ PERFECT ALIGNMENT: Backend structure exactly matches frontend requirements!")
-            print(f"   - Competency name: ✅ '{cross_functional.get('name')}'")
-            print(f"   - Description: ✅ '{cross_functional.get('description')}'")
-            print(f"   - Sub-competencies: ✅ {len(backend_sub_comps)} areas correctly defined")
-            print(f"   - User progress structure: ✅ Aligned")
-            return True, {"alignment": "perfect", "issues": []}
-        else:
-            print("   ❌ ALIGNMENT ISSUES FOUND:")
-            for issue in alignment_issues:
-                print(f"     - {issue}")
-            return False, {"alignment": "issues", "issues": alignment_issues}
-
-    def test_other_competency_areas_regression(self):
-        """Test that other competency areas (Leadership, Financial, Operational) still work correctly"""
-        print("\n🔍 Other Competency Areas Regression Testing")
-        
-        success, response = self.run_test(
-            "Get Competency Framework", 
-            "GET", 
-            "competencies", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Expected competency areas that should remain unchanged
-        expected_areas = {
-            "leadership_supervision": "Leadership & Supervision",
-            "financial_management": "Financial Management & Business Acumen", 
-            "operational_management": "Operational Management"
-        }
-        
-        regression_issues = []
-        
-        for area_key, expected_name in expected_areas.items():
-            if area_key not in response:
-                regression_issues.append(f"Missing competency area: {area_key}")
-                continue
-                
-            area_data = response[area_key]
-            actual_name = area_data.get('name', 'Missing')
-            
-            if actual_name != expected_name:
-                regression_issues.append(f"Name changed for {area_key}: expected '{expected_name}', got '{actual_name}'")
-            
-            # Check that sub-competencies exist
-            sub_comps = area_data.get('sub_competencies', {})
-            if len(sub_comps) == 0:
-                regression_issues.append(f"No sub-competencies found for {area_key}")
-            else:
-                print(f"   ✅ {area_key}: {len(sub_comps)} sub-competencies found")
-        
-        # Test user competency progress for these areas
-        if self.user_id:
-            success, user_competencies = self.run_test(
-                "Get User Competencies", 
-                "GET", 
-                f"users/{self.user_id}/competencies", 
-                200
-            )
-            
-            if success:
-                for area_key in expected_areas.keys():
-                    if area_key not in user_competencies:
-                        regression_issues.append(f"User competency missing area: {area_key}")
-                    else:
-                        user_area = user_competencies[area_key]
-                        user_sub_comps = user_area.get('sub_competencies', {})
-                        if len(user_sub_comps) == 0:
-                            regression_issues.append(f"User competency has no sub-competencies for {area_key}")
-                        else:
-                            print(f"   ✅ User progress for {area_key}: {len(user_sub_comps)} sub-competencies tracked")
-        
-        # Report results
-        if not regression_issues:
-            print("   ✅ NO REGRESSIONS: All other competency areas working correctly!")
-            return True, {"regressions": False, "issues": []}
-        else:
-            print("   ❌ REGRESSION ISSUES FOUND:")
-            for issue in regression_issues:
-                print(f"     - {issue}")
-            return False, {"regressions": True, "issues": regression_issues}
-
-    def test_cross_functional_collaboration_refined_structure(self):
-        """Test the refined Cross-Functional Collaboration framework structure - CRITICAL TEST"""
-        print("\n🎯 CRITICAL: Cross-Functional Collaboration Refined Framework Verification")
-        
-        success, response = self.run_test(
-            "Get Competency Framework", 
-            "GET", 
-            "competencies", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Check if cross_functional_collaboration competency exists (NEW KEY)
-        if 'cross_functional_collaboration' not in response:
-            print("❌ CRITICAL: cross_functional_collaboration competency area missing from backend")
-            print("   Expected key: 'cross_functional_collaboration' (not 'cross_functional')")
-            return False, {}
-        
-        cross_functional = response['cross_functional_collaboration']
-        expected_sub_competencies = {
-            "understanding_other_department": "Understanding & Appreciating the Other Department",
-            "unified_resident_experience": "Unified Resident Experience Creation",
-            "communication_across_departments": "Effective Communication Across Departments",
-            "stakeholder_relationship_building": "Stakeholder Relationship Building"
-        }
-        
-        print(f"   Cross-Functional Name: {cross_functional.get('name', 'Missing')}")
-        print(f"   Cross-Functional Description: {cross_functional.get('description', 'Missing')}")
-        
-        # Verify sub-competencies structure
-        backend_sub_competencies = cross_functional.get('sub_competencies', {})
-        print(f"   Backend Sub-Competencies Count: {len(backend_sub_competencies)}")
-        print(f"   Expected Sub-Competencies Count: {len(expected_sub_competencies)}")
-        
-        # Check each expected sub-competency
-        all_match = True
-        for key, expected_name in expected_sub_competencies.items():
-            if key in backend_sub_competencies:
-                actual_name = backend_sub_competencies[key]
-                if actual_name == expected_name:
-                    print(f"   ✅ {key}: '{actual_name}' - CORRECT")
-                else:
-                    print(f"   ❌ {key}: Expected '{expected_name}', got '{actual_name}' - MISMATCH")
-                    all_match = False
-            else:
-                print(f"   ❌ {key}: MISSING from backend")
-                all_match = False
-        
-        # Check for unexpected sub-competencies
-        for key in backend_sub_competencies:
-            if key not in expected_sub_competencies:
-                print(f"   ⚠️  {key}: UNEXPECTED sub-competency in backend")
-                all_match = False
-        
-        if all_match:
-            print("   🎯 SUCCESS: Backend Cross-Functional Collaboration framework matches refined frontend requirements!")
-            return True, response
-        else:
-            print("   ❌ CRITICAL FAILURE: Backend-Frontend Cross-Functional Collaboration framework mismatch!")
-            return False, response
-
-    def test_cross_functional_collaboration_user_progress(self):
-        """Test user competency progress calculation with refined Cross-Functional structure"""
-        print("\n📊 Cross-Functional Collaboration User Progress Calculation")
-        
-        if not self.user_id:
-            print("❌ No user ID available for testing")
-            return False, {}
-        
-        success, response = self.run_test(
-            "Get User Competencies", 
-            "GET", 
-            f"users/{self.user_id}/competencies", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Check cross_functional_collaboration competency progress (NEW KEY)
-        if 'cross_functional_collaboration' not in response:
-            print("❌ cross_functional_collaboration competency missing from user progress")
-            print("   Expected key: 'cross_functional_collaboration' (not 'cross_functional')")
-            return False, {}
-        
-        cross_functional_progress = response['cross_functional_collaboration']
-        sub_competencies = cross_functional_progress.get('sub_competencies', {})
-        
-        expected_sub_competencies = {
-            "understanding_other_department",
-            "unified_resident_experience",
-            "communication_across_departments",
-            "stakeholder_relationship_building"
-        }
-        
-        print(f"   Cross-Functional Overall Progress: {cross_functional_progress.get('overall_progress', 0)}%")
-        print(f"   Sub-Competencies Found: {len(sub_competencies)}")
-        
-        progress_calculation_valid = True
-        total_tasks = 0
-        total_completed = 0
-        
-        for sub_comp in expected_sub_competencies:
-            if sub_comp in sub_competencies:
-                sub_data = sub_competencies[sub_comp]
-                completed = sub_data.get('completed_tasks', 0)
-                total = sub_data.get('total_tasks', 0)
-                percentage = sub_data.get('completion_percentage', 0)
-                
-                print(f"   ✅ {sub_comp}: {completed}/{total} tasks ({percentage:.1f}%)")
-                total_tasks += total
-                total_completed += completed
-            else:
-                print(f"   ❌ {sub_comp}: MISSING from user progress")
-                progress_calculation_valid = False
-        
-        print(f"   Total Cross-Functional Tasks: {total_tasks}")
-        print(f"   Total Completed: {total_completed}")
-        
-        if progress_calculation_valid:
-            print("   ✅ Cross-Functional competency progress calculation working correctly")
-        else:
-            print("   ❌ Cross-Functional competency progress calculation has issues")
-        
-        return progress_calculation_valid, response
-
-    def test_cross_functional_collaboration_admin_task_management(self):
-        """Test admin can manage tasks across refined Cross-Functional sub-competency areas"""
-        print("\n🔐 Admin Cross-Functional Collaboration Task Management")
-        
-        if not self.admin_token:
-            print("❌ No admin token available for testing")
-            return False, {}
-        
-        # Test creating tasks for each refined sub-competency
-        expected_sub_competencies = [
-            "understanding_other_department",
-            "unified_resident_experience",
-            "communication_across_departments",
-            "stakeholder_relationship_building"
-        ]
-        
-        created_task_ids = []
-        all_successful = True
-        
-        for i, sub_comp in enumerate(expected_sub_competencies):
-            task_data = {
-                "title": f"Test Cross-Functional Task - {sub_comp.replace('_', ' ').title()}",
-                "description": f"Test task for {sub_comp} sub-competency area",
-                "task_type": "assessment",
-                "competency_area": "cross_functional_collaboration",  # NEW KEY
-                "sub_competency": sub_comp,
-                "order": i + 1,
-                "required": True,
-                "estimated_hours": 2.0,
-                "instructions": f"Complete this test task for {sub_comp} validation"
-            }
-            
-            success, response = self.run_test(
-                f"Admin Create Cross-Functional Task - {sub_comp}", 
-                "POST", 
-                "admin/tasks", 
-                200, 
-                data=task_data, 
-                auth_required=True
-            )
-            
-            if success and 'id' in response:
-                created_task_ids.append(response['id'])
-                print(f"   ✅ Created task for {sub_comp}: {response['id']}")
-            else:
-                print(f"   ❌ Failed to create task for {sub_comp}")
-                all_successful = False
-        
-        # Test updating one of the created tasks
-        if created_task_ids:
-            test_task_id = created_task_ids[0]
-            update_data = {
-                "title": "Updated Cross-Functional Test Task",
-                "estimated_hours": 3.0
-            }
-            
-            success, response = self.run_test(
-                "Admin Update Cross-Functional Task", 
-                "PUT", 
-                f"admin/tasks/{test_task_id}", 
-                200, 
-                data=update_data, 
-                auth_required=True
-            )
-            
-            if success:
-                print(f"   ✅ Successfully updated cross-functional task")
-            else:
-                print(f"   ❌ Failed to update cross-functional task")
-                all_successful = False
-        
-        # Clean up - deactivate created test tasks
-        for task_id in created_task_ids:
-            self.run_test(
-                f"Admin Delete Test Task", 
-                "DELETE", 
-                f"admin/tasks/{task_id}", 
-                200, 
-                auth_required=True
-            )
-        
-        if all_successful:
-            print("   ✅ Admin can successfully manage Cross-Functional tasks across all refined sub-competencies")
-        else:
-            print("   ❌ Admin task management has issues with Cross-Functional sub-competencies")
-        
-        return all_successful, {"created_tasks": len(created_task_ids)}
-
-    def test_existing_cross_functional_tasks_update(self):
-        """Test that existing cross_functional tasks are updated to use new structure"""
-        print("\n🔍 Existing Cross-Functional Tasks Structure Update Verification")
-        
-        success, response = self.run_test(
-            "Get All Tasks", 
-            "GET", 
-            "tasks", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Filter cross_functional tasks (both old and new keys)
-        old_cross_functional_tasks = [task for task in response if task.get('competency_area') == 'cross_functional']
-        new_cross_functional_tasks = [task for task in response if task.get('competency_area') == 'cross_functional_collaboration']
-        
-        print(f"   Found {len(old_cross_functional_tasks)} tasks with old 'cross_functional' key")
-        print(f"   Found {len(new_cross_functional_tasks)} tasks with new 'cross_functional_collaboration' key")
-        
-        expected_new_sub_competencies = {
-            "understanding_other_department",
-            "unified_resident_experience",
-            "communication_across_departments",
-            "stakeholder_relationship_building"
-        }
-        
-        # Check old tasks for migration status
-        old_tasks_need_update = []
-        for task in old_cross_functional_tasks:
-            sub_comp = task.get('sub_competency')
-            title = task.get('title', 'No title')
-            
-            if sub_comp not in expected_new_sub_competencies:
-                old_tasks_need_update.append({
-                    'id': task.get('id'),
-                    'title': title,
-                    'old_sub_competency': sub_comp
-                })
-                print(f"   ⚠️  Task '{title}' -> {sub_comp} - NEEDS UPDATE TO NEW STRUCTURE")
-        
-        # Check new tasks for correct structure
-        new_tasks_valid = True
-        for task in new_cross_functional_tasks:
-            sub_comp = task.get('sub_competency')
-            title = task.get('title', 'No title')
-            
-            if sub_comp in expected_new_sub_competencies:
-                print(f"   ✅ Task '{title}' -> {sub_comp} - CORRECT NEW STRUCTURE")
-            else:
-                print(f"   ❌ Task '{title}' -> {sub_comp} - INVALID SUB-COMPETENCY")
-                new_tasks_valid = False
-        
-        # Summary
-        if len(old_tasks_need_update) == 0 and new_tasks_valid:
-            print("   ✅ All cross-functional tasks use correct new structure")
-            return True, {"old_tasks_needing_update": 0, "new_tasks_valid": True}
-        else:
-            print(f"   ⚠️  {len(old_tasks_need_update)} old tasks need updating to new structure")
-            if not new_tasks_valid:
-                print("   ❌ Some new tasks have invalid sub-competency references")
-            return False, {"old_tasks_needing_update": len(old_tasks_need_update), "new_tasks_valid": new_tasks_valid}
-
-    def test_cross_functional_collaboration_backend_frontend_alignment(self):
-        """Test that backend structure matches refined frontend Cross-Functional Collaboration framework"""
-        print("\n🔄 Cross-Functional Collaboration Backend-Frontend Alignment Verification")
-        
-        # Get competency framework from backend
-        success, framework = self.run_test(
-            "Get Competency Framework", 
-            "GET", 
-            "competencies", 
-            200
-        )
-        
-        if not success:
-            return False, {}
-        
-        # Get user competencies to test the full data flow
-        if self.user_id:
-            success, user_competencies = self.run_test(
-                "Get User Competencies", 
-                "GET", 
-                f"users/{self.user_id}/competencies", 
-                200
-            )
-        else:
-            user_competencies = {}
-        
-        # Expected refined frontend structure
-        expected_structure = {
-            "name": "Cross-Functional Collaboration",
-            "description": "Breaking Down Silos & Building Unified Property Teams",
-            "sub_competencies": {
-                "understanding_other_department": "Understanding & Appreciating the Other Department",
-                "unified_resident_experience": "Unified Resident Experience Creation",
-                "communication_across_departments": "Effective Communication Across Departments",
-                "stakeholder_relationship_building": "Stakeholder Relationship Building"
-            }
-        }
-        
-        # Verify framework structure (NEW KEY)
-        cross_functional = framework.get('cross_functional_collaboration', {})
-        alignment_issues = []
-        
-        if not cross_functional:
-            alignment_issues.append("Missing 'cross_functional_collaboration' key in backend framework")
-            return False, {"alignment": "critical_failure", "issues": alignment_issues}
-        
-        # Check name
-        if cross_functional.get('name') != expected_structure['name']:
-            alignment_issues.append(f"Name mismatch: expected '{expected_structure['name']}', got '{cross_functional.get('name')}'")
-        
-        # Check description
-        if cross_functional.get('description') != expected_structure['description']:
-            alignment_issues.append(f"Description mismatch: expected '{expected_structure['description']}', got '{cross_functional.get('description')}'")
-        
-        # Check sub-competencies
-        backend_sub_comps = cross_functional.get('sub_competencies', {})
-        expected_sub_comps = expected_structure['sub_competencies']
-        
-        if len(backend_sub_comps) != len(expected_sub_comps):
-            alignment_issues.append(f"Sub-competency count mismatch: expected {len(expected_sub_comps)}, got {len(backend_sub_comps)}")
-        
-        for key, expected_name in expected_sub_comps.items():
-            if key not in backend_sub_comps:
-                alignment_issues.append(f"Missing sub-competency: {key}")
-            elif backend_sub_comps[key] != expected_name:
-                alignment_issues.append(f"Sub-competency name mismatch for {key}: expected '{expected_name}', got '{backend_sub_comps[key]}'")
-        
-        # Check user competency data structure alignment
-        if user_competencies and 'cross_functional_collaboration' in user_competencies:
-            user_cross_functional = user_competencies['cross_functional_collaboration']
-            user_sub_comps = user_cross_functional.get('sub_competencies', {})
-            
-            for key in expected_sub_comps.keys():
-                if key not in user_sub_comps:
-                    alignment_issues.append(f"User competency missing sub-competency: {key}")
-        elif user_competencies:
-            alignment_issues.append("User competencies missing 'cross_functional_collaboration' key")
-        
-        # Report results
-        if not alignment_issues:
-            print("   ✅ PERFECT ALIGNMENT: Backend structure exactly matches refined frontend requirements!")
-            print(f"   - Competency key: ✅ 'cross_functional_collaboration'")
-            print(f"   - Competency name: ✅ '{cross_functional.get('name')}'")
-            print(f"   - Description: ✅ '{cross_functional.get('description')}'")
-            print(f"   - Sub-competencies: ✅ {len(backend_sub_comps)} areas correctly defined")
-            print(f"   - User progress structure: ✅ Aligned")
-            return True, {"alignment": "perfect", "issues": []}
-        else:
-            print("   ❌ ALIGNMENT ISSUES FOUND:")
-            for issue in alignment_issues:
-                print(f"     - {issue}")
-            return False, {"alignment": "issues", "issues": alignment_issues}
+        return passed_tests, total_tests
 
 def main():
-    print("🚀 Starting CROSS-FUNCTIONAL COLLABORATION FRAMEWORK Backend Testing")
-    print("🎯 FOCUS: Testing refined Cross-Functional Collaboration framework backend implementation")
-    print("=" * 80)
+    """Main test execution"""
+    print("AI-Powered Learning Analytics Backend Testing")
+    print("Testing newly implemented AI integration endpoints")
+    print()
     
-    tester = TaskCompetencyAPITester()
+    test_suite = AIAnalyticsTestSuite()
+    passed, total = test_suite.run_comprehensive_test_suite()
     
-    # Test sequence following the review request priorities
-    print("\n📋 BASIC SETUP TESTS:")
-    
-    # 1. Basic setup tests
-    tester.test_root_endpoint()
-    
-    # 2. User setup for testing
-    print("\n👤 USER SETUP:")
-    tester.test_create_user_frontend_format()
-    tester.test_get_user()
-    
-    # 3. Admin setup for testing
-    print("\n🔐 ADMIN SETUP:")
-    tester.test_create_admin_user()
-    tester.test_admin_login()
-    
-    # 4. CRITICAL - Cross-Functional Collaboration Framework Tests (MAIN FOCUS)
-    print("\n🎯 CRITICAL - Cross-Functional Collaboration Framework Tests:")
-    tester.test_cross_functional_collaboration_refined_structure()
-    tester.test_cross_functional_collaboration_user_progress()
-    tester.test_cross_functional_collaboration_admin_task_management()
-    tester.test_existing_cross_functional_tasks_update()
-    tester.test_cross_functional_collaboration_backend_frontend_alignment()
-    
-    # 5. Regression testing for other competency areas
-    print("\n🔍 REGRESSION TESTING:")
-    tester.test_other_competency_areas_regression()
-    
-    # Print final results
-    print("\n" + "=" * 80)
-    print(f"📊 FINAL TEST RESULTS:")
-    print(f"   Tests Run: {tester.tests_run}")
-    print(f"   Tests Passed: {tester.tests_passed}")
-    print(f"   Success Rate: {(tester.tests_passed/tester.tests_run)*100:.1f}%")
-    
-    # Specific analysis for Cross-Functional Collaboration framework
-    print(f"\n🎯 CROSS-FUNCTIONAL COLLABORATION FRAMEWORK ANALYSIS:")
-    print(f"   This test focused on verifying the backend has been updated to match")
-    print(f"   the refined frontend framework with 4 streamlined sub-competencies:")
-    print(f"   1. understanding_other_department: Understanding & Appreciating the Other Department")
-    print(f"   2. unified_resident_experience: Unified Resident Experience Creation")
-    print(f"   3. communication_across_departments: Effective Communication Across Departments")
-    print(f"   4. stakeholder_relationship_building: Stakeholder Relationship Building")
-    print(f"   ")
-    print(f"   Key changes tested:")
-    print(f"   - Competency key changed from 'cross_functional' to 'cross_functional_collaboration'")
-    print(f"   - Sub-competencies reduced from 5 old ones to 4 new streamlined ones")
-    print(f"   - SAMPLE_TASKS updated to use new competency structure")
-    
-    if tester.tests_passed == tester.tests_run:
-        print("🎉 ALL TESTS PASSED! Cross-Functional Collaboration framework backend is working correctly.")
-        print("   Backend-frontend alignment achieved successfully.")
-        return 0
-    else:
-        failed_tests = tester.tests_run - tester.tests_passed
-        print(f"⚠️  {failed_tests} tests failed. Check the issues above.")
-        
-        # Provide specific feedback for Cross-Functional framework
-        print("\n🚨 CROSS-FUNCTIONAL COLLABORATION ISSUES:")
-        print("   If tests failed, the backend may not be properly synchronized with the frontend.")
-        print("   Check that NAVIGATOR_COMPETENCIES['cross_functional_collaboration'] exists and matches frontend structure.")
-        
-        return 1
+    return passed == total
 
 if __name__ == "__main__":
-    sys.exit(main())
+    success = main()
+    exit(0 if success else 1)
