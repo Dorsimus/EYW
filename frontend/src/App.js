@@ -4283,81 +4283,17 @@ const AuthenticatedApp = () => {
     localStorage.setItem('core_value_entries', JSON.stringify(updatedEntries));
   };
 
-  const adminLogin = async (email, password) => {
-    try {
-      // DEMO ADMIN LOGIN - Enhanced persistence
-      if (email === "admin@earnwings.com" && password === "admin123") {
-        console.log('Demo admin login successful - setting persistent state');
-        
-        // Set demo admin token with timestamp
-        const demoToken = `demo-admin-token-${Date.now()}`;
-        localStorage.setItem('admin_token', demoToken);
-        setAdminToken(demoToken);
-        setIsAdmin(true);
-        setShowAdminLogin(false);
-        setCurrentView('admin-dashboard');
-        
-        // Force set admin data immediately to ensure persistence
-        setAdminStats({
-          total_users: 45,
-          total_tasks: 10,
-          total_completions: 18,
-          completion_rate: 2.4,
-          active_competency_areas: 5
-        });
-        
-        // Load ALL TASKS FROM ACTUAL COMPETENCIES DATA
-        console.log('Loading real competency tasks for admin panel...');
-        const realTasks = getAllTasksFromCompetencies(competencies);
-        console.log(`Found ${realTasks.length} tasks from competencies`);
-        setAllTasks(realTasks);
-        
-        // Load existing users from localStorage or set demo user
-        const savedUsers = JSON.parse(localStorage.getItem('admin_all_users') || '[]');
-        const defaultDemoUser = { 
-          id: 'demo-user-123', 
-          name: 'Demo Navigator', 
-          email: 'demo@earnwings.com',
-          level: 3,
-          overall_progress: 0,
-          created_at: '2024-01-01',
-          last_activity: new Date().toISOString()
-        };
-        
-        // If no saved users, start with demo user
-        const allUsersData = savedUsers.length > 0 ? savedUsers : [defaultDemoUser];
-        setAllUsers(allUsersData);
-        
-        // Save the demo user if no users exist
-        if (savedUsers.length === 0) {
-          localStorage.setItem('admin_all_users', JSON.stringify([defaultDemoUser]));
-        }
-        
-        console.log(`Loaded ${allUsersData.length} users for admin panel`);
-        console.log('Admin login complete with real competency data');
-        return true;
-      } else {
-        console.error('Invalid admin credentials');
-        return false;
-      }
-    } catch (error) {
-      console.error('Admin login failed:', error);
-      return false;
-    }
-  };
-
-  const adminLogout = () => {
-    localStorage.removeItem('admin_token');
-    setAdminToken(null);
-    setIsAdmin(false);
-    setShowAdminLogin(false);
-    setCurrentView('dashboard');
-    initializeUser();
-  };
+  // Admin functions now use Clerk authentication - old admin login/logout removed
 
   const createTask = async (taskData) => {
+    if (!hasAdminAccess) {
+      console.log('No admin access for creating tasks');
+      return false;
+    }
+
     try {
-      const headers = { Authorization: `Bearer ${adminToken}` };
+      const token = await getToken();
+      const headers = { Authorization: `Bearer ${token}` };
       await axios.post(`${API}/admin/tasks`, taskData, { headers });
       await loadAdminData(); // Reload admin data
       return true;
