@@ -1124,13 +1124,13 @@ async def complete_task_new(
 
 # Admin Task Management Routes
 @api_router.post("/admin/tasks", response_model=Task)
-async def admin_create_task(task_data: TaskCreate, admin_user = Depends(get_current_admin)):
-    task = Task(**task_data.dict(), created_by=admin_user["id"])
+async def admin_create_task(task_data: TaskCreate, admin_user = Depends(require_admin)):
+    task = Task(**task_data.dict(), created_by=admin_user.get("sub", "admin"))
     await db.tasks.insert_one(task.dict())
     return task
 
 @api_router.put("/admin/tasks/{task_id}", response_model=Task)
-async def admin_update_task(task_id: str, task_update: TaskUpdate, admin_user = Depends(get_current_admin)):
+async def admin_update_task(task_id: str, task_update: TaskUpdate, admin_user = Depends(require_admin)):
     # Get existing task
     existing_task = await db.tasks.find_one({"id": task_id})
     if not existing_task:
@@ -1147,19 +1147,19 @@ async def admin_update_task(task_id: str, task_update: TaskUpdate, admin_user = 
     return Task(**serialize_doc(updated_task))
 
 @api_router.delete("/admin/tasks/{task_id}")
-async def admin_delete_task(task_id: str, admin_user = Depends(get_current_admin)):
+async def admin_delete_task(task_id: str, admin_user = Depends(require_admin)):
     result = await db.tasks.update_one({"id": task_id}, {"$set": {"active": False}})
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Task not found")
     return {"message": "Task deactivated successfully"}
 
 @api_router.get("/admin/tasks")
-async def admin_get_all_tasks(admin_user = Depends(get_current_admin)):
+async def admin_get_all_tasks(admin_user = Depends(require_admin)):
     tasks = await db.tasks.find().sort("created_at", -1).to_list(1000)
     return [serialize_doc(task) for task in tasks]
 
 @api_router.get("/admin/stats")
-async def admin_get_stats(admin_user = Depends(get_current_admin)):
+async def admin_get_stats(admin_user = Depends(require_admin)):
     # Get total counts
     total_users = await db.users.count_documents({"is_admin": False})
     total_tasks = await db.tasks.count_documents({"active": True})
@@ -1183,7 +1183,7 @@ async def admin_get_stats(admin_user = Depends(get_current_admin)):
     )
 
 @api_router.get("/admin/users")
-async def admin_get_all_users(admin_user = Depends(get_current_admin)):
+async def admin_get_all_users(admin_user = Depends(require_admin)):
     users = await db.users.find({"is_admin": False}).to_list(1000)
     
     # Add progress stats for each user
