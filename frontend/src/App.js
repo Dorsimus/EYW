@@ -96,7 +96,7 @@ const AuthenticationPrompt = () => {
         
         {/* Footer */}
         <div className="mt-6 text-center text-sm text-gray-500">
-          <p>Redstone Development • Navigator Level</p>
+          <p>Redstone Employee Development</p>
         </div>
       </div>
     </div>
