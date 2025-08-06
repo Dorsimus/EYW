@@ -5927,6 +5927,9 @@ const AuthenticatedApp = () => {
   );
 };
 
+// Export AuthenticatedApp for use in ClerkApp.js
+export { AuthenticatedApp };
+
 // Redstone Admin Login Modal Component
 const AdminLoginModal = ({ onLogin, onClose }) => {
   const [email, setEmail] = useState('');
