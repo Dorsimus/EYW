@@ -36,6 +36,69 @@ const App = () => {
   const [competencies, setCompetencies] = useState({});
   const [portfolio, setPortfolio] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCompetency, setSelectedCompetency] = useState(null);
+  const [competencyTasks, setCompetencyTasks] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminToken, setAdminToken] = useState(localStorage.getItem('admin_token'));
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [adminStats, setAdminStats] = useState(null);
+  const [allTasks, setAllTasks] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [showCreateTask, setShowCreateTask] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+  const [isInitialized, setIsInitialized] = useState(false); // Add flag to prevent double initialization
+  const [newTask, setNewTask] = useState({
+    title: '',
+    description: '',
+    task_type: 'course_link',
+    competency_area: 'leadership_supervision',
+    sub_competency: 'team_motivation',
+    order: 1,
+    required: true,
+    estimated_hours: 1.0,
+    external_link: '',
+    instructions: ''
+  });
+  const [newPortfolioItem, setNewPortfolioItem] = useState({
+    title: '',
+    description: '',
+    competency_areas: [],
+    tags: [],
+    file: null
+  });
+
+  // Core Values Data
+  const coreValues = {
+    believers: {
+      title: "WE ARE BELIEVERS",
+      description: "We believe in ourselves, our team members, our communities, and our company. By bringing an all-in attitude, we affect positive change through an adaptable mindset. Our belief drives us to embody the unwavering energy necessary to achieve our goals. Believers get things done and inspire others to achieve more than seems possible.",
+      icon: "https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/o4ei194w_We%20Are%20Believers.png"
+    },
+    communicate: {
+      title: "WE COMMUNICATE AUTHENTICALLY WITH CARE", 
+      description: "We champion diverse ideas and contributions of our people and encourage curiosity in learning about others. We foster clear, honest, and transparent dialogue. We seek to understand, assume positive intent, treat people with respect, and respond in a timely manner. Care is at the heart of respectful communication.",
+      icon: "https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/d5l6vrag_We%20Communicate%20Authentically%20With%20Care.png"
+    },
+    course: {
+      title: "WE STAY THE COURSE",
+      description: "We demonstrate relentless optimism, grit, and unyielding determination. In ever-changing market conditions, we recalibrate, sharpen our focus, foster alignment, and dig in together to win. Our purpose, values, and long-term goals define our \"True North,\" and inspire our course.",
+      icon: "https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/42zs31nd_We%20Stay%20the%20Course.png"
+    },
+    performance: {
+      title: "WE DRIVE PERFORMANCE", 
+      description: "We are goal driven, results oriented, and have a high bar of performance. We empower our teams, hold each other accountable, and achieve expected results. We value leadership mindsets, innovation, and continuous improvement. Our purpose, strategy, and culture drive performance through our relentless commitment to our people and world-class service.",
+      icon: "https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/j5pkaliy_We%20Drive%20Performance.png"
+    }
+  };
+
+  // Core Values State
+  const [coreValueEntries, setCoreValueEntries] = useState(() => {
+    const saved = localStorage.getItem('core_value_entries');
+    return saved ? JSON.parse(saved) : {};
+  });
+  const [expandedValue, setExpandedValue] = useState(null);
+  const [newEntry, setNewEntry] = useState({ value: '', story: '', date: '' });
+  const [showNewEntryForm, setShowNewEntryForm] = useState(null);
 
   // Competency Task Progress State
   const [competencyTaskProgress, setCompetencyTaskProgress] = useState(() => {
