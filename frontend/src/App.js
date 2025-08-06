@@ -4564,8 +4564,14 @@ const AuthenticatedApp = () => {
   };
 
   const updateUser = async (userId, userData) => {
+    if (!hasAdminAccess) {
+      console.log('No admin access for updating users');
+      return false;
+    }
+
     try {
-      const headers = { Authorization: `Bearer ${adminToken}` };
+      const token = await getToken();
+      const headers = { Authorization: `Bearer ${token}` };
       await axios.put(`${API}/users/${userId}`, userData, { headers });
       
       // Update local state
