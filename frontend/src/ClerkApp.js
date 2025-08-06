@@ -35,44 +35,60 @@ const ClerkApp = () => {
 // Authentication prompt for signed-out users
 const AuthenticationPrompt = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl shadow-2xl p-12 max-w-lg w-full border border-red-100">
         {/* EYW Logo */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-8">
           <img
             src="https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/3u2q2zfr_EYW%20Winged%20Emblem.png"
             alt="Earn Your Wings"
-            className="w-32 h-32 mx-auto mb-4"
+            className="w-40 h-40 mx-auto mb-6"
+            style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))' }}
           />
-          <h1 className="text-3xl font-bold" style={{color: '#d21217'}}>
+          <h1 className="text-4xl font-bold mb-3" style={{color: '#d21217', textShadow: '0 2px 4px rgba(0,0,0,0.1)'}}>
             Earn Your Wings
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 text-lg font-medium">
             Leadership Development Platform
           </p>
         </div>
         
         {/* Welcome Message */}
-        <div className="text-center mb-6">
-          <h2 className="text-xl font-semibold mb-2">Welcome Navigator!</h2>
-          <p className="text-gray-600">
-            Sign in to access your leadership development journey and track your progress through the Navigator level.
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">Welcome to EARN YOUR WINGS</h2>
+          <p className="text-gray-600 text-lg leading-relaxed">
+            Sign in to access your leadership development journey and track your progress.
           </p>
         </div>
         
         {/* Sign In Button */}
-        <div className="text-center">
+        <div className="text-center mb-6">
           <SignInButton mode="modal">
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
-              Sign In to Continue
+            <button className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-8 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg">
+              <span className="flex items-center justify-center">
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
+                Sign In to Continue
+              </span>
             </button>
           </SignInButton>
         </div>
         
         {/* Footer */}
-        <div className="mt-6 text-center text-sm text-gray-500">
-          <p>Redstone Development • Navigator Level</p>
+        <div className="text-center">
+          <div className="border-t border-gray-200 pt-6">
+            <p className="text-sm text-gray-500 font-medium">Redstone Employee Development</p>
+            <p className="text-xs text-gray-400 mt-1">Empowering leaders at every level</p>
+          </div>
         </div>
+      </div>
+      
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+        <div className="absolute top-10 left-10 w-20 h-20 bg-red-100 rounded-full opacity-50"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-orange-100 rounded-full opacity-30"></div>
+        <div className="absolute top-1/2 right-20 w-16 h-16 bg-yellow-100 rounded-full opacity-40"></div>
       </div>
     </div>
   );
