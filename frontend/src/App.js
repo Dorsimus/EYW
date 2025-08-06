@@ -5732,7 +5732,54 @@ const App = () => {
                 </label>
                 <textarea
                   value={taskNotes}
-                  onChange={(e) => setTaskNotes(e.target.value)}
+                  onChange={(e) => {
+                    setTaskNotes(e.target.value);
+                    
+                    // Add real-time bidirectional sync for task notes
+                    if (showTaskModal.taskType === 'phase_activity') {
+                      // Phase activity notes sync
+                      handleJournalReflectionChange(
+                        showTaskModal.areaKey,
+                        showTaskModal.subKey,
+                        `phase_${showTaskModal.phase}_${showTaskModal.activityKey}_notes`,
+                        e.target.value,
+                        'phase_activity_notes'
+                      );
+                    } else {
+                      // Regular task completion notes sync
+                      handleJournalReflectionChange(
+                        showTaskModal.areaKey,
+                        showTaskModal.subKey,
+                        `task_${showTaskModal.task.id}_notes`,
+                        e.target.value,
+                        'task_completion_notes'
+                      );
+                    }
+                  }}
+                  onBlur={(e) => {
+                    // Create flightbook entry immediately when user finishes editing
+                    if (e.target.value && e.target.value.trim().length > 10) {
+                      if (showTaskModal.taskType === 'phase_activity') {
+                        // Phase activity notes to flightbook
+                        handleJournalReflectionComplete(
+                          showTaskModal.areaKey,
+                          showTaskModal.subKey,
+                          `phase_${showTaskModal.phase}_${showTaskModal.activityKey}_notes`,
+                          e.target.value,
+                          'phase_activity_notes'
+                        );
+                      } else {
+                        // Regular task completion notes to flightbook
+                        handleJournalReflectionComplete(
+                          showTaskModal.areaKey,
+                          showTaskModal.subKey,
+                          `task_${showTaskModal.task.id}_notes`,
+                          e.target.value,
+                          'task_completion_notes'
+                        );
+                      }
+                    }
+                  }}
                   placeholder={showTaskModal.taskType === 'phase_activity' ? 
                     "Add your thoughts, insights, or observations about this activity..." :
                     "Describe your key learnings, insights, or how you applied this knowledge..."}
