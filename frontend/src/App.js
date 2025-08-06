@@ -5500,6 +5500,8 @@ const App = () => {
             setCurrentView={setCurrentView} 
             competencies={competencies}
             reloadPortfolio={reloadPortfolio}
+            showSuccessMessage={showSuccessMessage}
+            showErrorMessage={showErrorMessage}
           />
         )}
         
