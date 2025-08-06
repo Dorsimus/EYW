@@ -5441,6 +5441,24 @@ const App = () => {
               </button>
             ))}
             
+            {/* Admin Access Button - Hidden by default, appears on special action */}
+            {!isAdmin && (
+              <button
+                onClick={() => setShowAdminLogin(true)}
+                className="redstone-nav-tab admin-access-tab"
+                title="Admin Access"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="redstone-icon">
+                    🔧
+                  </div>
+                  <span className="font-semibold text-sm">
+                    
+                  </span>
+                </div>
+              </button>
+            )}
+            
             {/* ADMIN NAVIGATION */}
             {isAdmin && [
               { key: 'admin-dashboard', label: 'Admin Dashboard', icon: '🎛️' },
