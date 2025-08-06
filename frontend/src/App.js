@@ -11510,4 +11510,238 @@ Total Entries: ${totalEntries}
   );
 };
 
+// AI Insights Section Component
+const AIInsightsSection = ({ getAIInsights, showSuccessMessage, showErrorMessage }) => {
+  const [aiData, setAiData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const loadAIInsights = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const insights = await getAIInsights();
+      setAiData(insights);
+    } catch (err) {
+      setError(err.message);
+      showErrorMessage('Failed to load AI insights');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load AI insights on component mount
+  useEffect(() => {
+    loadAIInsights();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="bg-white rounded-lg p-5 shadow-sm border border-purple-100">
+        <div className="flex items-center justify-center py-8">
+          <div className="animate-spin h-8 w-8 border-b-2 border-purple-600 rounded-full"></div>
+          <span className="ml-3 text-gray-600">Analyzing your learning patterns with AI...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !aiData) {
+    return (
+      <div className="bg-white rounded-lg p-5 shadow-sm border border-purple-100">
+        <div className="text-center py-8">
+          <span className="text-gray-500">AI insights temporarily unavailable.</span>
+          <button 
+            onClick={loadAIInsights}
+            className="ml-3 text-purple-600 hover:text-purple-700 font-medium"
+          >
+            Retry →
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {/* AI Learning Analysis */}
+      <div className="bg-white rounded-lg p-5 shadow-sm border border-purple-100">
+        <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <span className="mr-2">🔍</span>
+          Your Learning Analysis
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Content Analysis */}
+          <div className="bg-blue-50 rounded-lg p-4">
+            <h5 className="font-medium text-blue-900 mb-2">Content Analysis</h5>
+            <div className="space-y-2">
+              <div className="text-sm text-blue-800">
+                <strong>Sentiment:</strong> {aiData.contentAnalysis.sentiment}
+              </div>
+              <div className="text-sm text-blue-800">
+                <strong>Engagement:</strong> {aiData.contentAnalysis.engagement_level || aiData.contentAnalysis.engagementLevel}
+              </div>
+              <div className="text-sm text-blue-700">
+                {aiData.contentAnalysis.key_insights?.[0] || aiData.contentAnalysis.keyInsights?.[0]}
+              </div>
+            </div>
+          </div>
+
+          {/* Learning Patterns */}
+          <div className="bg-green-50 rounded-lg p-4">
+            <h5 className="font-medium text-green-900 mb-2">Learning Patterns</h5>
+            <div className="space-y-2">
+              <div className="text-sm text-green-800">
+                <strong>Consistency:</strong> {aiData.learningPatterns.consistency_score || aiData.learningPatterns.consistencyScore}%
+              </div>
+              <div className="text-sm text-green-800">
+                <strong>Depth:</strong> {aiData.learningPatterns.reflection_depth || aiData.learningPatterns.reflectionDepth}
+              </div>
+              <div className="text-sm text-green-800">
+                <strong>Velocity:</strong> {aiData.learningPatterns.learning_velocity || aiData.learningPatterns.learningVelocity}
+              </div>
+            </div>
+          </div>
+
+          {/* Strengths & Growth */}
+          <div className="bg-orange-50 rounded-lg p-4">
+            <h5 className="font-medium text-orange-900 mb-2">Key Insights</h5>
+            <div className="space-y-2">
+              <div className="text-sm text-orange-800">
+                <strong>Strengths:</strong>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {(aiData.strengths || aiData.contentAnalysis.identified_strengths || []).slice(0, 2).map(strength => (
+                    <span key={strength} className="bg-orange-200 text-orange-800 px-2 py-1 rounded-full text-xs">
+                      {strength}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="text-sm text-orange-800">
+                <strong>Growth Areas:</strong>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {(aiData.growthAreas || aiData.contentAnalysis.growth_opportunities || []).slice(0, 2).map(area => (
+                    <span key={area} className="bg-orange-100 text-orange-700 px-2 py-1 rounded-full text-xs">
+                      {area}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* AI Recommendations */}
+      <div className="bg-white rounded-lg p-5 shadow-sm border border-purple-100">
+        <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <span className="mr-2">🎯</span>
+          Personalized Next Steps
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {(aiData.nextBestActions || aiData.recommendations?.slice(0, 3) || []).map((rec, index) => (
+            <div
+              key={index}
+              className={`p-4 rounded-lg border-2 transition-all hover:shadow-lg cursor-pointer ${
+                rec.priority === 'high' ? 'bg-red-50 border-red-200 hover:bg-red-100' :
+                rec.priority === 'medium' ? 'bg-yellow-50 border-yellow-200 hover:bg-yellow-100' :
+                'bg-blue-50 border-blue-200 hover:bg-blue-100'
+              }`}
+              onClick={() => {
+                showSuccessMessage(`AI Recommendation: ${rec.action}`);
+              }}
+            >
+              <div className="flex items-start mb-3">
+                <span className="text-2xl mr-3">{rec.icon}</span>
+                <div className="flex-1">
+                  <h5 className="font-medium text-gray-900 text-sm">{rec.title}</h5>
+                  <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-1 ${
+                    rec.priority === 'high' ? 'bg-red-100 text-red-800' :
+                    rec.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                    'bg-blue-100 text-blue-800'
+                  }`}>
+                    {rec.priority.toUpperCase()} PRIORITY
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm text-gray-700 mb-3">{rec.description}</p>
+              <div className="text-xs text-gray-600 mb-2">
+                <span className="font-medium">AI Insight:</span> {rec.ai_reason || rec.aiReason}
+              </div>
+              <button
+                className={`w-full py-2 px-3 rounded-md text-xs font-medium transition-colors ${
+                  rec.priority === 'high' ? 'bg-red-600 text-white hover:bg-red-700' :
+                  rec.priority === 'medium' ? 'bg-yellow-600 text-white hover:bg-yellow-700' :
+                  'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
+              >
+                {rec.action}
+              </button>
+            </div>
+          ))}
+        </div>
+        
+        {/* Refresh AI Insights Button */}
+        <div className="text-center mt-4">
+          <button
+            onClick={loadAIInsights}
+            className="text-purple-600 hover:text-purple-700 font-medium text-sm flex items-center mx-auto"
+            disabled={loading}
+          >
+            <span className="mr-1">🔄</span>
+            Refresh AI Analysis
+          </button>
+        </div>
+      </div>
+
+      {/* AI Predictive Analytics */}
+      {aiData.predictiveAnalytics && (
+        <div className="bg-white rounded-lg p-5 shadow-sm border border-purple-100">
+          <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+            <span className="mr-2">🔮</span>
+            AI Predictions & Insights
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-medium text-gray-700">Learning Momentum</span>
+                <span className={`px-2 py-1 rounded-full text-xs font-bold ${
+                  (aiData.predictiveAnalytics.learning_momentum || aiData.predictiveAnalytics.momentum) === 'high' ? 'bg-green-100 text-green-800' :
+                  (aiData.predictiveAnalytics.learning_momentum || aiData.predictiveAnalytics.momentum) === 'moderate' ? 'bg-yellow-100 text-yellow-800' :
+                  'bg-blue-100 text-blue-800'
+                }`}>
+                  {aiData.predictiveAnalytics.learning_momentum || aiData.predictiveAnalytics.momentum}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-medium text-gray-700">AI Confidence</span>
+                <span className="text-sm font-bold text-purple-600">
+                  {Math.round((aiData.predictiveAnalytics.confidence_score || aiData.predictiveAnalytics.aiConfidence || 0.75) * 100)}%
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-medium text-gray-700">Weekly Velocity</span>
+                <span className="text-sm font-bold text-blue-600">
+                  +{(aiData.predictiveAnalytics.weekly_velocity || aiData.predictiveAnalytics.weeklyVelocity || 2.0).toFixed(1)}%
+                </span>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <h6 className="font-medium text-gray-900 text-sm">Next Milestone:</h6>
+              <div className="text-sm font-medium text-purple-700 bg-purple-50 p-2 rounded">
+                🎯 {aiData.predictiveAnalytics.next_milestone || 'Continue your learning journey'}
+              </div>
+              {aiData.predictiveAnalytics.predicted_completion_weeks && (
+                <div className="text-sm text-gray-700 bg-gray-50 p-2 rounded">
+                  📅 Estimated completion: {aiData.predictiveAnalytics.predicted_completion_weeks} weeks
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
 export default App;
