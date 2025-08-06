@@ -2276,6 +2276,16 @@ const App = () => {
     }
   }, []);
 
+  // Load tasks from competencies when admin is active and competencies are available
+  useEffect(() => {
+    if (isAdmin && competencies && Object.keys(competencies).length > 0) {
+      console.log('Loading tasks from competencies for admin panel...');
+      const realTasks = getAllTasksFromCompetencies(competencies);
+      console.log(`Loaded ${realTasks.length} tasks from competencies`);
+      setAllTasks(realTasks);
+    }
+  }, [isAdmin, competencies]); // Add competencies as dependency
+
   // Handle admin token changes - FIXED: Stable admin state management  
   useEffect(() => {
     if (adminToken && !isAdmin) {
