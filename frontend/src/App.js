@@ -45,8 +45,71 @@ const getCompetencyClass = (areaKey) => {
 };
 
 const App = () => {
+  return (
+    <div className="App">
+      <SignedOut>
+        <AuthenticationPrompt />
+      </SignedOut>
+      <SignedIn>
+        <AuthenticatedApp />
+      </SignedIn>
+    </div>
+  );
+};
+
+// Authentication prompt for signed-out users
+const AuthenticationPrompt = () => {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+        {/* EYW Logo */}
+        <div className="text-center mb-6">
+          <img
+            src="https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/3u2q2zfr_EYW%20Winged%20Emblem.png"
+            alt="Earn Your Wings"
+            className="w-32 h-32 mx-auto mb-4"
+          />
+          <h1 className="text-3xl font-bold" style={{color: '#d21217'}}>
+            Earn Your Wings
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Leadership Development Platform
+          </p>
+        </div>
+        
+        {/* Welcome Message */}
+        <div className="text-center mb-6">
+          <h2 className="text-xl font-semibold mb-2">Welcome Navigator!</h2>
+          <p className="text-gray-600">
+            Sign in to access your leadership development journey and track your progress through the Navigator level.
+          </p>
+        </div>
+        
+        {/* Sign In Button */}
+        <div className="text-center">
+          <SignInButton mode="modal">
+            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+              Sign In to Continue
+            </button>
+          </SignInButton>
+        </div>
+        
+        {/* Footer */}
+        <div className="mt-6 text-center text-sm text-gray-500">
+          <p>Redstone Development • Navigator Level</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Main authenticated application
+const AuthenticatedApp = () => {
+  const { getToken } = useAuth();
+  const { user } = useUser();
+  
   const [currentView, setCurrentView] = useState('dashboard');
-  const [user, setUser] = useState(null);
+  const [localUser, setLocalUser] = useState(null);
   const [competencies, setCompetencies] = useState({});
   const [portfolio, setPortfolio] = useState([]);
   const [loading, setLoading] = useState(true);
