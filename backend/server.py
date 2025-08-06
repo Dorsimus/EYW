@@ -1382,7 +1382,7 @@ async def serve_file(file_type: str, file_id: str, user_id: Optional[str] = None
 
 # Storage management endpoints
 @api_router.get("/admin/storage/stats")
-async def get_storage_stats(admin_user = Depends(get_current_admin)):
+async def get_storage_stats(admin_user = Depends(require_admin)):
     """Get storage usage statistics"""
     def get_directory_size(directory: Path) -> tuple[int, int]:
         """Get total size and file count of directory"""
