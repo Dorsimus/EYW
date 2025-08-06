@@ -2391,6 +2391,15 @@ const App = () => {
     // Clear loading state
     setLoading(false);
     console.log('Demo environment ready - can now fix text visibility issues');
+    } catch (error) {
+      console.error('Error during initialization:', error);
+      handleError(error, 'Application initialization', false);
+      // Ensure loading always completes even on error
+      setLoading(false);
+    } finally {
+      // Guaranteed loading completion
+      console.log('Initialization complete, setting loading to false');
+      setLoading(false);
     }
   }, []);
 
