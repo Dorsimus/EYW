@@ -5485,13 +5485,7 @@ const AuthenticatedApp = () => {
         )}
       </main>
 
-      {/* Admin Login Modal */}
-      {showAdminLogin && (
-        <AdminLoginModal
-          onLogin={adminLogin}
-          onClose={() => setShowAdminLogin(false)}
-        />
-      )}
+      {/* Admin login modal removed - using Clerk authentication */}
 
       {/* Edit Task Modal */}
       {editingTask && (
