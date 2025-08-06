@@ -6137,13 +6137,39 @@ const CompetenciesView = ({
       // Create flightbook entry for culminating project notes
       if (evidenceDescription && evidenceDescription.trim().length > 10) {
         console.log(`Creating flightbook entry from culminating project task ${taskId} with content:`, evidenceDescription.substring(0, 50) + '...');
-        await createFlightbookFromJournalReflection(
-          'culminating_project', 
-          'capstone_project', 
-          `task_${taskId}`, 
-          evidenceDescription.trim(), 
-          'culminating_project'
-        );
+        
+        // Call the main flightbook creation function directly
+        if (!user?.id || !evidenceDescription || evidenceDescription.trim().length === 0) return;
+        
+        try {
+          const entryTitle = `Culminating Project Task ${taskId}`;
+          const flightbookEntry = {
+            id: `culminating_project_task_${taskId}_${Date.now()}`,
+            title: entryTitle,
+            content: evidenceDescription.trim(),
+            date: new Date(),
+            updated_at: new Date(),
+            competency_area: 'culminating_project',
+            sub_competency: 'capstone_project',
+            task_id: `task_${taskId}`,
+            task_type: 'culminating_project',
+            version: 1,
+            version_history: []
+          };
+          
+          // Get existing entries
+          const existingEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+          
+          // Add new entry
+          const updatedEntries = [...existingEntries, flightbookEntry];
+          
+          // Save to localStorage
+          localStorage.setItem('flightbook_entries', JSON.stringify(updatedEntries));
+          
+          console.log('✅ Created flightbook entry:', entryTitle);
+        } catch (error) {
+          console.error('Error creating flightbook entry:', error);
+        }
       }
       
       setSelectedCulminatingTask(null);
