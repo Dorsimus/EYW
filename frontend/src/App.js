@@ -4218,19 +4218,28 @@ const App = () => {
         console.log(`Found ${realTasks.length} tasks from competencies`);
         setAllTasks(realTasks);
         
-        // Set demo users data
-        setAllUsers([
-          { 
-            id: 'demo-user-123', 
-            name: 'Demo Navigator', 
-            email: 'demo@earnwings.com',
-            level: 3,
-            overall_progress: 0,
-            created_at: '2024-01-01',
-            last_activity: new Date().toISOString()
-          }
-        ]);
+        // Load existing users from localStorage or set demo user
+        const savedUsers = JSON.parse(localStorage.getItem('admin_all_users') || '[]');
+        const defaultDemoUser = { 
+          id: 'demo-user-123', 
+          name: 'Demo Navigator', 
+          email: 'demo@earnwings.com',
+          level: 3,
+          overall_progress: 0,
+          created_at: '2024-01-01',
+          last_activity: new Date().toISOString()
+        };
         
+        // If no saved users, start with demo user
+        const allUsersData = savedUsers.length > 0 ? savedUsers : [defaultDemoUser];
+        setAllUsers(allUsersData);
+        
+        // Save the demo user if no users exist
+        if (savedUsers.length === 0) {
+          localStorage.setItem('admin_all_users', JSON.stringify([defaultDemoUser]));
+        }
+        
+        console.log(`Loaded ${allUsersData.length} users for admin panel`);
         console.log('Admin login complete with real competency data');
         return true;
       } else {
