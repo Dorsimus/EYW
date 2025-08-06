@@ -235,51 +235,21 @@ const App = () => {
       // For now, use empty array until competencies are loaded
       setAllTasks([]);
       
+      // Set demo users data
       setAllUsers([
-        {
-          id: "user-1",
-          email: "john.doe@earnwings.com",
-          name: "John Doe",
-          role: "participant", 
-          level: "navigator",
-          completed_tasks: 2,
-          overall_progress: 20,
-          created_at: "2024-01-15T00:00:00Z"
-        },
-        {
-          id: "user-2",
-          email: "jane.smith@earnwings.com", 
-          name: "Jane Smith",
-          role: "participant",
-          level: "navigator",
-          completed_tasks: 1,
-          overall_progress: 10,
-          created_at: "2024-01-20T00:00:00Z"
-        },
-        {
-          id: "user-3",
-          email: "mike.johnson@earnwings.com",
-          name: "Mike Johnson", 
-          role: "mentor",
-          level: "navigator",
-          completed_tasks: 5,
-          overall_progress: 50,
-          created_at: "2024-01-10T00:00:00Z"
-        },
-        {
-          id: "user-4",
-          email: "demo@earnwings.com",
-          name: "Demo Navigator",
-          role: "participant",
-          level: "navigator", 
-          completed_tasks: 0,
+        { 
+          id: 'demo-user-123', 
+          name: 'Demo Navigator', 
+          email: 'demo@earnwings.com',
+          level: 3,
           overall_progress: 0,
-          created_at: "2024-01-25T00:00:00Z"
+          created_at: '2024-01-01',
+          last_activity: new Date().toISOString()
         }
       ]);
       
       setLoading(false);
-      console.log('Admin demo environment ready with 5 tasks and 4 users');
+      console.log('Admin state restored from existing token');
     } else {
       // Regular user demo data
       const userData = {
