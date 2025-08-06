@@ -359,7 +359,7 @@ const AuthenticatedApp = () => {
         created_at: new Date().toISOString()
       };
       
-      setUser(userData);
+      setLocalUser(userData);
       // Store user data in localStorage so bidirectional sync functions can access it
       localStorage.setItem('user', JSON.stringify(userData));
       
