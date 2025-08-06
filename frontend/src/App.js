@@ -5253,6 +5253,7 @@ const App = () => {
           <EnhancedUserManagement 
             users={allUsers}
             onUpdateUser={updateUser}
+            onCreateUser={createUser}
             onApproveLevel={(userId, newLevel) => {
               updateUser(userId, { level: newLevel, pending_level_approval: false });
               showSuccessMessage(`User approved for Level ${newLevel}`);
