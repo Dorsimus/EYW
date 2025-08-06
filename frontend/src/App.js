@@ -4957,7 +4957,7 @@ const App = () => {
     };
     
     setCompetencyTaskProgress(updatedProgress);
-    localStorage.setItem('competency_task_progress', JSON.stringify(updatedProgress));
+    saveDataWithBackup('competency_task_progress', updatedProgress);
     
     // Create or update flightbook entry for ANY meaningful journal/reflection entry
     if (notes && notes.trim().length > 10) {
