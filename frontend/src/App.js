@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
+import { 
+  SignedIn, 
+  SignedOut, 
+  SignInButton, 
+  UserButton, 
+  useAuth, 
+  useUser 
+} from '@clerk/clerk-react';
 
 // AI Service imports
 import { EnhancedAdminDashboard, EnhancedUserManagement } from './AdminPanel';
