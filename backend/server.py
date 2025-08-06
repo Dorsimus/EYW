@@ -862,38 +862,7 @@ async def update_all_competency_progress(user_id: str):
 async def root():
     return {"message": "Earn Your Wings Platform API"}
 
-# Authentication Routes
-@api_router.post("/admin/login")
-async def admin_login(login_data: AdminLogin):
-    user = await db.users.find_one({"email": login_data.email, "is_admin": True})
-    if not user:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    
-    if not verify_password(login_data.password, user["password_hash"]):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": user["id"]}, expires_delta=access_token_expires
-    )
-    return {"access_token": access_token, "token_type": "bearer", "user": serialize_doc(user)}
-
-@api_router.post("/admin/create")
-async def create_admin(user_data: UserCreate):
-    """Create admin user - should be protected in production"""
-    if not user_data.is_admin or not user_data.password:
-        raise HTTPException(status_code=400, detail="Admin user requires password")
-    
-    # Check if admin already exists
-    existing = await db.users.find_one({"email": user_data.email})
-    if existing:
-        raise HTTPException(status_code=400, detail="User already exists")
-    
-    user = User(**user_data.dict())
-    user.password_hash = get_password_hash(user_data.password)
-    await db.users.insert_one(user.dict())
-    
-    return {"message": "Admin created successfully", "user_id": user.id}
+# Authentication Routes - Legacy admin routes removed, now using Clerk authentication
 
 # User Management Routes
 @api_router.post("/users", response_model=User)
