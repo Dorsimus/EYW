@@ -8313,7 +8313,7 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
 };
 
 // Enhanced Portfolio View Component with Accordion Organization
-const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfolio }) => {
+const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfolio, showSuccessMessage, showErrorMessage }) => {
   const [expandedSections, setExpandedSections] = useState({});
   const [selectedItems, setSelectedItems] = useState(new Set());
   const [showBulkActions, setShowBulkActions] = useState(false);
