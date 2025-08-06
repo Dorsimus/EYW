@@ -2353,15 +2353,13 @@ const AuthenticatedApp = () => {
     }
   }, [isAdmin, competencies]); // Add competencies as dependency
 
-  // Handle admin token changes - FIXED: Stable admin state management  
+  // Handle admin access setup for Clerk users
   useEffect(() => {
-    if (adminToken && !isAdmin) {
-      // Only set admin state if we're not already admin
-      console.log('Setting admin state from token...');
-      setIsAdmin(true);
+    if (hasAdminAccess) {
+      console.log('User has admin access via Clerk...');
       setCurrentView('admin-dashboard');
       
-      // Set demo admin data only once
+      // Set demo admin data for testing
       setAdminStats({
         total_users: 45,
         total_tasks: 10,
@@ -2369,18 +2367,19 @@ const AuthenticatedApp = () => {
         completion_rate: 0.44,
         active_competency_areas: 5
       });
-    } else if (!adminToken && isAdmin) {
-      // Only clear admin state if we were admin
-      console.log('Clearing admin state...');
-      setIsAdmin(false);
-      setCurrentView('dashboard');
     }
-  }, [adminToken]); // Remove isAdmin from dependencies to prevent loops
+  }, [hasAdminAccess]);
 
   const loadAdminData = async () => {
+    if (!hasAdminAccess) {
+      console.log('No admin access for loading admin data');
+      return;
+    }
+
     try {
       setLoading(true);
-      const headers = { Authorization: `Bearer ${adminToken}` };
+      const token = await getToken();
+      const headers = { Authorization: `Bearer ${token}` };
       
       // Load admin stats
       const statsResponse = await axios.get(`${API}/admin/stats`, { headers });
@@ -2397,9 +2396,7 @@ const AuthenticatedApp = () => {
     } catch (error) {
       console.error('Error loading admin data:', error);
       if (error.response?.status === 401) {
-        localStorage.removeItem('admin_token');
-        setAdminToken(null);
-        setIsAdmin(false);
+        console.log('Unauthorized access - user may not have admin role');
       }
     } finally {
       setLoading(false);
