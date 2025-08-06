@@ -37,18 +37,22 @@ const AuthenticationPrompt = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-xl shadow-2xl p-12 max-w-lg w-full border border-red-100">
-        {/* EYW Logo */}
+        {/* Welcome Text at Top */}
+        <div className="text-center mb-8">
+          <h2 className="text-xl font-medium mb-2 text-gray-600">Welcome to</h2>
+          <h1 className="text-4xl font-bold mb-8" style={{color: '#d21217', textShadow: '0 2px 4px rgba(0,0,0,0.1)'}}>
+            Earn Your Wings
+          </h1>
+        </div>
+
+        {/* EYW Logo - Centered and Large */}
         <div className="text-center mb-8">
           <img
             src="https://customer-assets.emergentagent.com/job_earnyourwings/artifacts/ybtb01sj_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png"
             alt="Earn Your Wings"
-            className="w-40 h-40 mx-auto mb-6"
-            style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))' }}
+            className="w-80 h-80 mx-auto"
+            style={{ filter: 'drop-shadow(0 6px 12px rgba(0,0,0,0.15))' }}
           />
-          <h2 className="text-xl font-medium mb-2 text-gray-600">Welcome to</h2>
-          <h1 className="text-4xl font-bold mb-6" style={{color: '#d21217', textShadow: '0 2px 4px rgba(0,0,0,0.1)'}}>
-            Earn Your Wings
-          </h1>
         </div>
         
         {/* Welcome Message */}
