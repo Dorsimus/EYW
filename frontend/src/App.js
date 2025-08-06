@@ -2391,13 +2391,16 @@ const App = () => {
     setLoading(false);
     console.log('Demo environment ready - can now fix text visibility issues');
     }
-    
-    // Timeout protection to ensure loading never gets stuck
-    setTimeout(() => {
+  }, []);
+
+  // Emergency loading fix - force loading to false after 3 seconds
+  useEffect(() => {
+    const emergencyTimeout = setTimeout(() => {
+      console.log('🚨 Emergency timeout: Forcing loading to false');
       setLoading(false);
-      console.log('Timeout protection: Ensuring loading state is cleared');
-    }, 5000);
-    
+    }, 3000);
+
+    return () => clearTimeout(emergencyTimeout);
   }, []);
 
   // Handle admin token changes - FIXED: Stable admin state management  
