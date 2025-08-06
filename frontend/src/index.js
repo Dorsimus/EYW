@@ -13,7 +13,30 @@ if (!PUBLISHABLE_KEY) {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+    <ClerkProvider 
+      publishableKey={PUBLISHABLE_KEY} 
+      afterSignOutUrl="/"
+      appearance={{
+        elements: {
+          card: "shadow-lg",
+          headerTitle: "text-2xl font-bold text-red-600",
+          headerSubtitle: "text-gray-600",
+          socialButtonsBlockButton: "border border-gray-300 hover:border-gray-400",
+          formButtonPrimary: "bg-red-600 hover:bg-red-700 text-white",
+          footerActionLink: "text-red-600 hover:text-red-700",
+          logoBox: "mx-auto mb-6",
+          logoImage: "w-16 h-16"
+        },
+        layout: {
+          logoImageUrl: "https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/3u2q2zfr_EYW%20Winged%20Emblem.png"
+        },
+        variables: {
+          colorPrimary: "#d21217",
+          colorText: "#374151",
+          colorTextSecondary: "#6b7280"
+        }
+      }}
+    >
       <ClerkApp />
     </ClerkProvider>
   </React.StrictMode>
