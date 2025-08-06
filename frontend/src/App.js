@@ -5896,20 +5896,21 @@ const App = () => {
                 notification.type === 'success' 
                   ? 'border-green-400 text-green-800' 
                   : 'border-red-400 text-red-800'
-              }`}
+              } 
+              sm:max-w-sm max-w-xs text-xs sm:text-sm`}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <span className="mr-2">
                     {notification.type === 'success' ? '✅' : '❌'}
                   </span>
-                  <span className="text-sm font-medium">
+                  <span className="font-medium">
                     {notification.message}
                   </span>
                 </div>
                 <button
                   onClick={() => removeNotification(notification.id)}
-                  className="ml-2 text-gray-400 hover:text-gray-600 text-xs"
+                  className="ml-2 text-gray-400 hover:text-gray-600 text-xs touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center"
                 >
                   ×
                 </button>
