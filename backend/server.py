@@ -1353,3 +1353,201 @@ logger = logging.getLogger(__name__)
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
+
+
+# =============================================================================
+# AI-POWERED LEARNING ANALYTICS SERVICE
+# =============================================================================
+
+class AIAnalysisRequest(BaseModel):
+    user_id: str
+    flightbook_entries: List[Dict] = []
+    task_progress: Dict = {}
+    competencies: Dict = {}
+    portfolio: List[Dict] = []
+
+class AIInsightsResponse(BaseModel):
+    content_analysis: Dict
+    learning_patterns: Dict
+    recommendations: List[Dict]
+    predictive_analytics: Dict
+
+class AIService:
+    def __init__(self):
+        self.api_key = os.environ.get('OPENAI_API_KEY')
+        if not self.api_key:
+            raise ValueError("OPENAI_API_KEY not found in environment variables")
+    
+    async def analyze_user_learning(self, request: AIAnalysisRequest) -> AIInsightsResponse:
+        """Generate comprehensive AI analysis of user's learning patterns and provide personalized insights."""
+        try:
+            # Create a new chat instance for this analysis
+            chat = LlmChat(
+                api_key=self.api_key,
+                session_id=f"learning_analysis_{request.user_id}_{uuid.uuid4()}",
+                system_message="""You are an advanced learning analytics AI specializing in leadership development. 
+                Analyze user learning data to provide deep insights and actionable recommendations.
+                Always respond in valid JSON format with the exact structure requested."""
+            ).with_model("openai", "gpt-4o").with_max_tokens(2000)
+
+            # Prepare analysis prompt
+            analysis_prompt = f"""
+            Analyze this user's learning data and provide comprehensive insights in JSON format:
+
+            USER LEARNING DATA:
+            - Flightbook Entries: {len(request.flightbook_entries)} reflections
+            - Sample Recent Reflections: {json.dumps(request.flightbook_entries[-3:] if request.flightbook_entries else [], indent=2)}
+            - Task Progress: {json.dumps(request.task_progress, indent=2)}
+            - Portfolio Items: {len(request.portfolio)} items
+
+            REQUIRED JSON RESPONSE FORMAT:
+            {{
+                "content_analysis": {{
+                    "sentiment": "positive/neutral/developing",
+                    "engagement_level": "high/moderate/beginning",
+                    "themes": ["theme1", "theme2", "theme3"],
+                    "identified_strengths": ["strength1", "strength2", "strength3"],
+                    "growth_opportunities": ["area1", "area2", "area3"],
+                    "key_insights": ["insight1", "insight2", "insight3"]
+                }},
+                "learning_patterns": {{
+                    "consistency_score": 85,
+                    "reflection_depth": "thoughtful/developing/basic",
+                    "preferred_competency": "leadership_supervision/financial_management/operational_management/cross_functional_collaboration/strategic_thinking",
+                    "learning_velocity": "accelerating/steady/building",
+                    "engagement_trends": "increasing/stable/variable"
+                }},
+                "recommendations": [
+                    {{
+                        "type": "quick-win/skill-development/portfolio-building/reflection",
+                        "priority": "high/medium/low",
+                        "title": "Recommendation Title",
+                        "description": "Detailed description",
+                        "action": "Specific action to take",
+                        "icon": "🎯/📁/💭/🚀/👥",
+                        "ai_reason": "AI reasoning for this recommendation"
+                    }}
+                ],
+                "predictive_analytics": {{
+                    "predicted_completion_weeks": 12,
+                    "learning_momentum": "high/moderate/building",
+                    "weekly_velocity": 3.5,
+                    "confidence_score": 0.85,
+                    "next_milestone": "Complete 5 more leadership reflections"
+                }}
+            }}
+
+            Provide actionable, personalized insights based on the actual data provided.
+            """
+
+            # Send analysis request to AI
+            user_message = UserMessage(text=analysis_prompt)
+            response = await chat.send_message(user_message)
+            
+            # Parse AI response
+            try:
+                ai_insights = json.loads(response)
+                return AIInsightsResponse(**ai_insights)
+            except json.JSONDecodeError:
+                # Fallback response if AI doesn't return valid JSON
+                return self._generate_fallback_insights(request)
+
+        except Exception as e:
+            logger.error(f"AI analysis error: {e}")
+            return self._generate_fallback_insights(request)
+
+    def _generate_fallback_insights(self, request: AIAnalysisRequest) -> AIInsightsResponse:
+        """Generate basic insights when AI service is unavailable."""
+        entries_count = len(request.flightbook_entries)
+        portfolio_count = len(request.portfolio)
+        
+        return AIInsightsResponse(
+            content_analysis={
+                "sentiment": "neutral",
+                "engagement_level": "beginning" if entries_count < 3 else "moderate" if entries_count < 10 else "high",
+                "themes": ["Leadership Development", "Self-Reflection", "Professional Growth"],
+                "identified_strengths": ["Commitment to Learning", "Goal-Oriented Approach", "Reflection Mindset"],
+                "growth_opportunities": ["Consistency Building", "Depth Enhancement", "Action Planning"],
+                "key_insights": [
+                    f"Recorded {entries_count} learning reflections",
+                    f"Portfolio contains {portfolio_count} items",
+                    "Ready for structured development approach"
+                ]
+            },
+            learning_patterns={
+                "consistency_score": min(entries_count * 10, 100),
+                "reflection_depth": "developing",
+                "preferred_competency": "leadership_supervision",
+                "learning_velocity": "building",
+                "engagement_trends": "stable"
+            },
+            recommendations=[
+                {
+                    "type": "quick-win",
+                    "priority": "high",
+                    "title": "Start Leadership Curiosity Assessment",
+                    "description": "Begin with reflective questions to establish your baseline",
+                    "action": "Complete Program Foundations section",
+                    "icon": "🎯",
+                    "ai_reason": "Perfect starting point for systematic leadership development"
+                },
+                {
+                    "type": "reflection",
+                    "priority": "high",
+                    "title": "Daily Reflection Practice",
+                    "description": "Spend 10 minutes daily reflecting on leadership moments",
+                    "action": "Set daily reminder for reflection",
+                    "icon": "💭",
+                    "ai_reason": "Consistent reflection accelerates leadership growth"
+                }
+            ],
+            predictive_analytics={
+                "predicted_completion_weeks": 16,
+                "learning_momentum": "building",
+                "weekly_velocity": 2.0,
+                "confidence_score": 0.75,
+                "next_milestone": "Complete first competency area assessment"
+            }
+        )
+
+# Initialize AI Service
+ai_service = AIService()
+
+@app.post("/api/ai/analyze", response_model=AIInsightsResponse)
+async def analyze_learning_patterns(request: AIAnalysisRequest):
+    """
+    Generate AI-powered learning analytics and personalized recommendations.
+    """
+    try:
+        insights = await ai_service.analyze_user_learning(request)
+        return insights
+    except Exception as e:
+        logger.error(f"Learning analysis error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to analyze learning patterns")
+
+@app.get("/api/ai/health")
+async def ai_health_check():
+    """Check if AI service is available."""
+    try:
+        # Test basic AI connectivity
+        chat = LlmChat(
+            api_key=ai_service.api_key,
+            session_id=f"health_check_{uuid.uuid4()}",
+            system_message="You are a helpful assistant."
+        ).with_model("openai", "gpt-4o").with_max_tokens(50)
+        
+        user_message = UserMessage(text="Say 'AI service is healthy' and nothing else.")
+        response = await chat.send_message(user_message)
+        
+        return {
+            "status": "healthy",
+            "ai_response": response.strip(),
+            "timestamp": datetime.utcnow().isoformat()
+        }
+    except Exception as e:
+        logger.error(f"AI health check failed: {e}")
+        return {
+            "status": "unhealthy",
+            "error": str(e),
+            "timestamp": datetime.utcnow().isoformat()
+        }
