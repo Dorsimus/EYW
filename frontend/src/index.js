@@ -28,7 +28,7 @@ root.render(
           logoImage: "w-16 h-16"
         },
         layout: {
-          logoImageUrl: "https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/3u2q2zfr_EYW%20Winged%20Emblem.png"
+          logoImageUrl: "https://customer-assets.emergentagent.com/job_earnyourwings/artifacts/ybtb01sj_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png"
         },
         variables: {
           colorPrimary: "#d21217",
