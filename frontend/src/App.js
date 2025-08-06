@@ -5252,24 +5252,6 @@ const AuthenticatedApp = () => {
               </button>
             ))}
             
-            {/* Admin Access Info for Regular Users */}
-            {!isAdmin && (
-              <button
-                onClick={() => setCurrentView('admin-info')}
-                className={`redstone-nav-tab ${currentView === 'admin-info' ? 'active' : ''} border-2 border-dashed border-gray-300 hover:border-blue-400`}
-                title="Learn about Admin Access"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="redstone-icon text-gray-500">
-                    🛠️
-                  </div>
-                  <span className="font-semibold text-sm text-gray-600">
-                    Admin Tools
-                  </span>
-                </div>
-              </button>
-            )}
-            
             {/* Admin access is now handled by Clerk authentication */}
             
             {/* ADMIN NAVIGATION */}
