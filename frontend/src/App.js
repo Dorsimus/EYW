@@ -9613,7 +9613,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
             const competencyProgress = JSON.parse(localStorage.getItem('competency_task_progress') || '{}');
             if (competencyProgress[existingEntry.entry_key]) {
               competencyProgress[existingEntry.entry_key].notes = editContent.trim();
-              saveDataWithBackup('competency_task_progress', competencyProgress);
+              localStorage.setItem('competency_task_progress', JSON.stringify(competencyProgress));
               
               // Update React state to trigger re-render of competency textareas
               if (setCompetencyTaskProgress) {
