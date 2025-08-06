@@ -40,22 +40,19 @@ const AuthenticationPrompt = () => {
         {/* EYW Logo */}
         <div className="text-center mb-8">
           <img
-            src="https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/3u2q2zfr_EYW%20Winged%20Emblem.png"
+            src="https://customer-assets.emergentagent.com/job_earnyourwings/artifacts/ybtb01sj_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png"
             alt="Earn Your Wings"
             className="w-40 h-40 mx-auto mb-6"
             style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))' }}
           />
-          <h1 className="text-4xl font-bold mb-3" style={{color: '#d21217', textShadow: '0 2px 4px rgba(0,0,0,0.1)'}}>
+          <h2 className="text-xl font-medium mb-2 text-gray-600">Welcome to</h2>
+          <h1 className="text-4xl font-bold mb-6" style={{color: '#d21217', textShadow: '0 2px 4px rgba(0,0,0,0.1)'}}>
             Earn Your Wings
           </h1>
-          <p className="text-gray-600 text-lg font-medium">
-            Leadership Development Platform
-          </p>
         </div>
         
         {/* Welcome Message */}
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold mb-4 text-gray-800">Welcome to EARN YOUR WINGS</h2>
           <p className="text-gray-600 text-lg leading-relaxed">
             Sign in to access your leadership development journey and track your progress.
           </p>
