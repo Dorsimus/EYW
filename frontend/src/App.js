@@ -35,6 +35,8 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [competencies, setCompetencies] = useState({});
   const [portfolio, setPortfolio] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
   // Enhanced Error Handling and User Feedback State
   const [notifications, setNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
