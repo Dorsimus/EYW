@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
 
+// AI Service imports
+import { EnhancedAdminDashboard, EnhancedUserManagement } from './AdminPanel';
+import ContentManagement from './ContentManagement';
+import LevelManagement from './LevelManagement';
+import TestingTools from './TestingTools';
+
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
