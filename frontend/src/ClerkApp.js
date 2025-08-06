@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
-import axios from 'axios';
 import { 
   SignedIn, 
   SignedOut, 
-  SignInButton, 
-  UserButton, 
-  useAuth, 
-  useUser 
+  SignInButton
 } from '@clerk/clerk-react';
 
-// AI Service imports
-import { EnhancedAdminDashboard, EnhancedUserManagement } from './AdminPanel';
-import ContentManagement from './ContentManagement';
-import LevelManagement from './LevelManagement';
-import TestingTools from './TestingTools';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Import the full authenticated app component from App.js
+import { AuthenticatedApp } from './App';
 
 const ClerkApp = () => {
   return (
