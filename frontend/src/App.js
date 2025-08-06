@@ -100,10 +100,94 @@ const App = () => {
   const [newEntry, setNewEntry] = useState({ value: '', story: '', date: '' });
   const [showNewEntryForm, setShowNewEntryForm] = useState(null);
 
-  // Competency Task Progress State
+  // Data Persistence Utility Functions
+  const saveDataWithBackup = (key, data) => {
+    try {
+      const dataString = JSON.stringify(data);
+      
+      // Save to localStorage
+      localStorage.setItem(key, dataString);
+      
+      // Create backup in sessionStorage
+      sessionStorage.setItem(`backup_${key}`, dataString);
+      
+      // Create timestamped backup
+      const timestamp = new Date().toISOString();
+      localStorage.setItem(`${key}_backup_${timestamp.slice(0, 10)}`, dataString);
+      
+      // Clean old backups (keep only last 7 days)
+      cleanOldBackups(key);
+      
+      console.log(`✅ Data saved with backup: ${key}`);
+    } catch (error) {
+      console.error(`❌ Error saving data for ${key}:`, error);
+    }
+  };
+
+  const loadDataWithRecovery = (key, defaultValue = {}) => {
+    try {
+      // Try primary localStorage first
+      let data = localStorage.getItem(key);
+      if (data && data !== 'null' && data !== 'undefined') {
+        return JSON.parse(data);
+      }
+      
+      // Try sessionStorage backup
+      data = sessionStorage.getItem(`backup_${key}`);
+      if (data && data !== 'null' && data !== 'undefined') {
+        console.log(`🔄 Recovered data from sessionStorage backup: ${key}`);
+        // Restore to localStorage
+        localStorage.setItem(key, data);
+        return JSON.parse(data);
+      }
+      
+      // Try timestamped backups (last 7 days)
+      const today = new Date();
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        const dateString = date.toISOString().slice(0, 10);
+        data = localStorage.getItem(`${key}_backup_${dateString}`);
+        if (data) {
+          console.log(`🔄 Recovered data from backup ${dateString}: ${key}`);
+          // Restore to localStorage
+          localStorage.setItem(key, data);
+          return JSON.parse(data);
+        }
+      }
+      
+      console.log(`⚠️ No backup found for ${key}, using default value`);
+      return defaultValue;
+    } catch (error) {
+      console.error(`❌ Error loading data for ${key}:`, error);
+      return defaultValue;
+    }
+  };
+
+  const cleanOldBackups = (key) => {
+    try {
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - 7);
+      
+      // Get all localStorage keys
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const storageKey = localStorage.key(i);
+        if (storageKey && storageKey.startsWith(`${key}_backup_`)) {
+          const dateString = storageKey.replace(`${key}_backup_`, '');
+          const backupDate = new Date(dateString);
+          if (backupDate < cutoffDate) {
+            localStorage.removeItem(storageKey);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error cleaning old backups:', error);
+    }
+  };
+
+  // Competency Task Progress State with enhanced persistence
   const [competencyTaskProgress, setCompetencyTaskProgress] = useState(() => {
-    const saved = localStorage.getItem('competency_task_progress');
-    return saved ? JSON.parse(saved) : {};
+    return loadDataWithRecovery('competency_task_progress', {});
   });
   const [showTaskModal, setShowTaskModal] = useState(null);
   const [taskNotes, setTaskNotes] = useState('');
