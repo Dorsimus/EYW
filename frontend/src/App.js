@@ -6138,9 +6138,6 @@ const CompetenciesView = ({
       if (evidenceDescription && evidenceDescription.trim().length > 10) {
         console.log(`Creating flightbook entry from culminating project task ${taskId} with content:`, evidenceDescription.substring(0, 50) + '...');
         
-        // Call the main flightbook creation function directly
-        if (!user?.id || !evidenceDescription || evidenceDescription.trim().length === 0) return;
-        
         try {
           const entryTitle = `Culminating Project Task ${taskId}`;
           const flightbookEntry = {
