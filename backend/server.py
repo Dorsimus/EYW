@@ -31,8 +31,11 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # Clerk Authentication Configuration
-CLERK_JWKS_URL = os.getenv("CLERK_JWKS_URL", "https://secure-koi-87.clerk.accounts.dev/.well-known/jwks.json")
-CLERK_ISSUER = os.getenv("CLERK_ISSUER", "https://secure-koi-87.clerk.accounts.dev")
+CLERK_JWKS_URL = os.getenv("CLERK_JWKS_URL")
+CLERK_ISSUER = os.getenv("CLERK_ISSUER")
+
+if not CLERK_JWKS_URL or not CLERK_ISSUER:
+    raise ValueError("CLERK_JWKS_URL and CLERK_ISSUER environment variables are required")
 
 # HTTP Bearer for token extraction
 security = HTTPBearer()
