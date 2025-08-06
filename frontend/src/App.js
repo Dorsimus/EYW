@@ -262,11 +262,10 @@ const App = () => {
   useEffect(() => {
     console.log('Setting up demo environment...');
     
-    try {
-      // Check if we have admin token
-      const existingToken = localStorage.getItem('admin_token');
-      if (existingToken) {
-        console.log('Found existing admin token, setting admin state...');
+    // Check if we have admin token
+    const existingToken = localStorage.getItem('admin_token');
+    if (existingToken) {
+      console.log('Found existing admin token, setting admin state...');
       setIsAdmin(true);
       setCurrentView('admin-dashboard');
       
