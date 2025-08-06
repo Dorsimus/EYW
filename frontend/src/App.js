@@ -4915,6 +4915,9 @@ const App = () => {
     console.log(`Finalizing journal reflection: ${areaKey} -> ${subKey} -> ${taskId}`);
     const taskKey = `${areaKey}_${subKey}_${taskId}`;
     
+    // Show saving indicator
+    showSaveStatus('💾 Saving...');
+    
     // Update task as completed
     const updatedProgress = {
       ...competencyTaskProgress,
@@ -4933,6 +4936,9 @@ const App = () => {
     if (notes && notes.trim().length > 10) {
       console.log(`Creating/updating flightbook entry from ${taskType} with content:`, notes.substring(0, 50) + '...');
       await createOrUpdateFlightbookFromJournalReflection(areaKey, subKey, taskId, notes, taskType);
+      showSaveStatus('✅ Saved to Flightbook!');
+    } else if (notes && notes.trim().length > 0) {
+      showSaveStatus('💭 Saved!');
     }
     
     // Update competency progress percentages
