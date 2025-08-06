@@ -5034,10 +5034,8 @@ const App = () => {
         console.log(`Creating/updating flightbook entry from ${taskType} with content:`, notes.substring(0, 50) + '...');
         await createOrUpdateFlightbookFromJournalReflection(areaKey, subKey, taskId, notes, taskType);
         
-        // Show success notification
-        showNotification('✨ Reflection saved to your Leadership Flightbook!', 'success', 3000);
-      } else if (notes && notes.trim().length > 0) {
-        showNotification('💭 Reflection saved! Add more details to include it in your Flightbook.', 'info', 3000);
+        // Simple success log instead of notification that might cause issues
+        console.log('✨ Reflection saved to your Leadership Flightbook!');
       }
       
       // Update competency progress percentages
@@ -5046,7 +5044,7 @@ const App = () => {
         updateCompetencyProgressWithData(updatedProgress);
       }, 500);
     } catch (error) {
-      handleError(error, 'Saving reflection');
+      console.error('Error saving reflection:', error);
     }
   };
 
