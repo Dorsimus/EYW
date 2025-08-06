@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Depends
+from fastapi import FastAPI, APIRouter, UploadFile, File, HTTPException, Form, Depends, Request, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import FileResponse
 from dotenv import load_dotenv
@@ -14,6 +14,8 @@ from datetime import datetime, timedelta
 import shutil
 import json
 import jwt
+import requests
+from functools import lru_cache
 from passlib.context import CryptContext
 import asyncio
 
