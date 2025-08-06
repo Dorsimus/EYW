@@ -5579,6 +5579,39 @@ const AuthenticatedApp = () => {
         )}
       </main>
 
+      {/* Footer */}
+      {!isAdmin && (
+        <footer className="bg-gray-50 border-t border-gray-200 py-6 mt-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <img
+                  src="https://customer-assets.emergentagent.com/job_earnyourwings/artifacts/ybtb01sj_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png"
+                  alt="Earn Your Wings"
+                  className="w-8 h-8"
+                />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">Earn Your Wings</p>
+                  <p className="text-xs text-gray-500">Leadership Development Platform</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => setCurrentView('admin-info')}
+                  className="text-sm text-gray-600 hover:text-blue-600 flex items-center space-x-2 transition-colors"
+                >
+                  <span>🛠️</span>
+                  <span>Admin Tools</span>
+                </button>
+                <span className="text-gray-300">•</span>
+                <span className="text-xs text-gray-500">Redstone Employee Development</span>
+              </div>
+            </div>
+          </div>
+        </footer>
+      )}
+
       {/* Admin login modal removed - using Clerk authentication */}
 
       {/* Edit Task Modal */}
