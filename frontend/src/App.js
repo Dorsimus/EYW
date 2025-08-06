@@ -230,23 +230,33 @@ const App = () => {
         active_competency_areas: 5
       });
       
-      // Load tasks from actual competencies data - need to set competencies first
+      // Load tasks from actual competencies data
       console.log('Loading tasks from competencies for existing admin session...');
-      // For now, use empty array until competencies are loaded
-      setAllTasks([]);
+      const realTasks = getAllTasksFromCompetencies(competencies);
+      console.log(`Loaded ${realTasks.length} tasks from competencies`);
+      setAllTasks(realTasks);
       
-      // Set demo users data
-      setAllUsers([
-        { 
-          id: 'demo-user-123', 
-          name: 'Demo Navigator', 
-          email: 'demo@earnwings.com',
-          level: 3,
-          overall_progress: 0,
-          created_at: '2024-01-01',
-          last_activity: new Date().toISOString()
-        }
-      ]);
+      // Load users from localStorage with demo user fallback
+      const savedUsers = JSON.parse(localStorage.getItem('admin_all_users') || '[]');
+      const defaultDemoUser = { 
+        id: 'demo-user-123', 
+        name: 'Demo Navigator', 
+        email: 'demo@earnwings.com',
+        level: 3,
+        overall_progress: 0,
+        created_at: '2024-01-01',
+        last_activity: new Date().toISOString()
+      };
+      
+      const allUsersData = savedUsers.length > 0 ? savedUsers : [defaultDemoUser];
+      setAllUsers(allUsersData);
+      
+      // Save demo user if no users exist
+      if (savedUsers.length === 0) {
+        localStorage.setItem('admin_all_users', JSON.stringify([defaultDemoUser]));
+      }
+      
+      console.log(`Loaded ${allUsersData.length} users for existing admin session`);
       
       setLoading(false);
       console.log('Admin state restored from existing token');
