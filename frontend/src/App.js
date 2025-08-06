@@ -4502,8 +4502,14 @@ const AuthenticatedApp = () => {
   };
 
   const deleteTask = async (taskId) => {
+    if (!hasAdminAccess) {
+      console.log('No admin access for deleting tasks');
+      return false;
+    }
+
     try {
-      const headers = { Authorization: `Bearer ${adminToken}` };
+      const token = await getToken();
+      const headers = { Authorization: `Bearer ${token}` };
       await axios.delete(`${API}/admin/tasks/${taskId}`, { headers });
       await loadAdminData(); // Reload admin data
       return true;
