@@ -6154,50 +6154,122 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
   };
 
   const recentPortfolio = portfolio.slice(0, 3);
+  const analytics = getAdvancedProgressData();
+  const heatMap = getCompetencyHeatMap();
+  const achievements = detectAchievements();
 
   return (
     <div className="space-y-8">
-      {/* Hero Section */}
+      {/* Enhanced Hero Section with Achievements */}
       <div className="text-center mb-8 fade-in">
         <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{color: '#0127a2'}}>
           Welcome back, {user?.name}! 🚀
         </h1>
-        <p className="text-lg md:text-xl font-medium" style={{color: '#333333'}}>
-          Track your progress through task completion and portfolio building
+        <p className="text-lg md:text-xl font-medium mb-4" style={{color: '#333333'}}>
+          Advanced Progress Analytics & Leadership Development Tracking
         </p>
+        
+        {/* Achievement Badges */}
+        {achievements.length > 0 && (
+          <div className="flex justify-center gap-3 mb-4">
+            {achievements.map((achievement, index) => (
+              <div key={index} className="inline-flex items-center px-3 py-1 bg-yellow-50 border border-yellow-300 rounded-full text-sm font-medium text-yellow-800">
+                <span className="mr-2">{achievement.icon}</span>
+                {achievement.title}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* REDSTONE STATS OVERVIEW */}
+      {/* Enhanced Analytics Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="redstone-stat-card text-center bounce-in">
+        {/* Overall Progress with Trend */}
+        <div className="redstone-stat-card text-center bounce-in bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
           <div className="flex justify-center mb-4">
-            <div className="redstone-icon-xl">
-              📊
-            </div>
+            <div className="redstone-icon-xl">📊</div>
           </div>
-          <div className="stat-number text-4xl font-bold mb-2">{overallProgress}%</div>
-          <div className="stat-label text-lg font-semibold mb-3">Overall Progress</div>
-          <div className="redstone-progress-bar mt-3 h-3 bg-gray-200 rounded-full overflow-hidden">
+          <div className="stat-number text-4xl font-bold mb-2 text-blue-700">{overallProgress}%</div>
+          <div className="stat-label text-lg font-semibold mb-3 text-blue-800">Overall Progress</div>
+          <div className="redstone-progress-bar mt-3 h-4 bg-blue-200 rounded-full overflow-hidden">
             <div 
-              className="redstone-progress-bar h-full rounded-full"
+              className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-1000"
               style={{ width: `${overallProgress}%` }}
             />
           </div>
-          <div className="stat-detail mt-3 text-sm">
-            Your learning journey
+          <div className="stat-detail mt-3 text-xs text-blue-600">
+            {analytics.trend > 0 ? `📈 +${analytics.trend.toFixed(1)}%/week` : '📊 Starting journey'}
           </div>
         </div>
         
-        <div className="redstone-stat-card text-center bounce-in" style={{ animationDelay: '0.1s' }}>
+        {/* Tasks with Velocity */}
+        <div className="redstone-stat-card text-center bounce-in bg-gradient-to-br from-green-50 to-green-100 border-green-200" style={{ animationDelay: '0.1s' }}>
           <div className="flex justify-center mb-4">
-            <div className="redstone-icon-xl">
-              ✅
+            <div className="redstone-icon-xl">✅</div>
+          </div>
+          <div className="stat-number text-4xl font-bold mb-2 text-green-700">{getCompletedTasks()}/{getTotalTasks()}</div>
+          <div className="stat-label text-lg font-semibold mb-3 text-green-800">Tasks Completed</div>
+          <div className="w-full bg-green-200 rounded-full h-2">
+            <div 
+              className="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full transition-all duration-1000"
+              style={{ width: `${(getCompletedTasks() / getTotalTasks()) * 100}%` }}
+            />
+          </div>
+          <div className="stat-detail mt-3 text-xs text-green-600">
+            Weekly Velocity: {analytics.weeklyVelocity.toFixed(1)}%
+          </div>
+        </div>
+
+        {/* Portfolio with Growth Trend */}
+        <div className="redstone-stat-card text-center bounce-in bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200" style={{ animationDelay: '0.2s' }}>
+          <div className="flex justify-center mb-4">
+            <div className="redstone-icon-xl">📁</div>
+          </div>
+          <div className="stat-number text-4xl font-bold mb-2 text-purple-700">{portfolio.length}</div>
+          <div className="stat-label text-lg font-semibold mb-3 text-purple-800">Portfolio Items</div>
+          <div className="flex justify-center">
+            <div className="w-16 h-16 relative">
+              <svg className="w-16 h-16 transform -rotate-90">
+                <circle cx="32" cy="32" r="28" stroke="#e5e7eb" strokeWidth="4" fill="none"/>
+                <circle 
+                  cx="32" cy="32" r="28" 
+                  stroke="#8b5cf6" strokeWidth="4" fill="none"
+                  strokeDasharray={`${2 * Math.PI * 28}`}
+                  strokeDashoffset={`${2 * Math.PI * 28 * (1 - Math.min(portfolio.length / 50, 1))}`}
+                  className="transition-all duration-1000"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-purple-700">
+                {Math.round((portfolio.length / 50) * 100)}%
+              </div>
             </div>
           </div>
-          <div className="stat-number text-4xl font-bold mb-2">{getCompletedTasks()}/{getTotalTasks()}</div>
-          <div className="stat-label text-lg font-semibold mb-3">Tasks Completed</div>
-          <div className="stat-detail mt-3 text-sm" style={{color: '#333333'}}>
-            {getTotalTasks() - getCompletedTasks()} remaining
+          <div className="stat-detail mt-3 text-xs text-purple-600">
+            Goal: 50 items
+          </div>
+        </div>
+
+        {/* Momentum Indicator */}
+        <div className="redstone-stat-card text-center bounce-in bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200" style={{ animationDelay: '0.3s' }}>
+          <div className="flex justify-center mb-4">
+            <div className="redstone-icon-xl">
+              {analytics.momentum === 'High' ? '🚀' : analytics.momentum === 'Moderate' ? '📈' : '🐢'}
+            </div>
+          </div>
+          <div className="stat-number text-2xl font-bold mb-2 text-orange-700">{analytics.momentum}</div>
+          <div className="stat-label text-lg font-semibold mb-3 text-orange-800">Learning Momentum</div>
+          <div className="space-y-1">
+            <div className={`h-2 rounded-full ${analytics.momentum === 'High' ? 'bg-orange-500' : 'bg-gray-300'}`}></div>
+            <div className={`h-2 rounded-full ${analytics.momentum !== 'Slow' ? 'bg-orange-400' : 'bg-gray-300'}`}></div>
+            <div className={`h-2 rounded-full ${analytics.momentum === 'High' ? 'bg-orange-300' : 'bg-gray-300'}`}></div>
+          </div>
+          <div className="stat-detail mt-3 text-xs text-orange-600">
+            {analytics.predictedCompletion ? 
+              `ETA: ${analytics.predictedCompletion.toLocaleDateString()}` : 
+              'Set learning goals'}
+          </div>
+        </div>
+      </div>
           </div>
         </div>
         
