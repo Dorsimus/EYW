@@ -115,6 +115,41 @@ const AuthenticatedApp = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCompetency, setSelectedCompetency] = useState(null);
   const [competencyTasks, setCompetencyTasks] = useState([]);
+  const [adminStats, setAdminStats] = useState(null);
+  const [allTasks, setAllTasks] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [showCreateTask, setShowCreateTask] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [newTask, setNewTask] = useState({
+    title: '',
+    description: '',
+    task_type: 'course_link',
+    competency_area: 'leadership_supervision',
+    sub_competency: 'team_motivation',
+    order: 1,
+    required: true,
+    estimated_hours: 1.0,
+    external_link: '',
+    instructions: ''
+  });
+  const [newPortfolioItem, setNewPortfolioItem] = useState({
+    title: '',
+    description: '',
+    competency_areas: [],
+    tags: [],
+    file: null
+  });
+
+  // Check if current user is admin based on Clerk metadata
+  const isAdmin = user?.publicMetadata?.roles?.includes('admin') || false;
+  const isModerator = user?.publicMetadata?.roles?.includes('moderator') || false;
+  const hasAdminAccess = isAdmin || isModerator;
+  const [competencies, setCompetencies] = useState({});
+  const [portfolio, setPortfolio] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCompetency, setSelectedCompetency] = useState(null);
+  const [competencyTasks, setCompetencyTasks] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminToken, setAdminToken] = useState(localStorage.getItem('admin_token'));
   const [showAdminLogin, setShowAdminLogin] = useState(false);
