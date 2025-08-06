@@ -109,7 +109,6 @@ const AuthenticatedApp = () => {
   const { user } = useUser();
   
   const [currentView, setCurrentView] = useState('dashboard');
-  const [isAdmin, setIsAdmin] = useState(false);
   const [localUser, setLocalUser] = useState(null);
   const [competencies, setCompetencies] = useState({});
   const [portfolio, setPortfolio] = useState([]);
