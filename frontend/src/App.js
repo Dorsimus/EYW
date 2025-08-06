@@ -79,9 +79,9 @@ const AuthenticationPrompt = () => {
         
         {/* Welcome Message */}
         <div className="text-center mb-6">
-          <h2 className="text-xl font-semibold mb-2">Welcome Navigator!</h2>
+          <h2 className="text-xl font-semibold mb-2">Welcome to EARN YOUR WINGS</h2>
           <p className="text-gray-600">
-            Sign in to access your leadership development journey and track your progress through the Navigator level.
+            Sign in to access your leadership development journey and track your progress.
           </p>
         </div>
         
