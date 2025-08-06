@@ -6023,8 +6023,80 @@ const AdminLoginModal = ({ onLogin, onClose }) => {
   );
 };
 
-// Dashboard View Component
-const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewCompetencyTasks, setCurrentView }) => {
+// Enhanced Dashboard View Component with Advanced Progress Tracking
+const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewCompetencyTasks, setCurrentView, showSuccessMessage, showErrorMessage }) => {
+  const [selectedTimeframe, setSelectedTimeframe] = useState('7days');
+  const [showDetailedAnalytics, setShowDetailedAnalytics] = useState(false);
+  const [progressGoals, setProgressGoals] = useState({
+    weekly: 10, // percentage points per week
+    monthly: 40, // percentage points per month
+    targetCompletionDate: null
+  });
+
+  // Enhanced progress calculation with predictive analytics
+  const getAdvancedProgressData = () => {
+    const now = new Date();
+    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+    // Mock historical data for demonstration (in real app, this would come from backend)
+    const historicalData = [
+      { date: oneMonthAgo, progress: 0, tasks: 0, reflections: 0 },
+      { date: new Date(oneMonthAgo.getTime() + 7 * 24 * 60 * 60 * 1000), progress: 5, tasks: 3, reflections: 8 },
+      { date: new Date(oneMonthAgo.getTime() + 14 * 24 * 60 * 60 * 1000), progress: 12, tasks: 8, reflections: 15 },
+      { date: new Date(oneMonthAgo.getTime() + 21 * 24 * 60 * 60 * 1000), progress: 18, tasks: 12, reflections: 23 },
+      { date: now, progress: overallProgress, tasks: 0, reflections: 28 }
+    ];
+
+    // Calculate trend and predictions
+    const progressTrend = historicalData.length > 1 
+      ? ((historicalData[historicalData.length - 1].progress - historicalData[0].progress) / historicalData.length) 
+      : 0;
+
+    const predictedCompletionWeeks = progressTrend > 0 ? Math.ceil((100 - overallProgress) / progressTrend) : null;
+    const predictedCompletionDate = predictedCompletionWeeks 
+      ? new Date(now.getTime() + predictedCompletionWeeks * 7 * 24 * 60 * 60 * 1000)
+      : null;
+
+    return {
+      historical: historicalData,
+      trend: progressTrend,
+      predictedCompletion: predictedCompletionDate,
+      weeklyVelocity: progressTrend * 4, // weekly progress rate
+      momentum: progressTrend > 5 ? 'High' : progressTrend > 2 ? 'Moderate' : 'Slow'
+    };
+  };
+
+  // Generate competency heat map data
+  const getCompetencyHeatMap = () => {
+    return Object.keys(competencies).map(key => {
+      const comp = competencies[key];
+      const progress = comp.progress || 0;
+      const recentActivity = Math.random() * 10; // Mock recent activity score
+      const difficulty = Math.random() * 5 + 1; // Mock difficulty rating
+      
+      return {
+        key,
+        name: comp.name || key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        progress,
+        recentActivity,
+        difficulty,
+        recommendation: progress < 20 ? 'Start Here' : progress < 50 ? 'In Progress' : 'Advanced'
+      };
+    });
+  };
+
+  // Achievement detection system
+  const detectAchievements = () => {
+    const achievements = [];
+    const analytics = getAdvancedProgressData();
+    
+    if (analytics.trend > 3) achievements.push({ icon: '🚀', title: 'Momentum Builder', desc: 'High learning velocity!' });
+    if (overallProgress >= 25) achievements.push({ icon: '🎯', title: 'Quarter Master', desc: '25% completion reached!' });
+    if (analytics.historical.length > 4) achievements.push({ icon: '📈', title: 'Consistent Learner', desc: 'Regular progress tracking!' });
+    
+    return achievements;
+  };
   // Color mapping for competencies
   const getCompetencyColor = (competencyKey) => {
     const colorMap = {
