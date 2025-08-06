@@ -2391,16 +2391,14 @@ const App = () => {
     // Clear loading state
     setLoading(false);
     console.log('Demo environment ready - can now fix text visibility issues');
-    } catch (error) {
-      console.error('Error during initialization:', error);
-      handleError(error, 'Application initialization', false);
-      // Ensure loading always completes even on error
-      setLoading(false);
-    } finally {
-      // Guaranteed loading completion
-      console.log('Initialization complete, setting loading to false');
-      setLoading(false);
     }
+    
+    // Timeout protection to ensure loading never gets stuck
+    setTimeout(() => {
+      setLoading(false);
+      console.log('Timeout protection: Ensuring loading state is cleared');
+    }, 5000);
+    
   }, []);
 
   // Handle admin token changes - FIXED: Stable admin state management  
