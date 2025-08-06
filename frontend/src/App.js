@@ -221,88 +221,19 @@ const App = () => {
       setIsAdmin(true);
       setCurrentView('admin-dashboard');
       
-      // Set all admin demo data including COMPREHENSIVE TASK LIBRARY
+      // Set all admin demo data including REAL COMPETENCY TASKS
       setAdminStats({
         total_users: 45,
-        total_tasks: 26, // Updated for comprehensive library  
+        total_tasks: 26, // Updated for real competency tasks  
         total_completions: 18,
         completion_rate: 2.4,
         active_competency_areas: 5
       });
       
-      setAllTasks([
-        {
-          id: "task-1",
-          title: "Team Leadership Workshop",
-          description: "Complete leadership training focused on team motivation",
-          task_type: "course_link",
-          competency_area: "leadership_supervision",
-          sub_competency: "team_motivation",
-          order: 1,
-          required: true,
-          estimated_hours: 2.0,
-          external_link: "https://example.com/leadership",
-          instructions: "Complete the online workshop and submit reflection",
-          active: true,
-          created_by: "admin-123"
-        },
-        {
-          id: "task-2", 
-          title: "Budget Analysis Project",
-          description: "Analyze quarterly budget variance and create improvement plan",
-          task_type: "project",
-          competency_area: "financial_management",
-          sub_competency: "budget_creation",
-          order: 1,
-          required: true,
-          estimated_hours: 4.0,
-          instructions: "Use provided template to analyze Q3 budget data",
-          active: true,
-          created_by: "admin-123"
-        },
-        {
-          id: "task-3",
-          title: "Delegation Skills Assessment", 
-          description: "Self-assessment on delegation effectiveness",
-          task_type: "assessment",
-          competency_area: "leadership_supervision",
-          sub_competency: "delegation",
-          order: 2,
-          required: false,
-          estimated_hours: 1.0,
-          instructions: "Complete self-evaluation form",
-          active: true,
-          created_by: "admin-123"
-        },
-        {
-          id: "task-4",
-          title: "Process Optimization Review",
-          description: "Review and optimize key operational workflows", 
-          task_type: "document_upload",
-          competency_area: "operational_management",
-          sub_competency: "workflow_optimization",
-          order: 1,
-          required: true,
-          estimated_hours: 3.0,
-          instructions: "Document current processes and suggest improvements",
-          active: true,
-          created_by: "admin-123"
-        },
-        {
-          id: "task-5",
-          title: "Stakeholder Communication Plan",
-          description: "Develop communication strategy for key stakeholders",
-          task_type: "project",
-          competency_area: "cross_functional_collaboration", 
-          sub_competency: "stakeholder_management",
-          order: 1,
-          required: true,
-          estimated_hours: 2.5,
-          instructions: "Create comprehensive stakeholder engagement plan",
-          active: true,
-          created_by: "admin-123"
-        }
-      ]);
+      // Load tasks from actual competencies data - need to set competencies first
+      console.log('Loading tasks from competencies for existing admin session...');
+      // For now, use empty array until competencies are loaded
+      setAllTasks([]);
       
       setAllUsers([
         {
