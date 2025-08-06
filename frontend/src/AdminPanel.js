@@ -187,7 +187,7 @@ const EnhancedAdminDashboard = ({ stats, onNavigate, users, tasks }) => {
 };
 
 // Enhanced User Management with Individual Progress and Approvals
-const EnhancedUserManagement = ({ users, onUpdateUser, onApproveLevel }) => {
+const EnhancedUserManagement = ({ users, onUpdateUser, onCreateUser, onApproveLevel }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [filterLevel, setFilterLevel] = useState('all');
   const [sortBy, setSortBy] = useState('progress');
