@@ -4307,7 +4307,20 @@ const App = () => {
         console.log(`Found ${realTasks.length} tasks from competencies`);
         setAllTasks(realTasks);
         
-        console.log('Admin login complete with persistent data');
+        // Set demo users data
+        setAllUsers([
+          { 
+            id: 'demo-user-123', 
+            name: 'Demo Navigator', 
+            email: 'demo@earnwings.com',
+            level: 3,
+            overall_progress: 0,
+            created_at: '2024-01-01',
+            last_activity: new Date().toISOString()
+          }
+        ]);
+        
+        console.log('Admin login complete with real competency data');
         return true;
       } else {
         console.error('Invalid admin credentials');
