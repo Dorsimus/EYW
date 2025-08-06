@@ -5874,6 +5874,39 @@ const App = () => {
           </div>
         </div>
       )}
+
+      {/* Step 3: Simple Notification System */}
+      {notifications.length > 0 && (
+        <div className="fixed bottom-4 right-4 z-50 space-y-2">
+          {notifications.slice(-3).map((notification) => (
+            <div
+              key={notification.id}
+              className={`max-w-sm bg-white rounded-lg shadow-lg border-l-4 px-4 py-3 transition-all duration-300 ease-in-out ${
+                notification.type === 'success' 
+                  ? 'border-green-400 text-green-800' 
+                  : 'border-red-400 text-red-800'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <span className="mr-2">
+                    {notification.type === 'success' ? '✅' : '❌'}
+                  </span>
+                  <span className="text-sm font-medium">
+                    {notification.message}
+                  </span>
+                </div>
+                <button
+                  onClick={() => removeNotification(notification.id)}
+                  className="ml-2 text-gray-400 hover:text-gray-600 text-xs"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
