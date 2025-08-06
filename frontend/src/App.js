@@ -35,7 +35,64 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [competencies, setCompetencies] = useState({});
   const [portfolio, setPortfolio] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Enhanced Error Handling and User Feedback State
+  const [notifications, setNotifications] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState('');
+
+  // Notification System
+  const showNotification = (message, type = 'info', duration = 5000) => {
+    const id = Date.now();
+    const notification = {
+      id,
+      message,
+      type, // 'success', 'error', 'warning', 'info'
+      timestamp: new Date()
+    };
+    
+    setNotifications(prev => [...prev, notification]);
+    
+    // Auto-remove after duration
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n.id !== id));
+    }, duration);
+  };
+
+  const removeNotification = (id) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
+
+  // Enhanced Loading States
+  const setLoadingState = (loading, message = '') => {
+    setIsLoading(loading);
+    setLoadingMessage(message);
+  };
+
+  // Error Recovery Functions
+  const handleError = (error, context = 'Operation', showToUser = true) => {
+    console.error(`Error in ${context}:`, error);
+    
+    if (showToUser) {
+      const errorMessage = error.message || 'An unexpected error occurred. Please try again.';
+      showNotification(`${context} failed: ${errorMessage}`, 'error');
+    }
+    
+    return { success: false, error: error.message };
+  };
+
+  const retryOperation = async (operation, maxRetries = 3, delay = 1000) => {
+    for (let i = 0; i < maxRetries; i++) {
+      try {
+        return await operation();
+      } catch (error) {
+        if (i === maxRetries - 1) throw error;
+        
+        console.log(`Retry ${i + 1}/${maxRetries} after ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        delay *= 2; // Exponential backoff
+      }
+    }
+  };
   const [selectedCompetency, setSelectedCompetency] = useState(null);
   const [competencyTasks, setCompetencyTasks] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
