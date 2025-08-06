@@ -6270,24 +6270,155 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
           </div>
         </div>
       </div>
+
+      {/* Advanced Progress Analytics Section */}
+      <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-2xl font-bold text-gray-900">📊 Advanced Analytics Dashboard</h3>
+          <div className="flex items-center gap-3">
+            <select
+              value={selectedTimeframe}
+              onChange={(e) => setSelectedTimeframe(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm"
+            >
+              <option value="7days">Last 7 Days</option>
+              <option value="30days">Last 30 Days</option>
+              <option value="90days">Last 90 Days</option>
+            </select>
+            <button
+              onClick={() => setShowDetailedAnalytics(!showDetailedAnalytics)}
+              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                showDetailedAnalytics
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {showDetailedAnalytics ? '📊 Detailed View' : '📈 Simple View'}
+            </button>
           </div>
         </div>
-        
-        <div className="redstone-stat-card text-center bounce-in" style={{ animationDelay: '0.2s' }}>
-          <div className="flex justify-center mb-4">
-            <div className="redstone-icon-xl">
-              📚
+
+        {/* Competency Heat Map */}
+        <div className="mb-8">
+          <h4 className="text-lg font-semibold text-gray-800 mb-4">🎯 Competency Progress Heat Map</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {heatMap.map((comp) => {
+              const color = getCompetencyColor(comp.key);
+              return (
+                <div
+                  key={comp.key}
+                  className={`p-4 rounded-lg border-2 cursor-pointer transition-all hover:shadow-lg ${
+                    comp.progress < 20 ? 'bg-red-50 border-red-200' :
+                    comp.progress < 50 ? 'bg-yellow-50 border-yellow-200' :
+                    comp.progress < 80 ? 'bg-blue-50 border-blue-200' :
+                    'bg-green-50 border-green-200'
+                  }`}
+                  onClick={() => navigateToCompetency(comp.key)}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h5 className="font-medium text-sm text-gray-900 truncate">{comp.name}</h5>
+                    <span className="text-xs font-bold text-gray-600">{comp.progress}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                    <div
+                      className="h-2 rounded-full transition-all duration-1000"
+                      style={{
+                        width: `${comp.progress}%`,
+                        background: color.primary
+                      }}
+                    />
+                  </div>
+                  <div className="flex justify-between items-center text-xs">
+                    <span className={`px-2 py-1 rounded-full font-medium ${
+                      comp.recommendation === 'Start Here' ? 'bg-red-100 text-red-800' :
+                      comp.recommendation === 'In Progress' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-green-100 text-green-800'
+                    }`}>
+                      {comp.recommendation}
+                    </span>
+                    <span className="text-gray-500">
+                      🔥 {comp.recentActivity.toFixed(1)}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Detailed Analytics (Conditional) */}
+        {showDetailedAnalytics && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Progress Timeline */}
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h4 className="text-lg font-semibold text-gray-800 mb-4">📈 Progress Timeline</h4>
+              <div className="space-y-3">
+                {analytics.historical.map((point, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <span className="text-sm text-gray-600">
+                      {point.date.toLocaleDateString()}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <div className="w-20 bg-gray-200 rounded-full h-2">
+                        <div
+                          className="bg-blue-500 h-2 rounded-full"
+                          style={{ width: `${point.progress}%` }}
+                        />
+                      </div>
+                      <span className="text-sm font-medium text-gray-800">
+                        {point.progress}%
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Predictions & Goals */}
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h4 className="text-lg font-semibold text-gray-800 mb-4">🔮 Predictions & Goals</h4>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Predicted Completion:</span>
+                  <span className="text-sm font-medium text-green-600">
+                    {analytics.predictedCompletion 
+                      ? analytics.predictedCompletion.toLocaleDateString()
+                      : 'Set goals to predict'
+                    }
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Weekly Target:</span>
+                  <span className="text-sm font-medium text-blue-600">
+                    {progressGoals.weekly}% per week
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Current Velocity:</span>
+                  <span className={`text-sm font-medium ${
+                    analytics.trend >= progressGoals.weekly / 4 ? 'text-green-600' : 'text-orange-600'
+                  }`}>
+                    {analytics.trend.toFixed(1)}% per week
+                  </span>
+                </div>
+                {analytics.trend > 0 && (
+                  <div className="mt-3 p-3 bg-blue-50 rounded-md">
+                    <p className="text-xs text-blue-800">
+                      💡 <strong>Insight:</strong> {
+                        analytics.trend > 3 ? 
+                          "You're on fire! Maintain this pace to finish ahead of schedule." :
+                        analytics.trend > 1 ?
+                          "Steady progress! Consider increasing engagement to accelerate growth." :
+                          "Great start! Try setting weekly goals to build momentum."
+                      }
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-          <div className="stat-number text-4xl font-bold mb-2">{portfolio.length}</div>
-          <div className="stat-label text-lg font-semibold mb-3">Portfolio Items</div>
-          <div className="stat-detail mt-3 text-sm" style={{color: '#333333'}}>
-            Your Work
-          </div>
-        </div>
-        
-        <div className="redstone-stat-card text-center bounce-in" style={{ animationDelay: '0.3s' }}>
-          <div className="flex justify-center mb-4">
+        )}
+      </div>
             <div className="redstone-icon-xl">
               🏆
             </div>
