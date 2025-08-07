@@ -2413,14 +2413,6 @@ const AuthenticatedApp = () => {
     }
   }, [hasAdminAccess]);
 
-  // Ensure admin users still start with regular dashboard view
-  useEffect(() => {
-    if (hasAdminAccess && currentView.startsWith('admin-')) {
-      console.log('🔄 Admin detected but forcing regular dashboard start...');
-      setCurrentView('dashboard');
-    }
-  }, [hasAdminAccess, currentView]);
-
   const loadAdminData = async () => {
     if (!hasAdminAccess) {
       console.log('No admin access for loading admin data');
