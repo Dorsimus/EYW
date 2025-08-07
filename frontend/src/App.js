@@ -126,6 +126,8 @@ const AuthenticationPrompt = () => {
 const AuthenticatedApp = () => {
   const { getToken } = useAuth();
   const { user } = useUser();
+  const { organization, membership } = useOrganization();
+  const { organizationList } = useOrganizationList();
   
   const [currentView, setCurrentView] = useState('dashboard');
   const [localUser, setLocalUser] = useState(null);
