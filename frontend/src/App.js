@@ -164,9 +164,8 @@ const AuthenticatedApp = () => {
 
   // Check if current user is admin based on Clerk metadata OR organization membership
   const isAdminByMetadata = user?.publicMetadata?.roles?.includes('admin') || false;
-  const isAdminByEmail = user?.emailAddresses?.[0]?.emailAddress === 'mgwilliams81@gmail.com'; // TEMPORARY ADMIN ACCESS
   const isAdminByOrganization = membership?.role === 'admin' || organization?.name === 'Earn Your Wings';
-  const isAdmin = isAdminByMetadata || isAdminByOrganization || isAdminByEmail; // Include email check temporarily
+  const isAdmin = isAdminByMetadata || isAdminByOrganization;
   const isModerator = user?.publicMetadata?.roles?.includes('moderator') || membership?.role === 'moderator' || false;
   const hasAdminAccess = isAdmin || isModerator;
 
