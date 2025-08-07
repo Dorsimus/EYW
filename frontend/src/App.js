@@ -162,6 +162,24 @@ const AuthenticatedApp = () => {
   const isModerator = user?.publicMetadata?.roles?.includes('moderator') || false;
   const hasAdminAccess = isAdmin || isModerator;
 
+  // Debug: Log user data to console
+  useEffect(() => {
+    if (user) {
+      console.log('🔍 CLERK USER DEBUG INFO:');
+      console.log('Full user object:', user);
+      console.log('User ID:', user.id);
+      console.log('Email addresses:', user.emailAddresses);
+      console.log('First name:', user.firstName);
+      console.log('Last name:', user.lastName);
+      console.log('Full name:', user.fullName);
+      console.log('Public metadata:', user.publicMetadata);
+      console.log('Private metadata:', user.privateMetadata);
+      console.log('Unsafe metadata:', user.unsafeMetadata);
+      console.log('Is admin?', isAdmin);
+      console.log('Has admin access?', hasAdminAccess);
+    }
+  }, [user, isAdmin, hasAdminAccess]);
+
   // Core Values Data
   const coreValues = {
     believers: {
