@@ -345,8 +345,8 @@ const AuthenticatedApp = () => {
     
     // Check if user has admin access via Clerk
     if (hasAdminAccess) {
-      console.log('User has admin access, setting admin view...');
-      setCurrentView('admin-dashboard');
+      console.log('User has admin access, loading admin data but keeping regular view...');
+      // Start with regular dashboard - admin can navigate to admin panels manually
       
       // Set all admin demo data including REAL COMPETENCY TASKS
       setAdminStats({
