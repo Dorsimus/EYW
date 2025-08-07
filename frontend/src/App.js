@@ -355,6 +355,10 @@ const AuthenticatedApp = () => {
     console.log('🔄 Explicitly setting dashboard view for all users...');
     setCurrentView('dashboard');
     
+    // Load competencies data first (needed for both admin and user functionality)
+    console.log('📚 Loading competencies for admin user...');
+    await setupRefinedCompetencies();
+    
     // Check if user has admin access via Clerk
     if (hasAdminAccess) {
       console.log('User has admin access, loading admin data but keeping regular view...');
