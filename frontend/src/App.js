@@ -342,6 +342,12 @@ const AuthenticatedApp = () => {
   // BYPASS DEMO ENVIRONMENT: Set admin view if user has admin role
   useEffect(() => {
     console.log('Setting up demo environment...');
+    console.log('🔍 CurrentView on setup:', currentView);
+    console.log('🔍 HasAdminAccess:', hasAdminAccess);
+    
+    // FORCE REGULAR DASHBOARD FOR ALL USERS (INCLUDING ADMINS)
+    console.log('🔄 Explicitly setting dashboard view for all users...');
+    setCurrentView('dashboard');
     
     // Check if user has admin access via Clerk
     if (hasAdminAccess) {
