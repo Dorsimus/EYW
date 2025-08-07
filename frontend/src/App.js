@@ -8,7 +8,9 @@ import {
   UserButton, 
   SignOutButton,
   useAuth, 
-  useUser 
+  useUser,
+  useOrganization,
+  useOrganizationList
 } from '@clerk/clerk-react';
 
 // AI Service imports
