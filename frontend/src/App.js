@@ -6382,7 +6382,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
       {/* Enhanced Hero Section with Achievements */}
       <div className="text-center mb-8 fade-in">
         <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{color: '#0127a2'}}>
-          Welcome back, {user?.name}! 🚀
+          Welcome back, {user?.firstName || user?.fullName?.split(' ')[0] || 'Navigator'}! 🚀
         </h1>
         <p className="text-lg md:text-xl font-medium mb-4" style={{color: '#333333'}}>
           Advanced Progress Analytics & Leadership Development Tracking
