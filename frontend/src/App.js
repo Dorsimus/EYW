@@ -5215,13 +5215,26 @@ const AuthenticatedApp = () => {
             <div className="flex-1 flex justify-center items-center">
               <div className="text-center">
                 <p className="font-bold text-lg text-gray-800">
-                  {isAdmin ? 'Admin Control' : user?.name}
+                  {isAdmin ? 'Admin Control' : (user?.fullName || `${user?.firstName || ''} ${user?.lastName || ''}`.trim() || user?.emailAddresses?.[0]?.emailAddress || 'User')}
                 </p>
                 <div className="flex items-center justify-center mt-1">
                   <div className="w-2 h-2 rounded-full mr-3" style={{backgroundColor: '#ff3443'}}></div>
                   <p className="text-sm font-medium text-gray-800">
                     {isAdmin ? 'Full Access' : `${getOverallProgress()}% Complete`}
                   </p>
+                </div>
+                
+                {/* User Actions */}
+                <div className="flex items-center justify-center space-x-3 mt-2">
+                  <span className="text-xs text-gray-600">
+                    {user?.emailAddresses?.[0]?.emailAddress}
+                  </span>
+                  <span className="text-gray-300">•</span>
+                  <SignOutButton>
+                    <button className="text-xs text-red-600 hover:text-red-800 font-medium transition-colors">
+                      Sign Out
+                    </button>
+                  </SignOutButton>
                 </div>
               </div>
             </div>
