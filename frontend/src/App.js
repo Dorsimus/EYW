@@ -162,9 +162,11 @@ const AuthenticatedApp = () => {
     file: null
   });
 
-  // Check if current user is admin based on Clerk metadata
-  const isAdmin = user?.publicMetadata?.roles?.includes('admin') || false;
-  const isModerator = user?.publicMetadata?.roles?.includes('moderator') || false;
+  // Check if current user is admin based on Clerk metadata OR organization membership
+  const isAdminByMetadata = user?.publicMetadata?.roles?.includes('admin') || false;
+  const isAdminByOrganization = membership?.role === 'admin' || organization?.name === 'Earn Your Wings';
+  const isAdmin = isAdminByMetadata || isAdminByOrganization;
+  const isModerator = user?.publicMetadata?.roles?.includes('moderator') || membership?.role === 'moderator' || false;
   const hasAdminAccess = isAdmin || isModerator;
 
   // Debug: Log user data to console
@@ -180,10 +182,15 @@ const AuthenticatedApp = () => {
       console.log('Public metadata:', user.publicMetadata);
       console.log('Private metadata:', user.privateMetadata);
       console.log('Unsafe metadata:', user.unsafeMetadata);
-      console.log('Is admin?', isAdmin);
+      console.log('Organization:', organization);
+      console.log('Organization membership:', membership);
+      console.log('Organization list:', organizationList);
+      console.log('Is admin by metadata?', isAdminByMetadata);
+      console.log('Is admin by organization?', isAdminByOrganization);
+      console.log('Final admin status:', isAdmin);
       console.log('Has admin access?', hasAdminAccess);
     }
-  }, [user, isAdmin, hasAdminAccess]);
+  }, [user, organization, membership, isAdmin, hasAdminAccess]);
 
   // Core Values Data
   const coreValues = {
