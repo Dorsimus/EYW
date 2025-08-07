@@ -27,17 +27,50 @@ You need admin access to build out tasks and manage content. Here's exactly how 
 3. Click on that user to open their profile
 4. You should see user details and a **"Metadata"** section
 
-## **Step 4: Add Admin Role**
+## **Step 4: Add Admin Role (CRITICAL STEP)**
 
-1. Look for the **"Public metadata"** section (or just "Metadata")
-2. Click **"Edit"** or the edit button
-3. Add this exact JSON:
+In Clerk dashboard, there are different metadata sections. Here's exactly where to add the admin role:
+
+### **Option A: Public Metadata (Recommended)**
+1. In the user profile, scroll down to find **"Public metadata"** section
+2. Click **"Edit"** next to Public metadata
+3. Add this exact JSON (replace any existing content):
    ```json
    {
      "roles": ["admin"]
    }
    ```
 4. Click **"Save"** or **"Update"**
+
+### **Option B: Private Metadata (Alternative)**
+If you don't see "Public metadata", try "Private metadata":
+1. Find **"Private metadata"** section
+2. Click **"Edit"** 
+3. Add the same JSON:
+   ```json
+   {
+     "roles": ["admin"]
+   }
+   ```
+
+### **Option C: Using Clerk's API (Advanced)**
+If the UI doesn't work, you can use Clerk's API:
+1. Go to **API Keys** in your Clerk dashboard
+2. Copy your **Secret Key** 
+3. Make a PATCH request to update user metadata:
+   ```bash
+   curl -X PATCH https://api.clerk.com/v1/users/USER_ID \
+     -H "Authorization: Bearer YOUR_SECRET_KEY" \
+     -H "Content-Type: application/json" \
+     -d '{"public_metadata": {"roles": ["admin"]}}'
+   ```
+
+## **Step 4.5: Verify Metadata Was Added**
+
+1. **Refresh the user profile** in Clerk dashboard
+2. **Check that the metadata shows**: `{"roles": ["admin"]}`
+3. **Look in the browser console** when logged into EYW platform
+4. **Should see debug logs** showing the user object and admin status
 
 ## **Step 5: Activate Admin Access**
 
