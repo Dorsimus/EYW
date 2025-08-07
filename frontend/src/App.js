@@ -196,9 +196,15 @@ const AuthenticatedApp = () => {
   useEffect(() => {
     if (Object.keys(competencies).length > 0) {
       console.log('🔄 Updating tasks from competencies data...');
+      console.log('📊 Competencies available:', Object.keys(competencies));
       const realTasks = getAllTasksFromCompetencies(competencies);
       console.log(`📚 Updated ${realTasks.length} tasks for content management`);
+      if (realTasks.length > 0) {
+        console.log('📝 Sample task:', realTasks[0]);
+      }
       setAllTasks(realTasks);
+    } else {
+      console.log('⏳ Competencies not loaded yet, waiting...');
     }
   }, [competencies]);
 
