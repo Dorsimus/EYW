@@ -357,7 +357,7 @@ const AuthenticatedApp = () => {
     
     // Load competencies data first (needed for both admin and user functionality)
     console.log('📚 Loading competencies for admin user...');
-    await setupRefinedCompetencies();
+    setupRefinedCompetencies();
     
     // Check if user has admin access via Clerk
     if (hasAdminAccess) {
