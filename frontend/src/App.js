@@ -348,9 +348,12 @@ const AuthenticatedApp = () => {
       });
       
       // Load tasks from actual competencies data
-      console.log('Loading tasks from competencies for admin user...');
+      console.log('🔧 Loading tasks from competencies for admin user...');
+      console.log('📋 Competencies object:', competencies);
+      console.log('📊 Competencies keys:', Object.keys(competencies));
       const realTasks = getAllTasksFromCompetencies(competencies);
-      console.log(`Loaded ${realTasks.length} tasks from competencies`);
+      console.log(`✅ Loaded ${realTasks.length} tasks from competencies`);
+      console.log('📝 Sample task:', realTasks[0]);
       setAllTasks(realTasks);
       
       // Load users from localStorage with demo user fallback
