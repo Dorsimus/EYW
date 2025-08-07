@@ -192,6 +192,16 @@ const AuthenticatedApp = () => {
     }
   }, [user, organization, membership, isAdmin, hasAdminAccess]);
 
+  // Load tasks from competencies whenever competencies data changes
+  useEffect(() => {
+    if (Object.keys(competencies).length > 0) {
+      console.log('🔄 Updating tasks from competencies data...');
+      const realTasks = getAllTasksFromCompetencies(competencies);
+      console.log(`📚 Updated ${realTasks.length} tasks for content management`);
+      setAllTasks(realTasks);
+    }
+  }, [competencies]);
+
   // Core Values Data
   const coreValues = {
     believers: {
