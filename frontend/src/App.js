@@ -2399,8 +2399,8 @@ const AuthenticatedApp = () => {
   // Handle admin access setup for Clerk users
   useEffect(() => {
     if (hasAdminAccess) {
-      console.log('User has admin access via Clerk...');
-      setCurrentView('admin-dashboard');
+      console.log('User has admin access via Clerk - loading admin data in background...');
+      // Keep user on regular dashboard - they can navigate to admin tools manually
       
       // Set demo admin data for testing
       setAdminStats({
