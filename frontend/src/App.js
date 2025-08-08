@@ -5185,6 +5185,12 @@ const AuthenticatedApp = () => {
 
   // UPDATE TASK IN COMPETENCIES DATA
   const updateTaskInCompetencies = (taskId, updatedTaskData) => {
+    // Add validation to prevent the split error
+    if (!taskId || typeof taskId !== 'string') {
+      console.error('updateTaskInCompetencies: taskId must be a string, received:', typeof taskId, taskId);
+      return;
+    }
+    
     setCompetencies(prevCompetencies => {
       const updatedCompetencies = JSON.parse(JSON.stringify(prevCompetencies));
       
