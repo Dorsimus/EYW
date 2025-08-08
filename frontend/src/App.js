@@ -5297,11 +5297,11 @@ const AuthenticatedApp = () => {
       
       // Find and update the task in the competencies structure
       const parts = taskId.split('_');
-      const areaKey = parts[0];
+      const areaKey = parts[0] + '_' + parts[1]; // Fix: leadership_supervision not just leadership
       const area = updatedCompetencies[areaKey];
       
       if (!area) {
-        console.warn('Area not found:', areaKey);
+        console.warn('Area not found:', areaKey, 'Available areas:', Object.keys(updatedCompetencies));
         return prevCompetencies;
       }
       
