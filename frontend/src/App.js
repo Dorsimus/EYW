@@ -5303,8 +5303,8 @@ const AuthenticatedApp = () => {
           {/* REDSTONE NAVIGATION - Pushed up closer to emblem */}
           <nav className="flex justify-between items-center -mt-8 mb-4">
             <div className="flex space-x-3 flex-wrap">
-            {/* REGULAR USER NAVIGATION */}
-            {!isAdmin && [
+            {/* REGULAR USER NAVIGATION - Show for ALL users, including admins */}
+            {[
               { key: 'dashboard', label: 'Dashboard', icon: '📊' },
               { key: 'competencies', label: 'Competencies', icon: '🎯' },
               { key: 'portfolio', label: 'Portfolio', icon: '📁' },
