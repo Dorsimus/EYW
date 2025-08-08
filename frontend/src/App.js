@@ -9133,6 +9133,15 @@ const CompetenciesView = ({
           </div>
 
           {expandedArea === 'culminating_project' && (
+            <CulminatingProjectView 
+              competencies={competencies}
+              portfolio={portfolio}
+              setCurrentView={setCurrentView}
+              showSuccessMessage={showSuccessMessage}
+              showErrorMessage={showErrorMessage}
+              user={localUser}
+            />
+          )}
             <div className="px-6 py-6 bg-white border-t border-red-200">
               {/* Overview Section */}
               <div className="mb-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
