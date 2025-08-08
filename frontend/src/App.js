@@ -10150,6 +10150,140 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
         </div>
       </div>
 
+      {/* Document Viewer Modal */}
+      {selectedDocument && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b">
+              <div>
+                <h3 className="text-lg font-medium text-gray-900">{selectedDocument.title}</h3>
+                <p className="text-sm text-gray-500">{selectedDocument.original_filename}</p>
+              </div>
+              <button
+                onClick={() => setSelectedDocument(null)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <span className="sr-only">Close</span>
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="p-4 max-h-[calc(90vh-120px)] overflow-auto">
+              {/* Document preview based on file type */}
+              {selectedDocument.original_filename && (
+                <DocumentPreview 
+                  filename={selectedDocument.original_filename}
+                  filePath={selectedDocument.file_path}
+                  fileId={selectedDocument.id}
+                  fileSize={selectedDocument.file_size}
+                />
+              )}
+              
+              {/* Document metadata */}
+              <div className="mt-6 border-t pt-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="font-medium text-gray-700">Upload Date:</span>
+                    <span className="ml-2">{new Date(selectedDocument.upload_date).toLocaleDateString()}</span>
+                  </div>
+                  <div>
+                    <span className="font-medium text-gray-700">File Size:</span>
+                    <span className="ml-2">{selectedDocument.file_size_formatted || 'Unknown'}</span>
+                  </div>
+                  <div>
+                    <span className="font-medium text-gray-700">Competencies:</span>
+                    <span className="ml-2">{selectedDocument.competency_areas?.join(', ') || 'None'}</span>
+                  </div>
+                  <div>
+                    <span className="font-medium text-gray-700">Tags:</span>
+                    <span className="ml-2">{selectedDocument.tags?.join(', ') || 'None'}</span>
+                  </div>
+                </div>
+                <div className="mt-3">
+                  <span className="font-medium text-gray-700">Description:</span>
+                  <p className="mt-1 text-gray-600">{selectedDocument.description}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Document preview component */}
+      {(() => {
+        const DocumentPreview = ({ filename, filePath, fileId, fileSize }) => {
+          const extension = filename?.split('.').pop()?.toLowerCase();
+          const API = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+          
+          // Generate file URL for viewing
+          const fileUrl = `${API}/api/files/portfolio/${fileId}`;
+          
+          if (['pdf'].includes(extension)) {
+            return (
+              <div className="w-full h-96">
+                <embed
+                  src={fileUrl}
+                  type="application/pdf"
+                  width="100%"
+                  height="100%"
+                  className="border rounded"
+                />
+              </div>
+            );
+          } else if (['jpg', 'jpeg', 'png', 'gif', 'bmp'].includes(extension)) {
+            return (
+              <div className="text-center">
+                <img
+                  src={fileUrl}
+                  alt={filename}
+                  className="max-w-full max-h-96 mx-auto rounded border"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'block';
+                  }}
+                />
+                <div style={{ display: 'none' }} className="text-gray-500 py-8">
+                  <span className="text-4xl">🖼️</span>
+                  <p>Image preview not available</p>
+                </div>
+              </div>
+            );
+          } else if (['txt', 'md'].includes(extension)) {
+            return (
+              <iframe
+                src={fileUrl}
+                className="w-full h-96 border rounded"
+                title={filename}
+              />
+            );
+          } else {
+            return (
+              <div className="text-center py-12 bg-gray-50 rounded">
+                <div className="text-6xl text-gray-300 mb-4">
+                  {extension === 'doc' || extension === 'docx' ? '📄' :
+                   extension === 'xls' || extension === 'xlsx' ? '📊' :
+                   extension === 'ppt' || extension === 'pptx' ? '📈' : '📋'}
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">{filename}</h3>
+                <p className="text-gray-600 mb-4">Preview not available for this file type</p>
+                <a
+                  href={fileUrl}
+                  download={filename}
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                >
+                  📥 Download File
+                </a>
+              </div>
+            );
+          }
+        };
+        
+        // Return null since this is just defining the component
+        return null;
+      })()}
+
       {totalItems > 0 ? (
         <div className="space-y-4">
           {/* Culminating Project Section - Featured at Top */}
