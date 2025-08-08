@@ -5562,7 +5562,7 @@ const AuthenticatedApp = () => {
           />
         )}
         
-        {currentView === 'core-values' && !isAdmin && (
+        {currentView === 'core-values' && !isAdminMode && (
           <CoreValuesView 
             coreValues={coreValues}
             coreValueEntries={coreValueEntries}
