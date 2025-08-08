@@ -5261,28 +5261,77 @@ const AuthenticatedApp = () => {
     try {
       console.log('Updating task:', taskId, taskData);
       
-      // First update backend database
-      const token = await getToken();
-      const headers = { Authorization: `Bearer ${token}` };
-      await axios.put(`${API}/admin/tasks/${taskId}`, taskData, { headers });
+      // Check if this is a generated task from competencies (not a real database task)
+      const isGeneratedTask = taskId.includes('_course_') || taskId.includes('_resource_') || 
+                              taskId.includes('_curiosity_ignition') || taskId.includes('_culminating_project');
       
-      // Then update local state
+      if (isGeneratedTask) {
+        console.log('Detected generated task from competencies - converting to database task');
+        
+        // Create a new database task with the updated data
+        const newTaskData = {
+          ...taskData,
+          original_generated_id: taskId, // Keep reference to original
+          source: 'competency_generated'
+        };
+        
+        // Create in database
+        const token = await getToken();
+        const headers = { Authorization: `Bearer ${token}` };
+        const response = await axios.post(`${API}/admin/tasks`, newTaskData, { headers });
+        
+        if (response.data && response.data.id) {
+          // Replace the generated task with the new database task in allTasks
+          setAllTasks(prevTasks => 
+            prevTasks.map(task => 
+              task.id === taskId ? { ...newTaskData, id: response.data.id } : task
+            )
+          );
+          
+          console.log(`Converted generated task ${taskId} to database task ${response.data.id}`);
+          
+          // Reload admin data to ensure sync
+          await loadAdminData();
+          return true;
+        }
+      } else {
+        // Regular database task - update normally
+        const token = await getToken();
+        const headers = { Authorization: `Bearer ${token}` };
+        await axios.put(`${API}/admin/tasks/${taskId}`, taskData, { headers });
+        
+        // Update local state
+        setAllTasks(prevTasks => 
+          prevTasks.map(task => 
+            task.id === taskId ? { ...task, ...taskData } : task
+          )
+        );
+        
+        console.log('Database task updated successfully');
+        
+        // Reload admin data to ensure sync
+        await loadAdminData();
+        return true;
+      }
+      
+    } catch (error) {
+      console.error('Error updating task:', error);
+      
+      // Fallback: At least update the local state and localStorage
+      console.log('Falling back to local state update only');
       updateTaskInCompetencies(taskId, taskData);
       
-      // Update in allTasks state
       setAllTasks(prevTasks => 
         prevTasks.map(task => 
           task.id === taskId ? { ...task, ...taskData } : task
         )
       );
       
-      // Reload admin data to ensure sync
-      await loadAdminData();
+      // Show user that changes are temporary
+      if (window.showErrorMessage) {
+        window.showErrorMessage('Changes saved locally but may not persist. Please check your admin permissions.');
+      }
       
-      console.log('Task updated successfully in backend and local state');
-      return true;
-    } catch (error) {
-      console.error('Error updating task:', error);
       return false;
     }
   };
