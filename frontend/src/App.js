@@ -4650,6 +4650,23 @@ const AuthenticatedApp = () => {
           }
         });
         
+        // Apply converted task updates to merged competencies
+        const convertedTasksList = [...convertedTasks];
+        console.log('🔄 Applying converted task updates:', convertedTasksList);
+        
+        for (const taskId of convertedTasksList) {
+          // Find the converted task data in allTasks
+          const convertedTask = allTasks.find(task => 
+            task.original_generated_id === taskId || 
+            (task.source === 'competency_generated' && task.id)
+          );
+          
+          if (convertedTask) {
+            console.log('📝 Applying converted task to competencies:', taskId, convertedTask);
+            applyConvertedTaskToCompetencies(mergedCompetencies, taskId, convertedTask);
+          }
+        }
+        
         setCompetencies(mergedCompetencies);
         console.log('✅ Competency data merged successfully');
         
