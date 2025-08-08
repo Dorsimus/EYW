@@ -5476,7 +5476,7 @@ const AuthenticatedApp = () => {
           />
         )}
         
-        {currentView === 'admin-users' && isAdmin && (
+        {currentView === 'admin-users' && isAdminMode && (
           <AdminUsersView users={allUsers} />
         )}
         
