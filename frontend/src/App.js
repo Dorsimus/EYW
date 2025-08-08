@@ -2433,6 +2433,22 @@ const AuthenticatedApp = () => {
     }
   }, [hasAdminAccess]);
 
+  // FINAL DASHBOARD ENFORCEMENT - runs after everything else
+  useEffect(() => {
+    // Only run after user is loaded and not in loading state
+    if (user && !loading && hasAdminAccess) {
+      console.log('🚨 DASHBOARD ENFORCEMENT: Checking current view...');
+      console.log('🚨 Current view is:', currentView);
+      
+      if (currentView.startsWith('admin-')) {
+        console.log('🚨 Admin view detected - forcing dashboard!');
+        setCurrentView('dashboard');
+      } else {
+        console.log('✅ Dashboard view confirmed');
+      }
+    }
+  }, [user, loading, hasAdminAccess, currentView]);
+
   const loadAdminData = async () => {
     if (!hasAdminAccess) {
       console.log('No admin access for loading admin data');
