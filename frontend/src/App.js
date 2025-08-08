@@ -5344,9 +5344,12 @@ const AuthenticatedApp = () => {
               </button>
             ))}
             
-            {/* Admin access is now handled by Clerk authentication */}
+            {/* SEPARATOR between regular and admin navigation */}
+            {isAdmin && (
+              <div className="border-l-2 border-red-300 mx-4 h-8"></div>
+            )}
             
-            {/* ADMIN NAVIGATION */}
+            {/* ADMIN NAVIGATION - Additional options for admins */}
             {isAdmin && [
               { key: 'admin-dashboard', label: 'Admin Dashboard', icon: '🎛️' },
               { key: 'admin-users-enhanced', label: 'Users', icon: '👥' },
