@@ -611,18 +611,38 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
 
   // Enhanced Task Card Component
   const TaskCard = ({ task, isSelected, onSelect }) => (
-    <div className={`bg-white rounded-lg border-2 transition-all duration-200 hover:shadow-md ${
-      isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
-    }`}>
+    <div 
+      className={`bg-white rounded-lg border-2 transition-all duration-200 hover:shadow-md ${
+        isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'
+      } ${
+        isDragMode ? 'cursor-move' : 'cursor-default'
+      } ${
+        dragOverTask?.id === task.id ? 'border-green-500 bg-green-50 transform scale-105' : ''
+      }`}
+      draggable={isDragMode}
+      onDragStart={(e) => handleDragStart(e, task)}
+      onDragEnd={handleDragEnd}
+      onDragOver={(e) => handleDragOver(e, task)}
+      onDragLeave={handleDragLeave}
+      onDrop={(e) => handleDrop(e, task)}
+    >
       <div className="p-4">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center space-x-3">
-            <input
-              type="checkbox"
-              checked={isSelected}
-              onChange={() => onSelect(task.id)}
-              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-            />
+            {isDragMode ? (
+              <div className="flex items-center justify-center w-5 h-5 text-gray-400">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                </svg>
+              </div>
+            ) : (
+              <input
+                type="checkbox"
+                checked={isSelected}
+                onChange={() => onSelect(task.id)}
+                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+            )}
             <div className={`px-2 py-1 rounded text-xs font-medium bg-${getTypeColor(task.task_type)}-100 text-${getTypeColor(task.task_type)}-800`}>
               {getTypeIcon(task.task_type)} {taskTypes.find(t => t.value === task.task_type)?.label.split(' ').slice(1).join(' ') || task.task_type}
             </div>
@@ -677,6 +697,14 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
             )}
           </div>
         </div>
+        
+        {dragOverTask?.id === task.id && (
+          <div className="absolute inset-0 border-2 border-dashed border-green-500 rounded-lg bg-green-50 bg-opacity-50 flex items-center justify-center">
+            <div className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+              Drop here to reorder
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
