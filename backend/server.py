@@ -783,6 +783,148 @@ SAMPLE_TASKS = [
         "estimated_hours": 2.0,
         "external_link": "https://your-lms.com/change-management",
         "instructions": "Apply lessons learned to your current organizational context."
+    },
+    
+    # Enhanced Leadership & Supervision Portfolio Tasks
+    {
+        "title": "Individual Development Plan Creation",
+        "description": "Create comprehensive development plans for each team member with quarterly progress tracking",
+        "task_type": "document_upload",
+        "competency_area": "leadership_supervision",
+        "sub_competency": "inspiring_team_motivation",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 4.0,
+        "instructions": "Use development plan template, include strengths assessment, growth goals, and specific development opportunities."
+    },
+    {
+        "title": "Coaching Conversation Case Studies",
+        "description": "Document 3 coaching conversations showing progression from problem-solving to people development",
+        "task_type": "document_upload",
+        "competency_area": "leadership_supervision",
+        "sub_competency": "mastering_difficult_conversations",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 3.0,
+        "instructions": "Include situation, coaching approach, outcomes, and lessons learned for each case study."
+    },
+    {
+        "title": "Meeting Facilitation Innovation Documentation",
+        "description": "Document meeting improvement techniques and engagement strategies with results",
+        "task_type": "document_upload",
+        "competency_area": "leadership_supervision",
+        "sub_competency": "inspiring_team_motivation",
+        "order": 5,
+        "required": True,
+        "estimated_hours": 2.0,
+        "instructions": "Include before/after meeting effectiveness, engagement techniques used, and team feedback."
+    },
+    
+    # Enhanced Financial Management Portfolio Tasks
+    {
+        "title": "Monthly P&L Commentary Series",
+        "description": "Create quarterly series of monthly P&L analysis with business insights and recommendations",
+        "task_type": "document_upload",
+        "competency_area": "financial_management",
+        "sub_competency": "pl_understanding",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 6.0,
+        "instructions": "Include variance analysis, trend identification, and actionable management recommendations."
+    },
+    {
+        "title": "Cost-Saving Initiative Portfolio",
+        "description": "Document 3 cost-saving initiatives with ROI analysis and implementation results",
+        "task_type": "document_upload",
+        "competency_area": "financial_management",
+        "sub_competency": "cost_control",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 5.0,
+        "instructions": "Include opportunity identification, implementation plan, actual savings achieved, and lessons learned."
+    },
+    
+    # Enhanced Operational Management Portfolio Tasks
+    {
+        "title": "Process Improvement Project Documentation",
+        "description": "Complete process improvement project with before/after analysis and measurable results",
+        "task_type": "document_upload",
+        "competency_area": "operational_management",
+        "sub_competency": "workflow_optimization",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 8.0,
+        "instructions": "Include current state mapping, improvement implementation, results measurement, and scalability assessment."
+    },
+    {
+        "title": "Quality Control System Implementation",
+        "description": "Design and implement quality control systems with monitoring and improvement documentation",
+        "task_type": "document_upload",
+        "competency_area": "operational_management",
+        "sub_competency": "quality_control",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 6.0,
+        "instructions": "Include quality standards, monitoring systems, team training materials, and improvement tracking."
+    },
+    
+    # Enhanced Cross-Functional Collaboration Portfolio Tasks
+    {
+        "title": "Cross-Department Understanding Report",
+        "description": "Complete department shadowing experience with partnership opportunity analysis",
+        "task_type": "document_upload",
+        "competency_area": "cross_functional_collaboration",
+        "sub_competency": "understanding_other_department",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 8.0,
+        "instructions": "Include shadowing log, process documentation, challenge identification, and collaboration opportunities."
+    },
+    {
+        "title": "Resident Journey Mapping Project",
+        "description": "Map complete resident experience across departments with improvement recommendations",
+        "task_type": "document_upload",
+        "competency_area": "cross_functional_collaboration",
+        "sub_competency": "unified_resident_experience",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 6.0,
+        "instructions": "Include journey maps, friction point analysis, collaborative solutions, and implementation timeline."
+    },
+    
+    # Enhanced Strategic Thinking Portfolio Tasks
+    {
+        "title": "Property Market Analysis Report",
+        "description": "Comprehensive market analysis with strategic positioning recommendations",
+        "task_type": "document_upload",
+        "competency_area": "strategic_thinking",
+        "sub_competency": "seeing_patterns_anticipating_trends",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 8.0,
+        "instructions": "Include competitor analysis, market trends, pricing analysis, and strategic recommendations for property positioning."
+    },
+    {
+        "title": "Innovation Proposal Portfolio",
+        "description": "Develop 3 innovation proposals with business case analysis and implementation plans",
+        "task_type": "document_upload",
+        "competency_area": "strategic_thinking",
+        "sub_competency": "innovation_continuous_improvement",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 10.0,
+        "instructions": "Include opportunity identification, business case with ROI, implementation plan, and success metrics."
+    },
+    {
+        "title": "Department Strategic Plan",
+        "description": "Create annual strategic plan for department aligned with property goals",
+        "task_type": "document_upload",
+        "competency_area": "strategic_thinking",
+        "sub_competency": "planning_goal_achievement",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 12.0,
+        "instructions": "Include environmental analysis, strategic goals, action plans, resource requirements, and success metrics."
     }
 ]
 
