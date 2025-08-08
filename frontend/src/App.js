@@ -4515,19 +4515,6 @@ const AuthenticatedApp = () => {
       showErrorMessage(`Error completing task: ${error.message}`);
     }
   };
-      
-      // Reload competency progress and portfolio
-      if (selectedCompetency) {
-        await loadCompetencyTasks(selectedCompetency.area, selectedCompetency.sub);
-      }
-      await reloadPortfolio();
-      
-      return response.data;
-    } catch (error) {
-      console.error('Error completing task:', error);
-      throw error;
-    }
-  };
 
   // Core Values Functions
   const handleAddCoreValueEntry = async (valueKey) => {
