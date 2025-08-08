@@ -743,21 +743,30 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
             </div>
           </div>
           
-          <button
-            onClick={() => setEditingTask({ 
-              id: null,
-              title: '',
-              description: '',
-              task_type: 'document_upload',
-              competency_area: 'leadership_supervision',
-              estimated_hours: 1,
-              order: tasks.length + 1,
-              required: true
-            })}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-lg hover:shadow-xl"
-          >
-            ➕ Create New Task
-          </button>
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={() => setShowTemplateManager(true)}
+              className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors font-medium border border-purple-200"
+            >
+              📚 Template Library
+            </button>
+            
+            <button
+              onClick={() => setEditingTask({ 
+                id: null,
+                title: '',
+                description: '',
+                task_type: 'document_upload',
+                competency_area: 'leadership_supervision',
+                estimated_hours: 1,
+                order: tasks.length + 1,
+                required: true
+              })}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-lg hover:shadow-xl"
+            >
+              ➕ Create New Task
+            </button>
+          </div>
         </div>
       </div>
 
