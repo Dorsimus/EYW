@@ -1174,12 +1174,14 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
                 for (const taskId of taskIds) {
                   const task = tasks.find(t => t.id === taskId);
                   if (task) {
-                    await onUpdateTask({ 
+                    // Fix: Pass taskId and taskData separately
+                    const updatedTaskData = { 
                       ...task, 
                       ...Object.fromEntries(
                         Object.entries(actionData).filter(([key, value]) => value !== '' && value !== null)
                       )
-                    });
+                    };
+                    await onUpdateTask(taskId, updatedTaskData);
                   }
                 }
                 break;
