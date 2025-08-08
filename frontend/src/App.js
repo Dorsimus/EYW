@@ -5390,12 +5390,17 @@ const AuthenticatedApp = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* ENHANCED ADMIN VIEWS */}
         {currentView === 'admin-dashboard' && isAdmin && (
-          <EnhancedAdminDashboard 
-            stats={adminStats} 
-            onNavigate={setCurrentView}
-            users={allUsers}
-            tasks={allTasks}
-          />
+          <div>
+            <div style={{background: 'red', color: 'white', padding: '10px', margin: '10px', border: '2px solid black'}}>
+              🚨 DEBUG: EnhancedAdminDashboard is rendering for currentView='{currentView}' isAdmin={isAdmin ? 'true' : 'false'}
+            </div>
+            <EnhancedAdminDashboard 
+              stats={adminStats} 
+              onNavigate={setCurrentView}
+              users={allUsers}
+              tasks={allTasks}
+            />
+          </div>
         )}
         
         {currentView === 'admin-users-enhanced' && isAdmin && (
