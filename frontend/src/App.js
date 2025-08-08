@@ -5592,7 +5592,7 @@ const AuthenticatedApp = () => {
         console.log('📤 Creating new database task:', newTaskData);
         
         // Create in database
-        const token = await getToken();
+        const token = await getToken({ template: "default" });
         console.log('🔐 Got auth token:', token ? `${token.substring(0, 50)}...` : 'null');
         
         // Debug: Decode token to see claims
@@ -5603,9 +5603,11 @@ const AuthenticatedApp = () => {
             console.log('🔍 Token payload:', {
               sub: payload.sub,
               metadata: payload.metadata,
+              public_metadata: payload.public_metadata,
               roles: payload.roles,
               exp: new Date(payload.exp * 1000),
-              iss: payload.iss
+              iss: payload.iss,
+              fullPayload: payload
             });
           } catch (e) {
             console.log('Could not decode token:', e);
