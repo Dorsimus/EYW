@@ -5577,7 +5577,7 @@ const AuthenticatedApp = () => {
           />
         )}
         
-        {currentView === 'add-portfolio' && !isAdmin && (
+        {currentView === 'add-portfolio' && !isAdminMode && (
           <AddPortfolioView 
             portfolioItem={newPortfolioItem}
             setPortfolioItem={setNewPortfolioItem}
