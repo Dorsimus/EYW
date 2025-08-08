@@ -105,6 +105,20 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
+  - task: "Core Values Dropdown Removal from Competencies Tab"
+    implemented: true
+    working: true
+    file: "frontend/src/App.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "IMPLEMENTED: Removed Core Values dropdown from competencies tab to eliminate error and avoid duplication since Core Values has its own dedicated menu item. Applied filtering to all competency displays: 1) CompetenciesView main display (line 8117), 2) Portfolio competency filter (line 10817), 3) AddPortfolioView competency options (line 11354), 4) Analytics competency breakdown (line 13943). Verified that Core Values functionality remains fully intact in dedicated menu with proper flightbook integration through handleAddCoreValueEntry function."
+
+user_problem_statement: "Remove Core Values dropdown from competencies tab to fix errors while ensuring Core Values entries still flow into flightbook through dedicated menu item."
+
   - task: "Enhanced ContentManagement Admin Interface - Phase 1"
     implemented: true
     working: false
