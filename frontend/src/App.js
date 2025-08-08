@@ -4499,7 +4499,9 @@ const AuthenticatedApp = () => {
         showSuccessMessage(`Task "${taskData.title}" completed successfully!`);
         
         // Reload competency tasks to reflect completion
-        await loadCompetencyTasks(competencyArea, selectedCompetency?.sub);
+        loadCompetencyTasks(competencyArea, selectedCompetency?.sub).catch(error => {
+          console.warn('⚠️ Failed to reload tasks:', error);
+        });
         
         // Trigger auto-save
         autoSaveUserProgress();
