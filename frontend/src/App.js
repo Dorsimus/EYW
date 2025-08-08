@@ -5317,6 +5317,9 @@ const AuthenticatedApp = () => {
         });
         
         if (response.data && response.data.id) {
+          // Track this task as converted to prevent regeneration
+          setConvertedTasks(prev => new Set([...prev, taskId]));
+          
           // Replace the generated task with the new database task in allTasks
           setAllTasks(prevTasks => 
             prevTasks.map(task => 
@@ -5324,10 +5327,13 @@ const AuthenticatedApp = () => {
             )
           );
           
+          // Update the competencies structure to show the converted task data
+          updateTaskInCompetencies(taskId, { ...newTaskData, id: response.data.id });
+          
           console.log(`✅ Converted generated task ${taskId} to database task ${response.data.id}`);
           
-          // Reload admin data to ensure sync
-          await loadAdminData();
+          // DON'T reload admin data here - it will overwrite our conversion
+          // await loadAdminData();
           return true;
         } else {
           console.error('❌ Backend response missing ID:', response.data);
