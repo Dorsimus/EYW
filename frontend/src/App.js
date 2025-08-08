@@ -5128,22 +5128,25 @@ const AuthenticatedApp = () => {
             });
           }
           
-          // Add monthly activities
+          // Add monthly activities (only if not converted)
           if (subComp.monthly_activities) {
             subComp.monthly_activities.forEach((activity, index) => {
-              allTasks.push({
-                id: `${areaKey}_${subKey}_activity_${index}`,
-                title: activity.title,
-                description: activity.in_flow_activity,
-                task_type: 'project',
-                competency_area: areaKey,
-                sub_competency: subKey,
-                estimated_hours: 0.5,
-                instructions: `Journal Prompt: ${activity.journal_prompt}`,
-                document_section: activity.document_section?.title,
-                active: true,
-                required: true
-              });
+              const taskId = `${areaKey}_${subKey}_activity_${index}`;
+              if (!convertedTasks.has(taskId)) {
+                allTasks.push({
+                  id: taskId,
+                  title: activity.title,
+                  description: activity.in_flow_activity,
+                  task_type: 'project',
+                  competency_area: areaKey,
+                  sub_competency: subKey,
+                  estimated_hours: 0.5,
+                  instructions: `Journal Prompt: ${activity.journal_prompt}`,
+                  document_section: activity.document_section?.title,
+                  active: true,
+                  required: true
+                });
+              }
             });
           }
           
