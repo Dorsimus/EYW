@@ -5406,12 +5406,17 @@ const AuthenticatedApp = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* ADMIN VIEWS - Show when in admin mode */}
         {currentView === 'admin-dashboard' && isAdminMode && (
-          <EnhancedAdminDashboard 
-            stats={adminStats} 
-            onNavigate={setCurrentView}
-            users={allUsers}
-            tasks={allTasks}
-          />
+          <div>
+            <div style={{background: 'lightblue', padding: '5px', fontSize: '12px'}}>
+              DEBUG: Admin Dashboard - currentView={currentView}, isAdminMode={isAdminMode}
+            </div>
+            <EnhancedAdminDashboard 
+              stats={adminStats} 
+              onNavigate={setCurrentView}
+              users={allUsers}
+              tasks={allTasks}
+            />
+          </div>
         )}
         
         {currentView === 'admin-users-enhanced' && isAdminMode && (
