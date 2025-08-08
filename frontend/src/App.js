@@ -9665,20 +9665,114 @@ const CulminatingProjectView = ({ competencies, portfolio, setCurrentView, showS
   const [showProjectWizard, setShowProjectWizard] = useState(false);
   const [milestoneProgress, setMilestoneProgress] = useState({});
 
-  // Get culminating project data from competencies - try multiple paths
+  // Get culminating project data from competencies
   let culminatingProject = competencies?.leadership_supervision?.culminating_project || 
                           competencies?.culminating_project || 
                           {};
-  
-  // Debug logging to see what we're getting
-  console.log('CulminatingProjectView Debug:', {
-    competenciesExists: !!competencies,
-    leadershipSupervisionExists: !!competencies?.leadership_supervision,
-    culminatingProjectExists: !!culminatingProject || !!competencies?.culminating_project,
-    culminatingProjectData: culminatingProject,
-    allCompetencyKeys: competencies ? Object.keys(competencies) : [],
-    leadershipSupervisionKeys: competencies?.leadership_supervision ? Object.keys(competencies.leadership_supervision) : []
-  });
+
+  // If no project data found, provide default structure to show something
+  if (!culminatingProject.title && !culminatingProject.phases) {
+    culminatingProject = {
+      title: "Leadership Legacy Initiative",
+      duration: "Final 2-3 months of program",
+      challenge: "Design and implement one leadership initiative that improves both team performance and team satisfaction",
+      project_scope: "Cross-competency capstone project integrating all Navigator-level learning",
+      phases: {
+        planning: {
+          title: "📋 Planning & Design Phase",
+          duration: "3-4 weeks",
+          description: "Project identification, stakeholder analysis, and comprehensive planning",
+          deliverables: [
+            {
+              title: "Project Charter & Business Case",
+              description: "2-page document outlining project goals, stakeholder analysis, success metrics, and expected outcomes",
+              template_provided: true,
+              required: true,
+              competencies_demonstrated: ["strategic_thinking", "financial_management"],
+              portfolio_tag: "culminating-project-planning"
+            },
+            {
+              title: "Implementation Timeline & Resource Plan",
+              description: "Detailed project timeline with milestones, resource requirements, and risk mitigation strategies",
+              template_provided: true,
+              required: true,
+              competencies_demonstrated: ["operational_management", "strategic_thinking"],
+              portfolio_tag: "culminating-project-planning"
+            }
+          ],
+          success_criteria: "All planning deliverables completed and approved by Community Manager"
+        },
+        execution: {
+          title: "⚡ Implementation & Execution Phase",
+          duration: "7-9 weeks",
+          description: "Active project implementation with regular progress tracking and adjustment",
+          deliverables: [
+            {
+              title: "Weekly Progress Reports",
+              description: "Brief weekly updates on implementation progress, challenges encountered, and lessons learned",
+              template_provided: true,
+              required: true,
+              frequency: "weekly",
+              competencies_demonstrated: ["operational_management", "strategic_thinking"],
+              portfolio_tag: "culminating-project-execution"
+            },
+            {
+              title: "Milestone Documentation",
+              description: "Evidence of key milestones achieved, including photos, metrics, testimonials, or other proof of progress",
+              template_provided: false,
+              required: true,
+              competencies_demonstrated: ["all"],
+              portfolio_tag: "culminating-project-execution"
+            }
+          ],
+          success_criteria: "Project successfully implemented with measurable positive impact"
+        },
+        completion: {
+          title: "🎯 Documentation & Presentation Phase",
+          duration: "2-3 weeks",
+          description: "Project documentation, impact analysis, and formal presentation preparation",
+          deliverables: [
+            {
+              title: "Comprehensive Project Portfolio",
+              description: "Complete project documentation including all phases, evidence of impact, lessons learned, and future recommendations",
+              template_provided: true,
+              required: true,
+              competencies_demonstrated: ["all"],
+              portfolio_tag: "culminating-project-completion"
+            },
+            {
+              title: "Final Presentation Materials",
+              description: "Professional presentation materials for the formal project defense, including slides, visual aids, and supporting documentation",
+              template_provided: true,
+              required: true,
+              competencies_demonstrated: ["all"],
+              portfolio_tag: "culminating-project-completion"
+            }
+          ],
+          success_criteria: "Successful presentation defense and project approval by review committee"
+        }
+      },
+      presentation: {
+        title: "Navigator Leadership Showcase",
+        duration: "20 minutes presentation + 10 minutes Q&A",
+        audience: "Community Manager, Regional Manager, and 2 Navigator peers",
+        components: [
+          "Project Overview & Business Impact (5 minutes)",
+          "Implementation Journey & Challenges Overcome (5 minutes)",
+          "Leadership Growth & Competency Development (5 minutes)",
+          "Future Applications & Continuous Improvement (5 minutes)",
+          "Q&A Session (10 minutes)"
+        ]
+      },
+      cross_competency_integration: {
+        leadership_supervision: "Demonstrate team development and change management skills",
+        financial_management: "Show business impact and financial analysis capabilities", 
+        operational_management: "Implement process improvements and quality enhancements",
+        cross_functional_collaboration: "Work effectively across departments and stakeholder groups",
+        strategic_thinking: "Apply systems thinking and future-focused planning"
+      }
+    };
+  }
 
   // Calculate phase progress based on portfolio submissions
   const getPhaseProgress = (phase) => {
