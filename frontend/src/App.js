@@ -5514,7 +5514,9 @@ const AuthenticatedApp = () => {
 
   // Save converted tasks to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem('convertedTasks', JSON.stringify([...convertedTasks]));
+    const convertedList = [...convertedTasks];
+    localStorage.setItem('convertedTasks', JSON.stringify(convertedList));
+    console.log('💾 SAVED CONVERTED TASKS TO LOCALSTORAGE:', convertedList);
   }, [convertedTasks]);
 
   const updateTask = async (taskId, taskData) => {
