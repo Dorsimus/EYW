@@ -2159,17 +2159,6 @@ const AuthenticatedApp = () => {
               }
             ],
             competency_gate: "Market analysis completed + Innovation proposals developed + Strategic plans created + Change management demonstrated"
-                in_flow_activity: "Make one small change in your department based on a trend you've identified",
-                document_section: {
-                  title: "Proactive Action Results",
-                  description: "Change you made based on trend analysis and its outcomes",
-                  portfolio_integration: true
-                },
-                leadership_integration: "Share trend thinking with your team to build strategic awareness",
-                curiosity_question: "How can pattern recognition become a natural part of how I think about our work?"
-              }
-            ],
-            competency_gate: "Identify meaningful trend affecting department + Take proactive action based on trend analysis"
           },
           innovation_continuous_improvement: {
             name: "Innovation & Continuous Improvement Thinking",
