@@ -2681,21 +2681,27 @@ const AuthenticatedApp = () => {
       console.log(`📊 Generated ${generatedTasks.length} tasks from competencies`);
       
       // Add database tasks from backend
-      console.log('📋 Loading database tasks from backend...');
-      let databaseTasks = [];
-      try {
-        const tasksResponse = await axios.get(`${API}/admin/tasks`, { headers });
-        databaseTasks = tasksResponse.data || [];
-        console.log(`📊 Loaded ${databaseTasks.length} database tasks from backend`);
-      } catch (taskError) {
-        console.warn('⚠️ Could not load database tasks:', taskError);
-      }
+      const loadDatabaseTasks = async () => {
+        console.log('📋 Loading database tasks from backend...');
+        let databaseTasks = [];
+        try {
+          const token = await getToken();
+          const headers = { Authorization: `Bearer ${token}` };
+          const tasksResponse = await axios.get(`${API}/admin/tasks`, { headers });
+          databaseTasks = tasksResponse.data || [];
+          console.log(`📊 Loaded ${databaseTasks.length} database tasks from backend`);
+        } catch (taskError) {
+          console.warn('⚠️ Could not load database tasks:', taskError);
+        }
+        
+        // Combine generated and database tasks
+        const combinedTasks = [...generatedTasks, ...databaseTasks];
+        console.log(`📊 TOTAL COMBINED TASKS: ${combinedTasks.length} (${generatedTasks.length} generated + ${databaseTasks.length} database)`);
+        
+        setAllTasks(combinedTasks);
+      };
       
-      // Combine generated and database tasks
-      const combinedTasks = [...generatedTasks, ...databaseTasks];
-      console.log(`📊 TOTAL COMBINED TASKS: ${combinedTasks.length} (${generatedTasks.length} generated + ${databaseTasks.length} database)`);
-      
-      setAllTasks(combinedTasks);
+      loadDatabaseTasks();
     }
   }, [isAdmin, competencies]); // Add competencies as dependency
 
