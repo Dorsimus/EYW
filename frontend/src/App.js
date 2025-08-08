@@ -5345,13 +5345,8 @@ const AuthenticatedApp = () => {
               </button>
             ))}
             
-            {/* SEPARATOR between regular and admin navigation */}
-            {isAdmin && (
-              <div className="border-l-2 border-red-300 mx-4 h-8"></div>
-            )}
-            
-            {/* ADMIN NAVIGATION - Additional options for admins */}
-            {isAdmin && [
+            {/* ADMIN NAVIGATION - Only show in admin mode */}
+            {isAdminMode && [
               { key: 'admin-dashboard', label: 'Admin Dashboard', icon: '🎛️' },
               { key: 'admin-users-enhanced', label: 'Users', icon: '👥' },
               { key: 'admin-content-management', label: 'Content', icon: '📚' },
