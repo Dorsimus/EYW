@@ -2702,6 +2702,9 @@ const AuthenticatedApp = () => {
   // REMOVED: Dashboard enforcement was interfering with admin toggle functionality
 
   const loadAdminData = async () => {
+    console.log('🔄 LOAD ADMIN DATA CALLED');
+    console.log('📊 Current converted tasks before loading:', [...convertedTasks]);
+    
     if (!hasAdminAccess) {
       console.log('No admin access for loading admin data');
       return;
