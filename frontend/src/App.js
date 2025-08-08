@@ -5483,7 +5483,7 @@ const AuthenticatedApp = () => {
         {currentView === 'dashboard' && (
           <div>
             <div style={{background: 'yellow', padding: '10px', margin: '10px', border: '2px solid red'}}>
-              🚨 DEBUG: DashboardView is rendering for currentView=&apos;{currentView}&apos; isAdmin={isAdmin}
+              🚨 DEBUG: DashboardView is rendering for currentView={currentView} isAdmin={isAdmin ? 'true' : 'false'}
             </div>
             <DashboardView 
             user={user}
