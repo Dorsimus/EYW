@@ -403,6 +403,14 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
   const [selectedTasks, setSelectedTasks] = useState(new Set());
   const [showBulkActions, setShowBulkActions] = useState(false);
   const [sortBy, setSortBy] = useState('order');
+  const [draggedTask, setDraggedTask] = useState(null);
+  const [dragOverTask, setDragOverTask] = useState(null);
+  const [showBulkModal, setShowBulkModal] = useState(false);
+  const [bulkActionType, setBulkActionType] = useState(null);
+  const [templatePreview, setTemplatePreview] = useState(null);
+  const [showTemplateManager, setShowTemplateManager] = useState(false);
+  const [isDragMode, setIsDragMode] = useState(false);
+  const dragContainerRef = useRef(null);
 
   const competencyAreas = [
     { key: 'all', name: 'All Competencies', count: tasks.length },
