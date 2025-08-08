@@ -5406,17 +5406,12 @@ const AuthenticatedApp = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* ADMIN VIEWS - Show when in admin mode */}
         {currentView === 'admin-dashboard' && isAdminMode && (
-          <div>
-            <div style={{background: 'red', color: 'white', padding: '10px', margin: '10px', border: '2px solid black'}}>
-              🚨 DEBUG: EnhancedAdminDashboard is rendering for currentView='{currentView}' isAdmin={isAdmin ? 'true' : 'false'}
-            </div>
-            <EnhancedAdminDashboard 
-              stats={adminStats} 
-              onNavigate={setCurrentView}
-              users={allUsers}
-              tasks={allTasks}
-            />
-          </div>
+          <EnhancedAdminDashboard 
+            stats={adminStats} 
+            onNavigate={setCurrentView}
+            users={allUsers}
+            tasks={allTasks}
+          />
         )}
         
         {currentView === 'admin-users-enhanced' && isAdminMode && (
