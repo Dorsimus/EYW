@@ -5286,6 +5286,15 @@ const AuthenticatedApp = () => {
       }
       
       console.log('✅ Updated competencies structure for:', taskId);
+      
+      // Save updated competencies to localStorage for persistence
+      try {
+        localStorage.setItem('competencies', JSON.stringify(updatedCompetencies));
+        console.log('💾 Saved updated competencies to localStorage');
+      } catch (error) {
+        console.error('Error saving competencies to localStorage:', error);
+      }
+      
       return updatedCompetencies;
     });
   };
