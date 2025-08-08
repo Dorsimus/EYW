@@ -2071,31 +2071,94 @@ const AuthenticatedApp = () => {
             monthly_activities: [
               {
                 month: 1,
-                title: "Pattern Detective Work",
-                in_flow_activity: "During weekly property meetings, note one pattern or trend you observe in your department's data",
+                title: "Market Trend Analysis Project",
+                in_flow_activity: "Research and document local property market trends, competitor activities, and their potential impacts on your property",
+                portfolio_assignment: {
+                  title: "Property Market Analysis Report",
+                  deliverable: "Quarterly market trend analysis with strategic implications",
+                  description: "Research local market conditions, competitor analysis, pricing trends, occupancy patterns, and recommendations for strategic positioning",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "market-analysis",
+                  file_types: ["document", "spreadsheet", "presentation"],
+                  quarterly_requirement: true
+                },
                 document_section: {
-                  title: "Pattern Recognition Log",
-                  description: "Weekly observations of trends in your department",
+                  title: "Strategic Analysis Portfolio",
+                  description: "Market analyses showing your ability to think beyond day-to-day operations",
                   portfolio_integration: true
                 },
-                operational_integration: "Connect patterns to daily operational decisions",
-                journal_prompt: "What patterns do I see that others might be missing? What do these patterns suggest about what's coming?"
+                cross_functional_integration: "Share market insights with other department leaders",
+                journal_prompt: "What patterns do I see in our market that suggest opportunities or threats? How should we position ourselves strategically?"
               },
               {
                 month: 2,
-                title: "Trend Impact Analysis",
-                in_flow_activity: "Choose one pattern from Month 1 and think through what it might mean for your department's future",
+                title: "Innovation & Improvement Proposal Development",
+                in_flow_activity: "Identify and document innovation opportunities in your department that could create competitive advantage or resident value",
+                portfolio_assignment: {
+                  title: "Innovation Proposal Portfolio",
+                  deliverable: "Quarterly innovation proposals with business case analysis",
+                  description: "Identify improvement opportunities, document innovation ideas, create business cases with ROI projections and implementation plans",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "innovation-proposals",
+                  file_types: ["document", "presentation", "project-plan"],
+                  quarterly_requirement: "2-3 proposals"
+                },
                 document_section: {
-                  title: "Trend Impact Assessment",
-                  description: "Simple analysis of what one trend could mean",
+                  title: "Innovation Leadership Portfolio",
+                  description: "Innovation proposals showing your forward-thinking leadership development",
                   portfolio_integration: true
                 },
-                cross_functional_integration: "Discuss trend observations with opposite department Navigator",
-                journal_prompt: "If this trend continues, what opportunities or challenges might we face? How should we prepare?"
+                operational_integration: "Connect innovation ideas to current operational challenges",
+                journal_prompt: "What could we do differently that would create value for residents while improving our operations? What innovations could give us competitive advantage?"
               },
               {
                 month: 3,
-                title: "Proactive Planning",
+                title: "Strategic Planning Documentation",
+                in_flow_activity: "Create 6-month and annual plans for your department that align with property strategic goals and market opportunities",
+                portfolio_assignment: {
+                  title: "Department Strategic Plans",
+                  deliverable: "Annual department strategic plan with quarterly milestones",
+                  description: "Develop strategic plans including goals, strategies, resource requirements, success metrics, and alignment with property objectives",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "strategic-planning",
+                  file_types: ["document", "presentation", "project-plan"],
+                  annual_requirement: true
+                },
+                document_section: {
+                  title: "Strategic Planning Portfolio",
+                  description: "Strategic plans showing your ability to connect daily work to long-term success",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Involve team in strategic planning and goal setting",
+                curiosity_question: "How can my department's work contribute most effectively to our property's long-term success and competitive position?"
+              },
+              {
+                month: 4,
+                title: "Change Management & Future-State Planning",
+                in_flow_activity: "Develop plans for managing anticipated changes and transitions in your department or property operations",
+                portfolio_assignment: {
+                  title: "Change Management Plans",
+                  deliverable: "Change management documentation with transition strategies",
+                  description: "Document anticipated changes, assess impacts, develop transition plans, communication strategies, and success metrics for change initiatives",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "change-management",
+                  file_types: ["document", "presentation", "communication-plan"],
+                  project_based: true
+                },
+                document_section: {
+                  title: "Change Leadership Portfolio",
+                  description: "Change management plans showing your ability to lead transitions and prepare for the future",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Align change management with property strategic initiatives",
+                curiosity_question: "How can I help my team and property not just adapt to change, but leverage change for competitive advantage?"
+              }
+            ],
+            competency_gate: "Market analysis completed + Innovation proposals developed + Strategic plans created + Change management demonstrated"
                 in_flow_activity: "Make one small change in your department based on a trend you've identified",
                 document_section: {
                   title: "Proactive Action Results",
