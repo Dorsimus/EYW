@@ -10814,7 +10814,9 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
                 className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="all">All Competencies</option>
-                {Object.entries(competencies).map(([key, data]) => (
+                {Object.entries(competencies)
+                  .filter(([key]) => key !== 'core_values')
+                  .map(([key, data]) => (
                   <option key={key} value={key}>{data.name}</option>
                 ))}
               </select>
