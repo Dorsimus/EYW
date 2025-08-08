@@ -5259,26 +5259,37 @@ const AuthenticatedApp = () => {
 
   // ENHANCED TASK MANAGEMENT FOR ADMIN PANEL
   const updateTask = async (taskId, taskData) => {
+    console.log('🔧 updateTask called:', { taskId, hasAdminAccess, taskData });
+    
     if (!hasAdminAccess) {
-      console.log('No admin access for updating tasks');
+      console.error('❌ No admin access for updating tasks. Admin status:', {
+        isAdmin,
+        isModerator, 
+        hasAdminAccess,
+        userMetadata: user?.publicMetadata,
+        membership: membership?.role,
+        organization: organization?.name
+      });
       return false;
     }
 
     // Add validation for taskId
     if (!taskId || typeof taskId !== 'string') {
-      console.error('updateTask: taskId must be a string, received:', typeof taskId, taskId);
+      console.error('❌ updateTask: taskId must be a string, received:', typeof taskId, taskId);
       return false;
     }
 
     try {
-      console.log('Updating task:', taskId, taskData);
+      console.log('🔄 Updating task:', taskId, taskData);
       
       // Check if this is a generated task from competencies (not a real database task)
       const isGeneratedTask = taskId.includes('_course_') || taskId.includes('_resource_') || 
                               taskId.includes('_curiosity_ignition') || taskId.includes('_culminating_project');
       
+      console.log('🔍 Task type analysis:', { taskId, isGeneratedTask });
+      
       if (isGeneratedTask) {
-        console.log('Detected generated task from competencies - converting to database task');
+        console.log('🔄 Detected generated task from competencies - converting to database task');
         
         // Create a new database task with the updated data
         const newTaskData = {
@@ -5287,10 +5298,20 @@ const AuthenticatedApp = () => {
           source: 'competency_generated'
         };
         
+        console.log('📤 Creating new database task:', newTaskData);
+        
         // Create in database
         const token = await getToken();
+        console.log('🔐 Got auth token:', token ? `${token.substring(0, 20)}...` : 'null');
+        
         const headers = { Authorization: `Bearer ${token}` };
         const response = await axios.post(`${API}/admin/tasks`, newTaskData, { headers });
+        
+        console.log('📥 Backend response:', { 
+          status: response.status, 
+          data: response.data,
+          hasId: !!response.data?.id 
+        });
         
         if (response.data && response.data.id) {
           // Replace the generated task with the new database task in allTasks
@@ -5300,15 +5321,22 @@ const AuthenticatedApp = () => {
             )
           );
           
-          console.log(`Converted generated task ${taskId} to database task ${response.data.id}`);
+          console.log(`✅ Converted generated task ${taskId} to database task ${response.data.id}`);
           
           // Reload admin data to ensure sync
           await loadAdminData();
           return true;
+        } else {
+          console.error('❌ Backend response missing ID:', response.data);
+          return false;
         }
       } else {
+        console.log('🔄 Regular database task - updating normally');
+        
         // Regular database task - update normally
         const token = await getToken();
+        console.log('🔐 Got auth token:', token ? `${token.substring(0, 20)}...` : 'null');
+        
         const headers = { Authorization: `Bearer ${token}` };
         await axios.put(`${API}/admin/tasks/${taskId}`, taskData, { headers });
         
@@ -5319,7 +5347,7 @@ const AuthenticatedApp = () => {
           )
         );
         
-        console.log('Database task updated successfully');
+        console.log('✅ Database task updated successfully');
         
         // Reload admin data to ensure sync
         await loadAdminData();
@@ -5327,14 +5355,20 @@ const AuthenticatedApp = () => {
       }
       
     } catch (error) {
-      console.error('Error updating task:', error);
+      console.error('❌ Error updating task:', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+        url: error.config?.url
+      });
       
       // Fallback: Only update local state for generated tasks
-      console.log('Falling back to local state update only');
+      console.log('🔄 Falling back to local state update only');
       
       if (taskId.includes('_course_') || taskId.includes('_resource_') || 
           taskId.includes('_curiosity_ignition') || taskId.includes('_culminating_project')) {
         // Only call updateTaskInCompetencies for generated tasks
+        console.log('🔄 Updating competencies structure locally');
         updateTaskInCompetencies(taskId, taskData);
       }
       
@@ -5345,7 +5379,7 @@ const AuthenticatedApp = () => {
       );
       
       // Show user that changes are temporary
-      console.warn('Changes saved locally only - may not persist on reload');
+      console.warn('⚠️ Changes saved locally only - may not persist on reload');
       
       return false;
     }
