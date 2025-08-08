@@ -131,6 +131,7 @@ const AuthenticatedApp = () => {
   
   const [currentView, setCurrentView] = useState('dashboard');
   const [localUser, setLocalUser] = useState(null);
+  const [isAdminMode, setIsAdminMode] = useState(false); // Toggle between user and admin interface
   const [competencies, setCompetencies] = useState({});
   const [portfolio, setPortfolio] = useState([]);
   const [loading, setLoading] = useState(true);
