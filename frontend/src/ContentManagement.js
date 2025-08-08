@@ -1143,7 +1143,8 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
           competencyAreas={competencyAreas.filter(a => a.key !== 'all')}
           onSave={(updatedTask) => {
             if (updatedTask.id) {
-              onUpdateTask && onUpdateTask(updatedTask);
+              // Fix: Pass taskId and taskData separately
+              onUpdateTask && onUpdateTask(updatedTask.id, updatedTask);
             } else {
               onCreateTask && onCreateTask({ ...updatedTask, id: `task-${Date.now()}` });
             }
