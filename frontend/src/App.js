@@ -5084,20 +5084,23 @@ const AuthenticatedApp = () => {
       // Skip core_values as it's handled differently
       if (areaKey === 'core_values') return;
       
-      // Add Curiosity Ignition as a task
+      // Add Curiosity Ignition as a task (only if not converted)
       if (area.curiosity_ignition) {
-        allTasks.push({
-          id: `${areaKey}_curiosity_ignition`,
-          title: area.curiosity_ignition.title,
-          description: area.curiosity_ignition.description,
-          task_type: 'assessment',
-          competency_area: areaKey,
-          sub_competency: 'curiosity_ignition',
-          estimated_hours: 0.25,
-          instructions: `Reflection prompts: ${area.curiosity_ignition.reflection_prompts?.join(', ')}`,
-          active: true,
-          required: true
-        });
+        const taskId = `${areaKey}_curiosity_ignition`;
+        if (!convertedTasks.has(taskId)) {
+          allTasks.push({
+            id: taskId,
+            title: area.curiosity_ignition.title,
+            description: area.curiosity_ignition.description,
+            task_type: 'assessment',
+            competency_area: areaKey,
+            sub_competency: 'curiosity_ignition',
+            estimated_hours: 0.25,
+            instructions: `Reflection prompts: ${area.curiosity_ignition.reflection_prompts?.join(', ')}`,
+            active: true,
+            required: true
+          });
+        }
       }
       
       // Add tasks from sub_competencies
