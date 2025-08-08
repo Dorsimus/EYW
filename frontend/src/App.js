@@ -5264,6 +5264,12 @@ const AuthenticatedApp = () => {
       return false;
     }
 
+    // Add validation for taskId
+    if (!taskId || typeof taskId !== 'string') {
+      console.error('updateTask: taskId must be a string, received:', typeof taskId, taskId);
+      return false;
+    }
+
     try {
       console.log('Updating task:', taskId, taskData);
       
@@ -5323,9 +5329,14 @@ const AuthenticatedApp = () => {
     } catch (error) {
       console.error('Error updating task:', error);
       
-      // Fallback: At least update the local state and localStorage
+      // Fallback: Only update local state for generated tasks
       console.log('Falling back to local state update only');
-      updateTaskInCompetencies(taskId, taskData);
+      
+      if (taskId.includes('_course_') || taskId.includes('_resource_') || 
+          taskId.includes('_curiosity_ignition') || taskId.includes('_culminating_project')) {
+        // Only call updateTaskInCompetencies for generated tasks
+        updateTaskInCompetencies(taskId, taskData);
+      }
       
       setAllTasks(prevTasks => 
         prevTasks.map(task => 
@@ -5334,9 +5345,7 @@ const AuthenticatedApp = () => {
       );
       
       // Show user that changes are temporary
-      if (window.showErrorMessage) {
-        window.showErrorMessage('Changes saved locally but may not persist. Please check your admin permissions.');
-      }
+      console.warn('Changes saved locally only - may not persist on reload');
       
       return false;
     }
