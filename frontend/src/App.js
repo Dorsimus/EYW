@@ -9794,6 +9794,347 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
   );
 };
 
+// Enhanced Culminating Project Management Component
+const CulminatingProjectView = ({ competencies, portfolio, setCurrentView, showSuccessMessage, showErrorMessage, user }) => {
+  const [currentPhase, setCurrentPhase] = useState('planning');
+  const [projectDetails, setProjectDetails] = useState(null);
+  const [selectedDeliverable, setSelectedDeliverable] = useState(null);
+  const [showProjectWizard, setShowProjectWizard] = useState(false);
+  const [milestoneProgress, setMilestoneProgress] = useState({});
+
+  // Get culminating project data from competencies
+  const culminatingProject = competencies?.leadership_supervision?.culminating_project || {};
+
+  // Calculate phase progress based on portfolio submissions
+  const getPhaseProgress = (phase) => {
+    if (!culminatingProject.phases || !culminatingProject.phases[phase]) {
+      return { completed: 0, total: 0, percentage: 0 };
+    }
+
+    const phaseData = culminatingProject.phases[phase];
+    const deliverables = phaseData.deliverables || [];
+    const total = deliverables.length;
+    
+    // Count completed deliverables by checking portfolio for matching tags
+    const completed = deliverables.reduce((count, deliverable) => {
+      const hasPortfolioEvidence = portfolio.some(item => 
+        item.tags && item.tags.includes(deliverable.portfolio_tag)
+      );
+      return hasPortfolioEvidence ? count + 1 : count;
+    }, 0);
+
+    return {
+      completed,
+      total,
+      percentage: total > 0 ? Math.round((completed / total) * 100) : 0
+    };
+  };
+
+  // Get overall project progress
+  const getOverallProgress = () => {
+    const phases = ['planning', 'execution', 'completion'];
+    let totalDeliverables = 0;
+    let completedDeliverables = 0;
+
+    phases.forEach(phase => {
+      const progress = getPhaseProgress(phase);
+      totalDeliverables += progress.total;
+      completedDeliverables += progress.completed;
+    });
+
+    return {
+      completed: completedDeliverables,
+      total: totalDeliverables,
+      percentage: totalDeliverables > 0 ? Math.round((completedDeliverables / totalDeliverables) * 100) : 0
+    };
+  };
+
+  // Deliverable submission handler
+  const handleDeliverableSubmission = (deliverable, phase) => {
+    setSelectedDeliverable({ ...deliverable, phase });
+    setCurrentView('add-portfolio');
+  };
+
+  // Project phase indicator
+  const PhaseIndicator = ({ phase, phaseKey, isActive, progress }) => (
+    <div 
+      className={`flex-1 relative ${isActive ? 'z-10' : 'z-0'}`}
+      onClick={() => setCurrentPhase(phaseKey)}
+    >
+      <div className={`cursor-pointer p-4 rounded-lg transition-all ${
+        isActive 
+          ? 'bg-blue-100 border-2 border-blue-500 shadow-lg' 
+          : 'bg-white border border-gray-200 hover:border-gray-300'
+      }`}>
+        <div className="flex items-center space-x-2 mb-2">
+          <span className="text-lg">{phase.title.split(' ')[0]}</span>
+          <h4 className={`font-semibold text-sm ${isActive ? 'text-blue-900' : 'text-gray-700'}`}>
+            {phase.title.substring(phase.title.indexOf(' ') + 1)}
+          </h4>
+        </div>
+        
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2">
+            <div className="flex-1 bg-gray-200 rounded-full h-2">
+              <div 
+                className={`h-2 rounded-full transition-all duration-500 ${
+                  phaseKey === 'planning' ? 'bg-blue-500' :
+                  phaseKey === 'execution' ? 'bg-green-500' : 'bg-purple-500'
+                }`}
+                style={{ width: `${progress.percentage}%` }}
+              />
+            </div>
+            <span className="text-sm font-medium text-gray-700 min-w-[40px]">
+              {progress.percentage}%
+            </span>
+          </div>
+          
+          <div className="flex justify-between text-xs text-gray-500">
+            <span>{progress.completed}/{progress.total} deliverables</span>
+            <span>{phase.duration}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Deliverable card component
+  const DeliverableCard = ({ deliverable, phase, isCompleted }) => (
+    <div className={`border rounded-lg p-4 transition-all ${
+      isCompleted 
+        ? 'bg-green-50 border-green-200' 
+        : 'bg-white border-gray-200 hover:border-gray-300'
+    }`}>
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex-1">
+          <div className="flex items-center space-x-2 mb-1">
+            <h5 className="font-semibold text-gray-900">{deliverable.title}</h5>
+            {deliverable.required && (
+              <span className="text-xs bg-red-100 text-red-800 px-2 py-0.5 rounded-full">Required</span>
+            )}
+            {deliverable.template_provided && (
+              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Template</span>
+            )}
+          </div>
+          <p className="text-sm text-gray-600 mb-2">{deliverable.description}</p>
+          
+          {deliverable.competencies_demonstrated && (
+            <div className="flex flex-wrap gap-1 mb-2">
+              {deliverable.competencies_demonstrated.map(comp => (
+                <span key={comp} className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">
+                  {comp.replace(/_/g, ' ').toUpperCase()}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+        
+        <div className="flex items-center space-x-2">
+          {isCompleted ? (
+            <div className="flex items-center space-x-1 text-green-700">
+              <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <span className="text-sm font-medium">Complete</span>
+            </div>
+          ) : (
+            <div className="flex space-x-2">
+              {deliverable.template_provided && (
+                <button className="px-3 py-1.5 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors">
+                  📄 Template
+                </button>
+              )}
+              <button 
+                onClick={() => handleDeliverableSubmission(deliverable, phase)}
+                className="px-3 py-1.5 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors"
+              >
+                📤 Submit
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  const overallProgress = getOverallProgress();
+
+  return (
+    <div className="px-6 py-6 bg-white border-t border-red-200">
+      {/* Enhanced Project Header */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">🏆 {culminatingProject.title}</h3>
+            <p className="text-gray-600 mb-3">{culminatingProject.challenge}</p>
+          </div>
+          <div className="text-right">
+            <div className="text-3xl font-bold text-blue-600">{overallProgress.percentage}%</div>
+            <div className="text-sm text-gray-500">Overall Complete</div>
+          </div>
+        </div>
+        
+        {/* Project Scope & Integration */}
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 border border-blue-200">
+          <div className="flex items-start space-x-3">
+            <span className="text-2xl">🎯</span>
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-1">Cross-Competency Integration</h4>
+              <p className="text-sm text-gray-700 mb-3">{culminatingProject.project_scope}</p>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+                {culminatingProject.cross_competency_integration && Object.entries(culminatingProject.cross_competency_integration).map(([competency, description]) => (
+                  <div key={competency} className="bg-white rounded p-2 border">
+                    <div className="text-xs font-medium text-gray-800 mb-1">
+                      {competency.replace(/_/g, ' ').toUpperCase()}
+                    </div>
+                    <div className="text-xs text-gray-600">{description}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Phase Progress Indicators */}
+      <div className="mb-6">
+        <div className="flex space-x-4">
+          {culminatingProject.phases && Object.entries(culminatingProject.phases).map(([phaseKey, phase]) => (
+            <PhaseIndicator 
+              key={phaseKey}
+              phase={phase}
+              phaseKey={phaseKey}
+              isActive={currentPhase === phaseKey}
+              progress={getPhaseProgress(phaseKey)}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Current Phase Details */}
+      {culminatingProject.phases && culminatingProject.phases[currentPhase] && (
+        <div className="mb-6">
+          <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+            <div className="p-6">
+              <div className="flex items-center space-x-2 mb-4">
+                <span className="text-2xl">
+                  {currentPhase === 'planning' ? '📋' : 
+                   currentPhase === 'execution' ? '⚡' : '🎯'}
+                </span>
+                <h4 className="text-xl font-semibold text-gray-900">
+                  {culminatingProject.phases[currentPhase].title}
+                </h4>
+              </div>
+              
+              <p className="text-gray-700 mb-4">{culminatingProject.phases[currentPhase].description}</p>
+              
+              {/* Success Criteria */}
+              <div className="mb-6 p-3 bg-blue-50 rounded border-l-4 border-blue-400">
+                <div className="font-medium text-blue-900 mb-1">Success Criteria:</div>
+                <div className="text-sm text-blue-800">{culminatingProject.phases[currentPhase].success_criteria}</div>
+              </div>
+
+              {/* Phase Deliverables */}
+              <div className="space-y-4">
+                <h5 className="font-semibold text-gray-900">Phase Deliverables:</h5>
+                {culminatingProject.phases[currentPhase].deliverables?.map((deliverable, index) => {
+                  const isCompleted = portfolio.some(item => 
+                    item.tags && item.tags.includes(deliverable.portfolio_tag)
+                  );
+                  
+                  return (
+                    <DeliverableCard 
+                      key={index}
+                      deliverable={deliverable}
+                      phase={currentPhase}
+                      isCompleted={isCompleted}
+                    />
+                  );
+                })}
+              </div>
+
+              {/* Execution Phase Checkpoints */}
+              {currentPhase === 'execution' && culminatingProject.phases.execution.checkpoints && (
+                <div className="mt-6">
+                  <h5 className="font-semibold text-gray-900 mb-3">Project Checkpoints:</h5>
+                  <div className="space-y-2">
+                    {culminatingProject.phases.execution.checkpoints.map((checkpoint, index) => (
+                      <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded">
+                        <span className="font-medium text-gray-700">Week {checkpoint.week}:</span>
+                        <span className="text-gray-600">{checkpoint.milestone}</span>
+                        <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">
+                          {checkpoint.deliverable}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Final Presentation Requirements */}
+      {culminatingProject.presentation && (
+        <div className="mb-6">
+          <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 border border-purple-200">
+            <div className="flex items-start space-x-3">
+              <span className="text-2xl">🎤</span>
+              <div className="flex-1">
+                <h4 className="font-semibold text-purple-900 mb-2">{culminatingProject.presentation.title}</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="font-medium text-purple-800">Duration:</span>
+                    <p className="text-purple-700">{culminatingProject.presentation.duration}</p>
+                  </div>
+                  <div>
+                    <span className="font-medium text-purple-800">Audience:</span>
+                    <p className="text-purple-700">{culminatingProject.presentation.audience}</p>
+                  </div>
+                </div>
+                
+                <div className="mt-3">
+                  <span className="font-medium text-purple-800">Presentation Components:</span>
+                  <div className="mt-2 space-y-1">
+                    {culminatingProject.presentation.components?.map((component, index) => (
+                      <div key={index} className="flex items-center space-x-2 text-purple-700">
+                        <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
+                        <span>{component}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Action Buttons */}
+      <div className="flex items-center justify-center space-x-4">
+        <button
+          onClick={() => setCurrentView('portfolio')}
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+        >
+          📁 View Project Portfolio
+        </button>
+        <button
+          onClick={() => setCurrentView('add-portfolio')}
+          className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
+        >
+          📤 Add Project Evidence
+        </button>
+        {overallProgress.percentage >= 100 && (
+          <button className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+            🎤 Schedule Presentation
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
+
 // Enhanced Portfolio View Component with Document Viewing and Organization
 const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfolio, showSuccessMessage, showErrorMessage }) => {
   const [expandedSections, setExpandedSections] = useState({});
