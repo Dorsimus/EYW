@@ -5512,7 +5512,6 @@ const AuthenticatedApp = () => {
             showSuccessMessage={showSuccessMessage}
             showErrorMessage={showErrorMessage}
           />
-          </div>
         )}
         
         {currentView === 'competencies' && !isAdminMode && (
