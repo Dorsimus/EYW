@@ -5433,8 +5433,11 @@ const AuthenticatedApp = () => {
   const [convertedTasks, setConvertedTasks] = useState(() => {
     try {
       const saved = localStorage.getItem('convertedTasks');
-      return saved ? new Set(JSON.parse(saved)) : new Set();
-    } catch {
+      const restored = saved ? new Set(JSON.parse(saved)) : new Set();
+      console.log('🔄 RESTORED CONVERTED TASKS:', [...restored]);
+      return restored;
+    } catch (error) {
+      console.error('Error restoring converted tasks:', error);
       return new Set();
     }
   });
