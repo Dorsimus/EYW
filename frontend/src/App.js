@@ -5401,6 +5401,76 @@ const AuthenticatedApp = () => {
     }
   });
 
+  // Helper function to apply converted task data to competencies structure
+  const applyConvertedTaskToCompetencies = (competenciesObj, taskId, convertedTaskData) => {
+    if (!taskId || typeof taskId !== 'string') return;
+    
+    const parts = taskId.split('_');
+    const areaKey = parts[0];
+    const area = competenciesObj[areaKey];
+    
+    if (!area) return;
+    
+    // Handle different task types based on taskId pattern
+    if (taskId.includes('curiosity_ignition')) {
+      if (area.curiosity_ignition) {
+        area.curiosity_ignition.title = convertedTaskData.title;
+        area.curiosity_ignition.description = convertedTaskData.description;
+        area.curiosity_ignition._converted = true;
+        area.curiosity_ignition._database_id = convertedTaskData.id;
+      }
+    }
+    else if (taskId.includes('culminating_project')) {
+      if (area.culminating_project) {
+        area.culminating_project.title = convertedTaskData.title;
+        area.culminating_project.challenge = convertedTaskData.description;
+        area.culminating_project._converted = true;
+        area.culminating_project._database_id = convertedTaskData.id;
+      }
+    }
+    else if (taskId.includes('_course_')) {
+      const subKey = parts[1];
+      const courseIndex = parseInt(parts[3]);
+      const subComp = area.sub_competencies?.[subKey];
+      
+      if (subComp?.foundation_courses?.[courseIndex]) {
+        const course = subComp.foundation_courses[courseIndex];
+        course.title = convertedTaskData.title;
+        course.description = convertedTaskData.description;
+        course.url = convertedTaskData.external_link;
+        course._converted = true;
+        course._database_id = convertedTaskData.id;
+      }
+    }
+    else if (taskId.includes('_activity_')) {
+      const subKey = parts[1];
+      const activityIndex = parseInt(parts[3]);
+      const subComp = area.sub_competencies?.[subKey];
+      
+      if (subComp?.monthly_activities?.[activityIndex]) {
+        const activity = subComp.monthly_activities[activityIndex];
+        activity.title = convertedTaskData.title;
+        activity.in_flow_activity = convertedTaskData.description;
+        activity._converted = true;
+        activity._database_id = convertedTaskData.id;
+      }
+    }
+    else if (taskId.includes('_resource_')) {
+      const subKey = parts[1];
+      const resourceIndex = parseInt(parts[3]);
+      const subComp = area.sub_competencies?.[subKey];
+      
+      if (subComp?.dive_deeper_resources?.[resourceIndex]) {
+        const resource = subComp.dive_deeper_resources[resourceIndex];
+        resource.title = convertedTaskData.title;
+        resource.description = convertedTaskData.description;
+        resource.url = convertedTaskData.external_link;
+        resource._converted = true;
+        resource._database_id = convertedTaskData.id;
+      }
+    }
+  };
+
   // Save converted tasks to localStorage when it changes
   useEffect(() => {
     localStorage.setItem('convertedTasks', JSON.stringify([...convertedTasks]));
