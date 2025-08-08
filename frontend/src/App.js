@@ -5166,7 +5166,10 @@ const AuthenticatedApp = () => {
           if (subComp.foundation_courses) {
             subComp.foundation_courses.forEach((course, index) => {
               const taskId = `${areaKey}_${subKey}_course_${index}`;
-              if (!convertedTasks.has(taskId)) {
+              const isConverted = convertedTasks.has(taskId);
+              console.log(`📋 Foundation course ${taskId}: ${isConverted ? 'SKIPPED (converted)' : 'ADDED'}`);
+              
+              if (!isConverted) {
                 allTasks.push({
                   id: taskId,
                   title: course.title,
