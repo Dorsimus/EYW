@@ -5150,22 +5150,25 @@ const AuthenticatedApp = () => {
             });
           }
           
-          // Add Dive Deeper resources
+          // Add Dive Deeper resources (only if not converted)
           if (subComp.dive_deeper_resources) {
             subComp.dive_deeper_resources.forEach((resource, index) => {
-              allTasks.push({
-                id: `${areaKey}_${subKey}_resource_${index}`,
-                title: resource.title,
-                description: resource.description,
-                task_type: resource.type === 'course' ? 'course_link' : 'reading',
-                competency_area: areaKey,
-                sub_competency: subKey,
-                estimated_hours: resource.duration === '1 hour' ? 1 : 0.25,
-                external_link: resource.url || '#',
-                instructions: resource.why_this_matters,
-                active: true,
-                required: false
-              });
+              const taskId = `${areaKey}_${subKey}_resource_${index}`;
+              if (!convertedTasks.has(taskId)) {
+                allTasks.push({
+                  id: taskId,
+                  title: resource.title,
+                  description: resource.description,
+                  task_type: resource.type === 'course' ? 'course_link' : 'reading',
+                  competency_area: areaKey,
+                  sub_competency: subKey,
+                  estimated_hours: resource.duration === '1 hour' ? 1 : 0.25,
+                  external_link: resource.url || '#',
+                  instructions: resource.why_this_matters,
+                  active: true,
+                  required: false
+                });
+              }
             });
           }
         });
