@@ -5593,7 +5593,24 @@ const AuthenticatedApp = () => {
         
         // Create in database
         const token = await getToken();
-        console.log('🔐 Got auth token:', token ? `${token.substring(0, 20)}...` : 'null');
+        console.log('🔐 Got auth token:', token ? `${token.substring(0, 50)}...` : 'null');
+        
+        // Debug: Decode token to see claims
+        if (token) {
+          try {
+            const tokenParts = token.split('.');
+            const payload = JSON.parse(atob(tokenParts[1]));
+            console.log('🔍 Token payload:', {
+              sub: payload.sub,
+              metadata: payload.metadata,
+              roles: payload.roles,
+              exp: new Date(payload.exp * 1000),
+              iss: payload.iss
+            });
+          } catch (e) {
+            console.log('Could not decode token:', e);
+          }
+        }
         
         const headers = { Authorization: `Bearer ${token}` };
         const response = await axios.post(`${API}/admin/tasks`, newTaskData, { headers });
