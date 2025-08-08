@@ -5480,7 +5480,7 @@ const AuthenticatedApp = () => {
           <AdminUsersView users={allUsers} />
         )}
         
-        {currentView === 'admin-analytics' && isAdmin && (
+        {currentView === 'admin-analytics' && isAdminMode && (
           <AdminAnalyticsView 
             stats={adminStats} 
             tasks={allTasks} 
