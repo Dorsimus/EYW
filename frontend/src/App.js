@@ -5551,7 +5551,7 @@ const AuthenticatedApp = () => {
           />
         )}
         
-        {currentView === 'flightbook' && !isAdmin && (
+        {currentView === 'flightbook' && !isAdminMode && (
           <LeadershipFlightbookView 
             competencies={competencies}
             portfolio={portfolio}
