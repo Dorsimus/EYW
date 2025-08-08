@@ -5431,7 +5431,7 @@ const AuthenticatedApp = () => {
           />
         )}
         
-        {currentView === 'admin-content-management' && isAdmin && (
+        {currentView === 'admin-content-management' && isAdminMode && (
           <ContentManagement 
             tasks={allTasks}
             competencies={competencies}
