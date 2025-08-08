@@ -9633,7 +9633,7 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
   );
 };
 
-// Enhanced Portfolio View Component with Accordion Organization
+// Enhanced Portfolio View Component with Document Viewing and Organization
 const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfolio, showSuccessMessage, showErrorMessage }) => {
   const [expandedSections, setExpandedSections] = useState({});
   const [selectedItems, setSelectedItems] = useState(new Set());
@@ -9642,6 +9642,10 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('date');
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'grid'
+  const [selectedDocument, setSelectedDocument] = useState(null); // For document viewer
+  const [filterBy, setFilterBy] = useState('all'); // 'all', 'competency', 'tag', 'type'
+  const [selectedCompetency, setSelectedCompetency] = useState('all');
+  const [selectedTag, setSelectedTag] = useState('all');
   
   // Reload portfolio when component mounts
   useEffect(() => {
@@ -9649,6 +9653,196 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
       reloadPortfolio();
     }
   }, [reloadPortfolio]);
+
+  // Get unique tags from portfolio items
+  const uniqueTags = [...new Set(portfolio.flatMap(item => item.tags || []))];
+  
+  // Get unique file types from portfolio items
+  const uniqueFileTypes = [...new Set(portfolio.map(item => {
+    if (item.original_filename) {
+      const extension = item.original_filename.split('.').pop()?.toLowerCase();
+      return extension || 'unknown';
+    }
+    return 'document';
+  }))];
+
+  // Enhanced filtering and sorting
+  const filteredAndSortedPortfolio = portfolio
+    .filter(item => {
+      // Search filter
+      if (searchTerm && !item.title.toLowerCase().includes(searchTerm.toLowerCase()) && 
+          !item.description.toLowerCase().includes(searchTerm.toLowerCase())) {
+        return false;
+      }
+      
+      // Competency filter
+      if (selectedCompetency !== 'all' && !item.competency_areas?.includes(selectedCompetency)) {
+        return false;
+      }
+      
+      // Tag filter
+      if (selectedTag !== 'all' && !item.tags?.includes(selectedTag)) {
+        return false;
+      }
+      
+      return true;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'title':
+          return a.title.localeCompare(b.title);
+        case 'competency':
+          return (a.competency_areas?.[0] || '').localeCompare(b.competency_areas?.[0] || '');
+        case 'type':
+          const aType = a.original_filename?.split('.').pop() || 'document';
+          const bType = b.original_filename?.split('.').pop() || 'document';
+          return aType.localeCompare(bType);
+        case 'date':
+        default:
+          return new Date(b.upload_date) - new Date(a.upload_date);
+      }
+    });
+
+  // Group portfolio items by competency for accordion view
+  const portfolioByCompetency = {};
+  filteredAndSortedPortfolio.forEach(item => {
+    const competencyAreas = item.competency_areas || ['uncategorized'];
+    competencyAreas.forEach(competencyKey => {
+      if (!portfolioByCompetency[competencyKey]) {
+        portfolioByCompetency[competencyKey] = [];
+      }
+      portfolioByCompetency[competencyKey].push(item);
+    });
+  });
+
+  // Document viewer modal
+  const DocumentViewer = ({ document, onClose }) => (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
+        <div className="flex items-center justify-between p-4 border-b">
+          <div>
+            <h3 className="text-lg font-medium text-gray-900">{document.title}</h3>
+            <p className="text-sm text-gray-500">{document.original_filename}</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            <span className="sr-only">Close</span>
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div className="p-4 max-h-[calc(90vh-120px)] overflow-auto">
+          {/* Document preview based on file type */}
+          {document.original_filename && (
+            <DocumentPreview 
+              filename={document.original_filename}
+              filePath={document.file_path}
+              fileId={document.id}
+              fileSize={document.file_size}
+            />
+          )}
+          
+          {/* Document metadata */}
+          <div className="mt-6 border-t pt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="font-medium text-gray-700">Upload Date:</span>
+                <span className="ml-2">{new Date(document.upload_date).toLocaleDateString()}</span>
+              </div>
+              <div>
+                <span className="font-medium text-gray-700">File Size:</span>
+                <span className="ml-2">{document.file_size_formatted || 'Unknown'}</span>
+              </div>
+              <div>
+                <span className="font-medium text-gray-700">Competencies:</span>
+                <span className="ml-2">{document.competency_areas?.join(', ') || 'None'}</span>
+              </div>
+              <div>
+                <span className="font-medium text-gray-700">Tags:</span>
+                <span className="ml-2">{document.tags?.join(', ') || 'None'}</span>
+              </div>
+            </div>
+            <div className="mt-3">
+              <span className="font-medium text-gray-700">Description:</span>
+              <p className="mt-1 text-gray-600">{document.description}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Document preview component
+  const DocumentPreview = ({ filename, filePath, fileId, fileSize }) => {
+    const extension = filename?.split('.').pop()?.toLowerCase();
+    const API = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+    
+    // Generate file URL for viewing
+    const fileUrl = `${API}/api/files/portfolio/${fileId}`;
+    
+    if (['pdf'].includes(extension)) {
+      return (
+        <div className="w-full h-96">
+          <embed
+            src={fileUrl}
+            type="application/pdf"
+            width="100%"
+            height="100%"
+            className="border rounded"
+          />
+        </div>
+      );
+    } else if (['jpg', 'jpeg', 'png', 'gif', 'bmp'].includes(extension)) {
+      return (
+        <div className="text-center">
+          <img
+            src={fileUrl}
+            alt={filename}
+            className="max-w-full max-h-96 mx-auto rounded border"
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'block';
+            }}
+          />
+          <div style={{ display: 'none' }} className="text-gray-500 py-8">
+            <span className="text-4xl">🖼️</span>
+            <p>Image preview not available</p>
+          </div>
+        </div>
+      );
+    } else if (['txt', 'md'].includes(extension)) {
+      return (
+        <iframe
+          src={fileUrl}
+          className="w-full h-96 border rounded"
+          title={filename}
+        />
+      );
+    } else {
+      return (
+        <div className="text-center py-12 bg-gray-50 rounded">
+          <div className="text-6xl text-gray-300 mb-4">
+            {extension === 'doc' || extension === 'docx' ? '📄' :
+             extension === 'xls' || extension === 'xlsx' ? '📊' :
+             extension === 'ppt' || extension === 'pptx' ? '📈' : '📋'}
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">{filename}</h3>
+          <p className="text-gray-600 mb-4">Preview not available for this file type</p>
+          <a
+            href={fileUrl}
+            download={filename}
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+          >
+            📥 Download File
+          </a>
+        </div>
+      );
+    }
+  };
 
   // Enhanced bulk actions for selected items
   const handleBulkAction = async (action) => {
