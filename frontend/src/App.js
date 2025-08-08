@@ -6417,11 +6417,21 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
   };
 
   const getTotalTasks = () => {
+    // Handle case where competencies is undefined, null, or empty
+    if (!competencies || typeof competencies !== 'object') {
+      return 1; // Return 1 to avoid division by zero in percentage calculations
+    }
+    
     return Object.values(competencies).reduce((total, area) => {
+      // Handle case where area or sub_competencies is undefined
+      if (!area || !area.sub_competencies || typeof area.sub_competencies !== 'object') {
+        return total;
+      }
+      
       return total + Object.values(area.sub_competencies).reduce((subTotal, sub) => {
         return subTotal + (sub.total_tasks || 0);
       }, 0);
-    }, 0);
+    }, 0) || 1; // Ensure we never return 0 to avoid division by zero
   };
 
   const getCompletedTasks = () => {
