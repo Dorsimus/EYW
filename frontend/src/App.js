@@ -5481,7 +5481,11 @@ const AuthenticatedApp = () => {
 
         {/* User Views - Allow admin users to see regular dashboard too */}
         {currentView === 'dashboard' && (
-          <DashboardView 
+          <div>
+            <div style={{background: 'yellow', padding: '10px', margin: '10px', border: '2px solid red'}}>
+              🚨 DEBUG: DashboardView is rendering for currentView='{currentView}' isAdmin={isAdmin}
+            </div>
+            <DashboardView 
             user={user}
             competencies={competencies}
             portfolio={portfolio}
