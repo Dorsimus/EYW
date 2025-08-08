@@ -3400,24 +3400,7 @@ const AuthenticatedApp = () => {
               }
             ],
             competency_gate: "Process improvement projects completed + Quality control systems implemented + Technology improvements executed + SOPs optimized"
-                },
-                operational_integration: "Build process thinking into daily workflow management",
-                journal_prompt: "What processes work smoothly vs. create frustration? Where are the biggest opportunities for improvement?"
-              },
-              {
-                month: 2,
-                title: "Efficiency Implementation",
-                in_flow_activity: "Implement and test one process improvement each week",
-                document_section: {
-                  title: "Process Improvement Results",
-                  description: "Improvements you've tested and their impact",
-                  portfolio_integration: true
-                },
-                leadership_integration: "Involve team in identifying and implementing process improvements",
-                journal_prompt: "Which process improvements made the biggest difference? How can I make process improvement a regular part of how we work?"
-              },
-              {
-                month: 3,
+          },
                 title: "Systems Integration",
                 in_flow_activity: "Look for ways your improved processes can work better with other departments",
                 document_section: {
