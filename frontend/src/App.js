@@ -5253,10 +5253,20 @@ const AuthenticatedApp = () => {
 
   // ENHANCED TASK MANAGEMENT FOR ADMIN PANEL
   const updateTask = async (taskId, taskData) => {
+    if (!hasAdminAccess) {
+      console.log('No admin access for updating tasks');
+      return false;
+    }
+
     try {
       console.log('Updating task:', taskId, taskData);
       
-      // Update in competencies structure
+      // First update backend database
+      const token = await getToken();
+      const headers = { Authorization: `Bearer ${token}` };
+      await axios.put(`${API}/admin/tasks/${taskId}`, taskData, { headers });
+      
+      // Then update local state
       updateTaskInCompetencies(taskId, taskData);
       
       // Update in allTasks state
@@ -5266,7 +5276,10 @@ const AuthenticatedApp = () => {
         )
       );
       
-      console.log('Task updated successfully');
+      // Reload admin data to ensure sync
+      await loadAdminData();
+      
+      console.log('Task updated successfully in backend and local state');
       return true;
     } catch (error) {
       console.error('Error updating task:', error);
