@@ -6256,7 +6256,11 @@ const AuthenticatedApp = () => {
             onJournalReflectionComplete={handleJournalReflectionComplete}
             isCompetencyTaskComplete={isCompetencyTaskComplete}
             getCompetencyTaskNotes={getCompetencyTaskNotes}
-
+            portfolio={portfolio}
+            setCurrentView={setCurrentView}
+            showSuccessMessage={showSuccessMessage}
+            showErrorMessage={showErrorMessage}
+            user={localUser}
             showTaskModal={showTaskModal}
             setShowTaskModal={setShowTaskModal}
             taskNotes={taskNotes}
