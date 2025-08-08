@@ -13940,7 +13940,9 @@ const AnalyticsDashboard = ({ competencies, portfolio, competencyTaskProgress, c
         <div className="bg-white rounded-lg p-6 border shadow-sm">
           <h3 className="text-lg font-semibold mb-4">🎯 Competency Progress Breakdown</h3>
           <div className="space-y-4">
-            {Object.entries(competencies).map(([key, competency]) => (
+            {Object.entries(competencies)
+              .filter(([key]) => key !== 'core_values')
+              .map(([key, competency]) => (
               <div key={key} className="flex items-center space-x-4">
                 <div className="w-48 text-sm font-medium text-gray-700 truncate">
                   {competency.name}
