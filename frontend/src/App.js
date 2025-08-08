@@ -5355,7 +5355,7 @@ const AuthenticatedApp = () => {
           );
           
           // Update the competencies structure to show the converted task data
-          updateTaskInCompetencies(taskId, { ...newTaskData, id: response.data.id });
+          updateConvertedTaskInCompetencies(taskId, { ...newTaskData, id: response.data.id });
           
           console.log(`✅ Converted generated task ${taskId} to database task ${response.data.id}`);
           
