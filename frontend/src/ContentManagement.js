@@ -809,7 +809,27 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
           </div>
 
           {/* View Controls */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
+            {/* Drag Mode Toggle */}
+            <button
+              onClick={() => {
+                setIsDragMode(!isDragMode);
+                setSelectedTasks(new Set()); // Clear selection when entering drag mode
+                setShowBulkActions(false);
+              }}
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-1 ${
+                isDragMode 
+                  ? 'bg-green-100 text-green-700 hover:bg-green-200' 
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+              title={isDragMode ? 'Exit drag mode' : 'Enter drag mode to reorder tasks'}
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+              </svg>
+              <span>{isDragMode ? 'Stop Reordering' : 'Reorder Tasks'}</span>
+            </button>
+
             {/* View Mode Toggle */}
             <div className="flex bg-gray-100 rounded-md p-1">
               <button
@@ -835,27 +855,68 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
             </div>
 
             {/* Bulk Actions */}
-            {showBulkActions && (
+            {showBulkActions && !isDragMode && (
               <div className="flex items-center space-x-2 pl-4 border-l">
-                <span className="text-sm text-gray-600">{selectedTasks.size} selected</span>
+                <span className="text-sm text-gray-600 font-medium">{selectedTasks.size} selected</span>
+                
+                <button
+                  onClick={() => handleBulkAction('bulk_edit')}
+                  className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors font-medium"
+                  title="Edit multiple tasks at once"
+                >
+                  ✏️ Bulk Edit
+                </button>
+                
                 <button
                   onClick={() => handleBulkAction('duplicate')}
-                  className="px-3 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors"
+                  className="px-3 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors font-medium"
+                  title="Duplicate selected tasks"
                 >
-                  Duplicate
+                  📋 Duplicate
                 </button>
+                
+                <button
+                  onClick={() => handleBulkAction('move_competency')}
+                  className="px-3 py-1 text-xs bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors font-medium"
+                  title="Move to different competency area"
+                >
+                  🔄 Move
+                </button>
+                
                 <button
                   onClick={() => handleBulkAction('export')}
-                  className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+                  className="px-3 py-1 text-xs bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition-colors font-medium"
+                  title="Export as JSON file"
                 >
-                  Export
+                  📤 Export
                 </button>
+                
+                <button
+                  onClick={() => handleBulkAction('archive')}
+                  className="px-3 py-1 text-xs bg-orange-100 text-orange-700 rounded hover:bg-orange-200 transition-colors font-medium"
+                  title="Archive selected tasks"
+                >
+                  📦 Archive
+                </button>
+                
                 <button
                   onClick={() => handleBulkAction('delete')}
-                  className="px-3 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
+                  className="px-3 py-1 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors font-medium"
+                  title="Delete selected tasks"
                 >
-                  Delete
+                  🗑️ Delete
                 </button>
+              </div>
+            )}
+
+            {isDragMode && (
+              <div className="flex items-center space-x-2 pl-4 border-l border-green-200 bg-green-50 px-3 py-2 rounded-md">
+                <div className="flex items-center space-x-1 text-green-700">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="text-sm font-medium">Drag tasks to reorder or move between competency areas</span>
+                </div>
               </div>
             )}
           </div>
