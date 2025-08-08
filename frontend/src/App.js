@@ -4400,6 +4400,66 @@ const AuthenticatedApp = () => {
     }
   };
 
+  // Function to sync local data with backend when connection is restored
+  const syncLocalDataWithBackend = async () => {
+    if (!localUser?.id) return;
+
+    try {
+      console.log('🔄 Syncing local data with backend...');
+      const token = await getToken();
+      if (!token) {
+        console.log('No auth token available for sync');
+        return;
+      }
+
+      // Sync pending task completions
+      const pendingCompletions = JSON.parse(localStorage.getItem('task_completions') || '[]');
+      const unsynced = pendingCompletions.filter(c => !c.backendSubmitted);
+      
+      for (const completion of unsynced) {
+        try {
+          const formData = new FormData();
+          formData.append('task_id', completion.taskId);
+          formData.append('evidence_description', completion.evidenceDescription || '');
+          formData.append('notes', '');
+          
+          await axios.post(`${API}/users/${localUser.id}/tasks/complete`, formData, {
+            headers: { Authorization: `Bearer ${token}` },
+            timeout: 10000
+          });
+          
+          // Mark as synced
+          completion.backendSubmitted = true;
+          console.log(`✅ Synced task completion: ${completion.taskId}`);
+        } catch (syncError) {
+          console.warn(`⚠️ Failed to sync task ${completion.taskId}:`, syncError);
+        }
+      }
+      
+      // Update localStorage with sync status
+      localStorage.setItem('task_completions', JSON.stringify(pendingCompletions));
+      
+      // Sync portfolio items (if any are pending)
+      const pendingPortfolio = JSON.parse(localStorage.getItem('user_portfolio_pending') || '[]');
+      // Implementation for portfolio sync would go here
+      
+      console.log('✅ Local data sync completed');
+    } catch (error) {
+      console.error('❌ Error syncing local data:', error);
+    }
+  };
+
+  // Sync data when user comes online
+  useEffect(() => {
+    const handleOnline = () => {
+      console.log('🌐 Connection restored, syncing data...');
+      syncLocalDataWithBackend();
+    };
+
+    window.addEventListener('online', handleOnline);
+    return () => window.removeEventListener('online', handleOnline);
+  }, [localUser]);
+
   const completeTask = async (taskId, evidenceDescription = "", file = null) => {
     try {
       if (!localUser?.id) {
