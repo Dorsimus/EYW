@@ -5519,7 +5519,7 @@ const AuthenticatedApp = () => {
           </div>
         )}
         
-        {currentView === 'competencies' && !isAdmin && (
+        {currentView === 'competencies' && !isAdminMode && (
           <CompetenciesView 
             competencies={competencies}
             onViewTasks={loadCompetencyTasks}
