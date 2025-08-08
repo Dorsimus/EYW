@@ -5447,7 +5447,7 @@ const AuthenticatedApp = () => {
           />
         )}
         
-        {currentView === 'admin-testing-tools' && isAdmin && (
+        {currentView === 'admin-testing-tools' && isAdminMode && (
           <TestingTools 
             users={allUsers}
             tasks={allTasks}
