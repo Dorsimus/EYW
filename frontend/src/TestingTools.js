@@ -109,6 +109,7 @@ const TestingTools = ({ users, tasks, onCreateUser, onUpdateUser, onDeleteUser, 
           onDeleteUser={onDeleteUser}
           showSuccessMessage={showSuccessMessage}
           showErrorMessage={showErrorMessage}
+          bulkOperationInProgress={bulkOperationInProgress}
           setBulkOperationInProgress={setBulkOperationInProgress}
         />
       )}
