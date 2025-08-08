@@ -5327,8 +5327,8 @@ const AuthenticatedApp = () => {
       }
       else if (taskId.includes('_course_')) {
         console.log('📝 Updating foundation course in competencies');
-        const subKey = parts[1];
-        const courseIndex = parseInt(parts[3]);
+        const subKey = parts[2]; // Fix: subKey is the 3rd part (index 2)
+        const courseIndex = parseInt(parts[4]); // Fix: courseIndex is the 5th part (index 4)
         const subComp = area.sub_competencies?.[subKey];
         
         if (subComp?.foundation_courses?.[courseIndex]) {
@@ -5342,8 +5342,8 @@ const AuthenticatedApp = () => {
       }
       else if (taskId.includes('_activity_')) {
         console.log('📝 Updating monthly activity in competencies');
-        const subKey = parts[1];
-        const activityIndex = parseInt(parts[3]);
+        const subKey = parts[2]; // Fix: subKey is the 3rd part
+        const activityIndex = parseInt(parts[4]); // Fix: activityIndex is the 5th part
         const subComp = area.sub_competencies?.[subKey];
         
         if (subComp?.monthly_activities?.[activityIndex]) {
@@ -5356,8 +5356,8 @@ const AuthenticatedApp = () => {
       }
       else if (taskId.includes('_resource_')) {
         console.log('📝 Updating dive deeper resource in competencies');
-        const subKey = parts[1];
-        const resourceIndex = parseInt(parts[3]);
+        const subKey = parts[2]; // Fix: subKey is the 3rd part
+        const resourceIndex = parseInt(parts[4]); // Fix: resourceIndex is the 5th part
         const subComp = area.sub_competencies?.[subKey];
         
         if (subComp?.dive_deeper_resources?.[resourceIndex]) {
