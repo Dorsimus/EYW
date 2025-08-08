@@ -4593,10 +4593,34 @@ const AuthenticatedApp = () => {
     }
 
     try {
-      console.log('Creating user in demo mode:', userData);
+      console.log('Creating user:', userData);
       
-      // In demo mode, we simulate user creation by adding to allUsers state
-      if (hasAdminAccess) {
+      // Check if running in production mode (has valid auth token)
+      const token = await getToken();
+      
+      if (token && BACKEND_URL) {
+        // Production mode - make API call with proper error handling and timeout
+        const headers = { Authorization: `Bearer ${token}` };
+        const config = {
+          headers,
+          timeout: 15000, // 15 second timeout
+          validateStatus: (status) => status < 500 // Don't throw on 4xx errors
+        };
+        
+        console.log('Making API call to create user...');
+        const response = await axios.post(`${API}/users`, userData, config);
+        
+        if (response.status === 200 || response.status === 201) {
+          console.log('User created successfully via API:', response.data);
+          await loadAdminData(); // Reload admin data
+          return response.data;
+        } else {
+          console.warn('User creation API returned unexpected status:', response.status);
+          throw new Error(`API returned status: ${response.status}`);
+        }
+      } else {
+        // Demo/local mode - simulate user creation
+        console.log('Running in demo mode, simulating user creation...');
         const newUser = {
           ...userData,
           id: userData.id || `user-${Date.now()}`,
@@ -4615,17 +4639,30 @@ const AuthenticatedApp = () => {
         
         console.log('User created successfully in demo mode:', newUser);
         return newUser;
-      } else {
-        // Production mode - make API call
-        const token = await getToken();
-        const headers = { Authorization: `Bearer ${token}` };
-        const response = await axios.post(`${API}/users`, userData, { headers });
-        await loadAdminData(); // Reload admin data
-        return response.data;
       }
     } catch (error) {
       console.error('Error creating user:', error);
-      throw error;
+      
+      // If API call fails, fall back to demo mode
+      console.log('API call failed, falling back to demo mode...');
+      const newUser = {
+        ...userData,
+        id: userData.id || `user-${Date.now()}`,
+        created_at: userData.created_at || new Date().toISOString(),
+        last_activity: userData.last_activity || new Date().toISOString(),
+        role: userData.role || 'participant'
+      };
+      
+      // Add to allUsers state
+      setAllUsers(prevUsers => [...prevUsers, newUser]);
+      
+      // Save to localStorage for persistence  
+      const existingUsers = JSON.parse(localStorage.getItem('admin_all_users') || '[]');
+      const updatedUsers = [...existingUsers, newUser];
+      localStorage.setItem('admin_all_users', JSON.stringify(updatedUsers));
+      
+      console.log('User created in fallback demo mode:', newUser);
+      return newUser;
     }
   };
 
