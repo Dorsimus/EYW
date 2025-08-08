@@ -5174,21 +5174,24 @@ const AuthenticatedApp = () => {
         });
       }
       
-      // Add Culminating Project
+      // Add Culminating Project (only if not converted)
       if (area.culminating_project) {
-        allTasks.push({
-          id: `${areaKey}_culminating_project`,
-          title: area.culminating_project.title,
-          description: area.culminating_project.challenge,
-          task_type: 'project',
-          competency_area: areaKey,
-          sub_competency: 'culminating_project',
-          estimated_hours: 20, // Major project
-          instructions: `Options: ${area.culminating_project.options?.join(' | ')}`,
-          active: true,
-          required: true,
-          is_culminating: true
-        });
+        const taskId = `${areaKey}_culminating_project`;
+        if (!convertedTasks.has(taskId)) {
+          allTasks.push({
+            id: taskId,
+            title: area.culminating_project.title,
+            description: area.culminating_project.challenge,
+            task_type: 'project',
+            competency_area: areaKey,
+            sub_competency: 'culminating_project',
+            estimated_hours: 20, // Major project
+            instructions: `Options: ${area.culminating_project.options?.join(' | ')}`,
+            active: true,
+            required: true,
+            is_culminating: true
+          });
+        }
       }
     });
     
