@@ -5540,7 +5540,7 @@ const AuthenticatedApp = () => {
           />
         )}
         
-        {currentView === 'portfolio' && !isAdmin && (
+        {currentView === 'portfolio' && !isAdminMode && (
           <PortfolioView 
             portfolio={portfolio} 
             setCurrentView={setCurrentView} 
