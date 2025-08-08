@@ -467,16 +467,14 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
 
   const handleBulkAction = async (action) => {
     const taskIds = Array.from(selectedTasks);
+    
+    if (action === 'delete') {
+      setBulkActionType('delete');
+      setShowBulkModal(true);
+      return;
+    }
+    
     switch (action) {
-      case 'delete':
-        if (confirm(`Delete ${taskIds.length} selected tasks?`)) {
-          for (const taskId of taskIds) {
-            await onDeleteTask(taskId);
-          }
-          setSelectedTasks(new Set());
-          setShowBulkActions(false);
-        }
-        break;
       case 'duplicate':
         for (const taskId of taskIds) {
           const originalTask = tasks.find(t => t.id === taskId);
@@ -484,24 +482,121 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
             await onCreateTask({ 
               ...originalTask, 
               id: undefined, 
-              title: `${originalTask.title} (Copy)` 
+              title: `${originalTask.title} (Copy)`,
+              order: originalTask.order + 0.1
             });
           }
         }
         setSelectedTasks(new Set());
         setShowBulkActions(false);
         break;
+        
       case 'export':
         const selectedTasksData = tasks.filter(t => selectedTasks.has(t.id));
-        const dataStr = JSON.stringify(selectedTasksData, null, 2);
+        const exportData = {
+          exported_at: new Date().toISOString(),
+          tasks_count: selectedTasksData.length,
+          tasks: selectedTasksData.map(task => ({
+            ...task,
+            export_notes: `Exported from Earn Your Wings Platform on ${new Date().toLocaleDateString()}`
+          }))
+        };
+        const dataStr = JSON.stringify(exportData, null, 2);
         const dataBlob = new Blob([dataStr], {type: 'application/json'});
         const url = URL.createObjectURL(dataBlob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'selected_tasks.json';
+        link.download = `tasks_export_${new Date().toISOString().split('T')[0]}.json`;
         link.click();
+        URL.revokeObjectURL(url);
+        setSelectedTasks(new Set());
+        setShowBulkActions(false);
+        break;
+        
+      case 'bulk_edit':
+        setBulkActionType('bulk_edit');
+        setShowBulkModal(true);
+        break;
+        
+      case 'move_competency':
+        setBulkActionType('move_competency');
+        setShowBulkModal(true);
+        break;
+        
+      case 'archive':
+        for (const taskId of taskIds) {
+          const task = tasks.find(t => t.id === taskId);
+          if (task) {
+            await onUpdateTask({ ...task, status: 'archived' });
+          }
+        }
+        setSelectedTasks(new Set());
+        setShowBulkActions(false);
         break;
     }
+  };
+
+  // Enhanced drag and drop functionality
+  const handleDragStart = (e, task) => {
+    if (!isDragMode) return;
+    setDraggedTask(task);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', e.target.outerHTML);
+    e.currentTarget.style.opacity = '0.5';
+  };
+
+  const handleDragEnd = (e) => {
+    e.currentTarget.style.opacity = '1';
+    setDraggedTask(null);
+    setDragOverTask(null);
+  };
+
+  const handleDragOver = (e, task) => {
+    if (!isDragMode || !draggedTask || draggedTask.id === task.id) return;
+    e.preventDefault();
+    setDragOverTask(task);
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleDragLeave = (e) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setDragOverTask(null);
+    }
+  };
+
+  const handleDrop = async (e, targetTask) => {
+    e.preventDefault();
+    if (!draggedTask || !targetTask || draggedTask.id === targetTask.id) return;
+
+    // Reorder tasks
+    const draggedIndex = tasks.findIndex(t => t.id === draggedTask.id);
+    const targetIndex = tasks.findIndex(t => t.id === targetTask.id);
+    
+    if (draggedIndex !== -1 && targetIndex !== -1) {
+      const newOrder = targetTask.order;
+      await onUpdateTask({ 
+        ...draggedTask, 
+        order: newOrder,
+        competency_area: targetTask.competency_area // Also move to same competency area
+      });
+      
+      // Update order of other tasks if needed
+      const tasksToUpdate = tasks
+        .filter(t => t.competency_area === targetTask.competency_area && t.id !== draggedTask.id)
+        .sort((a, b) => (a.order || 0) - (b.order || 0));
+      
+      for (let i = 0; i < tasksToUpdate.length; i++) {
+        if (tasksToUpdate[i].order === newOrder) {
+          await onUpdateTask({ 
+            ...tasksToUpdate[i], 
+            order: newOrder + 1
+          });
+        }
+      }
+    }
+
+    setDraggedTask(null);
+    setDragOverTask(null);
   };
 
   const getTypeColor = (type) => {
