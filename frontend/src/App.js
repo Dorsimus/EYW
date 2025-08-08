@@ -9153,7 +9153,7 @@ const CompetenciesView = ({
               setCurrentView={setCurrentView}
               showSuccessMessage={showSuccessMessage}
               showErrorMessage={showErrorMessage}
-              user={localUser}
+              user={user}
             />
           )}
         </div>
