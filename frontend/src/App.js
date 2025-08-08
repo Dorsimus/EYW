@@ -5133,6 +5133,7 @@ const AuthenticatedApp = () => {
 
   // EXTRACT REAL TASKS FROM COMPETENCIES FOR ADMIN PANEL
   const getAllTasksFromCompetencies = (competenciesData) => {
+    console.log('🔧 getAllTasksFromCompetencies called with converted tasks:', [...convertedTasks]);
     const allTasks = [];
     
     Object.entries(competenciesData).forEach(([areaKey, area]) => {
