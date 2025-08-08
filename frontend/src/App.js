@@ -8292,6 +8292,138 @@ const CompetenciesView = ({
                                         </div>
                                         )}
                                         
+                                        {/* Portfolio Assignment Section */}
+                                        {monthActivity.portfolio_assignment && (
+                                          <div className="mb-4">
+                                            <h6 className="text-sm font-semibold text-gray-700 mb-2 block">📋 Portfolio Assignment:</h6>
+                                            <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                                              <div className="mb-3">
+                                                <h7 className="text-sm font-bold text-amber-800 mb-1 block">
+                                                  {monthActivity.portfolio_assignment.title}
+                                                </h7>
+                                                <p className="text-xs text-amber-700 mb-2">
+                                                  📄 <strong>Deliverable:</strong> {monthActivity.portfolio_assignment.deliverable}
+                                                </p>
+                                                <p className="text-sm text-amber-800">
+                                                  {monthActivity.portfolio_assignment.description}
+                                                </p>
+                                              </div>
+                                              
+                                              {/* Portfolio Assignment Details */}
+                                              <div className="grid grid-cols-2 gap-3 mb-3 text-xs">
+                                                {monthActivity.portfolio_assignment.template_provided && (
+                                                  <div className="flex items-center text-green-700">
+                                                    <span className="mr-1">✅</span>
+                                                    Template Provided
+                                                  </div>
+                                                )}
+                                                {monthActivity.portfolio_assignment.manager_review && (
+                                                  <div className="flex items-center text-blue-700">
+                                                    <span className="mr-1">👨‍💼</span>
+                                                    Manager Review
+                                                  </div>
+                                                )}
+                                                {monthActivity.portfolio_assignment.quarterly_requirement && (
+                                                  <div className="flex items-center text-purple-700">
+                                                    <span className="mr-1">📅</span>
+                                                    Quarterly Required
+                                                  </div>
+                                                )}
+                                                {monthActivity.portfolio_assignment.annual_requirement && (
+                                                  <div className="flex items-center text-red-700">
+                                                    <span className="mr-1">🗓️</span>
+                                                    Annual Required
+                                                  </div>
+                                                )}
+                                              </div>
+                                              
+                                              {/* File Types Accepted */}
+                                              {monthActivity.portfolio_assignment.file_types && (
+                                                <div className="mb-3">
+                                                  <p className="text-xs text-gray-600 mb-1">
+                                                    📎 <strong>Accepted File Types:</strong>
+                                                  </p>
+                                                  <div className="flex flex-wrap gap-1">
+                                                    {monthActivity.portfolio_assignment.file_types.map((fileType, ftIndex) => (
+                                                      <span key={ftIndex} className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded border">
+                                                        {fileType}
+                                                      </span>
+                                                    ))}
+                                                  </div>
+                                                </div>
+                                              )}
+                                              
+                                              {/* Portfolio Assignment Action Buttons */}
+                                              <div className="flex items-center space-x-2 flex-wrap gap-2">
+                                                {/* Download Template Button */}
+                                                {monthActivity.portfolio_assignment.template_provided && (
+                                                  <button
+                                                    onClick={() => {
+                                                      const templateName = monthActivity.portfolio_assignment.title.replace(/\s+/g, '_').toLowerCase();
+                                                      console.log(`Downloading portfolio template: ${templateName}`);
+                                                      // Here would be actual template download logic
+                                                    }}
+                                                    className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-green-700 bg-green-100 border border-green-200 rounded-md hover:bg-green-200 transition-colors"
+                                                  >
+                                                    📄 Download Template
+                                                  </button>
+                                                )}
+                                                
+                                                {/* Upload Portfolio Assignment Button */}
+                                                <button
+                                                  onClick={() => {
+                                                    const input = document.createElement('input');
+                                                    input.type = 'file';
+                                                    input.accept = '.pdf,.doc,.docx,.txt,.xls,.xlsx,.ppt,.pptx';
+                                                    input.onchange = (e) => {
+                                                      const file = e.target.files[0];
+                                                      if (file) {
+                                                        console.log(`Uploading portfolio assignment: ${file.name}`);
+                                                        // Here would be actual file upload logic to portfolio
+                                                        onCompleteCompetencyTask(areaKey, subKey, `${activityKey}_portfolio`, `Portfolio Assignment: ${monthActivity.portfolio_assignment.title} - ${file.name}`, 'portfolio_assignment');
+                                                      }
+                                                    };
+                                                    input.click();
+                                                  }}
+                                                  className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-amber-700 bg-amber-100 border border-amber-200 rounded-md hover:bg-amber-200 transition-colors"
+                                                >
+                                                  📤 Upload Assignment
+                                                </button>
+                                                
+                                                {/* Add to Portfolio Button */}
+                                                <button
+                                                  onClick={() => {
+                                                    setShowTaskModal({ 
+                                                      areaKey, 
+                                                      subKey, 
+                                                      task: {
+                                                        ...monthActivity,
+                                                        id: `${activityKey}_portfolio_assignment`,
+                                                        title: monthActivity.portfolio_assignment.title,
+                                                        description: monthActivity.portfolio_assignment.description,
+                                                        type: 'portfolio_assignment'
+                                                      }, 
+                                                      taskType: 'portfolio_assignment' 
+                                                    });
+                                                    setTaskNotes(getCompetencyTaskNotes(areaKey, subKey, `${activityKey}_portfolio_assignment`) || '');
+                                                  }}
+                                                  className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-blue-700 bg-blue-100 border border-blue-200 rounded-md hover:bg-blue-200 transition-colors"
+                                                >
+                                                  📂 Add to Portfolio
+                                                </button>
+                                              </div>
+                                              
+                                              {/* Show uploaded portfolio assignment if exists */}
+                                              {getCompetencyTaskNotes(areaKey, subKey, `${activityKey}_portfolio`) && (
+                                                <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded text-xs">
+                                                  <p className="font-medium text-green-800 mb-1">📎 Submitted Portfolio Assignment:</p>
+                                                  <p className="text-green-700">{getCompetencyTaskNotes(areaKey, subKey, `${activityKey}_portfolio`)}</p>
+                                                </div>
+                                              )}
+                                            </div>
+                                          </div>
+                                        )}
+                                        
                                         {/* Reflection/Journal Prompt */}
                                         {(monthActivity.reflection || monthActivity.journal_prompt || monthActivity.curiosity_question) && (
                                           <div className="mb-4">
