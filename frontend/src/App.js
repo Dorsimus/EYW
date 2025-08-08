@@ -13272,4 +13272,292 @@ const AIInsightsSection = ({ getAIInsights, showSuccessMessage, showErrorMessage
   );
 };
 
+// Advanced Analytics & Insights Dashboard
+const AnalyticsDashboard = ({ competencies, portfolio, competencyTaskProgress, coreValueEntries }) => {
+  const [analyticsView, setAnalyticsView] = useState('overview');
+  const [selectedTimeframe, setSelectedTimeframe] = useState('30days');
+  const [showInsights, setShowInsights] = useState(false);
+
+  // Calculate comprehensive analytics
+  const getProgressAnalytics = () => {
+    const competencyAreas = Object.keys(competencies);
+    const totalProgress = competencyAreas.reduce((sum, areaKey) => {
+      const area = competencies[areaKey];
+      return sum + (area.overall_progress || 0);
+    }, 0);
+    
+    const avgProgress = competencyAreas.length > 0 ? totalProgress / competencyAreas.length : 0;
+    
+    // Calculate portfolio growth
+    const portfolioByMonth = {};
+    portfolio.forEach(item => {
+      const month = new Date(item.upload_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+      portfolioByMonth[month] = (portfolioByMonth[month] || 0) + 1;
+    });
+
+    // Calculate task completion velocity
+    const totalTasks = Object.values(competencyTaskProgress || {}).reduce((sum, progress) => {
+      return sum + (progress.completed?.length || 0);
+    }, 0);
+
+    return {
+      avgProgress: Math.round(avgProgress),
+      totalPortfolioItems: portfolio.length,
+      totalTasksCompleted: totalTasks,
+      portfolioGrowth: Object.entries(portfolioByMonth).sort(([a], [b]) => new Date(a) - new Date(b)),
+      strongestCompetency: competencyAreas.reduce((strongest, current) => 
+        (competencies[current].overall_progress || 0) > (competencies[strongest]?.overall_progress || 0) ? current : strongest, 
+        competencyAreas[0]
+      ),
+      focusArea: competencyAreas.reduce((weakest, current) => 
+        (competencies[current].overall_progress || 0) < (competencies[weakest]?.overall_progress || 0) ? current : weakest, 
+        competencyAreas[0]
+      )
+    };
+  };
+
+  // AI-powered insights generator
+  const generateInsights = (analytics) => {
+    const insights = [];
+    
+    if (analytics.avgProgress >= 80) {
+      insights.push({
+        type: 'success',
+        icon: '🎉',
+        title: 'Outstanding Progress',
+        description: 'You\'re excelling across all competency areas! Consider mentoring newer participants.',
+        action: 'Explore advanced challenges or culminating project opportunities'
+      });
+    } else if (analytics.avgProgress >= 60) {
+      insights.push({
+        type: 'good',
+        icon: '📈',
+        title: 'Strong Development',
+        description: 'You\'re making solid progress. Focus on practical application of your growing skills.',
+        action: 'Schedule regular practice sessions for weaker competencies'
+      });
+    } else if (analytics.avgProgress >= 40) {
+      insights.push({
+        type: 'focus',
+        icon: '🎯',
+        title: 'Building Momentum',
+        description: 'You\'re in the growth phase. Consistency in daily practice will accelerate your development.',
+        action: 'Set weekly goals for each competency area'
+      });
+    } else {
+      insights.push({
+        type: 'start',
+        icon: '🚀',
+        title: 'Getting Started',
+        description: 'Every expert was once a beginner. Focus on one competency at a time for best results.',
+        action: 'Choose your strongest interest area and dive deep'
+      });
+    }
+
+    // Portfolio insights
+    if (analytics.totalPortfolioItems >= 20) {
+      insights.push({
+        type: 'portfolio',
+        icon: '📁',
+        title: 'Rich Portfolio',
+        description: 'Your extensive portfolio demonstrates consistent learning documentation.',
+        action: 'Consider organizing items by competency themes for presentations'
+      });
+    } else if (analytics.totalPortfolioItems >= 10) {
+      insights.push({
+        type: 'portfolio',
+        icon: '📝',
+        title: 'Growing Evidence',
+        description: 'You\'re building a solid foundation of work evidence.',
+        action: 'Aim for 2-3 portfolio additions per week'
+      });
+    }
+
+    // Competency-specific insights
+    if (analytics.strongestCompetency && analytics.focusArea && analytics.strongestCompetency !== analytics.focusArea) {
+      insights.push({
+        type: 'strategy',
+        icon: '⚖️',
+        title: 'Balanced Development',
+        description: `Leverage your strength in ${competencies[analytics.strongestCompetency]?.name} to support growth in ${competencies[analytics.focusArea]?.name}.`,
+        action: 'Find connections between your strongest and developing competencies'
+      });
+    }
+
+    return insights;
+  };
+
+  const analytics = getProgressAnalytics();
+  const insights = generateInsights(analytics);
+
+  return (
+    <div className="space-y-6">
+      {/* Analytics Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-6 text-white">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold mb-2">📊 Your Learning Analytics</h2>
+            <p className="text-blue-100">Data-driven insights into your Navigator journey</p>
+          </div>
+          <div className="text-right">
+            <div className="text-4xl font-bold">{analytics.avgProgress}%</div>
+            <div className="text-sm text-blue-200">Overall Progress</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Analytics Controls */}
+      <div className="flex items-center justify-between">
+        <div className="flex space-x-2">
+          {[
+            { key: 'overview', label: '📈 Overview' },
+            { key: 'competencies', label: '🎯 Competencies' },
+            { key: 'portfolio', label: '📁 Portfolio' },
+            { key: 'trends', label: '📊 Trends' }
+          ].map(view => (
+            <button
+              key={view.key}
+              onClick={() => setAnalyticsView(view.key)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                analyticsView === view.key 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              {view.label}
+            </button>
+          ))}
+        </div>
+        
+        <select
+          value={selectedTimeframe}
+          onChange={(e) => setSelectedTimeframe(e.target.value)}
+          className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+        >
+          <option value="7days">Last 7 Days</option>
+          <option value="30days">Last 30 Days</option>
+          <option value="90days">Last 90 Days</option>
+          <option value="all">All Time</option>
+        </select>
+      </div>
+
+      {/* Analytics Content */}
+      {analyticsView === 'overview' && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Key Metrics */}
+          <div className="bg-white rounded-lg p-4 border shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Avg Progress</p>
+                <p className="text-2xl font-bold text-blue-600">{analytics.avgProgress}%</p>
+              </div>
+              <div className="text-blue-500 text-2xl">📈</div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Portfolio Items</p>
+                <p className="text-2xl font-bold text-green-600">{analytics.totalPortfolioItems}</p>
+              </div>
+              <div className="text-green-500 text-2xl">📁</div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Tasks Done</p>
+                <p className="text-2xl font-bold text-purple-600">{analytics.totalTasksCompleted}</p>
+              </div>
+              <div className="text-purple-500 text-2xl">✅</div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Strongest Area</p>
+                <p className="text-sm font-bold text-orange-600">
+                  {competencies[analytics.strongestCompetency]?.name.substring(0, 15)}...
+                </p>
+              </div>
+              <div className="text-orange-500 text-2xl">💪</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* AI-Powered Insights */}
+      <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg p-6 border border-indigo-200">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-indigo-900">🧠 AI-Powered Insights</h3>
+          <button 
+            onClick={() => setShowInsights(!showInsights)}
+            className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+          >
+            {showInsights ? 'Hide Details' : 'View Insights'}
+          </button>
+        </div>
+        
+        {showInsights && (
+          <div className="space-y-4">
+            {insights.map((insight, index) => (
+              <div key={index} className={`p-4 rounded-lg border-l-4 ${
+                insight.type === 'success' ? 'bg-green-50 border-green-400' :
+                insight.type === 'good' ? 'bg-blue-50 border-blue-400' :
+                insight.type === 'focus' ? 'bg-yellow-50 border-yellow-400' :
+                insight.type === 'portfolio' ? 'bg-purple-50 border-purple-400' :
+                insight.type === 'strategy' ? 'bg-orange-50 border-orange-400' :
+                'bg-gray-50 border-gray-400'
+              }`}>
+                <div className="flex items-start space-x-3">
+                  <span className="text-2xl">{insight.icon}</span>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">{insight.title}</h4>
+                    <p className="text-sm text-gray-700 mb-2">{insight.description}</p>
+                    <div className="text-xs font-medium text-gray-600 bg-white px-3 py-1 rounded-full inline-block">
+                      💡 {insight.action}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Competency Progress Breakdown */}
+      {analyticsView === 'competencies' && (
+        <div className="bg-white rounded-lg p-6 border shadow-sm">
+          <h3 className="text-lg font-semibold mb-4">🎯 Competency Progress Breakdown</h3>
+          <div className="space-y-4">
+            {Object.entries(competencies).map(([key, competency]) => (
+              <div key={key} className="flex items-center space-x-4">
+                <div className="w-48 text-sm font-medium text-gray-700 truncate">
+                  {competency.name}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2">
+                    <div className="flex-1 bg-gray-200 rounded-full h-3">
+                      <div 
+                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500"
+                        style={{ width: `${competency.overall_progress || 0}%` }}
+                      />
+                    </div>
+                    <span className="text-sm font-medium text-gray-600 w-12">
+                      {Math.round(competency.overall_progress || 0)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default App;
