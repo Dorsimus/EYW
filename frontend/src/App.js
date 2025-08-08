@@ -5477,7 +5477,7 @@ const AuthenticatedApp = () => {
     if (!taskId || typeof taskId !== 'string') return;
     
     const parts = taskId.split('_');
-    const areaKey = parts[0];
+    const areaKey = parts[0] + '_' + parts[1]; // Fix: leadership_supervision format
     const area = competenciesObj[areaKey];
     
     if (!area) return;
@@ -5500,8 +5500,8 @@ const AuthenticatedApp = () => {
       }
     }
     else if (taskId.includes('_course_')) {
-      const subKey = parts[1];
-      const courseIndex = parseInt(parts[3]);
+      const subKey = parts[2]; // Fix: subKey is the 3rd part
+      const courseIndex = parseInt(parts[4]); // Fix: courseIndex is the 5th part
       const subComp = area.sub_competencies?.[subKey];
       
       if (subComp?.foundation_courses?.[courseIndex]) {
@@ -5514,8 +5514,8 @@ const AuthenticatedApp = () => {
       }
     }
     else if (taskId.includes('_activity_')) {
-      const subKey = parts[1];
-      const activityIndex = parseInt(parts[3]);
+      const subKey = parts[2]; // Fix: subKey is the 3rd part
+      const activityIndex = parseInt(parts[4]); // Fix: activityIndex is the 5th part
       const subComp = area.sub_competencies?.[subKey];
       
       if (subComp?.monthly_activities?.[activityIndex]) {
@@ -5527,8 +5527,8 @@ const AuthenticatedApp = () => {
       }
     }
     else if (taskId.includes('_resource_')) {
-      const subKey = parts[1];
-      const resourceIndex = parseInt(parts[3]);
+      const subKey = parts[2]; // Fix: subKey is the 3rd part
+      const resourceIndex = parseInt(parts[4]); // Fix: resourceIndex is the 5th part
       const subComp = area.sub_competencies?.[subKey];
       
       if (subComp?.dive_deeper_resources?.[resourceIndex]) {
