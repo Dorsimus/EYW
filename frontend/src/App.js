@@ -2675,10 +2675,27 @@ const AuthenticatedApp = () => {
   // Load tasks from competencies when admin is active and competencies are available
   useEffect(() => {
     if (isAdmin && competencies && Object.keys(competencies).length > 0) {
-      console.log('Loading tasks from competencies for admin panel...');
-      const realTasks = getAllTasksFromCompetencies(competencies);
-      console.log(`Loaded ${realTasks.length} tasks from competencies`);
-      setAllTasks(realTasks);
+      // Loading tasks from competencies for admin panel...
+      console.log('📋 Loading tasks from competencies for admin panel...');
+      const generatedTasks = getAllTasksFromCompetencies(competencies);
+      console.log(`📊 Generated ${generatedTasks.length} tasks from competencies`);
+      
+      // Add database tasks from backend
+      console.log('📋 Loading database tasks from backend...');
+      let databaseTasks = [];
+      try {
+        const tasksResponse = await axios.get(`${API}/admin/tasks`, { headers });
+        databaseTasks = tasksResponse.data || [];
+        console.log(`📊 Loaded ${databaseTasks.length} database tasks from backend`);
+      } catch (taskError) {
+        console.warn('⚠️ Could not load database tasks:', taskError);
+      }
+      
+      // Combine generated and database tasks
+      const combinedTasks = [...generatedTasks, ...databaseTasks];
+      console.log(`📊 TOTAL COMBINED TASKS: ${combinedTasks.length} (${generatedTasks.length} generated + ${databaseTasks.length} database)`);
+      
+      setAllTasks(combinedTasks);
     }
   }, [isAdmin, competencies]); // Add competencies as dependency
 
