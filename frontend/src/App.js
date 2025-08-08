@@ -9980,6 +9980,283 @@ const CulminatingProjectView = ({ competencies, portfolio, setCurrentView, showS
   );
 };
 
+// User Experience Enhancement Components
+
+// Notification System Component
+const NotificationCenter = ({ notifications, markAsRead, clearAll }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [filter, setFilter] = useState('all');
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+  
+  const filteredNotifications = notifications.filter(notification => {
+    if (filter === 'all') return true;
+    return notification.type === filter;
+  });
+
+  const formatTimeAgo = (timestamp) => {
+    const now = new Date();
+    const time = new Date(timestamp);
+    const diff = Math.floor((now - time) / 1000);
+    
+    if (diff < 60) return 'Just now';
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    return `${Math.floor(diff / 86400)}d ago`;
+  };
+
+  const getNotificationIcon = (type) => {
+    switch (type) {
+      case 'task_due': return '⏰';
+      case 'achievement': return '🏆';
+      case 'portfolio_feedback': return '💬';
+      case 'reminder': return '🔔';
+      case 'system': return '⚙️';
+      default: return '📢';
+    }
+  };
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="relative p-2 text-gray-600 hover:text-gray-900 focus:outline-none"
+      >
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5-5-5h5V12h-5l5-5 5 5h-5v5z" />
+        </svg>
+        {unreadCount > 0 && (
+          <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+            {unreadCount > 9 ? '9+' : unreadCount}
+          </span>
+        )}
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border z-50 max-h-96 overflow-hidden">
+          <div className="p-4 border-b">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold text-gray-900">Notifications</h3>
+              {notifications.length > 0 && (
+                <button
+                  onClick={clearAll}
+                  className="text-sm text-red-600 hover:text-red-800"
+                >
+                  Clear All
+                </button>
+              )}
+            </div>
+            
+            <div className="flex space-x-1">
+              {['all', 'task_due', 'achievement', 'portfolio_feedback'].map(type => (
+                <button
+                  key={type}
+                  onClick={() => setFilter(type)}
+                  className={`px-3 py-1 text-xs rounded-full transition-colors ${
+                    filter === type 
+                      ? 'bg-blue-100 text-blue-700' 
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {type === 'all' ? 'All' : type.replace('_', ' ')}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="max-h-64 overflow-y-auto">
+            {filteredNotifications.length === 0 ? (
+              <div className="p-4 text-center text-gray-500">
+                <span className="text-4xl mb-2 block">🔕</span>
+                <p className="text-sm">No notifications</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-gray-100">
+                {filteredNotifications.map(notification => (
+                  <div
+                    key={notification.id}
+                    className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
+                      !notification.read ? 'bg-blue-50 border-l-4 border-blue-400' : ''
+                    }`}
+                    onClick={() => markAsRead(notification.id)}
+                  >
+                    <div className="flex items-start space-x-3">
+                      <span className="text-lg flex-shrink-0">
+                        {getNotificationIcon(notification.type)}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900 truncate">
+                          {notification.title}
+                        </p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {notification.message}
+                        </p>
+                        <div className="flex items-center justify-between mt-2">
+                          <span className="text-xs text-gray-400">
+                            {formatTimeAgo(notification.timestamp)}
+                          </span>
+                          {!notification.read && (
+                            <span className="h-2 w-2 bg-blue-500 rounded-full"></span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Mobile-Optimized Navigation Component
+const MobileNavigation = ({ currentView, setCurrentView, competencies, hasAdminAccess, isAdminMode, setIsAdminMode }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navigationItems = [
+    { key: 'dashboard', label: '🏠 Dashboard', icon: '🏠' },
+    { key: 'portfolio', label: '📁 Portfolio', icon: '📁' },
+    { key: 'analytics', label: '📊 Analytics', icon: '📊' },
+    ...(hasAdminAccess && isAdminMode ? [
+      { key: 'admin-dashboard', label: '⚙️ Admin', icon: '⚙️' }
+    ] : [])
+  ];
+
+  return (
+    <>
+      {/* Mobile Menu Button */}
+      <div className="lg:hidden fixed bottom-4 right-4 z-50">
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+        >
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setIsMobileMenuOpen(false)}>
+          <div className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6 z-50 transform transition-transform">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Navigation</h3>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {navigationItems.map(item => (
+                <button
+                  key={item.key}
+                  onClick={() => {
+                    setCurrentView(item.key);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`p-4 rounded-lg text-center transition-colors ${
+                    currentView === item.key 
+                      ? 'bg-blue-100 text-blue-700 border-2 border-blue-200' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  <div className="text-2xl mb-2">{item.icon}</div>
+                  <div className="text-sm font-medium">{item.label.split(' ').slice(1).join(' ')}</div>
+                </button>
+              ))}
+            </div>
+
+            {/* Quick Actions */}
+            <div className="mt-6 pt-4 border-t">
+              <h4 className="text-sm font-medium text-gray-900 mb-3">Quick Actions</h4>
+              <div className="flex space-x-2">
+                <button 
+                  onClick={() => {
+                    setCurrentView('add-portfolio');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex-1 bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm font-medium"
+                >
+                  📤 Add Item
+                </button>
+                {hasAdminAccess && (
+                  <button 
+                    onClick={() => {
+                      setIsAdminMode(!isAdminMode);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="flex-1 bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium"
+                  >
+                    {isAdminMode ? '👤 User' : '⚙️ Admin'}
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+// Progress Tracking Widget
+const ProgressWidget = ({ competencies, portfolio }) => {
+  const totalCompetencies = Object.keys(competencies).length;
+  const avgProgress = totalCompetencies > 0 
+    ? Object.values(competencies).reduce((sum, comp) => sum + (comp.overall_progress || 0), 0) / totalCompetencies 
+    : 0;
+
+  const getProgressColor = (progress) => {
+    if (progress >= 80) return 'text-green-600';
+    if (progress >= 60) return 'text-blue-600';
+    if (progress >= 40) return 'text-yellow-600';
+    return 'text-gray-600';
+  };
+
+  return (
+    <div className="bg-white rounded-lg p-4 border shadow-sm">
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="font-semibold text-gray-900">Overall Progress</h3>
+        <span className={`text-2xl font-bold ${getProgressColor(avgProgress)}`}>
+          {Math.round(avgProgress)}%
+        </span>
+      </div>
+      
+      <div className="space-y-2">
+        <div className="flex items-center space-x-2">
+          <div className="flex-1 bg-gray-200 rounded-full h-2">
+            <div 
+              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500"
+              style={{ width: `${avgProgress}%` }}
+            />
+          </div>
+        </div>
+        
+        <div className="flex justify-between text-xs text-gray-600">
+          <span>{portfolio.length} portfolio items</span>
+          <span>{totalCompetencies} competencies</span>
+        </div>
+      </div>
+
+      <div className="mt-3 text-xs text-gray-500">
+        {avgProgress >= 80 && "🎉 Excellent progress! Keep it up!"}
+        {avgProgress >= 60 && avgProgress < 80 && "📈 Great momentum! You're doing well."}
+        {avgProgress >= 40 && avgProgress < 60 && "🎯 Good progress! Stay consistent."}
+        {avgProgress < 40 && "🚀 Getting started! Every step counts."}
+      </div>
+    </div>
+  );
+};
+
 // Enhanced Portfolio View Component with Document Viewing and Organization
 const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfolio, showSuccessMessage, showErrorMessage }) => {
   const [expandedSections, setExpandedSections] = useState({});
