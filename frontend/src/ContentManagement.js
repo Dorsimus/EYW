@@ -1143,6 +1143,381 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
           onCancel={() => setEditingTask(null)}
         />
       )}
+
+      {/* Enhanced Bulk Action Modal */}
+      {showBulkModal && (
+        <BulkActionModal
+          type={bulkActionType}
+          selectedTasks={Array.from(selectedTasks).map(id => tasks.find(t => t.id === id))}
+          competencyAreas={competencyAreas.filter(a => a.key !== 'all')}
+          onConfirm={async (actionData) => {
+            const taskIds = Array.from(selectedTasks);
+            
+            switch (bulkActionType) {
+              case 'delete':
+                for (const taskId of taskIds) {
+                  await onDeleteTask(taskId);
+                }
+                break;
+                
+              case 'bulk_edit':
+                for (const taskId of taskIds) {
+                  const task = tasks.find(t => t.id === taskId);
+                  if (task) {
+                    await onUpdateTask({ 
+                      ...task, 
+                      ...Object.fromEntries(
+                        Object.entries(actionData).filter(([key, value]) => value !== '' && value !== null)
+                      )
+                    });
+                  }
+                }
+                break;
+                
+              case 'move_competency':
+                for (const taskId of taskIds) {
+                  const task = tasks.find(t => t.id === taskId);
+                  if (task) {
+                    await onUpdateTask({ 
+                      ...task, 
+                      competency_area: actionData.competency_area
+                    });
+                  }
+                }
+                break;
+            }
+            
+            setSelectedTasks(new Set());
+            setShowBulkActions(false);
+            setShowBulkModal(false);
+            setBulkActionType(null);
+          }}
+          onCancel={() => {
+            setShowBulkModal(false);
+            setBulkActionType(null);
+          }}
+        />
+      )}
+
+      {/* Template Manager Modal */}
+      {showTemplateManager && (
+        <TemplateManagerModal
+          tasks={tasks}
+          onClose={() => setShowTemplateManager(false)}
+          onCreateTaskFromTemplate={(template) => {
+            onCreateTask({ 
+              ...template, 
+              id: undefined, 
+              title: `${template.title} (from template)`,
+              order: tasks.length + 1
+            });
+            setShowTemplateManager(false);
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+// Enhanced Bulk Action Modal Component
+const BulkActionModal = ({ type, selectedTasks, competencyAreas, onConfirm, onCancel }) => {
+  const [formData, setFormData] = useState({});
+
+  const renderModalContent = () => {
+    switch (type) {
+      case 'delete':
+        return (
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <div className="flex-shrink-0">
+                <div className="h-10 w-10 bg-red-100 rounded-full flex items-center justify-center">
+                  <svg className="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-gray-900">Delete Tasks</h3>
+                <p className="text-sm text-gray-500">
+                  Are you sure you want to delete {selectedTasks.length} task{selectedTasks.length !== 1 ? 's' : ''}? This action cannot be undone.
+                </p>
+              </div>
+            </div>
+            <div className="bg-red-50 rounded-lg p-3">
+              <div className="text-sm text-red-800">
+                <strong>Tasks to be deleted:</strong>
+                <ul className="mt-2 list-disc list-inside space-y-1">
+                  {selectedTasks.slice(0, 5).map(task => (
+                    <li key={task.id}>{task.title}</li>
+                  ))}
+                  {selectedTasks.length > 5 && (
+                    <li>... and {selectedTasks.length - 5} more</li>
+                  )}
+                </ul>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'bulk_edit':
+        return (
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Bulk Edit Tasks</h3>
+              <p className="text-sm text-gray-500 mb-4">
+                Edit {selectedTasks.length} task{selectedTasks.length !== 1 ? 's' : ''} at once. Leave fields empty to keep existing values.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Task Type</label>
+                <select
+                  value={formData.task_type || ''}
+                  onChange={(e) => setFormData({...formData, task_type: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Keep existing</option>
+                  <option value="course_link">🎓 Course/Training</option>
+                  <option value="document_upload">📄 Document Upload</option>
+                  <option value="assessment">📊 Assessment</option>
+                  <option value="project">🎯 Project</option>
+                  <option value="shadowing">👥 Shadowing</option>
+                  <option value="reading">📚 Reading</option>
+                  <option value="reflection">💭 Reflection</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Estimated Hours</label>
+                <input
+                  type="number"
+                  step="0.5"
+                  min="0.5"
+                  placeholder="Keep existing"
+                  value={formData.estimated_hours || ''}
+                  onChange={(e) => setFormData({...formData, estimated_hours: parseFloat(e.target.value) || ''})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.required === true}
+                    onChange={(e) => setFormData({...formData, required: e.target.checked})}
+                    className="rounded border-gray-300 text-blue-600"
+                  />
+                  <span className="text-sm font-medium text-gray-700">Mark as required</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'move_competency':
+        return (
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Move to Competency Area</h3>
+              <p className="text-sm text-gray-500 mb-4">
+                Move {selectedTasks.length} task{selectedTasks.length !== 1 ? 's' : ''} to a different competency area.
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Target Competency Area</label>
+              <select
+                value={formData.competency_area || ''}
+                onChange={(e) => setFormData({...formData, competency_area: e.target.value})}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="">Select competency area...</option>
+                {competencyAreas.map(area => (
+                  <option key={area.key} value={area.key}>{area.name}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="bg-blue-50 rounded-lg p-3">
+              <div className="text-sm text-blue-800">
+                <strong>Current distribution:</strong>
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  {competencyAreas.map(area => {
+                    const count = selectedTasks.filter(t => t.competency_area === area.key).length;
+                    if (count > 0) {
+                      return (
+                        <div key={area.key} className="text-xs">
+                          {area.name}: {count} task{count !== 1 ? 's' : ''}
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg max-w-2xl w-full max-h-[80vh] overflow-hidden shadow-2xl">
+        <div className="p-6">
+          {renderModalContent()}
+        </div>
+        
+        <div className="flex items-center justify-end space-x-3 px-6 py-4 bg-gray-50 border-t">
+          <button
+            onClick={onCancel}
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => onConfirm(formData)}
+            className={`px-4 py-2 rounded-md text-white font-medium transition-colors ${
+              type === 'delete' 
+                ? 'bg-red-600 hover:bg-red-700' 
+                : 'bg-blue-600 hover:bg-blue-700'
+            }`}
+          >
+            {type === 'delete' ? 'Delete Tasks' : 'Apply Changes'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Template Manager Modal Component
+const TemplateManagerModal = ({ tasks, onClose, onCreateTaskFromTemplate }) => {
+  const [templates] = useState([
+    {
+      id: 'template-1',
+      title: 'Leadership Shadow Session',
+      description: 'Observe and learn from senior leadership in action',
+      task_type: 'shadowing',
+      estimated_hours: 2,
+      instructions: 'Schedule a 2-hour observation session with a senior leader. Take detailed notes on leadership behaviors, decision-making processes, and communication styles.',
+      success_criteria: 'Complete observation log with specific examples of leadership behaviors and reflection on lessons learned.',
+      competency_area: 'leadership_supervision'
+    },
+    {
+      id: 'template-2', 
+      title: 'Budget Analysis Workshop',
+      description: 'Analyze departmental budget and identify optimization opportunities',
+      task_type: 'document_upload',
+      estimated_hours: 4,
+      instructions: 'Review your department\'s quarterly budget. Create a detailed analysis document identifying areas for cost optimization and revenue enhancement.',
+      success_criteria: 'Submit comprehensive budget analysis with at least 3 actionable recommendations.',
+      competency_area: 'financial_management'
+    },
+    {
+      id: 'template-3',
+      title: 'Process Improvement Initiative',
+      description: 'Design and implement a process improvement for operational efficiency',
+      task_type: 'project',
+      estimated_hours: 8,
+      instructions: 'Identify a process in your area that needs improvement. Design, test, and implement the improvement. Document results and lessons learned.',
+      success_criteria: 'Complete project documentation showing measurable improvement in efficiency or quality metrics.',
+      competency_area: 'operational_management'
+    },
+    {
+      id: 'template-4',
+      title: 'Cross-Department Collaboration Project',
+      description: 'Lead a project that requires coordination across multiple departments',
+      task_type: 'project',
+      estimated_hours: 6,
+      instructions: 'Initiate and lead a project that involves at least 2 other departments. Focus on communication, coordination, and building unified team objectives.',
+      success_criteria: 'Successfully complete cross-departmental project with documented collaboration strategies and outcomes.',
+      competency_area: 'cross_functional_collaboration'
+    },
+    {
+      id: 'template-5',
+      title: 'Strategic Planning Session',
+      description: 'Participate in or lead strategic planning for your area',
+      task_type: 'assessment',
+      estimated_hours: 3,
+      instructions: 'Engage in strategic planning process. Develop long-term goals, identify key challenges, and create action plans.',
+      success_criteria: 'Complete strategic plan with 3-5 year outlook, including measurable goals and milestone indicators.',
+      competency_area: 'strategic_thinking'
+    }
+  ]);
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+        <div className="flex items-center justify-between p-6 border-b bg-gradient-to-r from-purple-50 to-pink-50">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">📚 Task Template Library</h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Choose from pre-built task templates to quickly create engaging learning experiences
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="p-6 max-h-[calc(90vh-140px)] overflow-y-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {templates.map(template => (
+              <div key={template.id} className="bg-white border-2 border-gray-200 rounded-lg hover:border-blue-300 transition-all duration-200 hover:shadow-md">
+                <div className="p-5">
+                  <div className="flex items-center space-x-2 mb-3">
+                    <div className="text-2xl">
+                      {template.task_type === 'shadowing' && '👥'}
+                      {template.task_type === 'document_upload' && '📄'}
+                      {template.task_type === 'project' && '🎯'}
+                      {template.task_type === 'assessment' && '📊'}
+                      {template.task_type === 'course_link' && '🎓'}
+                      {template.task_type === 'reading' && '📚'}
+                      {template.task_type === 'reflection' && '💭'}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">{template.title}</h3>
+                      <div className="text-xs text-gray-500 mt-1">
+                        {template.estimated_hours}h • {template.competency_area.replace(/_/g, ' ')}
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                    {template.description}
+                  </p>
+
+                  <div className="mb-4">
+                    <div className="text-xs font-medium text-gray-700 mb-1">Instructions Preview:</div>
+                    <div className="text-xs text-gray-600 line-clamp-3 bg-gray-50 p-2 rounded">
+                      {template.instructions}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => onCreateTaskFromTemplate(template)}
+                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors font-medium text-sm"
+                  >
+                    Use This Template
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
