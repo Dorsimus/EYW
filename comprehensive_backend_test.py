@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 
 class ComprehensiveBackendTester:
-    def __init__(self, base_url="https://b86dfd40-d4ab-4416-9c99-c971de272169.preview.emergentagent.com"):
+    def __init__(self, base_url="https://6c89303b-3b46-458e-8c48-ff40dea979ca.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.tests_run = 0
