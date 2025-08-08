@@ -5258,6 +5258,9 @@ const AuthenticatedApp = () => {
   };
 
   // ENHANCED TASK MANAGEMENT FOR ADMIN PANEL
+  // Track converted tasks to prevent regeneration
+  const [convertedTasks, setConvertedTasks] = useState(new Set());
+
   const updateTask = async (taskId, taskData) => {
     console.log('🔧 updateTask called:', { taskId, hasAdminAccess, taskData });
     
