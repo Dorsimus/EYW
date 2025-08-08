@@ -8114,7 +8114,9 @@ const CompetenciesView = ({
       </div>
 
       <div className="space-y-4">
-        {Object.entries(competencies).map(([areaKey, areaData]) => (
+        {Object.entries(competencies)
+          .filter(([areaKey]) => areaKey !== 'core_values') // Remove core_values from competencies tab
+          .map(([areaKey, areaData]) => (
           <div key={areaKey} id={`competency-${areaKey}`} className={`bg-white rounded-lg shadow overflow-hidden ${getCompetencyClass(areaKey)}`}>
             <div 
               className="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50"
