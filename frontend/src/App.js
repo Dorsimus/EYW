@@ -9665,16 +9665,19 @@ const CulminatingProjectView = ({ competencies, portfolio, setCurrentView, showS
   const [showProjectWizard, setShowProjectWizard] = useState(false);
   const [milestoneProgress, setMilestoneProgress] = useState({});
 
-  // Get culminating project data from competencies
-  const culminatingProject = competencies?.leadership_supervision?.culminating_project || {};
+  // Get culminating project data from competencies - try multiple paths
+  let culminatingProject = competencies?.leadership_supervision?.culminating_project || 
+                          competencies?.culminating_project || 
+                          {};
   
   // Debug logging to see what we're getting
   console.log('CulminatingProjectView Debug:', {
     competenciesExists: !!competencies,
     leadershipSupervisionExists: !!competencies?.leadership_supervision,
-    culminatingProjectExists: !!competencies?.leadership_supervision?.culminating_project,
-    culminatingProjectData: competencies?.leadership_supervision?.culminating_project,
-    allCompetencyKeys: competencies ? Object.keys(competencies) : []
+    culminatingProjectExists: !!culminatingProject || !!competencies?.culminating_project,
+    culminatingProjectData: culminatingProject,
+    allCompetencyKeys: competencies ? Object.keys(competencies) : [],
+    leadershipSupervisionKeys: competencies?.leadership_supervision ? Object.keys(competencies.leadership_supervision) : []
   });
 
   // Calculate phase progress based on portfolio submissions
