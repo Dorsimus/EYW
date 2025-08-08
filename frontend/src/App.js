@@ -9972,11 +9972,7 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
 
   // Function to handle document viewing
   const handleDocumentView = (item) => {
-    if (item.file_path) {
-      // Create a download/view link for the file
-      const fileUrl = `${API}/files/portfolio/${item.id}`;
-      window.open(fileUrl, '_blank');
-    }
+    setSelectedDocument(item);
   };
 
   // Toggle section expansion
