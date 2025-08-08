@@ -5372,6 +5372,23 @@ const AuthenticatedApp = () => {
             {/* Admin logout is now handled by Clerk UserButton */}
             </div>
             
+            {/* ADMIN TOGGLE BUTTON - Only for admins */}
+            {hasAdminAccess && (
+              <button
+                onClick={() => {
+                  setIsAdminMode(!isAdminMode);
+                  setCurrentView(isAdminMode ? 'dashboard' : 'admin-dashboard');
+                }}
+                className={`px-4 py-2 rounded-lg font-medium transition-all ml-4 ${
+                  isAdminMode 
+                    ? 'bg-red-600 text-white hover:bg-red-700' 
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 border-2 border-dashed border-gray-400'
+                }`}
+              >
+                {isAdminMode ? '👤 User Mode' : '🛠️ Admin Tools'}
+              </button>
+            )}
+            
             {/* Navigator Program / Level Status - Right Side */}
             {!isAdmin && (
               <div className="flex items-center bg-gray-50 rounded-lg px-4 py-2 border">
