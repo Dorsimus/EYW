@@ -5459,15 +5459,8 @@ const AuthenticatedApp = () => {
           />
         )}
 
-        {/* LEGACY ADMIN VIEWS - Keep for compatibility */}
-        {currentView === 'admin-dashboard' && isAdmin && (
-          <AdminDashboardView 
-            stats={adminStats} 
-            onNavigate={setCurrentView}
-          />
-        )}
-        
-        {currentView === 'admin-tasks' && isAdmin && (
+        {/* LEGACY ADMIN VIEWS - Updated for admin mode */}
+        {currentView === 'admin-tasks' && isAdminMode && (
           <AdminTasksView 
             tasks={allTasks}
             onCreateTask={createTask}
