@@ -1190,10 +1190,12 @@ const ContentManagement = ({ tasks, competencies, onUpdateTask, onCreateTask, on
                 for (const taskId of taskIds) {
                   const task = tasks.find(t => t.id === taskId);
                   if (task) {
-                    await onUpdateTask({ 
+                    // Fix: Pass taskId and taskData separately
+                    const updatedTaskData = { 
                       ...task, 
                       competency_area: actionData.competency_area
-                    });
+                    };
+                    await onUpdateTask(taskId, updatedTaskData);
                   }
                 }
                 break;
