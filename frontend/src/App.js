@@ -3589,7 +3589,6 @@ const AuthenticatedApp = () => {
             competency_gate: "Implement technology improvements that measurably improve efficiency + Team demonstrates improved technology use"
           }
         }
-        // Additional operational framework elements would be added here...
       },
       cross_functional_collaboration: {
         name: "Cross-Functional Collaboration",
