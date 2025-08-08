@@ -5419,7 +5419,7 @@ const AuthenticatedApp = () => {
           </div>
         )}
         
-        {currentView === 'admin-users-enhanced' && isAdmin && (
+        {currentView === 'admin-users-enhanced' && isAdminMode && (
           <EnhancedUserManagement 
             users={allUsers}
             onUpdateUser={updateUser}
