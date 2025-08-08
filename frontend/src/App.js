@@ -3453,19 +3453,6 @@ const AuthenticatedApp = () => {
             ],
             competency_gate: "Process improvement projects completed + Quality control systems implemented + Technology improvements executed + SOPs optimized"
           },
-                title: "Systems Integration",
-                in_flow_activity: "Look for ways your improved processes can work better with other departments",
-                document_section: {
-                  title: "Cross-Department Process Coordination",
-                  description: "How your process improvements benefit other departments",
-                  portfolio_integration: true
-                },
-                cross_functional_integration: "Share process improvements with other department leaders",
-                curiosity_question: "How can process improvement become automatic rather than something I have to remember to do?"
-              }
-            ],
-            competency_gate: "Successfully implement measurable process improvement + Document impact on efficiency"
-          },
           quality_control_standards: {
             name: "Quality Control & Standards",
             description: "How do I create quality standards that actually get followed?",
