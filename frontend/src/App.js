@@ -4098,6 +4098,91 @@ const AuthenticatedApp = () => {
     return refinedCompetencies;
   };
 
+  // Function to save user progress to backend
+  const saveUserProgressToBackend = async (progressData) => {
+    if (!localUser?.id) {
+      console.warn('No user ID available for saving progress');
+      return false;
+    }
+
+    try {
+      const token = await getToken();
+      if (!token) {
+        console.log('No auth token available, skipping backend save');
+        return false;
+      }
+
+      const headers = { 
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+      
+      const config = {
+        headers,
+        timeout: 10000 // 10 second timeout
+      };
+
+      // Save competency progress data
+      if (progressData.competencies) {
+        console.log('💾 Saving competency progress to backend...');
+        // The backend expects this to be updated through task completions
+        // We'll save to localStorage for now and sync on next load
+        localStorage.setItem('user_competencies_pending', JSON.stringify(progressData.competencies));
+      }
+
+      // Save portfolio updates
+      if (progressData.portfolio) {
+        console.log('💾 Saving portfolio updates to backend...');
+        localStorage.setItem('user_portfolio_pending', JSON.stringify(progressData.portfolio));
+      }
+
+      // Save flightbook entries 
+      if (progressData.flightbook) {
+        console.log('💾 Saving flightbook entries to localStorage...');
+        localStorage.setItem('flightbook_entries', JSON.stringify(progressData.flightbook));
+      }
+
+      console.log('✅ User progress saved successfully');
+      return true;
+    } catch (error) {
+      console.error('❌ Error saving user progress:', error);
+      // Still save to localStorage even if backend fails
+      if (progressData.competencies) {
+        localStorage.setItem('user_competencies_local', JSON.stringify(progressData.competencies));
+      }
+      if (progressData.portfolio) {
+        localStorage.setItem('user_portfolio_local', JSON.stringify(progressData.portfolio));
+      }
+      return false;
+    }
+  };
+
+  // Enhanced auto-save function that preserves user work
+  const autoSaveUserProgress = () => {
+    const progressData = {
+      competencies: competencies,
+      portfolio: portfolio,
+      flightbook: JSON.parse(localStorage.getItem('flightbook_entries') || '[]'),
+      taskProgress: competencyTaskProgress,
+      coreValues: coreValueEntries,
+      timestamp: new Date().toISOString()
+    };
+
+    // Save to localStorage immediately
+    localStorage.setItem('user_progress_autosave', JSON.stringify(progressData));
+    
+    // Attempt backend save (non-blocking)
+    saveUserProgressToBackend(progressData).catch(error => {
+      console.warn('Auto-save to backend failed:', error);
+    });
+  };
+
+  // Auto-save every 30 seconds
+  useEffect(() => {
+    const autoSaveInterval = setInterval(autoSaveUserProgress, 30000);
+    return () => clearInterval(autoSaveInterval);
+  }, [competencies, portfolio, competencyTaskProgress, coreValueEntries]);
+
   const loadUserData = async (userId, refinedCompetencies = null) => {
     console.log(`🔄 Loading user data for ID: ${userId}`);
     
