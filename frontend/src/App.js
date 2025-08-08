@@ -2706,14 +2706,8 @@ const AuthenticatedApp = () => {
                 cross_functional_integration: "Apply conflict resolution skills to cross-department challenges",
                 curiosity_question: "How can every conflict become an opportunity to strengthen relationships and build understanding?"
               }
-                  description: "Recognition approaches tailored to each team member",
-                  portfolio_integration: true
-                },
-                strategic_integration: "Connect individual recognition to department goals",
-                curiosity_question: "How can recognition become so personalized and timely that it feels natural rather than forced?"
-              }
             ],
-            competency_gate: "Team members can articulate what motivates them + Recognition system implemented"
+            competency_gate: "Team development plans created + Performance coaching documented + Meeting facilitation improved + Conflict resolution skills demonstrated"
           },
           mastering_difficult_conversations: {
             name: "Mastering Difficult Conversations",
