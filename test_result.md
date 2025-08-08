@@ -168,7 +168,19 @@
         - agent: "main"
         - comment: "COMPREHENSIVE FIX for data persistence issue where converted tasks reverted to defaults. Root cause: getAllTasksFromCompetencies() function was regenerating all generated tasks on every loadAdminData() call, overwriting successful conversions. IMPLEMENTED SOLUTIONS: 1) Added convertedTasks state tracking with localStorage persistence to track which generated tasks have been converted to database tasks, 2) Modified getAllTasksFromCompetencies() to skip generating tasks that are in the convertedTasks set, 3) Updated task conversion logic to properly mark tasks as converted and update competencies structure without calling loadAdminData(), 4) Added comprehensive task ID checking for all generated task types (curiosity_ignition, foundation_courses, monthly_activities, dive_deeper_resources, culminating_project). This ensures that once a generated task is converted to a database task, it won't be regenerated and will maintain its updated state in both admin panel and competencies view."
 
-user_problem_statement: "Fix data synchronization issue where generated tasks convert to database tasks successfully but then revert to original state due to getAllTasksFromCompetencies() regenerating tasks on every reload."
+  - task: "Competencies View Synchronization for Converted Tasks"
+    implemented: true
+    working: true
+    file: "frontend/src/App.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "CRITICAL FIX: Resolved competencies view not showing updated data for converted tasks. Issue was that converted tasks updated allTasks state (admin panel) but not competencies state (competencies view). IMPLEMENTED COMPREHENSIVE SOLUTION: 1) Created updateConvertedTaskInCompetencies() function to specifically handle updating the competencies structure when generated tasks are converted to database tasks, 2) Added proper mapping for all task types: curiosity_ignition updates area.curiosity_ignition, foundation_courses updates sub_competencies[subKey].foundation_courses[index], monthly_activities updates monthly_activities[index], dive_deeper_resources updates dive_deeper_resources[index], culminating_project updates area.culminating_project, 3) Added conversion markers (_converted: true, _database_id) to track converted tasks in competencies structure, 4) Added localStorage persistence for updated competencies to survive page reloads, 5) Enhanced logging for debugging conversion flow. This ensures that when a generated task is converted in admin panel, the changes immediately appear in the competencies view and persist across reloads."
+
+user_problem_statement: "Fix competencies view synchronization issue where converted tasks show updated data in admin panel but still display original data in competencies view."
 
   - task: "Enhanced ContentManagement Admin Interface - Phase 1"
     implemented: true
