@@ -762,17 +762,178 @@ const AuthenticatedApp = () => {
           title: "Leadership Legacy Initiative",
           duration: "Final 2-3 months of program",
           challenge: "Design and implement one leadership initiative that improves both team performance and team satisfaction",
+          project_scope: "Cross-competency capstone project integrating all Navigator-level learning",
           options: [
             "Team Development Program: Create systematic approach to developing your team members",
             "Culture Transformation Project: Lead significant improvement in team culture and collaboration",
             "Cross-Department Leadership Initiative: Solve problem requiring leadership across departments"
           ],
-          deliverables: [
-            "Project proposal and implementation plan (2 pages max)",
-            "Evidence of positive impact (metrics, feedback, observations)",
-            "Leadership lessons learned and future development plan (1 page)"
-          ],
-          presentation: "15-minute presentation to CM and peer panel on leadership growth and impact"
+          phases: {
+            planning: {
+              title: "📋 Planning & Design Phase",
+              duration: "3-4 weeks",
+              description: "Project identification, stakeholder analysis, and comprehensive planning",
+              deliverables: [
+                {
+                  title: "Project Charter & Business Case",
+                  description: "2-page document outlining project goals, stakeholder analysis, success metrics, and expected outcomes",
+                  template_provided: true,
+                  required: true,
+                  competencies_demonstrated: ["strategic_thinking", "financial_management"],
+                  portfolio_tag: "culminating-project-planning"
+                },
+                {
+                  title: "Implementation Timeline & Resource Plan",
+                  description: "Detailed project timeline with milestones, resource requirements, and risk mitigation strategies",
+                  template_provided: true,
+                  required: true,
+                  competencies_demonstrated: ["operational_management", "strategic_thinking"],
+                  portfolio_tag: "culminating-project-planning"
+                },
+                {
+                  title: "Stakeholder Communication Plan",
+                  description: "Communication strategy and plan for engaging all relevant stakeholders throughout the project",
+                  template_provided: true,
+                  required: true,
+                  competencies_demonstrated: ["cross_functional_collaboration", "leadership_supervision"],
+                  portfolio_tag: "culminating-project-planning"
+                }
+              ],
+              success_criteria: "All planning deliverables completed and approved by Community Manager",
+              approval_required: true
+            },
+            execution: {
+              title: "⚡ Implementation & Execution Phase",
+              duration: "7-9 weeks",
+              description: "Active project implementation with regular progress tracking and adjustment",
+              deliverables: [
+                {
+                  title: "Weekly Progress Reports",
+                  description: "Brief weekly updates on implementation progress, challenges encountered, and lessons learned",
+                  template_provided: true,
+                  required: true,
+                  frequency: "weekly",
+                  competencies_demonstrated: ["operational_management", "strategic_thinking"],
+                  portfolio_tag: "culminating-project-execution"
+                },
+                {
+                  title: "Milestone Documentation",
+                  description: "Evidence of key milestones achieved, including photos, metrics, testimonials, or other proof of progress",
+                  template_provided: false,
+                  required: true,
+                  competencies_demonstrated: ["all"],
+                  portfolio_tag: "culminating-project-execution"
+                },
+                {
+                  title: "Stakeholder Feedback Collection",
+                  description: "Formal and informal feedback from team members, residents, and other stakeholders affected by the project",
+                  template_provided: true,
+                  required: true,
+                  competencies_demonstrated: ["cross_functional_collaboration", "leadership_supervision"],
+                  portfolio_tag: "culminating-project-execution"
+                },
+                {
+                  title: "Financial Impact Analysis",
+                  description: "Documentation of any financial impacts, cost savings, revenue improvements, or resource optimization achieved",
+                  template_provided: true,
+                  required: true,
+                  competencies_demonstrated: ["financial_management", "operational_management"],
+                  portfolio_tag: "culminating-project-execution"
+                }
+              ],
+              success_criteria: "Project successfully implemented with measurable positive impact",
+              checkpoints: [
+                { week: 3, milestone: "25% implementation complete", deliverable: "First milestone evidence" },
+                { week: 6, milestone: "60% implementation complete", deliverable: "Mid-project assessment" },
+                { week: 8, milestone: "90% implementation complete", deliverable: "Pre-completion review" }
+              ]
+            },
+            completion: {
+              title: "🎯 Documentation & Presentation Phase",
+              duration: "2-3 weeks",
+              description: "Project documentation, impact analysis, and formal presentation preparation",
+              deliverables: [
+                {
+                  title: "Comprehensive Project Portfolio",
+                  description: "Complete project documentation including all phases, evidence of impact, lessons learned, and future recommendations",
+                  template_provided: true,
+                  required: true,
+                  competencies_demonstrated: ["all"],
+                  portfolio_tag: "culminating-project-completion"
+                },
+                {
+                  title: "Impact Measurement Report",
+                  description: "Quantitative and qualitative analysis of project results, including metrics, testimonials, and long-term sustainability plans",
+                  template_provided: true,
+                  required: true,
+                  competencies_demonstrated: ["strategic_thinking", "financial_management"],
+                  portfolio_tag: "culminating-project-completion"
+                },
+                {
+                  title: "Leadership Growth Reflection",
+                  description: "Personal reflection on leadership development throughout the project and entire Navigator program experience",
+                  template_provided: true,
+                  required: true,
+                  competencies_demonstrated: ["leadership_supervision"],
+                  portfolio_tag: "culminating-project-completion"
+                },
+                {
+                  title: "Final Presentation Materials",
+                  description: "Professional presentation materials for the formal project defense, including slides, visual aids, and supporting documentation",
+                  template_provided: true,
+                  required: true,
+                  competencies_demonstrated: ["all"],
+                  portfolio_tag: "culminating-project-completion"
+                }
+              ],
+              success_criteria: "Successful presentation defense and project approval by review committee"
+            }
+          },
+          presentation: {
+            title: "Navigator Leadership Showcase",
+            duration: "20 minutes presentation + 10 minutes Q&A",
+            audience: "Community Manager, Regional Manager, and 2 Navigator peers",
+            format: "Professional presentation with portfolio evidence",
+            components: [
+              "Project Overview & Business Impact (5 minutes)",
+              "Implementation Journey & Challenges Overcome (5 minutes)",
+              "Leadership Growth & Competency Development (5 minutes)",
+              "Future Applications & Continuous Improvement (5 minutes)",
+              "Q&A Session (10 minutes)"
+            ],
+            success_criteria: [
+              "Clear demonstration of all five Navigator competencies",
+              "Measurable positive impact on property operations",
+              "Evidence of personal leadership growth",
+              "Professional presentation skills",
+              "Ability to answer questions thoughtfully and confidently"
+            ]
+          },
+          mentorship_component: {
+            title: "Peer Mentorship Integration",
+            description: "Collaborate with and mentor newer Navigator participants throughout the project",
+            requirements: [
+              "Partner with 1-2 newer Navigator participants as project mentees",
+              "Provide guidance and support throughout their competency development",
+              "Document mentorship activities and mentee progress",
+              "Include mentorship reflection in final portfolio"
+            ],
+            portfolio_integration: true
+          },
+          cross_competency_integration: {
+            leadership_supervision: "Demonstrate team development and change management skills",
+            financial_management: "Show business impact and financial analysis capabilities", 
+            operational_management: "Implement process improvements and quality enhancements",
+            cross_functional_collaboration: "Work effectively across departments and stakeholder groups",
+            strategic_thinking: "Apply systems thinking and future-focused planning"
+          },
+          portfolio_integration: {
+            dedicated_section: "Culminating Project Portfolio",
+            organization_method: "chronological_by_phase",
+            evidence_types: ["documents", "photos", "videos", "testimonials", "metrics", "presentations"],
+            cross_references: "Link to supporting evidence from monthly competency assignments",
+            final_showcase: "Integrated portfolio defense demonstrating all Navigator competencies"
+          }
         },
         validation_criteria: {
           mastery_evidence_portfolio: [
