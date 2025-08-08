@@ -5436,7 +5436,7 @@ const AuthenticatedApp = () => {
           />
         )}
         
-        {currentView === 'admin-level-management' && isAdmin && (
+        {currentView === 'admin-level-management' && isAdminMode && (
           <LevelManagement 
             users={allUsers}
             onUpdateUser={updateUser}
