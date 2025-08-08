@@ -11351,10 +11351,12 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
 
 // Add Portfolio View Component
 const AddPortfolioView = ({ portfolioItem, setPortfolioItem, onSubmit, competencies, setCurrentView }) => {
-  const competencyOptions = Object.entries(competencies).map(([key, data]) => ({
-    value: key,
-    label: data.name
-  }));
+  const competencyOptions = Object.entries(competencies)
+    .filter(([key]) => key !== 'core_values')
+    .map(([key, data]) => ({
+      value: key,
+      label: data.name
+    }));
 
   const handleCompetencyToggle = (competencyKey) => {
     const updated = portfolioItem.competency_areas.includes(competencyKey)
