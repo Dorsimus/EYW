@@ -4703,8 +4703,33 @@ const AuthenticatedApp = () => {
         if (savedCompetencies) {
           const parsedCompetencies = JSON.parse(savedCompetencies);
           console.log('📦 Loaded competency data from localStorage fallback');
+          
+          // Apply converted task updates to saved competencies
+          const convertedTasksList = [...convertedTasks];
+          for (const taskId of convertedTasksList) {
+            const convertedTask = allTasks.find(task => 
+              task.original_generated_id === taskId || 
+              (task.source === 'competency_generated' && task.id)
+            );
+            if (convertedTask) {
+              applyConvertedTaskToCompetencies(parsedCompetencies, taskId, convertedTask);
+            }
+          }
+          
           setCompetencies(parsedCompetencies);
         } else {
+          // Apply converted task updates to base competencies
+          const convertedTasksList = [...convertedTasks];
+          for (const taskId of convertedTasksList) {
+            const convertedTask = allTasks.find(task => 
+              task.original_generated_id === taskId || 
+              (task.source === 'competency_generated' && task.id)
+            );
+            if (convertedTask) {
+              applyConvertedTaskToCompetencies(baseCompetencies, taskId, convertedTask);
+            }
+          }
+          
           setCompetencies(baseCompetencies);
         }
       } catch (localError) {
