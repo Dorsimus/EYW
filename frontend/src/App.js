@@ -5432,13 +5432,18 @@ const AuthenticatedApp = () => {
         )}
         
         {currentView === 'admin-content-management' && isAdminMode && (
-          <ContentManagement 
-            tasks={allTasks}
-            competencies={competencies}
-            onUpdateTask={updateTask}
-            onCreateTask={createTask}
-            onDeleteTask={deleteTask}
-          />
+          <div>
+            <div style={{background: 'lightgreen', padding: '5px', fontSize: '12px'}}>
+              DEBUG: Content Management - currentView={currentView}, isAdminMode={isAdminMode}
+            </div>
+            <ContentManagement 
+              tasks={allTasks}
+              competencies={competencies}
+              onUpdateTask={updateTask}
+              onCreateTask={createTask}
+              onDeleteTask={deleteTask}
+            />
+          </div>
         )}
         
         {currentView === 'admin-level-management' && isAdminMode && (
