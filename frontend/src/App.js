@@ -4679,6 +4679,19 @@ const AuthenticatedApp = () => {
         }
       } else {
         console.warn('⚠️ Backend returned unexpected response, using local competencies');
+        
+        // Apply converted task updates to base competencies
+        const convertedTasksList = [...convertedTasks];
+        for (const taskId of convertedTasksList) {
+          const convertedTask = allTasks.find(task => 
+            task.original_generated_id === taskId || 
+            (task.source === 'competency_generated' && task.id)
+          );
+          if (convertedTask) {
+            applyConvertedTaskToCompetencies(baseCompetencies, taskId, convertedTask);
+          }
+        }
+        
         setCompetencies(baseCompetencies);
       }
     } catch (competencyError) {
