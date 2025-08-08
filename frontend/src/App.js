@@ -7625,7 +7625,11 @@ const CompetenciesView = ({
   onJournalReflectionComplete,
   isCompetencyTaskComplete,
   getCompetencyTaskNotes,
-
+  portfolio,
+  setCurrentView,
+  showSuccessMessage,
+  showErrorMessage,
+  user,
   showTaskModal,
   setShowTaskModal,
   taskNotes,
