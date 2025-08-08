@@ -6284,6 +6284,15 @@ const AuthenticatedApp = () => {
             key={`flightbook-${Date.now()}`} // Force re-render to reload entries
           />
         )}
+
+        {currentView === 'analytics' && !isAdminMode && (
+          <AnalyticsDashboard 
+            competencies={competencies}
+            portfolio={portfolio}
+            competencyTaskProgress={competencyTaskProgress}
+            coreValueEntries={coreValueEntries}
+          />
+        )}
         
         {currentView === 'core-values' && !isAdminMode && (
           <CoreValuesView 
