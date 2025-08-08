@@ -5575,12 +5575,19 @@ const AuthenticatedApp = () => {
         console.log('📥 Backend response:', { 
           status: response.status, 
           data: response.data,
-          hasId: !!response.data?.id 
+          hasId: !!response.data?.id,
+          fullResponse: response
         });
         
         if (response.data && response.data.id) {
+          console.log(`🎯 CONVERSION SUCCESS: ${taskId} → ${response.data.id}`);
+          
           // Track this task as converted to prevent regeneration
-          setConvertedTasks(prev => new Set([...prev, taskId]));
+          setConvertedTasks(prev => {
+            const updated = new Set([...prev, taskId]);
+            console.log('📝 UPDATED CONVERTED TASKS:', [...updated]);
+            return updated;
+          });
           
           // Replace the generated task with the new database task in allTasks
           setAllTasks(prevTasks => 
