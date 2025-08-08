@@ -10019,82 +10019,115 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
 
         {/* Enhanced Controls Bar */}
         <div className="bg-white rounded-lg shadow p-4 mb-6">
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             {/* Search and Filter Controls */}
-            <div className="flex flex-col sm:flex-row gap-3 items-center">
+            <div className="flex flex-col sm:flex-row gap-3 flex-1">
+              {/* Search Input */}
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Search portfolio items..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8 pr-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 w-64"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
-                <span className="absolute left-2 top-2 text-gray-400">🔍</span>
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
               </div>
-              
+
+              {/* Competency Filter */}
+              <select
+                value={selectedCompetency}
+                onChange={(e) => setSelectedCompetency(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="all">All Competencies</option>
+                {Object.entries(competencies).map(([key, data]) => (
+                  <option key={key} value={key}>{data.name}</option>
+                ))}
+              </select>
+
+              {/* Tag Filter */}
+              {uniqueTags.length > 0 && (
+                <select
+                  value={selectedTag}
+                  onChange={(e) => setSelectedTag(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="all">All Tags</option>
+                  {uniqueTags.map(tag => (
+                    <option key={tag} value={tag}>{tag}</option>
+                  ))}
+                </select>
+              )}
+            </div>
+
+            <div className="flex gap-3 items-center">
+              {/* Sort Controls */}
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="date">Sort by Date</option>
                 <option value="title">Sort by Title</option>
                 <option value="competency">Sort by Competency</option>
-                <option value="size">Sort by File Size</option>
+                <option value="type">Sort by File Type</option>
               </select>
-              
-              <div className="flex rounded-md shadow-sm">
+
+              {/* View Mode Toggle */}
+              <div className="flex bg-gray-100 rounded-md p-1">
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`px-3 py-2 text-sm font-medium rounded-l-md border ${
+                  className={`px-3 py-2 rounded text-sm font-medium transition-colors ${
                     viewMode === 'list' 
-                      ? 'bg-blue-50 text-blue-700 border-blue-500' 
-                      : 'bg-white text-gray-500 border-gray-300'
+                      ? 'bg-white text-gray-900 shadow' 
+                      : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
                   📋 List
                 </button>
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`px-3 py-2 text-sm font-medium rounded-r-md border-l-0 border ${
+                  className={`px-3 py-2 rounded text-sm font-medium transition-colors ${
                     viewMode === 'grid' 
-                      ? 'bg-blue-50 text-blue-700 border-blue-500' 
-                      : 'bg-white text-gray-500 border-gray-300'
+                      ? 'bg-white text-gray-900 shadow' 
+                      : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
-                  📊 Grid
+                  🔲 Grid
                 </button>
               </div>
             </div>
+          </div>
 
-            {/* Selection and Bulk Actions */}
-            <div className="flex items-center gap-3">
-              <button
-                onClick={toggleSelectAll}
-                className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md hover:bg-gray-50"
-              >
-                {selectedItems.size === portfolio.length ? '☑️ Deselect All' : '☐ Select All'}
-              </button>
-              
-              {showBulkActions && (
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => handleBulkAction('download')}
-                    className="px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 border border-blue-300 rounded-md hover:bg-blue-50"
-                  >
-                    💾 Download
-                  </button>
-                  <button
-                    onClick={() => handleBulkAction('delete')}
-                    className="px-3 py-2 text-sm font-medium text-red-600 hover:text-red-800 border border-red-300 rounded-md hover:bg-red-50"
-                  >
-                    🗑️ Delete
-                  </button>
-                </div>
+          {/* Filter Summary */}
+          {(searchTerm || selectedCompetency !== 'all' || selectedTag !== 'all') && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              <span className="text-sm text-gray-600">Active filters:</span>
+              {searchTerm && (
+                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  Search: "{searchTerm}"
+                  <button onClick={() => setSearchTerm('')} className="ml-1 text-blue-600 hover:text-blue-800">×</button>
+                </span>
+              )}
+              {selectedCompetency !== 'all' && (
+                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  {competencies[selectedCompetency]?.name}
+                  <button onClick={() => setSelectedCompetency('all')} className="ml-1 text-green-600 hover:text-green-800">×</button>
+                </span>
+              )}
+              {selectedTag !== 'all' && (
+                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                  Tag: {selectedTag}
+                  <button onClick={() => setSelectedTag('all')} className="ml-1 text-purple-600 hover:text-purple-800">×</button>
+                </span>
               )}
             </div>
-          </div>
+          )}
         </div>
       </div>
 
