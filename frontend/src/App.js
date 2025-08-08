@@ -3312,12 +3312,94 @@ const AuthenticatedApp = () => {
             monthly_activities: [
               {
                 month: 1,
-                title: "Process Mapping & Analysis",
-                in_flow_activity: "Map out one key department process and identify bottlenecks or inefficiencies",
+                title: "Process Improvement Project Documentation",
+                in_flow_activity: "Map out one key department process, identify improvement opportunities, and implement changes while documenting results",
+                portfolio_assignment: {
+                  title: "Process Improvement Project Plans",
+                  deliverable: "Quarterly process improvement projects with before/after analysis",
+                  description: "Document current process, identify inefficiencies, propose improvements, implement changes, and measure results",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "process-improvement",
+                  file_types: ["document", "flowchart", "spreadsheet"],
+                  quarterly_requirement: "1-2 improvement projects"
+                },
                 document_section: {
-                  title: "Process Improvement Opportunities",
-                  description: "Process maps and improvement opportunities you've identified",
+                  title: "Process Improvement Portfolio",
+                  description: "Process improvement projects showing your systems thinking development",
                   portfolio_integration: true
+                },
+                cross_functional_integration: "Identify process improvements that benefit multiple departments",
+                journal_prompt: "What processes am I noticing could work better? How is my systems thinking evolving?"
+              },
+              {
+                month: 2,
+                title: "Quality Control System Creation",
+                in_flow_activity: "Develop and implement quality control checklists and monitoring systems for your department's key deliverables",
+                portfolio_assignment: {
+                  title: "Quality Control Documentation",
+                  deliverable: "Quality control systems and monitoring reports",
+                  description: "Quality control checklists, monitoring systems, performance metrics, and improvement tracking for department operations",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "quality-control",
+                  file_types: ["document", "checklist", "spreadsheet"],
+                  ongoing_requirement: true
+                },
+                document_section: {
+                  title: "Quality Management Systems",
+                  description: "Quality control systems showing your commitment to operational excellence",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Train team on quality standards and monitoring systems",
+                journal_prompt: "How can I make quality control feel empowering rather than restrictive for my team?"
+              },
+              {
+                month: 3,
+                title: "Technology Implementation Planning",
+                in_flow_activity: "Plan and execute technology improvements or software implementations that enhance operational efficiency",
+                portfolio_assignment: {
+                  title: "Technology Implementation Plans",
+                  deliverable: "Technology project plans with adoption metrics",
+                  description: "Technology implementation plans including needs assessment, rollout strategy, training plans, and adoption success metrics",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "technology-implementation",
+                  file_types: ["document", "presentation", "project-plan"],
+                  project_based: true
+                },
+                document_section: {
+                  title: "Technology Leadership Portfolio",
+                  description: "Technology implementations showing your ability to drive operational innovation",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect technology improvements to property strategic goals",
+                curiosity_question: "How can technology make our operations more effective while improving the resident experience?"
+              },
+              {
+                month: 4,
+                title: "Standard Operating Procedures Optimization",
+                in_flow_activity: "Review, update, and optimize department SOPs based on current best practices and process improvements implemented",
+                portfolio_assignment: {
+                  title: "SOP Audit & Optimization Report",  
+                  deliverable: "Comprehensive SOP review with improvement documentation",
+                  description: "SOP audit findings, gap analysis, updated procedures, training plans, and compliance monitoring systems",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "sop-management",
+                  file_types: ["document", "procedures", "training-materials"],
+                  annual_requirement: true
+                },
+                document_section: {
+                  title: "Operational Excellence Documentation",
+                  description: "SOP improvements showing your commitment to operational standardization and excellence",
+                  portfolio_integration: true
+                },
+                team_integration: "Involve team in SOP improvement and ensure understanding of changes",
+                curiosity_question: "How can our SOPs become living documents that actually help team members excel rather than just comply?"
+              }
+            ],
+            competency_gate: "Process improvement projects completed + Quality control systems implemented + Technology improvements executed + SOPs optimized"
                 },
                 operational_integration: "Build process thinking into daily workflow management",
                 journal_prompt: "What processes work smoothly vs. create frustration? Where are the biggest opportunities for improvement?"
