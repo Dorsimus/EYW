@@ -1583,42 +1583,94 @@ const AuthenticatedApp = () => {
             monthly_activities: [
               {
                 month: 1,
-                title: "Department Curiosity Exploration",
-                in_flow_activity: "Spend 30 minutes weekly with your opposite department counterpart, just observing and asking curious questions",
+                title: "Cross-Department Understanding Project",
+                in_flow_activity: "Shadow the other department for 4-6 hours over a month and document their key processes, challenges, and success metrics",
+                portfolio_assignment: {
+                  title: "Department Understanding Documentation",
+                  deliverable: "Cross-department process analysis and partnership opportunities report",
+                  description: "Document the other department's workflows, challenges, success metrics, and identify specific collaboration opportunities",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "cross-department-understanding",
+                  file_types: ["document", "flowchart"],
+                  quarterly_requirement: true
+                },
                 document_section: {
-                  title: "Department Discovery Journal", 
-                  description: "Insights about how the other department really works",
+                  title: "Cross-Department Partnership Portfolio",
+                  description: "Deep understanding of other departments showing your collaborative leadership growth",
                   portfolio_integration: true
                 },
-                leadership_integration: "Share what you're learning with your team to build appreciation",
+                leadership_integration: "Share insights with your team to build cross-department appreciation",
                 journal_prompt: "What surprised me most about how the other department operates? What challenges do they face that I never considered?"
               },
               {
                 month: 2,
-                title: "Appreciation in Action",
-                in_flow_activity: "Find one specific way to make the other department's work easier each week",
+                title: "Resident Journey Mapping Project",
+                in_flow_activity: "Map the complete resident experience from both department perspectives and identify improvement opportunities",
+                portfolio_assignment: {
+                  title: "Resident Experience Journey Maps",
+                  deliverable: "Complete resident journey documentation with improvement recommendations",
+                  description: "Map resident touchpoints with both departments, identify friction points, and propose collaborative solutions for better resident experience",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "resident-journey-mapping",
+                  file_types: ["document", "flowchart", "presentation"],
+                  project_based: true
+                },
                 document_section: {
-                  title: "Partnership Action Log",
-                  description: "Concrete ways you've supported the other department",
+                  title: "Unified Resident Experience Portfolio",
+                  description: "Journey maps and improvements showing your ability to think beyond department boundaries",
                   portfolio_integration: true
                 },
-                operational_integration: "Build other department considerations into your daily decisions",
-                journal_prompt: "What small actions have the biggest impact on our working relationship? How does helping them actually help residents?"
+                strategic_integration: "Connect resident experience improvements to property business goals",
+                journal_prompt: "Where do residents experience friction between our departments? What would seamless collaboration look like from their perspective?"
               },
               {
                 month: 3,
-                title: "Bridge Building",
-                in_flow_activity: "Facilitate one conversation between your teams about how to work better together",
+                title: "Cross-Department Communication Protocol Development",
+                in_flow_activity: "Create and implement communication systems that keep both departments aligned on resident needs and priorities",
+                portfolio_assignment: {
+                  title: "Communication Protocol Documentation",
+                  deliverable: "Cross-department communication systems and protocols",
+                  description: "Design communication protocols for regular information sharing, conflict resolution, and collaborative decision-making between departments",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "communication-protocols",
+                  file_types: ["document", "procedures", "templates"],
+                  implementation_required: true
+                },
                 document_section: {
-                  title: "Team Bridge-Building Results",
-                  description: "Improved understanding and cooperation between teams",
+                  title: "Communication Leadership Portfolio",
+                  description: "Communication systems showing your ability to build organizational bridges",
                   portfolio_integration: true
                 },
-                strategic_integration: "Connect department partnership to property-wide goals",
-                curiosity_question: "How can appreciation and understanding become automatic between our departments?"
+                operational_integration: "Build cross-department communication into daily workflows",
+                curiosity_question: "How can we communicate in ways that strengthen partnership rather than just share information?"
+              },
+              {
+                month: 4,
+                title: "Collaborative Project Leadership",
+                in_flow_activity: "Lead a specific project that requires both departments working together to achieve a shared resident experience or business goal",
+                portfolio_assignment: {
+                  title: "Cross-Department Project Plans",
+                  deliverable: "Collaborative project documentation with outcomes and lessons learned",
+                  description: "Document project planning, execution, outcomes, and relationship-building lessons from leading cross-department initiatives",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "collaborative-leadership",
+                  file_types: ["document", "project-plan", "presentation"],
+                  quarterly_requirement: "1-2 collaborative projects"
+                },
+                document_section: {
+                  title: "Collaborative Leadership Evidence",
+                  description: "Project leadership showing your ability to unite departments around shared goals",
+                  portfolio_integration: true
+                },
+                leadership_integration: "Develop both teams' collaborative leadership skills through project work",
+                curiosity_question: "How can every cross-department project strengthen our ongoing partnership rather than just accomplish a task?"
               }
             ],
-            competency_gate: "Demonstrate improved working relationship with opposite department + Teams show increased cooperation"
+            competency_gate: "Cross-department understanding documented + Resident journey mapped + Communication protocols implemented + Collaborative project led"
           },
           unified_resident_experience: {
             name: "Unified Resident Experience Creation",
