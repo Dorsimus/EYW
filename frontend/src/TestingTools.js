@@ -145,7 +145,7 @@ const TestingTools = ({ users, tasks, onCreateUser, onUpdateUser, onDeleteUser, 
 };
 
 // User Simulation Component
-const UserSimulation = ({ users, testUserTemplates, onCreateUser, onUpdateUser, onDeleteUser, showSuccessMessage, showErrorMessage, setBulkOperationInProgress }) => {
+const UserSimulation = ({ users, testUserTemplates, onCreateUser, onUpdateUser, onDeleteUser, showSuccessMessage, showErrorMessage, bulkOperationInProgress, setBulkOperationInProgress }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [customUser, setCustomUser] = useState({
     name: '',
