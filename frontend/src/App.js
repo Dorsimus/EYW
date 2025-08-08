@@ -9844,6 +9844,29 @@ const PortfolioView = ({ portfolio, setCurrentView, competencies, reloadPortfoli
     }
   };
 
+  // Utility function to get file icons based on extension
+  const getFileIcon = (extension) => {
+    switch (extension?.toLowerCase()) {
+      case 'pdf': return '📄';
+      case 'doc':
+      case 'docx': return '📝';
+      case 'xls':
+      case 'xlsx': return '📊';
+      case 'ppt':
+      case 'pptx': return '📈';
+      case 'jpg':
+      case 'jpeg':
+      case 'png':
+      case 'gif':
+      case 'bmp': return '🖼️';
+      case 'txt':
+      case 'md': return '📄';
+      case 'zip':
+      case 'rar': return '📦';
+      default: return '📋';
+    }
+  };
+
   // Enhanced bulk actions for selected items
   const handleBulkAction = async (action) => {
     try {
