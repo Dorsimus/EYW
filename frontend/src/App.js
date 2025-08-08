@@ -5591,8 +5591,24 @@ const AuthenticatedApp = () => {
         
         console.log('📤 Creating new database task:', newTaskData);
         
-        // Create in database
-        const token = await getToken({ template: "default" });
+        // Create in database - Try different token approaches
+        let token;
+        try {
+          // Try getting token with metadata included
+          token = await getToken({ 
+            template: "default",
+            skipCache: true
+          });
+          
+          if (!token) {
+            console.warn('getToken returned null, trying alternative approach');
+            token = await getToken();
+          }
+        } catch (tokenError) {
+          console.warn('Error getting token with template, trying basic:', tokenError);
+          token = await getToken();
+        }
+        
         console.log('🔐 Got auth token:', token ? `${token.substring(0, 50)}...` : 'null');
         
         // Debug: Decode token to see claims
@@ -5609,6 +5625,12 @@ const AuthenticatedApp = () => {
               iss: payload.iss,
               fullPayload: payload
             });
+            
+            // Check if we need to manually add admin info to request
+            if (!payload.metadata && !payload.public_metadata && hasAdminAccess) {
+              console.log('🔧 JWT missing metadata, but frontend shows admin access');
+              console.log('🔧 User public metadata:', user?.publicMetadata);
+            }
           } catch (e) {
             console.log('Could not decode token:', e);
           }
