@@ -2399,6 +2399,10 @@ const AuthenticatedApp = () => {
     // Clear loading state
     setLoading(false);
     console.log('Demo environment ready - can now fix text visibility issues');
+    
+    // FINAL OVERRIDE: Ensure dashboard view is set after all processing
+    console.log('🔒 FINAL OVERRIDE: Setting dashboard view for all users');
+    setCurrentView('dashboard');
     }
   }, []);
 
