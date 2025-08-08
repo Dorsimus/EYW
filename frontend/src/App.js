@@ -4099,58 +4099,130 @@ const AuthenticatedApp = () => {
   };
 
   const loadUserData = async (userId, refinedCompetencies = null) => {
+    console.log(`🔄 Loading user data for ID: ${userId}`);
+    
+    // Use provided refined competencies or current state as fallback
+    const baseCompetencies = refinedCompetencies || competencies;
+    
     try {
+      // Add timeout and error handling for API calls
+      const config = {
+        timeout: 10000, // 10 second timeout
+        validateStatus: (status) => status < 500 // Don't throw on 4xx errors
+      };
+      
       // Load competencies progress from backend
-      const compResponse = await axios.get(`${API}/users/${userId}/competencies`);
-      const backendProgress = compResponse.data;
+      console.log('📊 Loading competency progress from backend...');
+      const compResponse = await axios.get(`${API}/users/${userId}/competencies`, config);
       
-      // Use provided refined competencies or current state
-      const baseCompetencies = refinedCompetencies || competencies;
-      
-      // Merge backend progress with local refined competency structure
-      const mergedCompetencies = { ...baseCompetencies };
-      
-      // Update progress data from backend while keeping local structure
-      Object.keys(backendProgress).forEach(areaKey => {
-        if (mergedCompetencies[areaKey]) {
-          // Update overall progress from backend
-          mergedCompetencies[areaKey].overall_progress = backendProgress[areaKey].overall_progress || 0;
-          mergedCompetencies[areaKey].completion_percentage = backendProgress[areaKey].overall_progress || 0;
-          
-          // Update sub-competency progress from backend
-          const backendSubCompetencies = backendProgress[areaKey].sub_competencies || {};
-          Object.keys(backendSubCompetencies).forEach(subKey => {
-            if (mergedCompetencies[areaKey].sub_competencies && mergedCompetencies[areaKey].sub_competencies[subKey]) {
-              const backendSubData = backendSubCompetencies[subKey];
-              mergedCompetencies[areaKey].sub_competencies[subKey] = {
-                ...mergedCompetencies[areaKey].sub_competencies[subKey],
-                progress_percentage: backendSubData.completion_percentage || 0,
-                completed_tasks: backendSubData.completed_tasks || 0,
-                total_tasks: backendSubData.total_tasks || mergedCompetencies[areaKey].sub_competencies[subKey].total_tasks || 4
-              };
-            }
-          });
+      if (compResponse.status === 200 && compResponse.data) {
+        console.log('✅ Successfully loaded backend competency data');
+        const backendProgress = compResponse.data;
+        
+        // Merge backend progress with local refined competency structure
+        const mergedCompetencies = { ...baseCompetencies };
+        
+        // Update progress data from backend while keeping local structure
+        Object.keys(backendProgress).forEach(areaKey => {
+          if (mergedCompetencies[areaKey]) {
+            // Update overall progress from backend
+            mergedCompetencies[areaKey].overall_progress = backendProgress[areaKey].overall_progress || 0;
+            mergedCompetencies[areaKey].completion_percentage = backendProgress[areaKey].overall_progress || 0;
+            
+            // Update sub-competency progress from backend
+            const backendSubCompetencies = backendProgress[areaKey].sub_competencies || {};
+            Object.keys(backendSubCompetencies).forEach(subKey => {
+              if (mergedCompetencies[areaKey].sub_competencies && mergedCompetencies[areaKey].sub_competencies[subKey]) {
+                const backendSubData = backendSubCompetencies[subKey];
+                mergedCompetencies[areaKey].sub_competencies[subKey] = {
+                  ...mergedCompetencies[areaKey].sub_competencies[subKey],
+                  progress_percentage: backendSubData.completion_percentage || 0,
+                  completed_tasks: backendSubData.completed_tasks || 0,
+                  total_tasks: backendSubData.total_tasks || mergedCompetencies[areaKey].sub_competencies[subKey].total_tasks || 4
+                };
+              }
+            });
+          }
+        });
+        
+        setCompetencies(mergedCompetencies);
+        console.log('✅ Competency data merged successfully');
+        
+        // Also save to localStorage for offline access
+        try {
+          localStorage.setItem('user_competencies', JSON.stringify(mergedCompetencies));
+          console.log('💾 Competency data saved to localStorage');
+        } catch (storageError) {
+          console.warn('⚠️ Failed to save competencies to localStorage:', storageError);
         }
-      });
+      } else {
+        console.warn('⚠️ Backend returned unexpected response, using local competencies');
+        setCompetencies(baseCompetencies);
+      }
+    } catch (competencyError) {
+      console.warn('⚠️ Error loading competency data from backend, falling back to local:', competencyError);
       
-      setCompetencies(mergedCompetencies);
-      
-      // Load portfolio with separate error handling
+      // Try to load from localStorage as fallback
       try {
-        console.log(`Loading portfolio for user: ${userId}`);
-        const portfolioResponse = await axios.get(`${API}/users/${userId}/portfolio`);
-        console.log('Portfolio response:', portfolioResponse.data);
+        const savedCompetencies = localStorage.getItem('user_competencies');
+        if (savedCompetencies) {
+          const parsedCompetencies = JSON.parse(savedCompetencies);
+          console.log('📦 Loaded competency data from localStorage fallback');
+          setCompetencies(parsedCompetencies);
+        } else {
+          setCompetencies(baseCompetencies);
+        }
+      } catch (localError) {
+        console.warn('⚠️ Error loading from localStorage, using base competencies:', localError);
+        setCompetencies(baseCompetencies);
+      }
+    }
+    
+    // Load portfolio with separate error handling
+    try {
+      console.log(`📁 Loading portfolio for user: ${userId}`);
+      const portfolioConfig = {
+        timeout: 8000, // 8 second timeout
+        validateStatus: (status) => status < 500
+      };
+      
+      const portfolioResponse = await axios.get(`${API}/users/${userId}/portfolio`, portfolioConfig);
+      
+      if (portfolioResponse.status === 200 && Array.isArray(portfolioResponse.data)) {
+        console.log(`✅ Successfully loaded ${portfolioResponse.data.length} portfolio items`);
         setPortfolio(portfolioResponse.data);
-        console.log(`Successfully loaded ${portfolioResponse.data.length} portfolio items`);
-      } catch (portfolioError) {
-        console.error('Error loading portfolio:', portfolioError);
-        // Initialize with empty portfolio if loading fails
+        
+        // Save to localStorage for offline access
+        try {
+          localStorage.setItem('user_portfolio', JSON.stringify(portfolioResponse.data));
+          console.log('💾 Portfolio data saved to localStorage');
+        } catch (storageError) {
+          console.warn('⚠️ Failed to save portfolio to localStorage:', storageError);
+        }
+      } else {
+        console.warn('⚠️ Invalid portfolio response, using empty array');
         setPortfolio([]);
       }
-    } catch (error) {
-      console.error('Error loading user data:', error);
-      // Keep using local refined competency structure if backend fails
+    } catch (portfolioError) {
+      console.warn('⚠️ Error loading portfolio from backend:', portfolioError);
+      
+      // Try to load from localStorage as fallback
+      try {
+        const savedPortfolio = localStorage.getItem('user_portfolio');
+        if (savedPortfolio) {
+          const parsedPortfolio = JSON.parse(savedPortfolio);
+          console.log(`📦 Loaded ${parsedPortfolio.length} portfolio items from localStorage fallback`);
+          setPortfolio(parsedPortfolio);
+        } else {
+          setPortfolio([]);
+        }
+      } catch (localError) {
+        console.warn('⚠️ Error loading portfolio from localStorage:', localError);
+        setPortfolio([]);
+      }
     }
+    
+    console.log('✅ User data loading completed');
   };
 
   // Function to reload portfolio data
