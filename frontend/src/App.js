@@ -5198,6 +5198,98 @@ const AuthenticatedApp = () => {
     return allTasks;
   };
 
+  // UPDATE CONVERTED TASK IN COMPETENCIES STRUCTURE
+  const updateConvertedTaskInCompetencies = (taskId, convertedTaskData) => {
+    if (!taskId || typeof taskId !== 'string') {
+      console.error('updateConvertedTaskInCompetencies: taskId must be a string, received:', typeof taskId, taskId);
+      return;
+    }
+    
+    console.log('🔄 Updating competencies structure for converted task:', taskId, convertedTaskData);
+    
+    setCompetencies(prevCompetencies => {
+      const updatedCompetencies = JSON.parse(JSON.stringify(prevCompetencies));
+      
+      // Find and update the task in the competencies structure
+      const parts = taskId.split('_');
+      const areaKey = parts[0];
+      const area = updatedCompetencies[areaKey];
+      
+      if (!area) {
+        console.warn('Area not found:', areaKey);
+        return prevCompetencies;
+      }
+      
+      // Handle different task types based on taskId pattern
+      if (taskId.includes('curiosity_ignition')) {
+        console.log('📝 Updating curiosity ignition in competencies');
+        if (area.curiosity_ignition) {
+          area.curiosity_ignition.title = convertedTaskData.title;
+          area.curiosity_ignition.description = convertedTaskData.description;
+          // Mark as converted so the competencies view knows this is a database task
+          area.curiosity_ignition._converted = true;
+          area.curiosity_ignition._database_id = convertedTaskData.id;
+        }
+      }
+      else if (taskId.includes('culminating_project')) {
+        console.log('📝 Updating culminating project in competencies');
+        if (area.culminating_project) {
+          area.culminating_project.title = convertedTaskData.title;
+          area.culminating_project.challenge = convertedTaskData.description;
+          area.culminating_project._converted = true;
+          area.culminating_project._database_id = convertedTaskData.id;
+        }
+      }
+      else if (taskId.includes('_course_')) {
+        console.log('📝 Updating foundation course in competencies');
+        const subKey = parts[1];
+        const courseIndex = parseInt(parts[3]);
+        const subComp = area.sub_competencies?.[subKey];
+        
+        if (subComp?.foundation_courses?.[courseIndex]) {
+          const course = subComp.foundation_courses[courseIndex];
+          course.title = convertedTaskData.title;
+          course.description = convertedTaskData.description;
+          course.url = convertedTaskData.external_link;
+          course._converted = true;
+          course._database_id = convertedTaskData.id;
+        }
+      }
+      else if (taskId.includes('_activity_')) {
+        console.log('📝 Updating monthly activity in competencies');
+        const subKey = parts[1];
+        const activityIndex = parseInt(parts[3]);
+        const subComp = area.sub_competencies?.[subKey];
+        
+        if (subComp?.monthly_activities?.[activityIndex]) {
+          const activity = subComp.monthly_activities[activityIndex];
+          activity.title = convertedTaskData.title;
+          activity.in_flow_activity = convertedTaskData.description;
+          activity._converted = true;
+          activity._database_id = convertedTaskData.id;
+        }
+      }
+      else if (taskId.includes('_resource_')) {
+        console.log('📝 Updating dive deeper resource in competencies');
+        const subKey = parts[1];
+        const resourceIndex = parseInt(parts[3]);
+        const subComp = area.sub_competencies?.[subKey];
+        
+        if (subComp?.dive_deeper_resources?.[resourceIndex]) {
+          const resource = subComp.dive_deeper_resources[resourceIndex];
+          resource.title = convertedTaskData.title;
+          resource.description = convertedTaskData.description;
+          resource.url = convertedTaskData.external_link;
+          resource._converted = true;
+          resource._database_id = convertedTaskData.id;
+        }
+      }
+      
+      console.log('✅ Updated competencies structure for:', taskId);
+      return updatedCompetencies;
+    });
+  };
+
   // UPDATE TASK IN COMPETENCIES DATA
   const updateTaskInCompetencies = (taskId, updatedTaskData) => {
     // Add validation to prevent the split error
