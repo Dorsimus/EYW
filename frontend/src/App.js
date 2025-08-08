@@ -5479,8 +5479,8 @@ const AuthenticatedApp = () => {
           />
         )}
 
-        {/* User Views */}
-        {currentView === 'dashboard' && !isAdmin && (
+        {/* User Views - Allow admin users to see regular dashboard too */}
+        {currentView === 'dashboard' && (
           <DashboardView 
             user={user}
             competencies={competencies}
