@@ -2620,34 +2620,92 @@ const AuthenticatedApp = () => {
             monthly_activities: [
               {
                 month: 1,
-                title: "Motivation Detective Work",
-                in_flow_activity: "During your weekly one-on-ones, ask each team member: 'What made you most excited about work this week?'",
+                title: "Individual Development Focus",
+                in_flow_activity: "During your weekly one-on-ones, create a simple development tracker for each team member focusing on their strengths, goals, and growth opportunities",
+                portfolio_assignment: {
+                  title: "Team Member Growth Documentation",
+                  deliverable: "Individual development tracker (one page per direct report)",
+                  description: "Document each person's current strengths, growth areas, career interests, development opportunities provided, progress observations, and next quarter focus",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "leadership-development",
+                  file_types: ["document", "spreadsheet"],
+                  quarterly_update: true
+                },
                 document_section: {
-                  title: "Team Motivation Insights",
-                  description: "What you're learning about what motivates each person",
+                  title: "Team Development Portfolio",
+                  description: "Individual development plans and progress tracking for your team members",
                   portfolio_integration: true
                 },
-                leadership_integration: "Apply motivation insights to daily interactions",
-                journal_prompt: "What surprised me about what motivates my team members? How can I use these insights in my daily leadership?"
+                leadership_integration: "Move from managing tasks to developing people through structured growth conversations",
+                journal_prompt: "What does each person on my team want to become? How can I help them get there through daily opportunities?"
               },
               {
                 month: 2,
-                title: "Energy Creation Experiments",
-                in_flow_activity: "Try one new approach each week to boost team energy based on what you learned about their motivations",
+                title: "Performance Coaching Mastery",
+                in_flow_activity: "When performance issues arise, document your coaching approach, questions asked, and solutions developed together with team members",
+                portfolio_assignment: {
+                  title: "Coaching Conversation Case Studies",
+                  deliverable: "2-3 documented coaching conversations per quarter",
+                  description: "Document coaching situations, approaches taken, team member responses, follow-up actions, and results observed",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "performance-coaching",
+                  file_types: ["document"],
+                  quarterly_requirement: "2-3 case studies"
+                },
                 document_section: {
-                  title: "Motivation Experiment Results",
-                  description: "What you tried and how team members responded",
+                  title: "Coaching Excellence Evidence",
+                  description: "Real coaching conversations showing your development from problem-solving to people-growing",
                   portfolio_integration: true
                 },
-                operational_integration: "Build motivation boosters into regular operations",
-                journal_prompt: "Which motivation experiments had the biggest impact? How can I make energy creation a natural part of my leadership style?"
+                operational_integration: "Build coaching mindset into daily performance conversations",
+                journal_prompt: "How is my coaching approach changing? What questions help team members find their own solutions?"
               },
               {
                 month: 3,
-                title: "Recognition Revolution",
-                in_flow_activity: "Develop and implement recognition practices that connect to what each person finds motivating",
+                title: "Team Meeting Innovation",
+                in_flow_activity: "Transform your team meetings from information delivery to engagement and problem-solving, documenting techniques and team-generated solutions",
+                portfolio_assignment: {
+                  title: "Meeting Facilitation Evolution",
+                  deliverable: "Monthly meeting improvement documentation",
+                  description: "Document meeting purposes, engagement techniques tried, team problem-solving facilitated, and changes implemented based on team input",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "meeting-facilitation",
+                  file_types: ["document", "presentation"],
+                  monthly_requirement: true
+                },
                 document_section: {
-                  title: "Personal Recognition System",
+                  title: "Meeting Leadership Portfolio",
+                  description: "Evidence of evolving from information delivery to team engagement and collaborative problem-solving",
+                  portfolio_integration: true
+                },
+                strategic_integration: "Connect team meetings to property goals and resident experience improvements",
+                curiosity_question: "How can every team meeting become a leadership development opportunity for everyone involved?"
+              },
+              {
+                month: 4,
+                title: "Conflict Resolution Mastery",
+                in_flow_activity: "When team or resident conflicts arise, document your relationship-building approach and the understanding achieved between parties",
+                portfolio_assignment: {
+                  title: "Relationship Building Through Conflict",
+                  deliverable: "Quarterly conflict resolution case studies",
+                  description: "Document conflict situations, root causes identified, resolution approaches, outcomes, and lessons learned for future situations",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "conflict-resolution",
+                  file_types: ["document"],
+                  quarterly_requirement: "2-3 case studies"
+                },
+                document_section: {
+                  title: "Conflict Resolution Portfolio",
+                  description: "Real examples of building stronger relationships through skillful conflict resolution",
+                  portfolio_integration: true
+                },
+                cross_functional_integration: "Apply conflict resolution skills to cross-department challenges",
+                curiosity_question: "How can every conflict become an opportunity to strengthen relationships and build understanding?"
+              }
                   description: "Recognition approaches tailored to each team member",
                   portfolio_integration: true
                 },
