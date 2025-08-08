@@ -5118,12 +5118,13 @@ const AuthenticatedApp = () => {
                   task_type: 'course_link',
                   competency_area: areaKey,
                   sub_competency: subKey,
-                estimated_hours: course.duration === '1 hour' ? 1 : 0.5,
-                external_link: course.url || '#',
-                instructions: `Platform: ${course.platform}`,
-                active: true,
-                required: true
-              });
+                  estimated_hours: course.duration === '1 hour' ? 1 : 0.5,
+                  external_link: course.url || '#',
+                  instructions: `Platform: ${course.platform}`,
+                  active: true,
+                  required: true
+                });
+              }
             });
           }
           
