@@ -4402,7 +4402,14 @@ const AuthenticatedApp = () => {
 
   const completeTask = async (taskId, evidenceDescription = "", file = null) => {
     try {
-      if (!user?.id) return;
+      if (!localUser?.id) {
+        console.error('No user ID available for task completion');
+        showErrorMessage('User not properly initialized. Please refresh the page.');
+        return;
+      }
+
+      console.log(`🎯 Completing task ${taskId} for user ${localUser.id}`);
+      
       const formData = new FormData();
       formData.append('task_id', taskId);
       formData.append('evidence_description', evidenceDescription);
@@ -4410,28 +4417,102 @@ const AuthenticatedApp = () => {
       
       if (file) {
         formData.append('file', file);
+        console.log('📎 File attached to task completion');
       }
       
-      // Submit task completion
-      const response = await axios.post(`${API}/users/${user.id}/tasks/complete`, formData);
+      // Try to submit to backend first
+      let backendSuccess = false;
+      try {
+        const token = await getToken();
+        if (token) {
+          console.log('📤 Submitting task completion to backend...');
+          const response = await axios.post(`${API}/users/${localUser.id}/tasks/complete`, formData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            timeout: 15000
+          });
+          
+          if (response.status === 200 || response.status === 201) {
+            console.log('✅ Task completion submitted to backend successfully');
+            backendSuccess = true;
+          }
+        }
+      } catch (backendError) {
+        console.warn('⚠️ Backend task completion failed, continuing with local tracking:', backendError);
+      }
       
-      // Get task details for automatic portfolio/flightbook creation
+      // Always update local state regardless of backend status
       const taskData = competencyTasks.find(t => t.id === taskId);
       const competencyArea = selectedCompetency?.area;
       
       if (taskData && competencyArea) {
+        // Update local task completion tracking
+        const completionData = {
+          taskId,
+          completedAt: new Date().toISOString(),
+          evidenceDescription,
+          hasFile: !!file,
+          backendSubmitted: backendSuccess
+        };
+        
+        // Save completion to localStorage
+        const existingCompletions = JSON.parse(localStorage.getItem('task_completions') || '[]');
+        const updatedCompletions = [...existingCompletions.filter(c => c.taskId !== taskId), completionData];
+        localStorage.setItem('task_completions', JSON.stringify(updatedCompletions));
+        
+        // Update competency progress locally
+        const updatedProgress = { ...competencyTaskProgress };
+        const progressKey = `${competencyArea}_${selectedCompetency?.sub}`;
+        if (!updatedProgress[progressKey]) {
+          updatedProgress[progressKey] = { completed: [], notes: {} };
+        }
+        if (!updatedProgress[progressKey].completed.includes(taskId)) {
+          updatedProgress[progressKey].completed.push(taskId);
+        }
+        updatedProgress[progressKey].notes[taskId] = evidenceDescription;
+        
+        setCompetencyTaskProgress(updatedProgress);
+        saveDataWithBackup('competency_task_progress', updatedProgress);
+        
         // Automatically create portfolio item if there's evidence/file
         if (evidenceDescription.trim() || file) {
-          console.log('Creating portfolio item from task completion...');
-          await createPortfolioFromTaskCompletion(taskData, competencyArea, evidenceDescription, file);
+          console.log('📁 Creating portfolio item from task completion...');
+          try {
+            await createPortfolioFromTaskCompletion(taskData, competencyArea, evidenceDescription, file);
+          } catch (portfolioError) {
+            console.warn('⚠️ Portfolio creation failed:', portfolioError);
+          }
         }
         
         // Automatically create flightbook entry if there are notes/reflections
         if (evidenceDescription.trim()) {
-          console.log('Creating flightbook entry from task completion...');
-          await createFlightbookFromTaskCompletion(taskData, competencyArea, evidenceDescription);
+          console.log('📖 Creating flightbook entry from task completion...');
+          try {
+            await createFlightbookFromTaskCompletion(taskData, competencyArea, evidenceDescription);
+          } catch (flightbookError) {
+            console.warn('⚠️ Flightbook entry creation failed:', flightbookError);
+          }
         }
+        
+        console.log('✅ Task completion processing finished');
+        showSuccessMessage(`Task "${taskData.title}" completed successfully!`);
+        
+        // Reload competency tasks to reflect completion
+        await loadCompetencyTasks(competencyArea, selectedCompetency?.sub);
+        
+        // Trigger auto-save
+        autoSaveUserProgress();
+      } else {
+        console.error('❌ Task data or competency area not found');
+        showErrorMessage('Error: Could not find task or competency information');
       }
+      
+    } catch (error) {
+      console.error('❌ Error completing task:', error);
+      showErrorMessage(`Error completing task: ${error.message}`);
+    }
+  };
       
       // Reload competency progress and portfolio
       if (selectedCompetency) {
