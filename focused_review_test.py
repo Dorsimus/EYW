@@ -14,7 +14,7 @@ import time
 from datetime import datetime
 
 class FocusedReviewTester:
-    def __init__(self, base_url="https://6c89303b-3b46-458e-8c48-ff40dea979ca.preview.emergentagent.com"):
+    def __init__(self, base_url="https://e12824c6-9758-455d-a132-fa398ec594a3.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.admin_token = None
