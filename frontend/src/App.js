@@ -3174,42 +3174,94 @@ const AuthenticatedApp = () => {
             monthly_activities: [
               {
                 month: 1,
-                title: "Financial Vocabulary Building",
-                in_flow_activity: "Learn and practice using financial terms and concepts in daily conversations",
+                title: "Monthly P&L Commentary Creation",
+                in_flow_activity: "Create written commentary for your department's monthly P&L, explaining variances and trends in business terms that anyone could understand",
+                portfolio_assignment: {
+                  title: "Monthly Department P&L Commentary",
+                  deliverable: "Monthly financial commentary (1-2 pages)",
+                  description: "Written analysis of your department's P&L performance, variance explanations, trend identification, and actionable insights for management",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "financial-analysis",
+                  file_types: ["document", "spreadsheet"],
+                  monthly_requirement: true
+                },
                 document_section: {
-                  title: "Financial Communication Growth",
-                  description: "How your comfort with financial discussions has improved",
+                  title: "Financial Analysis Portfolio",
+                  description: "Monthly P&L commentaries showing your growing financial analysis skills",
                   portfolio_integration: true
                 },
-                cross_functional_integration: "Practice financial discussions with other department leaders",
-                journal_prompt: "How has my comfort with financial conversations changed? What financial concepts do I now understand that I didn't before?"
+                cross_functional_integration: "Share insights with other department leaders to improve property-wide financial understanding",
+                journal_prompt: "What story do the numbers tell about my department's performance? What patterns am I starting to see?"
               },
               {
                 month: 2,
-                title: "Business Impact Storytelling",
-                in_flow_activity: "Practice explaining your department's work in terms of business impact and value creation",
+                title: "Cost-Saving Initiative Documentation",
+                in_flow_activity: "Identify and document cost-saving opportunities in your daily operations, including implementation plans and expected ROI",
+                portfolio_assignment: {
+                  title: "Cost-Saving Initiative Proposals",
+                  deliverable: "Quarterly cost-saving proposals with ROI analysis",
+                  description: "Document identified cost-saving opportunities, implementation plans, resource requirements, expected savings, and success metrics",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "cost-management",
+                  file_types: ["document", "presentation"],
+                  quarterly_requirement: "2-3 proposals"
+                },
                 document_section: {
-                  title: "Business Impact Stories",
-                  description: "How you've learned to communicate department value in business terms",
+                  title: "Cost Management Innovation",
+                  description: "Cost-saving initiatives showing your business impact thinking",
                   portfolio_integration: true
                 },
-                leadership_integration: "Help team members understand and communicate their business impact",
-                journal_prompt: "How can I tell our department's story in a way that clearly shows business value? What impact are we having that others might not see?"
+                leadership_integration: "Involve team in identifying cost-saving opportunities",
+                journal_prompt: "Where do I see waste or inefficiency? How can I turn operational improvements into financial wins?"
               },
               {
                 month: 3,
-                title: "Financial Presentation & Reporting",
-                in_flow_activity: "Present financial information or business case to CM with confidence and clarity",
+                title: "Budget Justification & Planning",
+                in_flow_activity: "Create detailed justifications for budget line items, explaining how each expense connects to resident experience and property performance",
+                portfolio_assignment: {
+                  title: "Budget Justification Documentation",
+                  deliverable: "Annual budget justification with business case support",
+                  description: "Detailed justifications for budget requests, connecting expenses to resident outcomes, revenue generation, or cost prevention",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "budget-planning",
+                  file_types: ["document", "spreadsheet", "presentation"],
+                  annual_requirement: true
+                },
                 document_section: {
-                  title: "Financial Presentation Success",
-                  description: "Financial presentations or business cases you've delivered",
+                  title: "Strategic Budget Planning",
+                  description: "Budget justifications showing connection between spending and business results",
                   portfolio_integration: true
                 },
-                strategic_integration: "Connect financial communication to property strategic discussions",
-                curiosity_question: "How can I make financial discussions feel natural and valuable rather than intimidating?"
+                strategic_integration: "Connect budget planning to property strategic goals and resident experience improvements",
+                curiosity_question: "How can every budget dollar tell a story about creating value for residents and the property?"
+              },
+              {
+                month: 4,
+                title: "ROI Analysis & Investment Cases",
+                in_flow_activity: "Prepare ROI analysis for equipment purchases, process improvements, or technology investments, including payback period and risk assessment",
+                portfolio_assignment: {
+                  title: "Investment ROI Analysis Portfolio",
+                  deliverable: "Quarterly ROI analyses for proposed investments",
+                  description: "Complete ROI analyses including initial investment, projected returns, payback period, risk assessment, and implementation timeline",
+                  template_provided: true,
+                  manager_review: true,
+                  portfolio_tag: "roi-analysis",
+                  file_types: ["document", "spreadsheet"],
+                  quarterly_requirement: "1-2 analyses"
+                },
+                document_section: {
+                  title: "Investment Decision Portfolio",
+                  description: "ROI analyses showing your financial decision-making maturity",
+                  portfolio_integration: true
+                },
+                operational_integration: "Use ROI thinking for all operational improvement decisions",
+                curiosity_question: "How can I make every investment decision data-driven and tied to measurable outcomes?"
               }
             ],
-            competency_gate: "Successfully present financial information to leadership + Demonstrate business acumen in discussions"
+            competency_gate: "Monthly P&L commentary created + Cost-saving proposals implemented + Budget justifications delivered + ROI analyses completed"
           }
         },
         // Additional financial framework elements would be added here...
