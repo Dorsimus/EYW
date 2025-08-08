@@ -144,7 +144,19 @@
         - agent: "main"
         - comment: "CRITICAL BUG FIX: Resolved 'taskId.split is not a function' runtime error that occurred when updating generated tasks (like 'Being a Team Player'). Root cause was updateTaskInCompetencies function expecting string taskId but receiving non-string values in some cases. IMPLEMENTED FIXES: 1) Added taskId validation in both updateTask and updateTaskInCompetencies functions with type checking, 2) Improved fallback error handling to only call updateTaskInCompetencies for generated tasks with proper ID patterns, 3) Enhanced generated task detection and conversion logic to properly handle the conversion from competency-generated tasks to database tasks, 4) Added proper logging for debugging task update flow."
 
-user_problem_statement: "Fix runtime error 'taskId.split is not a function' that occurs when updating generated tasks like 'Being a Team Player' in the admin interface, preventing successful task updates."
+  - task: "ContentManagement Parameter Fix for Task Updates"
+    implemented: true
+    working: true
+    file: "frontend/src/ContentManagement.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "CRITICAL BUG FIX: Identified and fixed parameter mismatch in ContentManagement component causing task updates to fail. Root cause: updateTask function expects (taskId, taskData) parameters but ContentManagement was calling onUpdateTask(updatedTask) with single object parameter. FIXED: 1) Enhanced Task Editor onSave handler (line 1146) to call onUpdateTask(updatedTask.id, updatedTask), 2) Bulk Edit action (line 1177) to properly separate taskId and taskData parameters, 3) Move Competency action (line 1193) to pass parameters correctly. Console debugging confirmed the parameter mismatch with logs showing 'taskId must be a string, received: object Object'."
+
+user_problem_statement: "Fix ContentManagement component parameter mismatch preventing task updates from saving, where function calls were passing entire task objects instead of separate taskId and taskData parameters."
 
   - task: "Enhanced ContentManagement Admin Interface - Phase 1"
     implemented: true
