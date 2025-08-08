@@ -6425,7 +6425,17 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
   };
 
   const getCompletedTasks = () => {
+    // Handle case where competencies is undefined, null, or empty
+    if (!competencies || typeof competencies !== 'object') {
+      return 0;
+    }
+    
     return Object.values(competencies).reduce((total, area) => {
+      // Handle case where area or sub_competencies is undefined
+      if (!area || !area.sub_competencies || typeof area.sub_competencies !== 'object') {
+        return total;
+      }
+      
       return total + Object.values(area.sub_competencies).reduce((subTotal, sub) => {
         return subTotal + (sub.completed_tasks || 0);
       }, 0);
