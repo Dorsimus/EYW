@@ -5106,16 +5106,18 @@ const AuthenticatedApp = () => {
       // Add tasks from sub_competencies
       if (area.sub_competencies) {
         Object.entries(area.sub_competencies).forEach(([subKey, subComp]) => {
-          // Add foundation courses
+          // Add foundation courses (only if not converted)
           if (subComp.foundation_courses) {
             subComp.foundation_courses.forEach((course, index) => {
-              allTasks.push({
-                id: `${areaKey}_${subKey}_course_${index}`,
-                title: course.title,
-                description: course.description,
-                task_type: 'course_link',
-                competency_area: areaKey,
-                sub_competency: subKey,
+              const taskId = `${areaKey}_${subKey}_course_${index}`;
+              if (!convertedTasks.has(taskId)) {
+                allTasks.push({
+                  id: taskId,
+                  title: course.title,
+                  description: course.description,
+                  task_type: 'course_link',
+                  competency_area: areaKey,
+                  sub_competency: subKey,
                 estimated_hours: course.duration === '1 hour' ? 1 : 0.5,
                 external_link: course.url || '#',
                 instructions: `Platform: ${course.platform}`,
