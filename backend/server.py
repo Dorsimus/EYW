@@ -505,6 +505,16 @@ NAVIGATOR_COMPETENCIES = {
             "problem_solving_future_focus": "Problem-Solving with Future Focus",
             "planning_goal_achievement": "Planning & Goal Achievement with Strategic Perspective"
         }
+    },
+    "client_confidence_connection": {
+        "name": "Client Confidence & Connection",
+        "description": "Building the Foundation for Exceptional Client Partnership",
+        "sub_competencies": {
+            "understanding_client_impact": "Understanding Client Impact & Connection",
+            "service_excellence_presence": "Service Excellence & Professional Presence", 
+            "client_communication_skills": "Client Communication & Relationship Skills",
+            "client_advocacy_value": "Client Advocacy & Value Creation"
+        }
     }
 }
 
