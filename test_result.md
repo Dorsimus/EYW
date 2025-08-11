@@ -216,7 +216,7 @@
         - agent: "main"
         - comment: "ARCHITECTURAL BREAKTHROUGH: Fixed the fundamental multiple sources of truth issue where admin panel and competencies view were reading from different data sources. ROOT PROBLEM: Admin panel read from allTasks (database + generated), competencies view read from hardcoded competencies structure. COMPREHENSIVE SOLUTION: 1) Added allTasks prop to CompetenciesView component to provide access to database tasks, 2) Enhanced foundation course rendering to check for converted database tasks using original_generated_id matching, 3) Implemented dynamic data source selection: uses database task data when available, falls back to hardcoded data otherwise, 4) Added visual 'Updated' badge to show when database version is being displayed, 5) Enhanced displayData logic to merge database fields (title, description, external_link) with original course metadata. Now both admin panel and competencies view read from the SAME database source when tasks have been converted, ensuring true single source of truth architecture."
 
-user_problem_statement: "Fix fundamental data architecture issue where admin panel changes persist in database but don't show in competencies view due to multiple sources of truth - admin reads from database, competencies reads from hardcoded data."
+user_problem_statement: "Fix critical link synchronization issue where task external_link updates in admin panel are not reflecting in user competencies view. Despite database correctly storing external_link field, the competencies view continues showing hardcoded PerformanceHQ URLs instead of updated database links."
 
   - task: "Enhanced ContentManagement Admin Interface - Phase 1"
     implemented: true
