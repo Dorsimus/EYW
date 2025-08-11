@@ -10357,7 +10357,8 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
       'leadership_supervision': 'competency-leadership', 
       'operational_management': 'competency-operational',
       'cross_functional_collaboration': 'competency-cross-functional',
-      'strategic_thinking': 'competency-strategic'
+      'strategic_thinking': 'competency-strategic',
+      'client_confidence_connection': 'competency-client'
     };
     return classMap[area] || '';
   };
