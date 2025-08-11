@@ -2900,6 +2900,7 @@ const AuthenticatedApp = () => {
             core_learning_question: "What makes someone excited to come to work for me specifically?",
             foundation_courses: [
               {
+                id: "leadership_supervision_inspiring_team_motivation_course_0",
                 title: "Being a Team Player",
                 duration: "1 hour",
                 platform: "PerformanceHQ",
