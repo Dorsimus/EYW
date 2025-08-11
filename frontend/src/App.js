@@ -211,6 +211,55 @@ const AuthenticatedApp = () => {
     }
   }, [competencies]);
 
+  // CRITICAL FIX: Process converted tasks when allTasks and databaseTasksForProcessing update
+  useEffect(() => {
+    if (databaseTasksForProcessing.length > 0 && allTasks.length > 0) {
+      console.log('🔄 Processing converted tasks after allTasks state update');
+      
+      const updatedCompetencies = { ...competencies };
+      let hasUpdates = false;
+      
+      databaseTasksForProcessing.forEach(databaseTask => {
+        // Improved task matching logic - match by original_generated_id or manual ID matching
+        const taskId = databaseTask.original_generated_id || 
+          (databaseTask.competency_area && databaseTask.sub_competency && databaseTask.title ? 
+            `${databaseTask.competency_area}_${databaseTask.sub_competency}_${databaseTask.title.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '')}_0` : null);
+        
+        console.log(`🔍 Processing database task: ${databaseTask.title}, taskId: ${taskId}`);
+        
+        if (taskId) {
+          // Find the corresponding generated task in allTasks
+          const generatedTask = allTasks.find(task => 
+            task.id === taskId || 
+            (task.competency_area === databaseTask.competency_area && 
+             task.sub_competency === databaseTask.sub_competency && 
+             task.title === databaseTask.title)
+          );
+          
+          if (generatedTask) {
+            console.log(`✅ Found matching generated task for conversion: ${taskId}`);
+            // Apply the database task data to competencies
+            const updated = applyConvertedTaskToCompetencies(updatedCompetencies, databaseTask, taskId);
+            if (updated !== updatedCompetencies) {
+              Object.assign(updatedCompetencies, updated);
+              hasUpdates = true;
+            }
+          } else {
+            console.log(`⚠️ No matching generated task found for: ${taskId}`);
+          }
+        }
+      });
+      
+      if (hasUpdates) {
+        console.log('✅ Applying converted task updates to competencies');
+        setCompetencies(updatedCompetencies);
+      }
+      
+      // Clear the processing queue
+      setDatabaseTasksForProcessing([]);
+    }
+  }, [allTasks, databaseTasksForProcessing, competencies]);
+
   // Core Values Data
   const coreValues = {
     believers: {
