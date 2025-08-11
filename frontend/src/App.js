@@ -8110,7 +8110,8 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
       'financial_management': { primary: '#10b981', gradient: 'from-green-500 to-green-600' }, 
       'operational_management': { primary: '#f97316', gradient: 'from-orange-500 to-orange-600' },
       'cross_functional_collaboration': { primary: '#6366f1', gradient: 'from-indigo-500 to-indigo-600' },
-      'strategic_thinking': { primary: '#ef4444', gradient: 'from-red-500 to-red-600' }
+      'strategic_thinking': { primary: '#ef4444', gradient: 'from-red-500 to-red-600' },
+      'client_confidence_connection': { primary: '#06b6d4', gradient: 'from-cyan-500 to-cyan-600' }
     };
     return colorMap[competencyKey] || { primary: '#6b7280', gradient: 'from-gray-500 to-gray-600' };
   };
