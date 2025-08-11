@@ -410,7 +410,7 @@ const AuthenticatedApp = () => {
       
       // Load demo competencies with demo user
       const demoUserId = 'demo-user-sync-test';
-      storeUserId(demoUserId);
+      setStoredUserId(demoUserId);
       loadUserData(demoUserId);
       
       console.log('🎮 Demo mode setup complete for testing admin-user sync');
