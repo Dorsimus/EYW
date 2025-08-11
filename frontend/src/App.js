@@ -8687,6 +8687,24 @@ const CompetenciesView = ({
                                       (task.title === course.title && task.competency_area === areaKey)
                                     );
                                     console.log(`🔍 Potentially matching tasks:`, relevantTasks);
+                                    
+                                    // Debug the first matching task in detail
+                                    if (relevantTasks.length > 0) {
+                                      const firstMatch = relevantTasks[0];
+                                      console.log(`🔍 DETAILED MATCH ANALYSIS:`, {
+                                        'Task ID looking for': taskId,
+                                        'Task original_generated_id': firstMatch.original_generated_id,
+                                        'Task source': firstMatch.source,
+                                        'Task competency_area': firstMatch.competency_area,
+                                        'Task sub_competency': firstMatch.sub_competency,
+                                        'Task title': firstMatch.title,
+                                        'Course title': course.title,
+                                        'Area key': areaKey,
+                                        'Sub key': subKey,
+                                        'Match test 1 (original_generated_id)': firstMatch.original_generated_id === taskId,
+                                        'Match test 2 (source + area + sub + title)': (firstMatch.source === 'competency_generated' && firstMatch.competency_area === areaKey && firstMatch.sub_competency === subKey && firstMatch.title === course.title)
+                                      });
+                                    }
                                   }
                                   
                                   const convertedTaskData = allTasks?.find(task => 
