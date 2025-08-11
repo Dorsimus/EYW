@@ -404,6 +404,26 @@ const AuthenticatedApp = () => {
     console.log('🔍 CurrentView on setup:', currentView);
     console.log('🔍 HasAdminAccess:', hasAdminAccess);
     
+    // DEMO MODE: Force user setup for testing without Clerk authentication
+    if (!user && window.location.search.includes('demo=true')) {
+      console.log('🎮 DEMO MODE ACTIVATED - Bypassing Clerk authentication');
+      const demoUser = {
+        id: 'demo-user-test-123',
+        emailAddresses: [{ emailAddress: 'demo@earnwings.test' }],
+        firstName: 'Demo',
+        lastName: 'User'
+      };
+      
+      // Set demo user for testing
+      setCurrentUserId(demoUser.id);
+      storeUserId(demoUser.id);
+      
+      // Load demo competencies and user data
+      loadUserData(demoUser.id);
+      
+      console.log('🎮 Demo user setup complete:', demoUser);
+    }
+    
     // FORCE REGULAR DASHBOARD FOR ALL USERS (INCLUDING ADMINS)
     console.log('🔄 Explicitly setting dashboard view for all users...');
     setCurrentView('dashboard');
