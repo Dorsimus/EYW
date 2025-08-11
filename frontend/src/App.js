@@ -5139,12 +5139,16 @@ const AuthenticatedApp = () => {
           const combinedTasks = [...generatedTasks, ...databaseTasks];
           console.log(`📊 Combined tasks: ${generatedTasks.length} generated + ${databaseTasks.length} database = ${combinedTasks.length} total`);
           setAllTasks(combinedTasks);
+          
+          // Store database tasks for useEffect to process converted tasks after state update
+          setDatabaseTasksForProcessing(databaseTasks);
         }
       } catch (tasksError) {
         console.warn('⚠️ Failed to load database tasks for user view:', tasksError.message);
         // Continue with just generated tasks as fallback
         const generatedTasks = getAllTasksFromCompetencies(baseCompetencies);
         setAllTasks(generatedTasks);
+        setDatabaseTasksForProcessing([]);
       }
       
       // Load competencies progress from backend
