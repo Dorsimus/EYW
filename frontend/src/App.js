@@ -343,7 +343,8 @@ const AuthenticatedApp = () => {
     { area: 'financial_management', subs: ['budget_creation', 'variance_analysis', 'cost_control', 'roi_decisions', 'revenue_impact', 'pl_understanding', 'kpi_tracking', 'financial_forecasting', 'capex_planning', 'vendor_cost_mgmt'] },
     { area: 'operational_management', subs: ['workflow_optimization', 'technology_utilization', 'quality_control', 'sop_management', 'innovation', 'safety_management', 'policy_enforcement', 'legal_compliance', 'emergency_preparedness', 'documentation'] },
     { area: 'cross_functional_collaboration', subs: ['understanding_other_department', 'unified_resident_experience', 'communication_across_departments', 'stakeholder_relationship_building'] },
-    { area: 'strategic_thinking', subs: ['seeing_patterns_anticipating_trends', 'innovation_continuous_improvement', 'problem_solving_future_focus', 'planning_goal_achievement'] }
+    { area: 'strategic_thinking', subs: ['seeing_patterns_anticipating_trends', 'innovation_continuous_improvement', 'problem_solving_future_focus', 'planning_goal_achievement'] },
+    { area: 'client_confidence_connection', subs: ['understanding_client_impact', 'service_excellence_presence', 'client_communication_skills', 'client_advocacy_value'] }
   ];
 
   // BYPASS DEMO ENVIRONMENT: Set admin view if user has admin role
