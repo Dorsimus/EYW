@@ -13968,6 +13968,11 @@ Total Entries: ${totalEntries}
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
+      .competency-header.cyan-theme { 
+        background: linear-gradient(135deg, #06b6d4, #0891b2) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
       
       .competency-title {
         font-size: 1.25rem;
