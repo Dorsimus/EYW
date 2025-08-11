@@ -8707,10 +8707,23 @@ const CompetenciesView = ({
                                     }
                                   }
                                   
-                                  const convertedTaskData = allTasks?.find(task => 
-                                    (task.original_generated_id === taskId) || 
-                                    (task.source === 'competency_generated' && task.competency_area === areaKey && task.sub_competency === subKey && task.title === course.title)
-                                  );
+                                  const convertedTaskData = allTasks?.find(task => {
+                                    // Primary match: original_generated_id (if available)
+                                    if (task.original_generated_id === taskId) {
+                                      return true;
+                                    }
+                                    
+                                    // Fallback match: competency + sub_competency + title match
+                                    // This handles cases where original_generated_id is missing from database
+                                    if (task.competency_area === areaKey && 
+                                        task.sub_competency === subKey && 
+                                        task.title === course.title) {
+                                      console.log(`✅ FALLBACK MATCH FOUND: Using competency+sub+title match for ${taskId}`);
+                                      return true;
+                                    }
+                                    
+                                    return false;
+                                  });
                                   
                                   // Use converted task data if available, otherwise use original course data
                                   const displayData = convertedTaskData || course;
