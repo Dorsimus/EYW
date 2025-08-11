@@ -216,7 +216,35 @@
         - agent: "main"
         - comment: "ARCHITECTURAL BREAKTHROUGH: Fixed the fundamental multiple sources of truth issue where admin panel and competencies view were reading from different data sources. ROOT PROBLEM: Admin panel read from allTasks (database + generated), competencies view read from hardcoded competencies structure. COMPREHENSIVE SOLUTION: 1) Added allTasks prop to CompetenciesView component to provide access to database tasks, 2) Enhanced foundation course rendering to check for converted database tasks using original_generated_id matching, 3) Implemented dynamic data source selection: uses database task data when available, falls back to hardcoded data otherwise, 4) Added visual 'Updated' badge to show when database version is being displayed, 5) Enhanced displayData logic to merge database fields (title, description, external_link) with original course metadata. Now both admin panel and competencies view read from the SAME database source when tasks have been converted, ensuring true single source of truth architecture."
 
-user_problem_statement: "Add new Client Confidence & Connection competency area with 4 sub-competencies to prepare Navigators for Community Manager client responsibilities. Maintain flow and formatting of existing competencies."
+user_problem_statement: "CRITICAL: Two data synchronization failures - 1) Admin panel changes to 'Being a Team Player' link not carrying through to user view (regression), 2) Notes, journal entries, and reflections not pulling through to flightbook"
+
+  - task: "Race Condition Fix - Admin Link Synchronization"
+    implemented: true
+    working: false
+    file: "frontend/src/App.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "CRITICAL RACE CONDITION IDENTIFIED AND FIXED: Root cause was React state timing issue where convertedTaskData matching ran before setAllTasks() state update completed, causing database task lookups to fail with stale/empty allTasks array. SOLUTION IMPLEMENTED: 1) Added databaseTasksForProcessing state queue, 2) Created useEffect that processes converted tasks AFTER allTasks state updates, 3) Enhanced task matching logic with original_generated_id + fallback matching, 4) Proper state dependency management to avoid infinite loops. This fixes the 'Being a Team Player' link regression and ensures admin changes propagate correctly."
+
+  - task: "Flightbook Data Sync Issue Investigation"  
+    implemented: false
+    working: false
+    file: "frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "ROOT CAUSE IDENTIFIED: Flightbook entries (notes/journal/reflections) are only stored in localStorage with no backend integration. Line 6834 shows TODO comment: 'await axios.post(`${API}/users/${user.id}/flightbook`, flightbookEntry);' indicating backend API is not implemented. SCOPE: This is expected behavior - flightbook is localStorage-only feature. User may expect backend persistence that doesn't exist yet. RECOMMENDATION: Either implement backend flightbook API or clarify to user that flightbook is currently localStorage-only."
+
+## agent_communication:
+##     - agent: "main" 
+##     - message: "CRITICAL FIXES IMPLEMENTED FOR DATA SYNC ISSUES: 1) ADMIN LINK SYNC: Fixed race condition where React state updates caused convertedTask processing to run with stale allTasks data. Added useEffect-based processing queue that waits for state updates. This resolves 'Being a Team Player' link regression. 2) FLIGHTBOOK SYNC: Identified that flightbook is localStorage-only with no backend API integration (TODO comment found). Notes/journal entries save to localStorage but don't sync to backend because backend endpoints don't exist. Need user clarification on whether to implement backend flightbook API or if localStorage-only is acceptable."
 
   - task: "Client Confidence & Connection Competency Addition"
     implemented: true
