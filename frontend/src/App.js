@@ -8776,7 +8776,7 @@ const CompetenciesView = ({
                                         <div className="flex items-center space-x-2">
                                           {/* LMS Link Button */}
                                           <a 
-                                            href={`https://performancehq.com/courses/${course.id}`}
+                                            href={displayData.external_link || course.url || `https://performancehq.com/courses/${course.id}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
