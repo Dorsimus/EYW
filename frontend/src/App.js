@@ -8731,6 +8731,7 @@ const CompetenciesView = ({
                                   
                                   // Debug link fields specifically
                                   if (convertedTaskData) {
+                                    const finalHref = convertedTaskData?.external_link || course.url || `https://performancehq.com/courses/${course.id}`;
                                     console.log(`🔗 LINK DEBUGGING for ${taskId}:`, {
                                       'convertedTaskData.external_link': convertedTaskData.external_link,
                                       'convertedTaskData.url': convertedTaskData.url,
@@ -8738,6 +8739,7 @@ const CompetenciesView = ({
                                       'course.url': course.url,
                                       'course.link': course.link,
                                       'Final link to use': (convertedTaskData.external_link || convertedTaskData.url || course.url),
+                                      'ACTUAL HREF VALUE': finalHref,
                                       'All convertedTaskData keys': Object.keys(convertedTaskData)
                                     });
                                   }
