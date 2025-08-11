@@ -8693,16 +8693,21 @@ const CompetenciesView = ({
                                           <div className="flex items-center mb-2">
                                             {isCompleted && <span className="text-green-600 mr-2">✅</span>}
                                             <h6 className="font-semibold text-sm text-gray-900">
-                                              {course.title}
+                                              {displayData.title}
                                             </h6>
+                                            {convertedTaskData && (
+                                              <span className="ml-2 px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
+                                                Updated
+                                              </span>
+                                            )}
                                           </div>
                                           <p className="text-xs text-gray-600 mb-2">
-                                            {course.description}
+                                            {displayData.description}
                                           </p>
                                           <div className="flex items-center space-x-3 text-xs text-gray-500 mb-3">
-                                            <span>⏱️ {course.duration}</span>
+                                            <span>⏱️ {displayData.duration || course.duration}</span>
                                             <span>•</span>
-                                            <span>{course.platform}</span>
+                                            <span>{displayData.platform || course.platform}</span>
                                           </div>
                                         </div>
                                       </div>
