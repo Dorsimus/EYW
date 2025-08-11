@@ -13340,7 +13340,8 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
       'financial_management': 'green', 
       'operational_management': 'orange',
       'cross_functional_collaboration': 'indigo',
-      'strategic_thinking': 'red'
+      'strategic_thinking': 'red',
+      'client_confidence_connection': 'cyan'
     };
     return colorMap[competencyKey] || 'gray';
   };
