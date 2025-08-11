@@ -219,7 +219,7 @@
 user_problem_statement: "Fix critical link synchronization issue where task external_link updates in admin panel are not reflecting in user competencies view. Despite database correctly storing external_link field, the competencies view continues showing hardcoded PerformanceHQ URLs instead of updated database links."
 
   - task: "Critical Link Synchronization Fix - External Link Display"
-    implemented: false
+    implemented: true
     working: false
     file: "frontend/src/App.js"
     stuck_count: 1
@@ -229,6 +229,9 @@ user_problem_statement: "Fix critical link synchronization issue where task exte
         - working: false
         - agent: "main"
         - comment: "CRITICAL ISSUE: Task external_link updates in admin panel store correctly in database but don't show in user competencies view. Debug shows convertedTaskData.external_link contains correct URL ('https://www.gracehillvision.com/...') but href still uses hardcoded PerformanceHQ URL. Root cause: link logic (line 8779) should prioritize displayData.external_link but fallback logic is bypassing converted task data. Need to fix href logic to properly use converted task external_link field."
+        - working: false
+        - agent: "main"
+        - comment: "IMPLEMENTED FIX: Changed href logic from displayData.external_link to convertedTaskData?.external_link for more direct access to database task data. Updated line 8779 to use convertedTaskData?.external_link || course.url || fallback pattern. Added enhanced debugging to track actual href value being used. This ensures that when a generated task is converted to database task with updated external_link, the competencies view will show the correct updated link instead of falling back to hardcoded course.url."
 
   - task: "Enhanced ContentManagement Admin Interface - Phase 1"
     implemented: true
