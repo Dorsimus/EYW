@@ -8729,6 +8729,19 @@ const CompetenciesView = ({
                                   const displayData = convertedTaskData || course;
                                   console.log(`📋 Course ${taskId}: Using ${convertedTaskData ? 'DATABASE' : 'HARDCODED'} data`, displayData);
                                   
+                                  // Debug link fields specifically
+                                  if (convertedTaskData) {
+                                    console.log(`🔗 LINK DEBUGGING for ${taskId}:`, {
+                                      'convertedTaskData.external_link': convertedTaskData.external_link,
+                                      'convertedTaskData.url': convertedTaskData.url,
+                                      'convertedTaskData.link': convertedTaskData.link,
+                                      'course.url': course.url,
+                                      'course.link': course.link,
+                                      'Final link to use': (convertedTaskData.external_link || convertedTaskData.url || course.url),
+                                      'All convertedTaskData keys': Object.keys(convertedTaskData)
+                                    });
+                                  }
+                                  
                                   const isCompleted = isCompetencyTaskComplete(areaKey, subKey, course.id);
                                   const courseNotes = getCompetencyTaskNotes(areaKey, subKey, course.id);
                                   
