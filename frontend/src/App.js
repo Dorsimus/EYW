@@ -8076,6 +8076,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
 // Enhanced Competencies View Component
 const CompetenciesView = ({ 
   competencies, 
+  allTasks,
   onViewTasks, 
   selectedCompetency, 
   competencyTasks, 
