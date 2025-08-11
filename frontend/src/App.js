@@ -8676,7 +8676,20 @@ const CompetenciesView = ({
                                 {subData.foundation_courses.map((course, index) => {
                                   // CRITICAL FIX: Check if this course has been converted to a database task
                                   const taskId = `${areaKey}_${subKey}_course_${index}`;
-                                  const convertedTaskData = allTasks.find(task => 
+                                  
+                                  // Enhanced debugging for matching
+                                  console.log(`🔍 Looking for converted task: ${taskId}`);
+                                  console.log(`🔍 allTasks count: ${allTasks?.length || 0}`);
+                                  if (allTasks?.length > 0) {
+                                    const relevantTasks = allTasks.filter(task => 
+                                      task.original_generated_id === taskId || 
+                                      (task.source === 'competency_generated' && task.competency_area === areaKey) ||
+                                      (task.title === course.title && task.competency_area === areaKey)
+                                    );
+                                    console.log(`🔍 Potentially matching tasks:`, relevantTasks);
+                                  }
+                                  
+                                  const convertedTaskData = allTasks?.find(task => 
                                     (task.original_generated_id === taskId) || 
                                     (task.source === 'competency_generated' && task.competency_area === areaKey && task.sub_competency === subKey && task.title === course.title)
                                   );
