@@ -4642,6 +4642,27 @@ const AuthenticatedApp = () => {
         validateStatus: (status) => status < 500 // Don't throw on 4xx errors
       };
       
+      // CRITICAL FIX: Load database tasks for user view to enable converted task matching
+      console.log('📊 Loading database tasks for user view...');
+      try {
+        const tasksResponse = await axios.get(`${API}/tasks`, config);
+        if (tasksResponse.status === 200 && Array.isArray(tasksResponse.data)) {
+          const databaseTasks = tasksResponse.data;
+          console.log(`✅ Loaded ${databaseTasks.length} database tasks for user view`);
+          
+          // Combine generated tasks with database tasks for complete allTasks
+          const generatedTasks = getAllTasksFromCompetencies(baseCompetencies);
+          const combinedTasks = [...generatedTasks, ...databaseTasks];
+          console.log(`📊 Combined tasks: ${generatedTasks.length} generated + ${databaseTasks.length} database = ${combinedTasks.length} total`);
+          setAllTasks(combinedTasks);
+        }
+      } catch (tasksError) {
+        console.warn('⚠️ Failed to load database tasks for user view:', tasksError.message);
+        // Continue with just generated tasks as fallback
+        const generatedTasks = getAllTasksFromCompetencies(baseCompetencies);
+        setAllTasks(generatedTasks);
+      }
+      
       // Load competencies progress from backend
       console.log('📊 Loading competency progress from backend...');
       const compResponse = await axios.get(`${API}/users/${userId}/competencies`, config);
