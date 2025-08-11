@@ -8672,6 +8672,17 @@ const CompetenciesView = ({
                               </h5>
                               <div className="grid grid-cols-1 gap-3">
                                 {subData.foundation_courses.map((course, index) => {
+                                  // CRITICAL FIX: Check if this course has been converted to a database task
+                                  const taskId = `${areaKey}_${subKey}_course_${index}`;
+                                  const convertedTaskData = allTasks.find(task => 
+                                    (task.original_generated_id === taskId) || 
+                                    (task.source === 'competency_generated' && task.competency_area === areaKey && task.sub_competency === subKey && task.title === course.title)
+                                  );
+                                  
+                                  // Use converted task data if available, otherwise use original course data
+                                  const displayData = convertedTaskData || course;
+                                  console.log(`📋 Course ${taskId}: Using ${convertedTaskData ? 'DATABASE' : 'HARDCODED'} data`, displayData);
+                                  
                                   const isCompleted = isCompetencyTaskComplete(areaKey, subKey, course.id);
                                   const courseNotes = getCompetencyTaskNotes(areaKey, subKey, course.id);
                                   
