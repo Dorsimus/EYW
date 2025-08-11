@@ -140,6 +140,7 @@ const AuthenticatedApp = () => {
   const [competencyTasks, setCompetencyTasks] = useState([]);
   const [adminStats, setAdminStats] = useState(null);
   const [allTasks, setAllTasks] = useState([]);
+  const [databaseTasksForProcessing, setDatabaseTasksForProcessing] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
