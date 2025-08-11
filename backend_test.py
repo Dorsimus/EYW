@@ -14,7 +14,7 @@ from typing import Dict, Any, List
 class AdminTaskUpdateTester:
     def __init__(self):
         # Use the production URL from frontend/.env
-        self.base_url = "https://e12824c6-9758-455d-a132-fa398ec594a3.preview.emergentagent.com/api"
+        self.base_url = "https://f89e38a3-d297-4f05-9465-c93694e16aba.preview.emergentagent.com/api"
         self.session = requests.Session()
         self.admin_token = None
         self.test_results = []

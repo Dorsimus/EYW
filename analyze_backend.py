@@ -3,7 +3,7 @@ import json
 
 def analyze_backend_structure():
     """Analyze the backend structure in detail"""
-    base_url = "https://e12824c6-9758-455d-a132-fa398ec594a3.preview.emergentagent.com/api"
+    base_url = "https://f89e38a3-d297-4f05-9465-c93694e16aba.preview.emergentagent.com/api"
     
     print("🔍 DETAILED BACKEND STRUCTURE ANALYSIS")
     print("=" * 60)
