@@ -6702,6 +6702,7 @@ const AuthenticatedApp = () => {
         {currentView === 'competencies' && !isAdminMode && (
           <CompetenciesView 
             competencies={competencies}
+            allTasks={allTasks}
             onViewTasks={loadCompetencyTasks}
             selectedCompetency={selectedCompetency}
             competencyTasks={competencyTasks}
