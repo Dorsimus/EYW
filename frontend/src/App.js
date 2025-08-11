@@ -4538,6 +4538,487 @@ const AuthenticatedApp = () => {
           }
         }
         // Additional strategic framework elements would be added here...
+      },
+      
+      client_confidence_connection: {
+        name: "Client Confidence & Connection", 
+        description: "Building the Foundation for Exceptional Client Partnership",
+        icon: "🤝",
+        overall_progress: 0,
+        completion_percentage: 0,
+        core_philosophy: "Every Decision Impacts Someone We Serve - Make It Count",
+        development_overview: "The Navigator Client Confidence & Connection development transforms department supervisors into client-focused leaders who understand that every operational decision ultimately affects the people we serve - residents, ownership, and community stakeholders. This isn't about becoming a salesperson - it's about building genuine client awareness and confidence that prepares Navigators for increasing client responsibility as Community Managers.",
+        time_commitment: "~12 minutes per week + natural work integration",
+        duration: "12-15 months (competency-based progression)",
+        focus: "Building client awareness and service excellence through daily operations and behind-the-scenes preparation",
+        
+        curiosity_ignition: {
+          title: "Client Connection Curiosity Assessment",
+          description: "Before diving in, spark curiosity about the people we ultimately serve",
+          duration: "5 minutes of thinking",
+          reflection_prompts: [
+            "How does the work my team does each day actually impact the residents who live here?",
+            "If I met the property owner at a company event, what would I want them to know about our property?", 
+            "What would residents say about our property if someone asked them at a coffee shop?",
+            "How does my department's quality and efficiency affect whether people want to live here and stay here?"
+          ],
+          journal_setup: "Client Connection Curiosity Journal Setup: Create a simple place to capture observations about client impact, resident feedback, and 'we make a difference' moments throughout the program."
+        },
+
+        sub_competencies: {
+          understanding_client_impact: {
+            name: "Understanding Client Impact & Connection",
+            description: "How does my department's work directly impact the experience of everyone we serve?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How does my department's work directly impact the experience of everyone we serve?",
+            foundation_courses: [
+              {
+                id: "client_confidence_connection_understanding_client_impact_course_0",
+                title: "Customer Relationship Management",
+                duration: "2 hours",
+                platform: "PerformanceHQ", 
+                description: "Understanding the complete client relationship",
+                link_type: "external",
+                url: "https://performancehq.com/customer-relationship-management"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Client Impact Mapping",
+                in_flow_activity: "Each week, identify one way your department's work affects residents, ownership, or community stakeholders",
+                document_section: {
+                  title: "Client Impact Discovery Log",
+                  description: "Weekly connections between your work and client experience"
+                },
+                operational_integration: "Consider client impact when making routine departmental decisions",
+                journal_prompt: "What work that feels 'behind the scenes' actually has huge client impact? How do our daily decisions affect whether clients have a great experience?"
+              },
+              {
+                month: 2, 
+                title: "Quality Through Client Lens",
+                in_flow_activity: "Look at one area of your department's work each week from the client's perspective",
+                document_section: {
+                  title: "Client Perspective Quality Assessment", 
+                  description: "How your work quality affects client experience"
+                },
+                cross_functional_integration: "Explore client impact with opposite department Navigator",
+                journal_prompt: "What does 'quality work' mean when I think about how it affects residents and ownership? Where could small improvements in our work create big improvements in client experience?"
+              },
+              {
+                month: 3,
+                title: "Client Value Recognition", 
+                in_flow_activity: "Help your team understand how their specific work contributes to client satisfaction and success",
+                document_section: {
+                  title: "Team Client Connection Examples",
+                  description: "How team members see their work's client impact"
+                },
+                leadership_integration: "Include client impact in team discussions and recognition",
+                curiosity_question: "How can client awareness become as natural as safety awareness in how my team thinks about work?"
+              }
+            ],
+            dive_deeper_resources: [
+              {
+                title: "Customer Service 1: Be Proactive",
+                duration: "30 minutes", 
+                type: "course",
+                platform: "PerformanceHQ",
+                description: "Anticipating client needs",
+                url: "https://performancehq.com/customer-service-proactive",
+                why_this_matters: "Understanding how to anticipate client needs builds stronger relationships"
+              },
+              {
+                title: "Resident Retention", 
+                duration: "1 hour 30 minutes",
+                type: "course", 
+                platform: "PerformanceHQ",
+                description: "Long-term client relationships",
+                url: "https://performancehq.com/resident-retention",
+                why_this_matters: "Client retention is built on understanding their ongoing needs and satisfaction"
+              },
+              {
+                title: "Understanding Your Customer's Journey",
+                duration: "10 minutes",
+                type: "video",
+                platform: "YouTube", 
+                description: "Seeing the complete client experience",
+                url: "https://youtube.com/watch?v=customer-journey",
+                why_this_matters: "Understanding the full client journey helps you see your department's role in their success"
+              }
+            ],
+            competency_gate: "Clearly articulate department's client impact + Team demonstrates increased client awareness"
+          },
+
+          service_excellence_presence: {
+            name: "Service Excellence & Professional Presence",
+            description: "How do I present myself and lead my team in a way that would make any client confident in our capabilities?",
+            duration: "3-4 months", 
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I present myself and lead my team in a way that would make any client confident in our capabilities?",
+            foundation_courses: [
+              {
+                id: "client_confidence_connection_service_excellence_presence_course_0",
+                title: "Business Etiquette",
+                duration: "1 hour",
+                platform: "PerformanceHQ",
+                description: "Professional presence and interactions", 
+                link_type: "external",
+                url: "https://performancehq.com/business-etiquette"
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Professional Presence Development",
+                in_flow_activity: "Focus on one aspect of professional presence each week (communication, appearance, demeanor, expertise demonstration)",
+                document_section: {
+                  title: "Professional Presence Development Log",
+                  description: "Improvements in professional confidence and presentation"
+                },
+                financial_integration: "Connect professional presence to business credibility and success", 
+                journal_prompt: "What aspects of professional presence feel natural vs. uncomfortable for me? How does professional confidence affect how others perceive our team's capabilities?"
+              },
+              {
+                month: 2,
+                title: "Service Excellence Standards",
+                in_flow_activity: "Establish one service excellence standard with your team each week that would impress any client",
+                document_section: {
+                  title: "Service Excellence Implementation",
+                  description: "Standards you've established that enhance client experience"
+                },
+                strategic_integration: "Connect service standards to long-term client relationships and property reputation",
+                journal_prompt: "What service standards would make clients choose us over competitors? How can excellent service become our team's natural way of working?"
+              },
+              {
+                month: 3,
+                title: "Confidence Building Through Competence", 
+                in_flow_activity: "Build expertise in one area each week that would make you more confident in client interactions",
+                document_section: {
+                  title: "Expertise Development Examples",
+                  description: "Knowledge and skills that increase client confidence"
+                },
+                operational_integration: "Use growing expertise to improve departmental operations",
+                curiosity_question: "What knowledge and skills would make me feel completely confident discussing my department's work with any client?"
+              }
+            ],
+            dive_deeper_resources: [
+              {
+                title: "Creating and Delivering Business Presentations",
+                duration: "1 hour",
+                type: "course",
+                platform: "PerformanceHQ", 
+                description: "Professional communication skills",
+                url: "https://performancehq.com/business-presentations",
+                why_this_matters: "Strong presentation skills build confidence in professional interactions"
+              },
+              {
+                title: "Leadership Booster: Communication Skills for Supervisors",
+                duration: "5 minutes",
+                type: "course",
+                platform: "PerformanceHQ",
+                description: "Clear, professional communication", 
+                url: "https://performancehq.com/communication-skills-supervisors",
+                why_this_matters: "Clear communication is essential for building client confidence"
+              },
+              {
+                title: "Building Professional Confidence",
+                duration: "12 minutes",
+                type: "video", 
+                platform: "YouTube",
+                description: "Developing confident professional presence",
+                url: "https://youtube.com/watch?v=professional-confidence",
+                why_this_matters: "Professional confidence directly impacts how clients perceive your capabilities"
+              }
+            ],
+            competency_gate: "Demonstrate professional presence in client-facing situations + Establish service excellence standards with team"
+          },
+
+          client_communication_skills: {
+            name: "Client Communication & Relationship Skills",
+            description: "How do I communicate with clients in a way that builds confidence and strengthens relationships?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes", 
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How do I communicate with clients in a way that builds confidence and strengthens relationships?",
+            foundation_courses: [
+              {
+                id: "client_confidence_connection_client_communication_skills_course_0", 
+                title: "Professional Client Communication",
+                duration: "45 minutes",
+                platform: "Custom Content", 
+                description: "Communication skills for various client types and situations",
+                link_type: "external",
+                url: "#custom-content-needed",
+                custom_content: true
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Communication Skills Development",
+                in_flow_activity: "Practice one client communication skill each week (active listening, clear explanations, professional email, etc.)",
+                document_section: {
+                  title: "Communication Skills Practice Log",
+                  description: "Communication improvements and confidence building" 
+                },
+                leadership_integration: "Model excellent communication for your team",
+                journal_prompt: "What communication skills make me feel most confident in professional interactions? What skills need more development?"
+              },
+              {
+                month: 2,
+                title: "Challenging Situation Preparation",
+                in_flow_activity: "Prepare for one type of challenging client situation each week (complaints, difficult questions, emergency communication)",
+                document_section: {
+                  title: "Challenging Situation Preparation Examples",
+                  description: "How you've prepared for difficult client interactions"
+                },
+                cross_functional_integration: "Practice challenging scenarios with opposite department Navigator", 
+                journal_prompt: "What client situations would I find most challenging? How can I prepare to handle these situations with confidence and professionalism?"
+              },
+              {
+                month: 3,
+                title: "Relationship Building Practice",
+                in_flow_activity: "Practice relationship building with internal 'clients' (other departments, vendors, community partners)",
+                document_section: {
+                  title: "Relationship Building Success Stories",
+                  description: "Relationships strengthened through improved communication"
+                },
+                strategic_integration: "Connect relationship building to long-term property and business success",
+                curiosity_question: "How can every interaction become an opportunity to strengthen relationships and build confidence in our capabilities?"
+              }
+            ],
+            dive_deeper_resources: [
+              {
+                title: "Conflict Resolution (Supervisor Version)",
+                duration: "2 hours",
+                type: "course", 
+                platform: "PerformanceHQ",
+                description: "Managing challenging client situations",
+                url: "https://performancehq.com/conflict-resolution-supervisor",
+                why_this_matters: "Handling difficult situations builds confidence and strengthens relationships"
+              },
+              {
+                title: "Business Writing: Grammar Works",
+                duration: "2 hours",
+                type: "course",
+                platform: "PerformanceHQ",
+                description: "Professional written communication",
+                url: "https://performancehq.com/business-writing-grammar",
+                why_this_matters: "Clear written communication is essential for professional client relationships"
+              },
+              {
+                title: "Building Rapport with Clients", 
+                duration: "8 minutes",
+                type: "video",
+                platform: "YouTube", 
+                description: "Connection and relationship building skills",
+                url: "https://youtube.com/watch?v=building-rapport",
+                why_this_matters: "Strong rapport is the foundation of lasting client relationships"
+              }
+            ],
+            competency_gate: "Successfully handle challenging communication situation + Demonstrate relationship building skills"
+          },
+
+          client_advocacy_value: {
+            name: "Client Advocacy & Value Creation", 
+            description: "How can I think and act like an advocate for our clients' success while achieving our property goals?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0, 
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "How can I think and act like an advocate for our clients' success while achieving our property goals?",
+            foundation_courses: [
+              {
+                id: "client_confidence_connection_client_advocacy_value_course_0",
+                title: "Understanding Client Success",
+                duration: "30 minutes", 
+                platform: "Custom Content",
+                description: "How to identify and contribute to what clients really need",
+                link_type: "external",
+                url: "#custom-content-needed",
+                custom_content: true
+              }
+            ],
+            monthly_activities: [
+              {
+                month: 1,
+                title: "Client Needs Understanding",
+                in_flow_activity: "Each week, identify one thing that would make clients more successful or satisfied",
+                document_section: {
+                  title: "Client Needs Discovery", 
+                  description: "Insights about what clients really need and value"
+                },
+                financial_integration: "Connect client needs to financial success for both client and property",
+                journal_prompt: "What do our clients really want from us beyond the basics? How can understanding their deeper needs guide our decisions?"
+              },
+              {
+                month: 2,
+                title: "Proactive Value Creation", 
+                in_flow_activity: "Find one way each week to create value for clients through your department's work",
+                document_section: {
+                  title: "Value Creation Examples",
+                  description: "Specific ways you've enhanced client experience or success" 
+                },
+                operational_integration: "Build value creation thinking into departmental processes",
+                journal_prompt: "What small actions could create big value for our clients? How can value creation become a natural part of how we work?"
+              },
+              {
+                month: 3,
+                title: "Client Advocacy Leadership",
+                in_flow_activity: "Lead your team in thinking about and acting on client advocacy opportunities",
+                document_section: {
+                  title: "Team Client Advocacy Examples",
+                  description: "How team members contribute to client success and satisfaction"
+                },
+                leadership_integration: "Make client advocacy part of team culture and decision-making",
+                curiosity_question: "How can client advocacy become as important to my team as operational efficiency?"
+              }
+            ],
+            dive_deeper_resources: [
+              {
+                title: "Spark: Resident Retention - Turnover Trouble - The High Cost of Vacancy",
+                duration: "5 minutes", 
+                type: "course",
+                platform: "PerformanceHQ",
+                description: "Understanding client retention value",
+                url: "https://performancehq.com/resident-retention-turnover", 
+                why_this_matters: "Understanding retention value helps you see the importance of client advocacy"
+              },
+              {
+                title: "Customer Service 1: Be Proactive",
+                duration: "30 minutes",
+                type: "course",
+                platform: "PerformanceHQ",
+                description: "Anticipating client needs",
+                url: "https://performancehq.com/customer-service-proactive",
+                why_this_matters: "Proactive service creates exceptional client value and satisfaction"
+              },
+              {
+                title: "Creating Value for Clients",
+                duration: "10 minutes",
+                type: "video",
+                platform: "YouTube",
+                description: "Going beyond expectations to create real value",
+                url: "https://youtube.com/watch?v=creating-value-clients",
+                why_this_matters: "Value creation is what transforms good service into exceptional client relationships"
+              }
+            ],
+            competency_gate: "Create measurable value for clients + Lead team in client advocacy thinking"
+          }
+        },
+
+        culminating_project: {
+          title: "Client Excellence Initiative",
+          description: "Design and implement one initiative that demonstrates client-focused leadership and prepares you for increased client responsibility",
+          duration: "Final 2-3 months of program",
+          options: [
+            "Client Experience Enhancement: Improve an aspect of client experience through departmental excellence",
+            "Professional Development Showcase: Demonstrate readiness for client-facing responsibilities", 
+            "Client Value Creation Project: Create measurable value for clients through operational improvements",
+            "Team Client Culture Development: Build client-focused culture and awareness throughout your team"
+          ],
+          deliverables: [
+            "Client opportunity analysis and initiative plan (1 page)",
+            "Implementation approach demonstrating client focus and professional capability (1 page)",
+            "Results documentation with client impact and professional development achieved (1 page)"
+          ],
+          presentation: "15-minute presentation to CM and potential client stakeholder on client confidence and readiness for increased responsibility"
+        },
+
+        integration_activities: {
+          weekly_client_perspective: {
+            title: "Weekly Client Perspective Practice", 
+            duration: "10 minutes weekly - rotated focus",
+            schedule: {
+              "months_1_3": "Understanding client impact and building awareness",
+              "months_4_6": "Professional presence and service excellence development", 
+              "months_7_9": "Communication skills and relationship building",
+              "months_10_12": "Client advocacy and value creation leadership"
+            }
+          },
+          monthly_client_observation: {
+            title: "Monthly Client Observation",
+            duration: "15 minutes monthly",
+            activities: [
+              "Observe actual client interactions (resident communications, ownership meetings, vendor discussions)",
+              "Analyze what makes interactions successful vs. challenging", 
+              "Practice client-focused thinking in real property scenarios"
+            ]
+          },
+          client_confidence_journal: {
+            title: "Client Confidence Journal",
+            duration: "5 minutes weekly",
+            focus: [
+              "Document client-focused observations, communication improvements, and confidence building moments",
+              "Track 'client impact' realizations when you see how work affects people we serve",
+              "Reflect on professional development and client relationship readiness"
+            ]
+          }
+        },
+
+        success_metrics: {
+          leading_indicators: {
+            frequency: "Monthly tracking",
+            metrics: [
+              "Client impact awareness and decision-making integration",
+              "Professional presence development and confidence building", 
+              "Communication skills practice and improvement",
+              "Client advocacy actions and team culture development"
+            ]
+          },
+          lagging_indicators: {
+            frequency: "Quarterly assessment", 
+            metrics: [
+              "Client satisfaction related to departmental service quality",
+              "Professional confidence in client-facing situations",
+              "Communication effectiveness and relationship building success",
+              "Team client-focused culture and service excellence"
+            ]
+          },
+          curiosity_growth_indicators: {
+            frequency: "Ongoing observation",
+            metrics: [
+              "Client-focused questions asked and insights developed",
+              "Professional development initiatives and confidence building",
+              "Communication experiments and relationship building attempts", 
+              "Others influenced toward client-focused thinking and service excellence"
+            ]
+          }
+        },
+
+        competency_validation: {
+          evidence_portfolio: [
+            "Client Impact Awareness: Clear understanding of how departmental work affects client experience and success",
+            "Professional Presence: Demonstrated professional confidence and service excellence standards",
+            "Communication Competency: Effective communication skills for various client situations and relationships",
+            "Client Advocacy Leadership: Evidence of client-focused thinking and value creation"
+          ],
+          portfolio_defense: {
+            duration: "20 minutes",
+            components: [
+              "Client Confidence Journey: How client awareness has changed your leadership approach and professional development",
+              "Professional Presence Evidence: Examples of professional growth and service excellence leadership", 
+              "Client Relationship Readiness: Demonstration of communication skills and relationship building capability",
+              "Future Client Leadership Vision: How you'll continue developing client confidence and relationship skills"
+            ]
+          },
+          readiness_indicators: [
+            "Client-Focused Decision Making: Consistently considers client impact in all departmental decisions",
+            "Professional Confidence: Comfortable representing property and company in client interactions",
+            "Communication Excellence: Skilled in various forms of client communication and relationship building",
+            "Client Advocacy Leadership: Leads team in client-focused thinking and service excellence"
+          ]
+        }
       }
     };
     
