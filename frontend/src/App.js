@@ -5736,31 +5736,32 @@ const AuthenticatedApp = () => {
     setCoreValueEntries(updatedEntries);
     localStorage.setItem('core_value_entries', JSON.stringify(updatedEntries));
     
-    // Also create a Flightbook entry for this Core Value story
+    // Also create a Flightbook entry for this Core Value story using the new API
     const coreValueTitle = coreValues[valueKey]?.title || valueKey;
-    const flightbookEntry = {
-      id: `core_value_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    
+    const flightbookEntryData = {
       title: `Core Value: ${coreValueTitle}`,
       content: newEntry.story,
-      competency: 'core_values',
       competency_area: 'core_values',
       sub_competency: valueKey,
-      task_id: `story_${entry.id}`,
-      type: 'core_value_story',
-      source: 'core_values_section',
-      tags: ['core-values', 'personal-story', valueKey.replace('_', '-')],
-      date: new Date(),
-      created_at: new Date(),
-      updated_at: new Date(),
-      version: 1
+      entry_type: 'core_value_story',
+      tags: ['core-values', 'personal-story', valueKey.replace('_', '-')]
     };
 
-    // Add to Flightbook
-    const existingFlightbookEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
-    existingFlightbookEntries.push(flightbookEntry);
-    localStorage.setItem('flightbook_entries', JSON.stringify(existingFlightbookEntries));
-    
-    console.log('Core Value story added to Flightbook:', coreValueTitle);
+    // Add to Flightbook via the production API
+    try {
+      const result = await flightbookAPIClient.create(flightbookEntryData);
+      if (result.success) {
+        console.log('✅ Core Value story successfully added to Flightbook:', coreValueTitle);
+        showSuccessMessage(`Core Value story "${coreValueTitle}" added to your Flightbook!`);
+      } else {
+        console.error('❌ Failed to add Core Value story to Flightbook:', result.error);
+        showErrorMessage('Story saved locally but failed to sync to Flightbook');
+      }
+    } catch (error) {
+      console.error('❌ Error adding Core Value story to Flightbook:', error);
+      showErrorMessage('Story saved locally but failed to sync to Flightbook');
+    }
     
     // Reset form
     setNewEntry({ value: '', story: '', date: '' });
