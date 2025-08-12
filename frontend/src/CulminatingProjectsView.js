@@ -157,6 +157,52 @@ const CulminatingProjectsView = ({
     }
   };
 
+  // Helper function to add uploaded project file to portfolio
+  const addFileToPortfolio = async (fileData, projectFile) => {
+    try {
+      if (!user?.id) {
+        console.log('No user ID available for portfolio integration');
+        return false;
+      }
+
+      const formData = new FormData();
+      formData.append('title', fileData.title);
+      formData.append('description', fileData.description || `${fileData.deliverable_type} from ${selectedProject.title}`);
+      
+      // Map project competency areas to portfolio format
+      const competencyAreas = selectedProject?.competency_areas || [];
+      formData.append('competency_areas', JSON.stringify(competencyAreas));
+      
+      // Create tags from project context
+      const tags = [
+        'culminating-project',
+        fileData.deliverable_type.toLowerCase().replace(/\s+/g, '-'),
+        fileData.project_phase
+      ].filter(Boolean);
+      formData.append('tags', JSON.stringify(tags));
+      formData.append('visibility', 'private');
+      
+      // Add the same file to portfolio
+      formData.append('file', fileData.file);
+      
+      const response = await axios.post(`${API}/users/${user.id}/portfolio`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      
+      // Update portfolio state
+      const portfolioResponse = await axios.get(`${API}/users/${user.id}/portfolio`);
+      setPortfolio(portfolioResponse.data);
+      
+      console.log('✅ File successfully added to portfolio');
+      return true;
+    } catch (error) {
+      console.error('❌ Failed to add file to portfolio:', error);
+      return false;
+    }
+  };
+
   const handleFileUpload = async (e) => {
     e.preventDefault();
     
@@ -174,6 +220,13 @@ const CulminatingProjectsView = ({
       
       if (result.success) {
         showSuccessMessage('File uploaded successfully!');
+        
+        // Also add the file to the user's portfolio
+        const portfolioAdded = await addFileToPortfolio(fileUpload, result.data);
+        if (portfolioAdded) {
+          showSuccessMessage('File uploaded and added to your Portfolio!');
+        }
+        
         setShowFileUpload(false);
         setFileUpload({
           title: '',
