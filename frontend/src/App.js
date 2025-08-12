@@ -148,6 +148,11 @@ const AuthenticatedApp = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  
+  // Production-ready flightbook API client
+  const [flightbookAPIClient] = useState(() => new FlightbookAPIClient());
+  const [migrationUtility] = useState(() => new FlightbookMigrationUtility(flightbookAPIClient));
+  const [isMigrationCompleted, setIsMigrationCompleted] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [newTask, setNewTask] = useState({
     title: '',
