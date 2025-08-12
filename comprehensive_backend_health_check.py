@@ -13,7 +13,7 @@ import io
 from datetime import datetime
 
 class ComprehensiveBackendHealthCheck:
-    def __init__(self, base_url="https://f89e38a3-d297-4f05-9465-c93694e16aba.preview.emergentagent.com"):
+    def __init__(self, base_url="https://wings-platform-7.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.tests_run = 0
