@@ -7452,6 +7452,7 @@ const AuthenticatedApp = () => {
             setCurrentView={setCurrentView}
             competencyTaskProgress={competencyTaskProgress}
             setCompetencyTaskProgress={setCompetencyTaskProgress}
+            flightbookAPIClient={flightbookAPIClient}
             key={`flightbook-${Date.now()}`} // Force re-render to reload entries
           />
         )}
