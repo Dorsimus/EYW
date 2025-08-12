@@ -70,8 +70,9 @@ async def migrate_sub_competency_references():
     
     # Connect to MongoDB
     mongo_url = os.getenv('MONGO_URL', 'mongodb://localhost:27017')
+    db_name = os.getenv('DB_NAME', 'test_database')
     client = AsyncIOMotorClient(mongo_url)
-    db = client.earnwings
+    db = client[db_name]
     
     try:
         # Get all tasks
