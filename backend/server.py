@@ -486,7 +486,8 @@ NAVIGATOR_COMPETENCIES = {
             "process_improvement_efficiency": "Process Improvement & Efficiency",
             "quality_control_standards": "Quality Control & Standards",
             "safety_leadership_risk_awareness": "Safety Leadership & Risk Awareness",
-            "technology_system_optimization": "Technology & System Optimization"
+            "technology_system_optimization": "Technology & System Optimization",
+            "compliance_risk_management": "Compliance & Risk Management"
         }
     },
     "cross_functional_collaboration": {
