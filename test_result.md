@@ -331,11 +331,14 @@ user_problem_statement: "CRITICAL: Two data synchronization failures - 1) Admin 
     file: "backend/server.py"
     stuck_count: 0
     priority: "critical"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
         - working: false
         - agent: "testing"
         - comment: "🚨 CRITICAL DATA INTEGRITY ISSUE IDENTIFIED: Found 21 tasks with invalid sub-competency references that don't match the current competency framework. **SPECIFIC MISMATCHES:** 1) Leadership tasks using 'team_motivation' instead of 'inspiring_team_motivation', 'performance_management' instead of valid options, 'coaching_development' and 'conflict_resolution' not in framework, 2) Financial tasks using 'budget_creation' instead of 'departmental_budget_management', 'variance_analysis', 'roi_decisions', 'pl_understanding' instead of 'property_pl_understanding', 3) Operational tasks using 'workflow_optimization' instead of 'process_improvement_efficiency', 'technology_utilization' instead of 'technology_system_optimization', 'sop_management', 'safety_management' not matching framework. **ROOT CAUSE:** Task data contains legacy/old sub-competency names that don't align with current competency framework definitions. **IMPACT:** This causes display/filtering issues in competencies view where tasks may not appear under correct sub-competency sections. **URGENT FIX NEEDED:** Update all task sub-competency references to match current framework or update framework to include legacy names with proper mapping."
+        - working: false
+        - agent: "testing"
+        - comment: "🎯 CRITICAL DEPLOYMENT VERIFICATION COMPLETED - PRECISE ISSUE IDENTIFICATION! Executed comprehensive admin-to-user task synchronization testing with 75% success rate (6/8 tests passed). **CRITICAL FINDINGS:** 1) ✅ Backend Infrastructure EXCELLENT - All systems operational, admin APIs properly secured, single source of truth verified with all 36 tasks as database tasks (UUID format), 2) ✅ Competency Framework PERFECT - All 6 competency areas with correct sub-competencies verified, 3) ❌ **CRITICAL BLOCKER IDENTIFIED:** Exactly 2 tasks have invalid sub-competency references: Task 'ROI Analysis for Capital Project' (ID: ecb3dbbc-88fc-449c-b03a-8ab81b960de3) uses 'operational_cost_control' instead of 'cost_conscious_decision_making', Task 'Safety Compliance Assessment' (ID: e3c734f3-1136-471a-b822-ba222c3b4de1) uses 'compliance_risk_management' instead of 'safety_leadership_risk_awareness', 4) ✅ Migration Plan VALIDATED - Created precise migration commands to fix both tasks via PUT /api/admin/tasks/{id} with correct sub-competency values, 5) ✅ Post-Migration Simulation CONFIRMED - All 36 tasks would have valid sub-competency references after migration. **DEPLOYMENT READINESS:** 🟠 BLOCKED by 2 specific tasks - migration required before deployment. **MIGRATION COMMANDS READY:** PUT requests with exact task IDs and correct sub-competency values identified and validated."
 
 ## metadata:
 ##   created_by: "main_agent"
