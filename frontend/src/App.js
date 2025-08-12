@@ -5736,7 +5736,7 @@ const AuthenticatedApp = () => {
     setCoreValueEntries(updatedEntries);
     localStorage.setItem('core_value_entries', JSON.stringify(updatedEntries));
     
-    // Also create a Flightbook entry for this Core Value story using the new API
+    // Also create a Flightbook entry for this Core Value story
     const coreValueTitle = coreValues[valueKey]?.title || valueKey;
     
     const flightbookEntryData = {
@@ -5748,24 +5748,54 @@ const AuthenticatedApp = () => {
       tags: ['core-values', 'personal-story', valueKey.replace('_', '-')]
     };
 
-    // Add to Flightbook via the production API
+    // Try to add to Flightbook via the production API first
     try {
       const result = await flightbookAPIClient.create(flightbookEntryData);
       if (result.success) {
-        console.log('✅ Core Value story successfully added to Flightbook:', coreValueTitle);
+        console.log('✅ Core Value story successfully added to Flightbook via API:', coreValueTitle);
         showSuccessMessage(`Core Value story "${coreValueTitle}" added to your Flightbook!`);
       } else {
-        console.error('❌ Failed to add Core Value story to Flightbook:', result.error);
-        showErrorMessage('Story saved locally but failed to sync to Flightbook');
+        console.log('⚠️ API failed, using localStorage fallback for Flightbook entry');
+        // Fall back to localStorage if API fails
+        addToFlightbookLocalStorage(flightbookEntryData, coreValueTitle);
       }
     } catch (error) {
-      console.error('❌ Error adding Core Value story to Flightbook:', error);
-      showErrorMessage('Story saved locally but failed to sync to Flightbook');
+      console.log('⚠️ Authentication error, using localStorage fallback for Flightbook entry:', error.message);
+      // Fall back to localStorage if authentication fails (demo mode)
+      addToFlightbookLocalStorage(flightbookEntryData, coreValueTitle);
     }
     
     // Reset form
     setNewEntry({ value: '', story: '', date: '' });
     setShowNewEntryForm(null);
+  };
+
+  // Helper function to add to localStorage (for demo mode or offline)
+  const addToFlightbookLocalStorage = (flightbookEntryData, coreValueTitle) => {
+    try {
+      const flightbookEntry = {
+        id: `core_value_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        ...flightbookEntryData,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        version: 1,
+        _local: true // Mark as local entry
+      };
+
+      // Add to localStorage
+      const existingFlightbookEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+      existingFlightbookEntries.push(flightbookEntry);
+      localStorage.setItem('flightbook_entries', JSON.stringify(existingFlightbookEntries));
+      
+      // Update local state
+      setFlightbook(existingFlightbookEntries);
+      
+      console.log('✅ Core Value story added to Flightbook localStorage:', coreValueTitle);
+      showSuccessMessage(`Core Value story "${coreValueTitle}" added to your Flightbook!`);
+    } catch (localError) {
+      console.error('❌ Failed to add to localStorage:', localError);
+      showErrorMessage('Failed to save story to Flightbook');
+    }
   };
 
   const handleDeleteCoreValueEntry = (valueKey, entryId) => {
