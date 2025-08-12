@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ProjectAPIClient from '../utils/ProjectAPIClient';
+import ProjectAPIClient from './utils/ProjectAPIClient';
 
 const CulminatingProjectsView = ({ 
   user, 
