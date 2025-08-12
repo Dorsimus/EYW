@@ -1562,6 +1562,10 @@ app.include_router(api_router)
 # Include flightbook routes
 app.include_router(flightbook_router)
 
+# Include project routes
+from routers.project import router as project_router
+app.include_router(project_router)
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
