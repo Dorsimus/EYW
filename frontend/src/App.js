@@ -13470,71 +13470,77 @@ const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, com
     loadFlightbookEntries();
   }, []);
 
-  const loadFlightbookEntries = () => {
+  // PRODUCTION VERSION: Load flightbook entries from backend API
+  const loadFlightbookEntries = async () => {
     try {
-      // Get entries from localStorage (journal reflections)
-      const storedEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+      console.log('🚀 Loading flightbook entries from production API...');
       
-      // Convert date strings back to Date objects for stored entries and fix truncated titles
-      const processedStoredEntries = storedEntries.map(entry => {
-        const processedEntry = {
-          ...entry,
-          date: entry.date ? new Date(entry.date) : new Date(),
-          updated_at: entry.updated_at ? new Date(entry.updated_at) : (entry.date ? new Date(entry.date) : new Date()),
-          created_at: entry.created_at ? new Date(entry.created_at) : (entry.date ? new Date(entry.date) : new Date())
-        };
-
-        // Fix truncated titles for existing entries
-        if (entry.title && entry.title.includes('...') && entry.original_prompt) {
-          console.log('Fixing truncated title for entry:', entry.id);
-          processedEntry.title = entry.original_prompt;
-        }
-
-        return processedEntry;
-      });
-
-      // Save back to localStorage if any titles were fixed
-      const hasFixedTitles = processedStoredEntries.some(entry => entry.title !== storedEntries.find(orig => orig.id === entry.id)?.title);
-      if (hasFixedTitles) {
-        console.log('Saving entries with fixed titles back to localStorage');
-        localStorage.setItem('flightbook_entries', JSON.stringify(processedStoredEntries));
-      }
+      // Use the production API client to get entries
+      const apiEntries = await flightbookAPIClient.getEntries({}, 1, 100); // Get first 100 entries
       
-      // Example structure for existing sample data
-      const exampleEntries = [
-        {
-          id: 'entry-1',
-          date: new Date(Date.now() - 86400000), // Yesterday
-          competency: 'leadership_supervision',
-          type: 'reflection',
-          title: 'Team Meeting Leadership Reflection',
-          content: 'Today I facilitated a challenging team meeting where we had to discuss budget cuts. I noticed how important it was to acknowledge everyone\'s concerns first before moving to solutions. The team responded much better when I started by validating their feelings.',
-          tags: ['team-management', 'difficult-conversations'],
-          source: 'task_completion'
-        },
-        {
-          id: 'entry-2', 
-          date: new Date(Date.now() - 172800000), // 2 days ago
-          competency: 'financial_management',
-          type: 'learning',
-          title: 'Budget Analysis Insights',
-          content: 'While reviewing the quarterly budget, I discovered patterns in our maintenance costs that could save us $15K annually. The key was looking at timing - we were doing preventive maintenance right before peak seasons when costs are highest.',
-          tags: ['budget-analysis', 'cost-management'],
-          source: 'portfolio_reflection'
-        }
-      ];
-      
-      // Combine stored entries with example entries
-      const allEntries = [...processedStoredEntries, ...exampleEntries];
+      // Process entries for UI display
+      const processedEntries = apiEntries.map(entry => ({
+        ...entry,
+        date: entry.created_at ? new Date(entry.created_at) : new Date(),
+        updated_at: entry.updated_at ? new Date(entry.updated_at) : new Date(),
+        created_at: entry.created_at ? new Date(entry.created_at) : new Date(),
+        // Map backend fields to expected UI fields
+        competency: entry.competency_area || 'general',
+        type: entry.entry_type || 'reflection'
+      }));
       
       // Sort by date (most recent first)
-      const sorted = allEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
+      const sorted = processedEntries.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
       setFlightbookEntries(sorted);
       
-      console.log(`Loaded ${allEntries.length} flightbook entries (${processedStoredEntries.length} from journal, ${exampleEntries.length} examples)`);
+      console.log(`✅ Loaded ${sorted.length} flightbook entries from API`);
+      
     } catch (error) {
-      console.error('Error loading flightbook entries:', error);
-      setFlightbookEntries([]);
+      console.error('❌ Error loading flightbook entries from API:', error);
+      
+      // Fallback to localStorage for offline support
+      console.log('⚠️ Falling back to localStorage for offline support');
+      try {
+        // Get entries from localStorage (journal reflections)
+        const storedEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+        
+        // Convert date strings back to Date objects for stored entries and fix truncated titles
+        const processedStoredEntries = storedEntries.map(entry => {
+          const processedEntry = {
+            ...entry,
+            date: entry.date ? new Date(entry.date) : new Date(),
+            updated_at: entry.updated_at ? new Date(entry.updated_at) : (entry.date ? new Date(entry.date) : new Date()),
+            created_at: entry.created_at ? new Date(entry.created_at) : (entry.date ? new Date(entry.date) : new Date()),
+            // Ensure compatibility with UI expectations
+            competency: entry.competency_area || entry.competency || 'general',
+            type: entry.entry_type || entry.type || 'reflection'
+          };
+
+          // Fix truncated titles for existing entries
+          if (entry.title && entry.title.includes('...') && entry.original_prompt) {
+            console.log('Fixing truncated title for entry:', entry.id);
+            processedEntry.title = entry.original_prompt;
+          }
+
+          return processedEntry;
+        });
+
+        // Save back to localStorage if any titles were fixed
+        const hasFixedTitles = processedStoredEntries.some(entry => entry.title !== storedEntries.find(orig => orig.id === entry.id)?.title);
+        if (hasFixedTitles) {
+          console.log('Saving entries with fixed titles back to localStorage');
+          localStorage.setItem('flightbook_entries', JSON.stringify(processedStoredEntries));
+        }
+        
+        // Sort by date (most recent first)
+        const sorted = processedStoredEntries.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+        setFlightbookEntries(sorted);
+        
+        console.log(`📋 Loaded ${sorted.length} flightbook entries from localStorage fallback`);
+      } catch (fallbackError) {
+        console.error('❌ Error loading from localStorage fallback:', fallbackError);
+        setFlightbookEntries([]);
+      }
     }
   };
 
