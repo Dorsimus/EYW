@@ -7205,7 +7205,6 @@ const AuthenticatedApp = () => {
               { key: 'dashboard', label: 'Dashboard', icon: '📊' },
               { key: 'competencies', label: 'Competencies', icon: '🎯' },
               { key: 'portfolio', label: 'Portfolio', icon: '📁' },
-              { key: 'culminating-projects', label: 'Culminating Projects', icon: '🏆' },
               { key: 'analytics', label: 'Analytics', icon: '📈' },
               { key: 'flightbook', label: 'My Leadership Flightbook', icon: '✈️' },
               { key: 'core-values', label: 'Core Values', icon: 'https://customer-assets.emergentagent.com/job_wings-platform-3/artifacts/bnn45ktt_Redstone_Symbol_RGB_Crimson.png', isImage: true },
