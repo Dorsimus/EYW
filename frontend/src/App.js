@@ -154,6 +154,10 @@ const AuthenticatedApp = () => {
   const [migrationUtility] = useState(() => new FlightbookMigrationUtility(flightbookAPIClient));
   const [isMigrationCompleted, setIsMigrationCompleted] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  
+  // Flightbook state for production API integration
+  const [flightbook, setFlightbook] = useState([]);
+  
   const [newTask, setNewTask] = useState({
     title: '',
     description: '',
