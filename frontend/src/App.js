@@ -5759,7 +5759,7 @@ const AuthenticatedApp = () => {
     // Try to add to Flightbook via the production API first
     try {
       console.log('🌐 Attempting API call to flightbook...');
-      const result = await flightbookAPIClient.create(flightbookEntryData);
+      const result = await flightbookAPIClient.createEntry(flightbookEntryData);
       if (result.success) {
         console.log('✅ Core Value story successfully added to Flightbook via API:', coreValueTitle);
         showSuccessMessage(`Core Value story "${coreValueTitle}" added to your Flightbook!`);
