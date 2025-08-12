@@ -18,6 +18,7 @@ import { EnhancedAdminDashboard, EnhancedUserManagement } from './AdminPanel';
 import ContentManagement from './ContentManagement';
 import LevelManagement from './LevelManagement';
 import TestingTools from './TestingTools';
+import CulminatingProjectsView from './CulminatingProjectsView';
 
 // Import production-ready flightbook API client
 import FlightbookAPIClient from './utils/FlightbookAPIClient.js';
