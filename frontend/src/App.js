@@ -11551,7 +11551,9 @@ const MobileNavigation = ({ currentView, setCurrentView, competencies, hasAdminA
 
   const navigationItems = [
     { key: 'dashboard', label: '🏠 Dashboard', icon: '🏠' },
+    { key: 'competencies', label: '🎯 Competencies', icon: '🎯' },
     { key: 'portfolio', label: '📁 Portfolio', icon: '📁' },
+    { key: 'culminating-projects', label: '🏆 Projects', icon: '🏆' },
     { key: 'analytics', label: '📊 Analytics', icon: '📊' },
     ...(hasAdminAccess && isAdminMode ? [
       { key: 'admin-dashboard', label: '⚙️ Admin', icon: '⚙️' }
