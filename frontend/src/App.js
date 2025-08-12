@@ -19,6 +19,10 @@ import ContentManagement from './ContentManagement';
 import LevelManagement from './LevelManagement';
 import TestingTools from './TestingTools';
 
+// Import production-ready flightbook API client
+import FlightbookAPIClient from './utils/FlightbookAPIClient.js';
+import FlightbookMigrationUtility from './utils/FlightbookMigrationUtility.js';
+
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
