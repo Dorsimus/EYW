@@ -325,6 +325,18 @@ user_problem_statement: "CRITICAL: Two data synchronization failures - 1) Admin 
         - agent: "testing"
         - comment: "❌ CRITICAL FRONTEND ACCESS ISSUE IDENTIFIED: Unable to access Enhanced ContentManagement Admin Interface through UI testing. **TESTING RESULTS:** 1) ❌ Authentication Barrier - Application shows authentication screen but Clerk authentication process appears to have issues, preventing access to admin interface, 2) ❌ UI Navigation - Cannot reach Content Management tab through normal user flow (Login → Admin Panel → Content Management), 3) ❌ Interface Accessibility - Enhanced ContentManagement features not accessible for UI testing: Template Library (5 templates), Bulk Operations (Edit, Duplicate, Move, Export, Archive, Delete), Drag-and-Drop functionality, Enhanced Table View, Task Editor with Preview mode, 4) ✅ Backend Services - All services running correctly (frontend, backend, mongodb), API endpoints responding, 5) ✅ Code Implementation - ContentManagement.js contains all requested Phase 1 features with comprehensive implementation. **ROOT CAUSE:** Frontend authentication flow preventing access to admin interface for comprehensive UI testing. **IMPACT:** Cannot verify user experience, visual feedback, responsive design, or end-to-end functionality of enhanced features. **RECOMMENDATION:** Main agent should investigate Clerk authentication configuration and ensure admin users can access ContentManagement interface through normal UI flow."
 
+  - task: "Sub-Competency Reference Alignment - Critical Data Integrity Fix"
+    implemented: false
+    working: false
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+        - working: false
+        - agent: "testing"
+        - comment: "🚨 CRITICAL DATA INTEGRITY ISSUE IDENTIFIED: Found 21 tasks with invalid sub-competency references that don't match the current competency framework. **SPECIFIC MISMATCHES:** 1) Leadership tasks using 'team_motivation' instead of 'inspiring_team_motivation', 'performance_management' instead of valid options, 'coaching_development' and 'conflict_resolution' not in framework, 2) Financial tasks using 'budget_creation' instead of 'departmental_budget_management', 'variance_analysis', 'roi_decisions', 'pl_understanding' instead of 'property_pl_understanding', 3) Operational tasks using 'workflow_optimization' instead of 'process_improvement_efficiency', 'technology_utilization' instead of 'technology_system_optimization', 'sop_management', 'safety_management' not matching framework. **ROOT CAUSE:** Task data contains legacy/old sub-competency names that don't align with current competency framework definitions. **IMPACT:** This causes display/filtering issues in competencies view where tasks may not appear under correct sub-competency sections. **URGENT FIX NEEDED:** Update all task sub-competency references to match current framework or update framework to include legacy names with proper mapping."
+
 ## metadata:
 ##   created_by: "main_agent"
 ##   version: "2.0"
