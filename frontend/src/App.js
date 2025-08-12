@@ -7447,6 +7447,16 @@ const AuthenticatedApp = () => {
           />
         )}
         
+        {currentView === 'culminating-projects' && !isAdminMode && (
+          <CulminatingProjectsView
+            user={localUser}
+            showSuccessMessage={showSuccessMessage}
+            showErrorMessage={showErrorMessage}
+            setCurrentView={setCurrentView}
+            flightbookAPIClient={flightbookAPIClient}
+          />
+        )}
+        
         {currentView === 'flightbook' && !isAdminMode && (
           <LeadershipFlightbookView 
             competencies={competencies}
