@@ -319,10 +319,10 @@ const AuthenticatedApp = () => {
       }
     };
     
-    if (user?.id && isAuthenticated) {
+    if (user?.id) {
       initializeFlightbook();
     }
-  }, [user?.id, isAuthenticated, migrationUtility]);
+  }, [user?.id, migrationUtility]);
   
   // Core Values Data
   const coreValues = {
