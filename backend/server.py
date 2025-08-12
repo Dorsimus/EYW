@@ -1559,6 +1559,9 @@ async def get_storage_stats(admin_user = Depends(require_admin)):
 # Include the router in the main app
 app.include_router(api_router)
 
+# Include flightbook routes
+app.include_router(flightbook_router)
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
