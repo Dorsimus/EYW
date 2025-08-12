@@ -459,9 +459,9 @@ const AuthenticatedApp = () => {
   };
 
   const competencyOptions = [
-    { area: 'leadership_supervision', subs: ['team_motivation', 'delegation', 'performance_management', 'coaching_development', 'team_building', 'conflict_resolution', 'difficult_conversations', 'cross_dept_communication', 'resident_resolution', 'crisis_leadership'] },
-    { area: 'financial_management', subs: ['budget_creation', 'variance_analysis', 'cost_control', 'roi_decisions', 'revenue_impact', 'pl_understanding', 'kpi_tracking', 'financial_forecasting', 'capex_planning', 'vendor_cost_mgmt'] },
-    { area: 'operational_management', subs: ['workflow_optimization', 'technology_utilization', 'quality_control', 'sop_management', 'innovation', 'safety_management', 'policy_enforcement', 'legal_compliance', 'emergency_preparedness', 'documentation'] },
+    { area: 'leadership_supervision', subs: ['inspiring_team_motivation', 'mastering_difficult_conversations', 'building_collaborative_culture', 'developing_individual_team_members'] },
+    { area: 'financial_management', subs: ['departmental_budget_management', 'operational_cost_control', 'property_pl_understanding', 'financial_performance_analysis'] },
+    { area: 'operational_management', subs: ['process_improvement_efficiency', 'compliance_risk_management', 'vendor_relationship_management', 'documentation_communication'] },
     { area: 'cross_functional_collaboration', subs: ['understanding_other_department', 'unified_resident_experience', 'communication_across_departments', 'stakeholder_relationship_building'] },
     { area: 'strategic_thinking', subs: ['seeing_patterns_anticipating_trends', 'innovation_continuous_improvement', 'problem_solving_future_focus', 'planning_goal_achievement'] },
     { area: 'client_confidence_connection', subs: ['understanding_client_impact', 'service_excellence_presence', 'client_communication_skills', 'client_advocacy_value'] }
