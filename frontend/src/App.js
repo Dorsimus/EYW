@@ -269,6 +269,61 @@ const AuthenticatedApp = () => {
     }
   }, [allTasks, databaseTasksForProcessing, competencies]);
 
+  // Production-ready flightbook migration and initialization
+  useEffect(() => {
+    const initializeFlightbook = async () => {
+      try {
+        console.log('🚀 Initializing production flightbook system...');
+        
+        // Check if migration has been completed
+        const migrationCompleted = migrationUtility.isMigrationCompleted();
+        setIsMigrationCompleted(migrationCompleted);
+        
+        if (!migrationCompleted && user?.id) {
+          console.log('📦 Migration needed - checking for localStorage data...');
+          
+          // Check if there's localStorage data to migrate
+          const hasLocalData = localStorage.getItem('flightbook_entries') || 
+                               localStorage.getItem('journal_entries') ||
+                               localStorage.getItem('competency_reflections');
+          
+          if (hasLocalData) {
+            console.log('📊 Found localStorage data, initiating migration...');
+            
+            // Run migration in background
+            try {
+              const migrationResults = await migrationUtility.migrateToBackend((progress) => {
+                console.log(`📈 Migration progress: ${progress.progress}% (${progress.processed}/${progress.total})`);
+              });
+              
+              if (migrationResults.successful > 0) {
+                console.log('✅ Migration completed successfully:', migrationResults);
+                setIsMigrationCompleted(true);
+              } else {
+                console.log('⚠️ Migration completed with no entries migrated');
+                setIsMigrationCompleted(true); // Mark as complete to avoid retry loops
+              }
+            } catch (migrationError) {
+              console.error('❌ Migration failed:', migrationError);
+              // Don't mark as completed so user can retry
+            }
+          } else {
+            console.log('ℹ️ No localStorage data found, marking migration as complete');
+            migrationUtility.markMigrationComplete();
+            setIsMigrationCompleted(true);
+          }
+        }
+        
+      } catch (error) {
+        console.error('❌ Failed to initialize flightbook system:', error);
+      }
+    };
+    
+    if (user?.id && isSignedIn) {
+      initializeFlightbook();
+    }
+  }, [user?.id, isSignedIn, migrationUtility]);
+  
   // Core Values Data
   const coreValues = {
     believers: {
