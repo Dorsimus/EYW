@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import ProjectAPIClient from './utils/ProjectAPIClient';
+import axios from 'axios';
+
+const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 const CulminatingProjectsView = ({ 
   user, 
   showSuccessMessage, 
   showErrorMessage, 
   setCurrentView,
-  flightbookAPIClient 
+  flightbookAPIClient,
+  portfolio,
+  setPortfolio
 }) => {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
