@@ -247,6 +247,47 @@ const CulminatingProjectsView = ({
     }
   };
 
+  // Helper function to add project note to flightbook
+  const addNoteToFlightbook = async (noteData) => {
+    try {
+      if (!user?.id || !flightbookAPIClient) {
+        console.log('No user ID or flightbook client available for flightbook integration');
+        return false;
+      }
+
+      const flightbookEntry = {
+        title: `Project Note: ${noteData.title}`,
+        content: noteData.content,
+        competency_area: selectedProject?.competency_areas?.[0] || 'culminating_project',
+        entry_type: 'project_reflection',
+        tags: [
+          'culminating-project',
+          noteData.note_type,
+          noteData.project_phase,
+          selectedProject?.title?.toLowerCase().replace(/\s+/g, '-')
+        ].filter(Boolean),
+        metadata: {
+          project_id: selectedProject?.id,
+          project_title: selectedProject?.title,
+          note_type: noteData.note_type,
+          project_phase: noteData.project_phase
+        }
+      };
+
+      const result = await flightbookAPIClient.createEntry(flightbookEntry);
+      if (result.success) {
+        console.log('✅ Note successfully added to flightbook');
+        return true;
+      } else {
+        console.error('❌ Failed to add note to flightbook:', result.error);
+        return false;
+      }
+    } catch (error) {
+      console.error('❌ Failed to add note to flightbook:', error);
+      return false;
+    }
+  };
+
   const handleCreateNote = async (e) => {
     e.preventDefault();
     
@@ -257,8 +298,16 @@ const CulminatingProjectsView = ({
 
     try {
       const result = await projectAPIClient.createProjectNote(selectedProject.id, newNote);
+      
       if (result.success) {
         showSuccessMessage('Note created successfully!');
+        
+        // Also add the note to flightbook
+        const flightbookAdded = await addNoteToFlightbook(newNote);
+        if (flightbookAdded) {
+          showSuccessMessage('Note created and added to your Flightbook!');
+        }
+        
         setShowNoteModal(false);
         setNewNote({
           title: '',
