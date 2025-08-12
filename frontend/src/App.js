@@ -5719,7 +5719,13 @@ const AuthenticatedApp = () => {
 
   // Core Values Functions
   const handleAddCoreValueEntry = async (valueKey) => {
-    if (!newEntry.story.trim()) return;
+    console.log('🎯 handleAddCoreValueEntry called with valueKey:', valueKey);
+    console.log('📝 newEntry.story:', newEntry.story);
+    
+    if (!newEntry.story.trim()) {
+      console.log('❌ No story content, exiting');
+      return;
+    }
     
     const entry = {
       id: Date.now(),
@@ -5735,9 +5741,11 @@ const AuthenticatedApp = () => {
     
     setCoreValueEntries(updatedEntries);
     localStorage.setItem('core_value_entries', JSON.stringify(updatedEntries));
+    console.log('✅ Core Value entry saved to localStorage');
     
     // Also create a Flightbook entry for this Core Value story
     const coreValueTitle = coreValues[valueKey]?.title || valueKey;
+    console.log('🚀 Creating Flightbook entry for:', coreValueTitle);
     
     const flightbookEntryData = {
       title: `Core Value: ${coreValueTitle}`,
@@ -5750,6 +5758,7 @@ const AuthenticatedApp = () => {
 
     // Try to add to Flightbook via the production API first
     try {
+      console.log('🌐 Attempting API call to flightbook...');
       const result = await flightbookAPIClient.create(flightbookEntryData);
       if (result.success) {
         console.log('✅ Core Value story successfully added to Flightbook via API:', coreValueTitle);
@@ -5768,11 +5777,14 @@ const AuthenticatedApp = () => {
     // Reset form
     setNewEntry({ value: '', story: '', date: '' });
     setShowNewEntryForm(null);
+    console.log('🧹 Form reset completed');
   };
 
   // Helper function to add to localStorage (for demo mode or offline)
   const addToFlightbookLocalStorage = (flightbookEntryData, coreValueTitle) => {
     try {
+      console.log('💾 Adding to localStorage Flightbook...');
+      
       const flightbookEntry = {
         id: `core_value_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         ...flightbookEntryData,
@@ -5784,11 +5796,16 @@ const AuthenticatedApp = () => {
 
       // Add to localStorage
       const existingFlightbookEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+      console.log('📚 Existing flightbook entries count:', existingFlightbookEntries.length);
+      
       existingFlightbookEntries.push(flightbookEntry);
       localStorage.setItem('flightbook_entries', JSON.stringify(existingFlightbookEntries));
       
-      // Update local state
+      console.log('💾 Updated flightbook entries count:', existingFlightbookEntries.length);
+      
+      // Update local state  
       setFlightbook(existingFlightbookEntries);
+      console.log('🔄 Updated flightbook state');
       
       console.log('✅ Core Value story added to Flightbook localStorage:', coreValueTitle);
       showSuccessMessage(`Core Value story "${coreValueTitle}" added to your Flightbook!`);
