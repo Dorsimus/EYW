@@ -6789,11 +6789,13 @@ const AuthenticatedApp = () => {
     }, 500);
   };
 
-  // Function to automatically create or update flightbook entry from journal reflection
+  // PRODUCTION VERSION: Create or update flightbook entry from journal reflection using backend API
   const createOrUpdateFlightbookFromJournalReflection = async (areaKey, subKey, taskId, notes, taskType = 'curiosity_reflection') => {
     if (!user?.id || !notes || notes.trim().length === 0) return null;
 
     try {
+      console.log('🚀 Creating/updating flightbook entry via production API:', { areaKey, subKey, taskId, taskType });
+      
       // Get the specific prompt text or activity description
       const competencyData = competencies[areaKey];
       let promptText = '';
@@ -6818,33 +6820,100 @@ const AuthenticatedApp = () => {
             break;
           }
         }
-      } 
-      // Handle task evidence/notes
-      else if (taskType === 'task_evidence') {
-        entryTitle = `Task Evidence: ${taskId}`;
-        promptText = 'Task completion evidence and learning notes';
       }
-      // Generic reflection
-      else {
-        entryTitle = `${taskType.replace('_', ' ')}: ${subKey.replace('_', ' ')}`;
+      // Check if it's a culminating project reflection
+      else if (taskId.includes('culminating') || taskType.includes('culminating')) {
+        entryTitle = 'Culminating Project Reflection';
+        promptText = 'Reflection on culminating project work and learning outcomes';
       }
-      
-      // Generate unique key for this journal entry based on its context
+
+      // Prepare entry data for backend API
+      const entryData = {
+        title: entryTitle.substring(0, 500), // Ensure title length limit
+        content: notes.substring(0, 50000), // Ensure content length limit
+        competency_area: areaKey.toLowerCase(),
+        sub_competency: subKey ? subKey.toLowerCase() : null,
+        task_id: taskId || null,
+        entry_type: 'reflection',
+        source: 'competency_work',
+        tags: [taskType.replace('_', '-'), 'reflection', 'auto-generated', areaKey.replace('_', '-')],
+        original_prompt: promptText || null
+      };
+
+      // Create entry_key for journal context
       const entryKey = `${areaKey}_${subKey}_${taskId}`;
       
-      // Get existing entries and look for an existing entry for this context
+      // Use production API client to create/update entry
+      const result = await flightbookAPIClient.createOrUpdateFromJournal(entryData, entryKey);
+      
+      console.log('✅ Successfully created/updated flightbook entry via API:', result.id);
+      
+      // Update local flightbook state for immediate UI feedback
+      const currentEntries = flightbook || [];
+      const existingIndex = currentEntries.findIndex(entry => 
+        entry.id === result.id || entry.entry_key === entryKey
+      );
+      
+      if (existingIndex >= 0) {
+        currentEntries[existingIndex] = result;
+      } else {
+        currentEntries.push(result);
+      }
+      
+      setFlightbook(currentEntries);
+      
+      return result;
+      
+    } catch (error) {
+      console.error('❌ Error creating/updating flightbook entry via API:', error);
+      
+      // Fallback to localStorage for offline capability
+      console.log('⚠️ Falling back to localStorage for offline support');
+      return await createOrUpdateFlightbookFromJournalReflectionLocally(areaKey, subKey, taskId, notes, taskType);
+    }
+  };
+
+  // Fallback localStorage implementation for offline support
+  const createOrUpdateFlightbookFromJournalReflectionLocally = async (areaKey, subKey, taskId, notes, taskType = 'curiosity_reflection') => {
+    try {
+      const currentTime = new Date().toISOString();
+      const entryKey = `${areaKey}_${subKey}_${taskId}`;
+      
+      // Get existing entries from localStorage
       const existingEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+      
+      // Check if updating existing entry
       const existingEntryIndex = existingEntries.findIndex(entry => entry.entry_key === entryKey);
       
-      const currentTime = new Date();
+      // Get the specific prompt text or activity description (same logic as above)
+      const competencyData = competencies[areaKey];
+      let promptText = '';
+      let entryTitle = 'Leadership Reflection';
       
+      if (subKey === 'curiosity_ignition' && competencyData?.curiosity_ignition?.reflection_prompts) {
+        const promptIndex = parseInt(taskId.replace('prompt_', ''));
+        promptText = competencyData.curiosity_ignition.reflection_prompts[promptIndex] || '';
+        entryTitle = promptText ? `${promptText}` : 'Curiosity Reflection';
+      } else if (taskId.includes('_reflection') && competencyData?.sub_competencies?.[subKey]?.monthly_activities) {
+        const activityKey = taskId.replace('_reflection', '');
+        const monthlyActivities = competencyData.sub_competencies[subKey].monthly_activities;
+        
+        for (const activity of monthlyActivities) {
+          if (activity.id === activityKey) {
+            promptText = activity.reflection || activity.journal_prompt || activity.curiosity_question || '';
+            entryTitle = `Monthly Activity: ${activity.title}`;
+            break;
+          }
+        }
+      }
+
       if (existingEntryIndex >= 0) {
-        // Update existing entry and add to version history
+        // Update existing entry
         const existingEntry = existingEntries[existingEntryIndex];
         
-        // Only update if content has actually changed
+        // Only update if content is different
         if (existingEntry.content !== notes) {
-          // Initialize version history if it doesn't exist
+          // Ensure version history exists
           if (!existingEntry.version_history) {
             existingEntry.version_history = [{
               version: 1,
@@ -6859,15 +6928,16 @@ const AuthenticatedApp = () => {
             version: existingEntry.version_history.length + 1,
             content: notes,
             updated_at: currentTime,
-            change_summary: `Updated via ${taskType.replace('_', ' ')}`
+            change_summary: `Updated via ${taskType.replace('_', ' ')} (offline)`
           });
           
           // Update the main entry
           existingEntry.content = notes;
           existingEntry.updated_at = currentTime;
           existingEntry.version = (existingEntry.version_history.length);
+          existingEntry._local = true; // Mark as local/offline
           
-          console.log(`Updated existing flightbook entry (v${existingEntry.version}):`, entryTitle);
+          console.log(`Updated existing flightbook entry locally (v${existingEntry.version}):`, entryTitle);
         } else {
           console.log('Flightbook entry content unchanged, no update needed');
           return existingEntry;
@@ -6875,43 +6945,43 @@ const AuthenticatedApp = () => {
       } else {
         // Create new flightbook entry structure
         const flightbookEntry = {
-          id: `journal_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-          entry_key: entryKey, // Unique key for identifying this journal context
+          id: `local_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          entry_key: entryKey,
           title: entryTitle,
           content: notes,
-          competency: areaKey,
-          type: taskType.replace('_', '_'),
-          source: 'competency_work',
+          competency_area: areaKey.toLowerCase(),
+          sub_competency: subKey ? subKey.toLowerCase() : null,
+          task_id: taskId,
+          entry_type: 'reflection',
+          source: 'competency_work_offline',
           original_prompt: promptText,
-          tags: [taskType.replace('_', '-'), 'reflection', 'auto-generated'],
-          date: currentTime,
+          tags: [taskType.replace('_', '-'), 'reflection', 'auto-generated', areaKey.replace('_', '-')],
           created_at: currentTime,
           updated_at: currentTime,
           version: 1,
-          competency_area: areaKey,
-          sub_competency: subKey,
-          task_id: taskId,
           version_history: [{
             version: 1,
             content: notes,
             updated_at: currentTime,
-            change_summary: 'Initial version'
-          }]
+            change_summary: 'Initial version (offline)'
+          }],
+          _local: true // Mark as local/offline
         };
 
         existingEntries.push(flightbookEntry);
-        console.log('Created new flightbook entry:', entryTitle);
+        console.log('Created new flightbook entry locally:', entryTitle);
       }
       
       // Save updated entries back to localStorage
       localStorage.setItem('flightbook_entries', JSON.stringify(existingEntries));
       
-      // TODO: Later add backend API call to save flightbook entry
-      // await axios.post(`${API}/users/${user.id}/flightbook`, flightbookEntry);
+      // Update local state
+      setFlightbook(existingEntries);
       
       return existingEntries[existingEntryIndex >= 0 ? existingEntryIndex : existingEntries.length - 1];
+      
     } catch (error) {
-      console.error('Error creating/updating flightbook entry from journal reflection:', error);
+      console.error('Error creating/updating flightbook entry locally:', error);
       return null;
     }
   };
