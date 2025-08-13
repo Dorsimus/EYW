@@ -7015,7 +7015,7 @@ const AuthenticatedApp = () => {
       if (subKey === 'curiosity_ignition' && competencyData?.curiosity_ignition?.reflection_prompts) {
         const promptIndex = parseInt(taskId.replace('prompt_', ''));
         promptText = competencyData.curiosity_ignition.reflection_prompts[promptIndex] || '';
-        entryTitle = promptText ? `${promptText}` : 'Curiosity Reflection';
+        entryTitle = promptText ? `Curiosity Reflection: "${promptText}"` : 'Curiosity Reflection';
       } else if (taskId.includes('_reflection') && competencyData?.sub_competencies?.[subKey]?.monthly_activities) {
         const activityKey = taskId.replace('_reflection', '');
         const monthlyActivities = competencyData.sub_competencies[subKey].monthly_activities;
@@ -7023,7 +7023,12 @@ const AuthenticatedApp = () => {
         for (const activity of monthlyActivities) {
           if (activity.id === activityKey) {
             promptText = activity.reflection || activity.journal_prompt || activity.curiosity_question || '';
-            entryTitle = `Monthly Activity: ${activity.title}`;
+            // Use the full prompt as the title instead of generic "Monthly Activity"
+            if (promptText) {
+              entryTitle = `Leadership Reflection: "${promptText}"`;
+            } else {
+              entryTitle = `Monthly Activity: ${activity.title}`;
+            }
             break;
           }
         }
