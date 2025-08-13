@@ -13512,15 +13512,32 @@ const AdminAnalyticsView = ({ stats, tasks, users }) => {
 };
 
 // My Leadership Flightbook View Component with Accordion Organization
-const LeadershipFlightbookView = ({ competencies, portfolio, setCurrentView, competencyTaskProgress, setCompetencyTaskProgress, flightbookAPIClient }) => {
+const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlightbook, setCurrentView, competencyTaskProgress, setCompetencyTaskProgress, flightbookAPIClient }) => {
   const [flightbookEntries, setFlightbookEntries] = useState([]);
   const [expandedSections, setExpandedSections] = useState({});
   const [editingEntry, setEditingEntry] = useState(null);
   const [editContent, setEditContent] = useState('');
   
-  // Load flightbook entries when component mounts
+  // Sync with main flightbook state and load from localStorage/API
   useEffect(() => {
-    loadFlightbookEntries();
+    console.log('🔄 Flightbook component mounting/updating, syncing with main state');
+    
+    // First, sync with main flightbook state if available
+    if (flightbook && flightbook.length > 0) {
+      console.log(`📖 Using main flightbook state: ${flightbook.length} entries`);
+      setFlightbookEntries(flightbook);
+    } else {
+      // Fallback to localStorage and API loading
+      console.log('📖 Main flightbook state empty, loading from localStorage and API');
+      loadFlightbookEntries(); 
+    }
+  }, [flightbook]); // Watch for changes in main flightbook state
+  
+  // Load flightbook entries when component mounts (fallback)
+  useEffect(() => {
+    if (!flightbook || flightbook.length === 0) {
+      loadFlightbookEntries();
+    }
   }, []);
 
   // PRODUCTION VERSION: Load flightbook entries from backend API
