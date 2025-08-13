@@ -5524,7 +5524,7 @@ const AuthenticatedApp = () => {
         }
       };
 
-      // Try to save via production API first
+      // Try to save via production API ONLY - no localStorage fallback to prevent duplicates
       try {
         console.log('🌐 Attempting API call to flightbook for task completion...');
         const result = await flightbookAPIClient.createEntry(flightbookEntry);
@@ -5532,14 +5532,16 @@ const AuthenticatedApp = () => {
           console.log('✅ Task completion successfully added to Flightbook via API');
           return result.data;
         } else {
-          console.log('⚠️ API failed, using localStorage fallback for task completion');
-          // Fall back to localStorage if API fails
-          return await addTaskCompletionToFlightbookLocalStorage(flightbookEntry);
+          console.log('⚠️ API call failed, but not using localStorage to prevent duplicates');
+          return null;
         }
       } catch (error) {
-        console.log('⚠️ Authentication error, using localStorage fallback for task completion:', error.message);
-        // Fall back to localStorage if authentication fails (demo mode)
-        return await addTaskCompletionToFlightbookLocalStorage(flightbookEntry);
+        console.log('⚠️ Authentication error, entry will not be saved to prevent duplicates:', error.message);
+        // In demo mode, only save to localStorage if we're absolutely sure API failed due to auth
+        if (error.message.includes('No active session') || error.message.includes('Authentication required')) {
+          return await addTaskCompletionToFlightbookLocalStorage(flightbookEntry);
+        }
+        return null;
       }
       
     } catch (error) {
