@@ -7498,6 +7498,8 @@ const AuthenticatedApp = () => {
           <LeadershipFlightbookView 
             competencies={competencies}
             portfolio={portfolio}
+            flightbook={flightbook}
+            setFlightbook={setFlightbook}
             setCurrentView={setCurrentView}
             competencyTaskProgress={competencyTaskProgress}
             setCompetencyTaskProgress={setCompetencyTaskProgress}
