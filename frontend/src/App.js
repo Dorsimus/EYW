@@ -13563,6 +13563,11 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
       const sorted = processedEntries.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
       setFlightbookEntries(sorted);
       
+      // Sync with main state
+      if (setFlightbook) {
+        setFlightbook(sorted);
+      }
+      
       console.log(`✅ Loaded ${sorted.length} flightbook entries from API`);
       
     } catch (error) {
@@ -13606,10 +13611,18 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
         const sorted = processedStoredEntries.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
         setFlightbookEntries(sorted);
         
+        // Sync with main state
+        if (setFlightbook) {
+          setFlightbook(sorted);
+        }
+        
         console.log(`📋 Loaded ${sorted.length} flightbook entries from localStorage fallback`);
       } catch (fallbackError) {
         console.error('❌ Error loading from localStorage fallback:', fallbackError);
         setFlightbookEntries([]);
+        if (setFlightbook) {
+          setFlightbook([]);
+        }
       }
     }
   };
