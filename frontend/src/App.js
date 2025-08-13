@@ -5508,23 +5508,84 @@ const AuthenticatedApp = () => {
     if (!user?.id || !notes || notes.trim().length === 0) return null;
 
     try {
-      // This will be expanded when we implement the full flightbook backend
+      console.log('📖 Creating flightbook entry from task completion...');
+      
       const flightbookEntry = {
-        title: `${taskData.title} - Reflection`,
+        title: `${taskData.title} - Task Completion`,
         content: notes,
-        competency: competencyArea,
-        type: 'task_reflection',
-        source: 'task_completion',
-        tags: ['task-reflection', 'auto-generated'],
-        date: new Date()
+        competency_area: competencyArea,
+        entry_type: 'task_completion',
+        tags: ['task-completion', competencyArea, 'auto-generated'],
+        metadata: {
+          task_id: taskData.id,
+          task_title: taskData.title,
+          task_type: taskData.task_type || 'task',
+          competency_area: competencyArea
+        }
       };
 
-      console.log('Would create flightbook entry:', flightbookEntry);
-      // TODO: Implement backend endpoint for flightbook entries
+      // Try to save via production API first
+      try {
+        console.log('🌐 Attempting API call to flightbook for task completion...');
+        const result = await flightbookAPIClient.createEntry(flightbookEntry);
+        if (result && result.success) {
+          console.log('✅ Task completion successfully added to Flightbook via API');
+          return result.data;
+        } else {
+          console.log('⚠️ API failed, using localStorage fallback for task completion');
+          // Fall back to localStorage if API fails
+          return await addTaskCompletionToFlightbookLocalStorage(flightbookEntry);
+        }
+      } catch (error) {
+        console.log('⚠️ Authentication error, using localStorage fallback for task completion:', error.message);
+        // Fall back to localStorage if authentication fails (demo mode)
+        return await addTaskCompletionToFlightbookLocalStorage(flightbookEntry);
+      }
       
-      return flightbookEntry;
     } catch (error) {
       console.error('Error creating flightbook entry from task completion:', error);
+      return null;
+    }
+  };
+
+  // Helper function to add task completion to flightbook localStorage
+  const addTaskCompletionToFlightbookLocalStorage = async (flightbookEntry) => {
+    try {
+      console.log('💾 Adding task completion to localStorage Flightbook...');
+      
+      // Get existing flightbook entries from localStorage
+      const existingEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+      console.log('📚 Existing flightbook entries count:', existingEntries.length);
+      
+      // Create new entry with proper structure
+      const newEntry = {
+        id: Date.now().toString(),
+        title: flightbookEntry.title,
+        content: flightbookEntry.content,
+        competency_area: flightbookEntry.competency_area,
+        entry_type: flightbookEntry.entry_type,
+        tags: flightbookEntry.tags,
+        metadata: flightbookEntry.metadata,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        date: new Date()
+      };
+      
+      // Add to existing entries
+      const updatedEntries = [...existingEntries, newEntry];
+      
+      // Save back to localStorage
+      localStorage.setItem('flightbook_entries', JSON.stringify(updatedEntries));
+      console.log('💾 Updated flightbook entries count:', updatedEntries.length);
+      
+      // Update main flightbook state to trigger UI refresh
+      setFlightbook(updatedEntries);
+      console.log('🔄 Updated flightbook state');
+      
+      console.log('✅ Task completion added to Flightbook localStorage');
+      return newEntry;
+    } catch (error) {
+      console.error('❌ Error adding task completion to localStorage:', error);
       return null;
     }
   };
