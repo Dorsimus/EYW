@@ -12,9 +12,41 @@ class FlightbookService:
         self.db = database
         self.flightbook_collection = database.flightbook_entries
         self.users_collection = database.users
+        
+    async def ensure_indexes(self):
+        """Ensure required indexes exist for flightbook collection"""
+        try:
+            # Create unique index on user_id + entry_key (for journal entries)
+            await self.flightbook_collection.create_index(
+                [("user_id", 1), ("entry_key", 1)], 
+                unique=True, 
+                sparse=True,
+                name="unique_user_entry_key"
+            )
+            
+            # Create unique index on user_id + competency_area + sub_competency + task_id + title (for task entries)
+            await self.flightbook_collection.create_index(
+                [("user_id", 1), ("competency_area", 1), ("sub_competency", 1), ("task_id", 1), ("title", 1)], 
+                unique=True, 
+                sparse=True,
+                name="unique_user_task_entry"
+            )
+            
+            # Create index for better query performance
+            await self.flightbook_collection.create_index(
+                [("user_id", 1), ("updated_at", -1)],
+                name="user_updated_at"
+            )
+            
+            print("✅ Flightbook indexes created successfully")
+        except Exception as e:
+            print(f"⚠️ Index creation warning (may already exist): {e}")
 
     async def create_entry(self, user_id: str, entry_data: FlightbookEntryCreate) -> Dict[str, Any]:
-        """Create a new flightbook entry"""
+        """Create a new flightbook entry with duplicate prevention"""
+        # Ensure indexes are created
+        await self.ensure_indexes()
+        
         # Convert Pydantic model to dictionary
         entry_dict = entry_data.dict()
         
@@ -38,14 +70,58 @@ class FlightbookService:
         if not entry_dict.get('entry_key') and entry_dict.get('competency_area') and entry_dict.get('sub_competency') and entry_dict.get('task_id'):
             entry_dict['entry_key'] = f"{entry_dict['competency_area']}_{entry_dict['sub_competency']}_{entry_dict['task_id']}"
         
-        # Insert into database
-        result = await self.flightbook_collection.insert_one(entry_dict)
-        entry_dict['_id'] = result.inserted_id
+        # Check for existing entry to prevent duplicates
+        existing_entry = None
+        if entry_dict.get('entry_key'):
+            # Check by entry_key for journal entries
+            existing_entry = await self.get_entry_by_key(entry_dict['entry_key'], user_id)
+        else:
+            # Check by task details for task completion entries
+            existing_entry = await self.flightbook_collection.find_one({
+                'user_id': user_id,
+                'competency_area': entry_dict.get('competency_area'),
+                'sub_competency': entry_dict.get('sub_competency'),
+                'task_id': entry_dict.get('task_id'),
+                'title': entry_dict.get('title')
+            })
         
-        # Convert ObjectId to string for response
-        entry_dict['id'] = str(entry_dict['_id'])
+        if existing_entry:
+            print(f"⚠️ Duplicate entry detected, returning existing entry: {existing_entry.get('title', 'Unknown')}")
+            existing_entry['id'] = str(existing_entry['_id'])
+            return existing_entry
         
-        return entry_dict
+        try:
+            # Insert into database
+            result = await self.flightbook_collection.insert_one(entry_dict)
+            entry_dict['_id'] = result.inserted_id
+            
+            # Convert ObjectId to string for response
+            entry_dict['id'] = str(entry_dict['_id'])
+            
+            print(f"✅ Created new flightbook entry: {entry_dict.get('title', 'Unknown')}")
+            return entry_dict
+            
+        except Exception as e:
+            # If duplicate key error, try to find and return existing entry
+            if "duplicate key error" in str(e).lower() or "E11000" in str(e):
+                print(f"⚠️ Duplicate key error caught, finding existing entry")
+                if entry_dict.get('entry_key'):
+                    existing_entry = await self.get_entry_by_key(entry_dict['entry_key'], user_id)
+                else:
+                    existing_entry = await self.flightbook_collection.find_one({
+                        'user_id': user_id,
+                        'competency_area': entry_dict.get('competency_area'),
+                        'sub_competency': entry_dict.get('sub_competency'),  
+                        'task_id': entry_dict.get('task_id'),
+                        'title': entry_dict.get('title')
+                    })
+                
+                if existing_entry:
+                    existing_entry['id'] = str(existing_entry['_id'])
+                    return existing_entry
+            
+            # Re-raise other errors
+            raise e
 
     async def get_entries_paginated(
         self, 
