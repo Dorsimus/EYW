@@ -7070,59 +7070,94 @@ const AuthenticatedApp = () => {
       // Check if updating existing entry
       const existingEntryIndex = existingEntries.findIndex(entry => entry.entry_key === entryKey);
       
-      // Get the specific prompt text or activity description (same logic as above)
+      // Universal prompt extraction - same logic as API version
       const competencyData = competencies[areaKey];
       let promptText = '';
-      let entryTitle = 'Leadership Reflection';
+      let entryTitle = 'Leadership Reflection'; // Default fallback
       
-      if (subKey === 'curiosity_ignition' && competencyData?.curiosity_ignition?.reflection_prompts) {
-        const promptIndex = parseInt(taskId.replace('prompt_', ''));
-        promptText = competencyData.curiosity_ignition.reflection_prompts[promptIndex] || '';
-        entryTitle = promptText ? `Curiosity Reflection: "${promptText}"` : 'Curiosity Reflection';
-      } 
-      // Check if this is a phase activity (e.g., phase_1_activity_key_notes)
-      else if (taskId.includes('phase_') && taskId.includes('_notes') && competencyData?.sub_competencies?.[subKey]?.monthly_activities) {
-        // Extract phase number from taskId like "phase_1_activity_key_notes"
-        const phaseMatch = taskId.match(/phase_(\d+)_/);
-        if (phaseMatch) {
-          const phaseNumber = parseInt(phaseMatch[1]);
-          const monthlyActivities = competencyData.sub_competencies[subKey].monthly_activities;
-          
-          // Find the activity by month (phase number corresponds to month)
-          const activity = monthlyActivities.find(act => act.month === phaseNumber);
-          if (activity) {
-            promptText = activity.journal_prompt || activity.reflection || activity.curiosity_question || '';
-            // Use the full prompt as the title
-            if (promptText) {
-              entryTitle = `Leadership Reflection: "${promptText}"`;
-            } else {
-              entryTitle = `Monthly Activity: ${activity.title}`;
+      // Extract prompt from the current modal or task context
+      if (showTaskModal && showTaskModal.task) {
+        // If we have the actual task being worked on, extract its prompt/description
+        const currentTask = showTaskModal.task;
+        
+        if (currentTask.reflection) {
+          promptText = currentTask.reflection;
+          entryTitle = `Leadership Reflection: "${promptText}"`;
+        } else if (currentTask.journal_prompt) {
+          promptText = currentTask.journal_prompt;
+          entryTitle = `Leadership Reflection: "${promptText}"`;
+        } else if (currentTask.curiosity_question) {
+          promptText = currentTask.curiosity_question;
+          entryTitle = `Leadership Reflection: "${promptText}"`;
+        } else if (currentTask.description) {
+          promptText = currentTask.description;
+          entryTitle = `Task Reflection: "${promptText}"`;
+        } else if (currentTask.title && currentTask.title !== 'Task Reflection') {
+          promptText = currentTask.title;
+          entryTitle = `Leadership Reflection: "${promptText}"`;
+        }
+        
+        console.log('📝 Extracted prompt from current task for localStorage:', promptText?.substring(0, 100));
+      }
+      
+      // Fallback to competency data structure if no current task
+      if (!promptText) {
+        if (subKey === 'curiosity_ignition' && competencyData?.curiosity_ignition?.reflection_prompts) {
+          const promptIndex = parseInt(taskId.replace('prompt_', ''));
+          promptText = competencyData.curiosity_ignition.reflection_prompts[promptIndex] || '';
+          entryTitle = promptText ? `Curiosity Reflection: "${promptText}"` : 'Curiosity Reflection';
+        } 
+        // Check if this is a phase activity (e.g., phase_1_activity_key_notes)
+        else if (taskId.includes('phase_') && taskId.includes('_notes') && competencyData?.sub_competencies?.[subKey]?.monthly_activities) {
+          // Extract phase number from taskId like "phase_1_activity_key_notes"
+          const phaseMatch = taskId.match(/phase_(\d+)_/);
+          if (phaseMatch) {
+            const phaseNumber = parseInt(phaseMatch[1]);
+            const monthlyActivities = competencyData.sub_competencies[subKey].monthly_activities;
+            
+            // Find the activity by month (phase number corresponds to month)
+            const activity = monthlyActivities.find(act => act.month === phaseNumber);
+            if (activity) {
+              promptText = activity.journal_prompt || activity.reflection || activity.curiosity_question || '';
+              // Use the full prompt as the title
+              if (promptText) {
+                entryTitle = `Leadership Reflection: "${promptText}"`;
+              } else {
+                entryTitle = `Monthly Activity: ${activity.title}`;
+              }
             }
           }
         }
-      }
-      // Check if this is a task completion note (e.g., task_taskId_notes)
-      else if (taskId.includes('task_') && taskId.includes('_notes')) {
-        // For task completion notes, we might need to look up the task details
-        entryTitle = 'Task Completion Reflection';
-        promptText = 'Task completion notes and reflections';
-      }
-      // Check if this is a monthly activity reflection (legacy format)
-      else if (taskId.includes('_reflection') && competencyData?.sub_competencies?.[subKey]?.monthly_activities) {
-        const monthlyActivities = competencyData.sub_competencies[subKey].monthly_activities;
-        
-        // Find the activity by matching the full taskId format: monthly_activity_${month}_reflection
-        for (const activity of monthlyActivities) {
-          const expectedTaskId = `monthly_activity_${activity.month}_reflection`;
-          if (taskId === expectedTaskId) {
-            promptText = activity.reflection || activity.journal_prompt || activity.curiosity_question || '';
-            // Use the full prompt as the title instead of generic "Monthly Activity"
+        // Check if this is a task completion note (e.g., task_taskId_notes)
+        else if (taskId.includes('task_') && taskId.includes('_notes')) {
+          // Try to find the task details from allTasks
+          const taskIdClean = taskId.replace('task_', '').replace('_notes', '');
+          const foundTask = allTasks?.find(task => task.id === taskIdClean);
+          if (foundTask) {
+            promptText = foundTask.reflection || foundTask.journal_prompt || foundTask.description || foundTask.title || '';
             if (promptText) {
-              entryTitle = `Leadership Reflection: "${promptText}"`;
+              entryTitle = `Task Reflection: "${promptText}"`;
             } else {
-              entryTitle = `Monthly Activity: ${activity.title}`;
+              entryTitle = `Task Completion: ${foundTask.title}`;
             }
-            break;
+          }
+        }
+        // Check if this is a monthly activity reflection (legacy format)
+        else if (taskId.includes('_reflection') && competencyData?.sub_competencies?.[subKey]?.monthly_activities) {
+          const monthlyActivities = competencyData.sub_competencies[subKey].monthly_activities;
+          
+          for (const activity of monthlyActivities) {
+            const expectedTaskId = `monthly_activity_${activity.month}_reflection`;
+            if (taskId === expectedTaskId) {
+              promptText = activity.reflection || activity.journal_prompt || activity.curiosity_question || '';
+              // Use the full prompt as the title instead of generic "Monthly Activity"
+              if (promptText) {
+                entryTitle = `Leadership Reflection: "${promptText}"`;
+              } else {
+                entryTitle = `Monthly Activity: ${activity.title}`;
+              }
+              break;
+            }
           }
         }
       }
