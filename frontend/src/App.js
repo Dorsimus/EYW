@@ -7493,18 +7493,6 @@ const AuthenticatedApp = () => {
             showErrorMessage={showErrorMessage}
           />
         )}
-
-        {currentView === 'culminating-projects' && !isAdminMode && (
-          <CulminatingProjectsView
-            user={localUser}
-            showSuccessMessage={showSuccessMessage}
-            showErrorMessage={showErrorMessage}
-            setCurrentView={setCurrentView}
-            flightbookAPIClient={flightbookAPIClient}
-            portfolio={portfolio}
-            setPortfolio={setPortfolio}
-          />
-        )}
         
         {currentView === 'flightbook' && !isAdminMode && (
           <LeadershipFlightbookView 
