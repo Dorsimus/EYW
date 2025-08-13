@@ -6924,7 +6924,34 @@ const AuthenticatedApp = () => {
         promptText = competencyData.curiosity_ignition.reflection_prompts[promptIndex] || '';
         entryTitle = promptText ? `Curiosity Reflection: "${promptText}"` : 'Curiosity Reflection';
       }
-      // Check if this is a monthly activity reflection
+      // Check if this is a phase activity (e.g., phase_1_activity_key_notes)
+      else if (taskId.includes('phase_') && taskId.includes('_notes') && competencyData?.sub_competencies?.[subKey]?.monthly_activities) {
+        // Extract phase number from taskId like "phase_1_activity_key_notes"
+        const phaseMatch = taskId.match(/phase_(\d+)_/);
+        if (phaseMatch) {
+          const phaseNumber = parseInt(phaseMatch[1]);
+          const monthlyActivities = competencyData.sub_competencies[subKey].monthly_activities;
+          
+          // Find the activity by month (phase number corresponds to month)
+          const activity = monthlyActivities.find(act => act.month === phaseNumber);
+          if (activity) {
+            promptText = activity.journal_prompt || activity.reflection || activity.curiosity_question || '';
+            // Use the full prompt as the title
+            if (promptText) {
+              entryTitle = `Leadership Reflection: "${promptText}"`;
+            } else {
+              entryTitle = `Monthly Activity: ${activity.title}`;
+            }
+          }
+        }
+      }
+      // Check if this is a task completion note (e.g., task_taskId_notes)
+      else if (taskId.includes('task_') && taskId.includes('_notes')) {
+        // For task completion notes, we might need to look up the task details
+        entryTitle = 'Task Completion Reflection';
+        promptText = 'Task completion notes and reflections';
+      }
+      // Check if this is a monthly activity reflection (legacy format)
       else if (taskId.includes('_reflection') && competencyData?.sub_competencies?.[subKey]?.monthly_activities) {
         const monthlyActivities = competencyData.sub_competencies[subKey].monthly_activities;
         
