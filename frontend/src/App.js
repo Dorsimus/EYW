@@ -6926,12 +6926,12 @@ const AuthenticatedApp = () => {
       }
       // Check if this is a monthly activity reflection
       else if (taskId.includes('_reflection') && competencyData?.sub_competencies?.[subKey]?.monthly_activities) {
-        const activityKey = taskId.replace('_reflection', '');
         const monthlyActivities = competencyData.sub_competencies[subKey].monthly_activities;
         
-        // Find the activity by searching through months
+        // Find the activity by matching the full taskId format: monthly_activity_${month}_reflection
         for (const activity of monthlyActivities) {
-          if (activity.id === activityKey) {
+          const expectedTaskId = `monthly_activity_${activity.month}_reflection`;
+          if (taskId === expectedTaskId) {
             promptText = activity.reflection || activity.journal_prompt || activity.curiosity_question || '';
             // Use the full prompt as the title instead of generic "Monthly Activity"
             if (promptText) {
