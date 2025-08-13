@@ -5819,7 +5819,7 @@ const AuthenticatedApp = () => {
       tags: ['core-values', 'personal-story', valueKey.replace('_', '-')]
     };
 
-    // Try to add to Flightbook via the production API first
+    // Try to add to Flightbook via the production API ONLY - no dual-path creation
     try {
       console.log('🌐 Attempting API call to flightbook...');
       const result = await flightbookAPIClient.createEntry(flightbookEntryData);
@@ -5827,14 +5827,15 @@ const AuthenticatedApp = () => {
         console.log('✅ Core Value story successfully added to Flightbook via API:', coreValueTitle);
         showSuccessMessage(`Core Value story "${coreValueTitle}" added to your Flightbook!`);
       } else {
-        console.log('⚠️ API failed, using localStorage fallback for Flightbook entry');
-        // Fall back to localStorage if API fails
-        addToFlightbookLocalStorage(flightbookEntryData, coreValueTitle);
+        console.log('⚠️ API call failed, but not using localStorage to prevent duplicates');
       }
     } catch (error) {
-      console.log('⚠️ Authentication error, using localStorage fallback for Flightbook entry:', error.message);
-      // Fall back to localStorage if authentication fails (demo mode)
-      addToFlightbookLocalStorage(flightbookEntryData, coreValueTitle);
+      console.log('⚠️ Authentication error, checking if we should use localStorage fallback:', error.message);
+      // Only fall back to localStorage in confirmed demo mode to prevent duplicates
+      if (error.message.includes('No active session') || error.message.includes('Authentication required')) {
+        console.log('⚠️ Using localStorage fallback for Core Value entry in demo mode');
+        addToFlightbookLocalStorage(flightbookEntryData, coreValueTitle);
+      }
     }
     
     // Reset form
