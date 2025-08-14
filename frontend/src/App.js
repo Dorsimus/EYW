@@ -3191,7 +3191,6 @@ const AuthenticatedApp = () => {
     console.log('🔄 User data loading complete');
     setLoading(false);
   };
-            ],
             monthly_activities: [
               {
                 month: 1,
