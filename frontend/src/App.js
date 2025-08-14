@@ -3277,19 +3277,7 @@ const AuthenticatedApp = () => {
     }
   };
 
-  const loadUserData = async (userId, refinedCompetencies = null) => {
-                in_flow_activity: "Develop systems for addressing small issues before they become difficult conversations",
-                document_section: {
-                  title: "Prevention Systems in Action",
-                  description: "Systems you've created to prevent conflicts",
-                  portfolio_integration: true
-                },
-                operational_integration: "Build conflict prevention into regular management practices",
-                curiosity_question: "How can I create such open communication that difficult conversations become rare because issues get addressed early?"
-              }
-            ],
-            competency_gate: "Successfully navigate challenging conversation + Demonstrate relationship strengthening"
-          },
+
           building_collaborative_culture: {
             name: "Building Collaborative Team Culture",
             description: "How do I create a team environment where collaboration feels natural, not forced?",
