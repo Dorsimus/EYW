@@ -3071,8 +3071,7 @@ const AuthenticatedApp = () => {
     }
   };
 
-  // Function to save user progress to backend
-            foundation_courses: [
+  const saveUserProgressToBackend = async (progressData) => {
               {
                 id: "leadership_supervision_inspiring_team_motivation_course_0",
                 title: "Being a Team Player",
