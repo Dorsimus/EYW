@@ -3183,7 +3183,26 @@ const AuthenticatedApp = () => {
 
     try {
       const token = await getToken();
-            name: "Inspiring Team Motivation & Engagement",
+      if (!token) {
+        console.log('No auth token available, skipping backend save');
+        return false;
+      }
+
+      const headers = { 
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+      
+      const config = {
+        headers,
+        timeout: 10000 // 10 second timeout
+      };
+
+      // Save competency progress data
+      if (progressData.competencies) {
+        console.log('💾 Saving competency progress to backend...');
+        // The backend expects this to be updated through task completions
+        // We'll save to localStorage for now and sync on next load
             description: "What makes someone excited to come to work for you specifically?",
             duration: "3-4 months",
             weekly_time: "~15 minutes",
