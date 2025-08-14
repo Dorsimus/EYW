@@ -3174,9 +3174,7 @@ const AuthenticatedApp = () => {
     }
   };
 
-
-
-        curiosity_ignition: {
+  // Function to save user progress to backend
           title: "Leadership Curiosity Assessment",
           description: "Before diving in, spark curiosity about your leadership journey",
           time_required: "5 minutes of thinking",
