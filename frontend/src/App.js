@@ -3232,12 +3232,8 @@ const AuthenticatedApp = () => {
       return false;
     }
   };
-            duration: "3-4 months",
-            weekly_time: "~15 minutes",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 4,
-            core_learning_question: "What makes someone excited to come to work for me specifically?",
+
+  const setupRefinedCompetencies = async () => {
             foundation_courses: [
               {
                 id: "leadership_supervision_inspiring_team_motivation_course_0",
