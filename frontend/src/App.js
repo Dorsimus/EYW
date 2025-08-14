@@ -3174,8 +3174,7 @@ const AuthenticatedApp = () => {
     }
   };
 
-  const setupRefinedCompetencies = async () => {
-          description: "Before diving in, spark curiosity about your leadership journey",
+  // Function to save user progress to backend
           time_required: "5 minutes of thinking",
           reflection_prompts: [
             "What's one leadership moment from this week that I keep thinking about?",
