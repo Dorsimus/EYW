@@ -557,8 +557,20 @@ const AuthenticatedApp = () => {
       localStorage.setItem('user', JSON.stringify(userData));
       
       // Set demo competencies with PROPER structure matching what UI expects
-      setCompetencies({
-      leadership_supervision: {
+      // Initialize with basic competency structure - actual data loaded by setupRefinedCompetencies
+      setCompetencies({});
+      
+      console.log('✅ Demo user setup complete - competencies will be loaded by setupRefinedCompetencies');
+      
+    } catch (error) {
+      console.error('Error setting up demo user:', error);
+    }
+  };
+
+  const initializeUser = async (userData) => {
+    try {
+      console.log('Initializing user with data:', userData);
+      console.log('Setting loading to true');
         name: "Leadership & Supervision",
         description: "Leadership Isn't a Title, It's How You Show Up Every Day",
         philosophy: "The Navigator Leadership & Supervision development transforms department supervisors into inspiring people leaders through their daily work. Every task builds real leadership skills while creating tangible value for residents and the property. This is learning in action, not learning in addition.",
