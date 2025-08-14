@@ -3279,19 +3279,7 @@ const AuthenticatedApp = () => {
 
 
 
-            monthly_activities: [
-              {
-                month: 1,
-                title: "Culture Assessment & Vision",
-                in_flow_activity: "Observe current team dynamics and involve team in envisioning ideal collaborative culture",
-                document_section: {
-                  title: "Team Culture Vision",
-                  description: "Current state and collaborative vision for your team",
-                  portfolio_integration: true
-                },
-                strategic_integration: "Connect team culture to department and property goals",
-                journal_prompt: "What does great collaboration look like in our specific work environment? What cultural shifts would make the biggest difference?"
-              },
+  const loadUserData = async (userId, refinedCompetencies = null) => {
               {
                 month: 2,
                 title: "Collaboration Catalyst Activities",
