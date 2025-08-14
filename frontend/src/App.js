@@ -3278,7 +3278,6 @@ const AuthenticatedApp = () => {
   };
 
   const loadUserData = async (userId, refinedCompetencies = null) => {
-                document_section: {
                   title: "Relationship Impact Results",
                   description: "How focusing on relationships changed conversation outcomes",
                   portfolio_integration: true
