@@ -1243,7 +1243,10 @@ async def complete_task_new(
 # Admin Task Management Routes
 @api_router.post("/admin/tasks", response_model=Task)
 async def admin_create_task(task_data: TaskCreate, admin_user = Depends(require_admin)):
-    task = Task(**task_data.dict(), created_by=admin_user.get("sub", "admin"))
+    # FIX: Explicitly ensure all new tasks are active
+    task_dict = task_data.dict()
+    task_dict["active"] = True  # Explicit setting to prevent sync issues
+    task = Task(**task_dict, created_by=admin_user.get("sub", "admin"))
     await db.tasks.insert_one(task.dict())
     return task
 
