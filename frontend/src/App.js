@@ -3037,9 +3037,9 @@ const AuthenticatedApp = () => {
                 title: "Being a Team Player",
                 duration: "1 hour",
                 platform: "PerformanceHQ",
-                description: "Foundation of collaborative mindset",
+                description: "Foundation of collaborative mindset!!!!!",
                 link_type: "external",
-                url: "https://performancehq.com/team-player"
+                url: "https://www.gracehillvision.com/deep_linking/customer_deep_links?prefix=zG7kryILi&training_object_id=56"
               }
             ],
             monthly_activities: [
