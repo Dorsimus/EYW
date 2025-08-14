@@ -1273,7 +1273,9 @@ async def admin_delete_task(task_id: str, admin_user = Depends(require_admin)):
 
 @api_router.get("/admin/tasks")
 async def admin_get_all_tasks(admin_user = Depends(require_admin)):
-    tasks = await db.tasks.find().sort("created_at", -1).to_list(1000)
+    # FIX: Only return active tasks to match user view
+    # This ensures admin and user see the same dataset
+    tasks = await db.tasks.find({"active": True}).sort("created_at", -1).to_list(1000)
     return [serialize_doc(task) for task in tasks]
 
 @api_router.get("/admin/stats")
