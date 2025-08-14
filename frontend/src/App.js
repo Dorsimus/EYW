@@ -5265,17 +5265,9 @@ const AuthenticatedApp = () => {
         // Update main competencies state with backend data
         setCompetencies(baseCompetencies);
         
-        // Apply any converted task updates if available
-        if (Array.isArray(convertedTasks) && convertedTasks.length > 0) {
-          console.log('🔄 Applying converted task updates:', convertedTasks);
-          const updatedCompetencies = applyConvertedTaskUpdates(baseCompetencies, convertedTasks);
-          setCompetencies(updatedCompetencies);
-          baseCompetencies = updatedCompetencies;
-        }
+        console.log('✅ Competency data loaded from backend successfully');
         
-        console.log('✅ Competency data merged successfully');
-        
-        // Save merged data to localStorage as cache
+        // Save backend data to localStorage as cache
         localStorage.setItem('competencies', JSON.stringify(baseCompetencies));
         console.log('💾 Competency data saved to localStorage');
       } else {
