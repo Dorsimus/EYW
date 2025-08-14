@@ -721,7 +721,7 @@ const AuthenticatedApp = () => {
               }
             ]
           },
-          building_collaborative_culture: {
+
             name: "Building Collaborative Team Culture",
             description: "How do we have high standards AND have fun together?",
             duration: "3-4 months",
