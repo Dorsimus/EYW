@@ -6,9 +6,15 @@ import { ClerkProvider } from '@clerk/clerk-react';
 
 const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
-if (!PUBLISHABLE_KEY) {
+// Check for demo mode to bypass Clerk key validation
+const isDemoMode = window.location.search.includes('demo=true');
+
+if (!PUBLISHABLE_KEY && !isDemoMode) {
   throw new Error("Missing Clerk Publishable Key");
 }
+
+// Use a placeholder key for demo mode
+const clerkKey = PUBLISHABLE_KEY || 'pk_test_demo_mode_placeholder';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
