@@ -3278,9 +3278,6 @@ const AuthenticatedApp = () => {
   };
 
   const loadUserData = async (userId, refinedCompetencies = null) => {
-              {
-                month: 2,
-                title: "Relationship-First Approach",
                 in_flow_activity: "Focus on strengthening relationships before, during, and after difficult conversations",
                 document_section: {
                   title: "Relationship Impact Results",
