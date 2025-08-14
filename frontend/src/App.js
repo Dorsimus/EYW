@@ -3175,19 +3175,7 @@ const AuthenticatedApp = () => {
   };
 
 
-    const refinedCompetencies = {
-      leadership_supervision: {
-        name: "Leadership & Supervision",
-        description: "Leadership Isn't a Title, It's How You Show Up Every Day",
-        philosophy: "The Navigator Leadership & Supervision development transforms department supervisors into inspiring people leaders through their daily work. Every task builds real leadership skills while creating tangible value for residents and the property. This is learning in action, not learning in addition.",
-        time_commitment: "~12 minutes per week + natural work integration",
-        duration: "12-15 months (competency-based progression)",
-        focus: "Curiosity-driven leadership development through authentic work experiences",
-        overall_progress: 0,
-        completion_percentage: 0,
-        completed_tasks: 0,
-        total_tasks: 16,
-        competency_area: "leadership_supervision",
+
         curiosity_ignition: {
           title: "Leadership Curiosity Assessment",
           description: "Before diving in, spark curiosity about your leadership journey",
