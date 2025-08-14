@@ -3069,6 +3069,29 @@ const AuthenticatedApp = () => {
   };
 
   // Enhanced auto-save function that preserves user work
+  const autoSaveUserProgress = () => {
+    const progressData = {
+      competencies: competencies,
+      portfolio: portfolio,
+      flightbook: JSON.parse(localStorage.getItem('flightbook_entries') || '[]'),
+      taskProgress: competencyTaskProgress,
+      coreValues: coreValueEntries,
+      timestamp: new Date().toISOString()
+    };
+
+    // Save to localStorage immediately
+    localStorage.setItem('user_progress_autosave', JSON.stringify(progressData));
+    
+    console.log('✅ Auto-save completed to localStorage');
+  };
+
+  // Auto-save every 30 seconds
+  useEffect(() => {
+    const autoSaveInterval = setInterval(autoSaveUserProgress, 30000);
+    return () => clearInterval(autoSaveInterval);
+  }, [competencies, portfolio, competencyTaskProgress, coreValueEntries]);
+
+  const loadUserData = async (userId, refinedCompetencies = null) => {
               {
                 title: "Conflict Resolution (Supervisor Version)",
                 duration: "2 hours",
