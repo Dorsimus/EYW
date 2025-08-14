@@ -3174,8 +3174,7 @@ const AuthenticatedApp = () => {
     }
   };
 
-  // Setup refined competencies function
-  const setupRefinedCompetencies = () => {
+
     const refinedCompetencies = {
       leadership_supervision: {
         name: "Leadership & Supervision",
