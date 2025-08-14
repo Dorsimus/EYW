@@ -3176,13 +3176,10 @@ const AuthenticatedApp = () => {
 
   // Function to save user progress to backend
   const saveUserProgressToBackend = async (progressData) => {
-          reflection_prompts: [
-            "What's one leadership moment from this week that I keep thinking about?",
-            "If I could ask any great leader three questions, what would they be?",
-            "What does leadership look like when no one's watching?",
-            "How do I want people to feel after working with me?"
-          ],
-          setup_requirement: "Create a simple place to capture leadership observations, questions, and 'aha moments' throughout the program."
+    if (!localUser?.id) {
+      console.warn('No user ID available for saving progress');
+      return false;
+    }
         },
         sub_competencies: {
           inspiring_team_motivation: {
