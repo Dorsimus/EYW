@@ -3180,9 +3180,9 @@ const AuthenticatedApp = () => {
       console.warn('No user ID available for saving progress');
       return false;
     }
-        },
-        sub_competencies: {
-          inspiring_team_motivation: {
+
+    try {
+      const token = await getToken();
             name: "Inspiring Team Motivation & Engagement",
             description: "What makes someone excited to come to work for you specifically?",
             duration: "3-4 months",
