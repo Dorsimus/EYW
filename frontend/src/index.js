@@ -18,9 +18,6 @@ const clerkKey = PUBLISHABLE_KEY || 'pk_test_demo_mode_placeholder';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-// Check for demo mode to bypass Clerk entirely
-const isDemoMode = window.location.search.includes('demo=true');
-
 if (isDemoMode) {
   console.log('🎮 DEMO MODE: Bypassing Clerk entirely');
   root.render(
