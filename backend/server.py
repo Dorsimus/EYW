@@ -1278,6 +1278,30 @@ async def admin_get_all_tasks(admin_user = Depends(require_admin)):
     tasks = await db.tasks.find({"active": True}).sort("created_at", -1).to_list(1000)
     return [serialize_doc(task) for task in tasks]
 
+@api_router.get("/admin/debug/tasks")
+async def debug_task_states(admin_user = Depends(require_admin)):
+    """Debug endpoint to check task states and identify sync issues"""
+    all_tasks = await db.tasks.find().to_list(1000)
+    active_tasks = await db.tasks.find({"active": True}).to_list(1000)
+    
+    return {
+        "message": "Task state analysis for debugging admin/user sync issues",
+        "total_tasks": len(all_tasks),
+        "active_tasks": len(active_tasks),
+        "inactive_tasks": len(all_tasks) - len(active_tasks),
+        "recent_tasks": [
+            {
+                "id": task.get("id"),
+                "title": task.get("title", "")[:50] + "..." if len(task.get("title", "")) > 50 else task.get("title", ""),
+                "active": task.get("active"),
+                "created_at": str(task.get("created_at", "")),
+                "competency_area": task.get("competency_area", ""),
+                "sub_competency": task.get("sub_competency", "")
+            }
+            for task in sorted(all_tasks, key=lambda x: x.get("created_at", ""), reverse=True)[:10]
+        ]
+    }
+
 @api_router.get("/admin/stats")
 async def admin_get_stats(admin_user = Depends(require_admin)):
     # Get total counts
