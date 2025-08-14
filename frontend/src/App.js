@@ -3071,7 +3071,7 @@ const AuthenticatedApp = () => {
     }
   };
 
-  const setupRefinedCompetencies = async () => {
+  // Function to save user progress to backend
             foundation_courses: [
               {
                 id: "leadership_supervision_inspiring_team_motivation_course_0",
