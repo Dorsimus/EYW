@@ -2989,14 +2989,130 @@ const AuthenticatedApp = () => {
   };
 
   const setupRefinedCompetencies = async () => {
-    // Set up the refined local competency structure
-    const refinedCompetencies = {
-      core_values: {
-        name: "Core Values", 
-        description: "Living Our Values Through Personal Stories",
-        philosophy: "Our core values come alive through the stories we tell and the experiences we share. This section captures your personal moments of living these values in action.",
-        focus: "Personal stories and experiences demonstrating core values"
-      },
+    console.log('📚 ARCHITECTURAL FIX: Loading competencies from backend API instead of hardcoded data');
+    
+    try {
+      // UNIFIED DATA SOURCE: Load all competency data from backend API
+      const competenciesResponse = await axios.get(`${API}/competencies`, {
+        timeout: 15000,
+        validateStatus: (status) => status < 500
+      });
+      
+      if (competenciesResponse.status === 200 && competenciesResponse.data) {
+        console.log('✅ Successfully loaded competencies from backend API');
+        const backendCompetencies = competenciesResponse.data;
+        
+        // Ensure all competencies have required UI fields
+        const processedCompetencies = {};
+        
+        Object.keys(backendCompetencies).forEach(competencyKey => {
+          const competency = backendCompetencies[competencyKey];
+          
+          // Add default UI fields if missing
+          processedCompetencies[competencyKey] = {
+            ...competency,
+            overall_progress: competency.overall_progress || 0,
+            completion_percentage: competency.completion_percentage || 0,
+            completed_tasks: competency.completed_tasks || 0,
+            total_tasks: competency.total_tasks || 16,
+            competency_area: competencyKey
+          };
+          
+          // Process sub-competencies with default values
+          if (competency.sub_competencies) {
+            Object.keys(competency.sub_competencies).forEach(subKey => {
+              const subComp = competency.sub_competencies[subKey];
+              processedCompetencies[competencyKey].sub_competencies[subKey] = {
+                ...subComp,
+                progress_percentage: subComp.progress_percentage || 0,
+                completed_tasks: subComp.completed_tasks || 0,
+                total_tasks: subComp.total_tasks || 4
+              };
+            });
+          }
+        });
+        
+        console.log('✅ Processed competencies for UI compatibility');
+        return processedCompetencies;
+        
+      } else {
+        console.warn('⚠️ Backend competencies API returned invalid response:', competenciesResponse.status);
+        throw new Error('Invalid backend response');
+      }
+      
+    } catch (error) {
+      console.error('❌ Failed to load competencies from backend API:', error.message);
+      console.warn('⚠️ FALLBACK: This should only happen in development. Production must use backend API.');
+      
+      // EMERGENCY DEVELOPMENT FALLBACK ONLY
+      // This is a minimal structure to prevent app crashes during development
+      return {
+        leadership_supervision: {
+          name: "Leadership & Supervision",
+          description: "Leadership development through authentic work experiences",
+          philosophy: "Development Fallback - Backend API required for production",
+          overall_progress: 0,
+          completion_percentage: 0,
+          completed_tasks: 0,
+          total_tasks: 16,
+          competency_area: "leadership_supervision",
+          sub_competencies: {
+            inspiring_team_motivation: {
+              name: "Inspiring Team Motivation & Engagement",
+              description: "Backend API required for full content",
+              progress_percentage: 0,
+              completed_tasks: 0,
+              total_tasks: 4,
+              foundation_courses: [],
+              monthly_activities: [],
+              dive_deeper_resources: []
+            }
+          }
+        },
+        // Add other minimal competency structures as needed
+        financial_management: {
+          name: "Financial Management",
+          description: "Backend API required for content",
+          overall_progress: 0,
+          completion_percentage: 0,
+          completed_tasks: 0,
+          total_tasks: 16,
+          competency_area: "financial_management",
+          sub_competencies: {}
+        },
+        operational_management: {
+          name: "Operational Management", 
+          description: "Backend API required for content",
+          overall_progress: 0,
+          completion_percentage: 0,
+          completed_tasks: 0,
+          total_tasks: 16,
+          competency_area: "operational_management",
+          sub_competencies: {}
+        },
+        cross_functional_collaboration: {
+          name: "Cross-Functional Collaboration",
+          description: "Backend API required for content", 
+          overall_progress: 0,
+          completion_percentage: 0,
+          completed_tasks: 0,
+          total_tasks: 16,
+          competency_area: "cross_functional_collaboration",
+          sub_competencies: {}
+        },
+        strategic_thinking: {
+          name: "Strategic Thinking",
+          description: "Backend API required for content",
+          overall_progress: 0, 
+          completion_percentage: 0,
+          completed_tasks: 0,
+          total_tasks: 16,
+          competency_area: "strategic_thinking",
+          sub_competencies: {}
+        }
+      };
+    }
+  };
       leadership_supervision: {
         name: "Leadership & Supervision",
         description: "Leadership Isn't a Title, It's How You Show Up Every Day",
