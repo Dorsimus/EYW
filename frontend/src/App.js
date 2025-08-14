@@ -3309,9 +3309,9 @@ const AuthenticatedApp = () => {
     setLoading(false);
   };
 
-  // STEP 2: Create loadCompetenciesFromAPI() function (NEW - Parallel to existing hardcoded setup)
+  // STEP 2 + STEP 4: Create loadCompetenciesFromAPI() function with Foundation Courses Migration
   const loadCompetenciesFromAPI = async () => {
-    console.log('🔧 STEP 2: Creating loadCompetenciesFromAPI() function for backend data processing');
+    console.log('🔧 STEP 2 + STEP 4: loadCompetenciesFromAPI() with Foundation Courses Migration');
     
     try {
       // Call backend API to get competencies
@@ -3322,15 +3322,15 @@ const AuthenticatedApp = () => {
       });
       
       if (response.status === 200 && response.data) {
-        console.log('✅ STEP 2: Successfully loaded competencies from API');
+        console.log('✅ STEP 4: Successfully loaded competencies from API for Foundation Courses migration');
         console.log('📊 API Response contains:', Object.keys(response.data).length, 'competency areas');
         
-        // Process the backend data to ensure UI compatibility
+        // STEP 4: Process the backend data with SELECTIVE MIGRATION - Foundation Courses Only
         const processedCompetencies = {};
         
         Object.keys(response.data).forEach(competencyKey => {
           const competency = response.data[competencyKey];
-          console.log(`🔧 Processing competency: ${competencyKey}`);
+          console.log(`🔧 STEP 4: Processing competency: ${competencyKey} for foundation courses migration`);
           
           // Ensure all required UI fields are present
           processedCompetencies[competencyKey] = {
@@ -3344,54 +3344,103 @@ const AuthenticatedApp = () => {
             sub_competencies: competency.sub_competencies || {}
           };
           
-          // Process sub-competencies if they exist
+          // STEP 4 CORE IMPLEMENTATION: Process sub-competencies with Foundation Courses migration
           if (competency.sub_competencies) {
             Object.keys(competency.sub_competencies).forEach(subKey => {
               const subComp = competency.sub_competencies[subKey];
+              
+              // STEP 4: SELECTIVE MIGRATION - Use API foundation_courses, keep hardcoded others
               processedCompetencies[competencyKey].sub_competencies[subKey] = {
                 ...subComp,
                 progress_percentage: subComp.progress_percentage || 0,
                 completed_tasks: subComp.completed_tasks || 0,
                 total_tasks: subComp.total_tasks || 4,
-                // Ensure required arrays exist
+                
+                // STEP 4 MIGRATION: Use foundation_courses from API (admin-updateable)
                 foundation_courses: subComp.foundation_courses || [],
-                monthly_activities: subComp.monthly_activities || [],
-                dive_deeper_resources: subComp.dive_deeper_resources || []
+                
+                // STEP 4 ISOLATION: Keep these hardcoded for safety (will migrate in Steps 5-6)
+                monthly_activities: getHardcodedMonthlyActivities(competencyKey, subKey) || [],
+                dive_deeper_resources: getHardcodedDiveDeeperResources(competencyKey, subKey) || []
               };
+              
+              // Log the selective migration
+              const foundationCoursesCount = subComp.foundation_courses?.length || 0;
+              console.log(`    📚 STEP 4: ${subKey} - foundation_courses: ${foundationCoursesCount} (from API), monthly_activities + dive_deeper: (hardcoded)`);
             });
           }
         });
         
-        console.log('✅ STEP 2: Data processing completed successfully');
-        console.log('📋 Processed competencies:', Object.keys(processedCompetencies));
+        console.log('✅ STEP 4: Foundation Courses selective migration completed successfully');
+        console.log('📋 Processed competencies with foundation courses from API:', Object.keys(processedCompetencies));
         
-        // Return processed data (but don't set it yet - Step 2 is parallel/testing only)
+        // Return processed data with Step 4 migration
         return {
           success: true,
           data: processedCompetencies,
-          source: 'backend_api',
+          source: 'step4_foundation_courses_api',
+          migration_status: 'foundation_courses_from_api_others_hardcoded',
           timestamp: new Date().toISOString()
         };
         
       } else {
-        console.warn('⚠️ STEP 2: Backend API returned invalid response:', response.status);
+        console.warn('⚠️ STEP 4: Backend API returned invalid response:', response.status);
         return {
           success: false,
           error: `Invalid response status: ${response.status}`,
-          source: 'backend_api',
+          source: 'step4_migration_failed',
           timestamp: new Date().toISOString()
         };
       }
       
     } catch (error) {
-      console.error('❌ STEP 2: Failed to load competencies from backend API:', error.message);
+      console.error('❌ STEP 4: Failed to load competencies from backend API:', error.message);
       return {
         success: false,
         error: error.message,
-        source: 'backend_api',
+        source: 'step4_api_error',
         timestamp: new Date().toISOString()
       };
     }
+  };
+
+  // STEP 4 HELPER: Get hardcoded monthly activities (temporary - will migrate in Step 6)
+  const getHardcodedMonthlyActivities = (competencyKey, subKey) => {
+    // Minimal hardcoded monthly activities structure for Step 4 isolation
+    const hardcodedActivities = {
+      leadership_supervision: {
+        inspiring_team_motivation: [
+          {
+            month: 1,
+            title: "Leadership Style Discovery",
+            in_the_flow_activity: "Practice understanding individual team member motivation styles",
+            document: "Leadership Style Notes",
+            reflection: "What motivates each team member differently?"
+          }
+        ]
+      }
+    };
+    
+    return hardcodedActivities[competencyKey]?.[subKey] || [];
+  };
+
+  // STEP 4 HELPER: Get hardcoded dive deeper resources (temporary - will migrate in Step 5)  
+  const getHardcodedDiveDeeperResources = (competencyKey, subKey) => {
+    // Minimal hardcoded dive deeper resources structure for Step 4 isolation
+    const hardcodedResources = {
+      leadership_supervision: {
+        inspiring_team_motivation: [
+          {
+            title: "The Five Languages of Appreciation in the Workplace",
+            type: "Book",
+            description: "Understanding different ways people feel valued at work",
+            url: "https://www.5lovelanguages.com/languages-of-appreciation/"
+          }
+        ]
+      }
+    };
+    
+    return hardcodedResources[competencyKey]?.[subKey] || [];
   };
 
 
