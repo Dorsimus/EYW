@@ -17,33 +17,46 @@ if (!PUBLISHABLE_KEY && !isDemoMode) {
 const clerkKey = PUBLISHABLE_KEY || 'pk_test_demo_mode_placeholder';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <ClerkProvider 
-      publishableKey={clerkKey} 
-      afterSignOutUrl="/"
-      appearance={{
-        elements: {
-          card: "shadow-lg",
-          headerTitle: "text-2xl font-bold text-red-600",
-          headerSubtitle: "text-gray-600",
-          socialButtonsBlockButton: "border border-gray-300 hover:border-gray-400",
-          formButtonPrimary: "bg-red-600 hover:bg-red-700 text-white",
-          footerActionLink: "text-red-600 hover:text-red-700",
-          logoBox: "mx-auto mb-6",
-          logoImage: "w-16 h-16"
-        },
-        layout: {
-          logoImageUrl: "https://customer-assets.emergentagent.com/job_earnyourwings/artifacts/ybtb01sj_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png"
-        },
-        variables: {
-          colorPrimary: "#d21217",
-          colorText: "#374151",
-          colorTextSecondary: "#6b7280"
-        }
-      }}
-    >
+
+// Check for demo mode to bypass Clerk entirely
+const isDemoMode = window.location.search.includes('demo=true');
+
+if (isDemoMode) {
+  console.log('🎮 DEMO MODE: Bypassing Clerk entirely');
+  root.render(
+    <React.StrictMode>
       <ClerkApp />
-    </ClerkProvider>
-  </React.StrictMode>
-);
+    </React.StrictMode>
+  );
+} else {
+  root.render(
+    <React.StrictMode>
+      <ClerkProvider 
+        publishableKey={clerkKey} 
+        afterSignOutUrl="/"
+        appearance={{
+          elements: {
+            card: "shadow-lg",
+            headerTitle: "text-2xl font-bold text-red-600",
+            headerSubtitle: "text-gray-600",
+            socialButtonsBlockButton: "border border-gray-300 hover:border-gray-400",
+            formButtonPrimary: "bg-red-600 hover:bg-red-700 text-white",
+            footerActionLink: "text-red-600 hover:text-red-700",
+            logoBox: "mx-auto mb-6",
+            logoImage: "w-16 h-16"
+          },
+          layout: {
+            logoImageUrl: "https://customer-assets.emergentagent.com/job_earnyourwings/artifacts/ybtb01sj_20250723_1404_Winged%20Emblem_remix_01k0we1tpnettvcv336sfsv4p1.png"
+          },
+          variables: {
+            colorPrimary: "#d21217",
+            colorText: "#374151",
+            colorTextSecondary: "#6b7280"
+          }
+        }}
+      >
+        <ClerkApp />
+      </ClerkProvider>
+    </React.StrictMode>
+  );
+}
