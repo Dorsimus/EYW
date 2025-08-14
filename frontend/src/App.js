@@ -720,16 +720,8 @@ const AuthenticatedApp = () => {
                 url: "https://www.cnvc.org/"
               }
             ]
-          },
-
-            name: "Building Collaborative Team Culture",
-            description: "How do we have high standards AND have fun together?",
-            duration: "3-4 months",
-            weekly_time: "~15 minutes",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 4,
-            core_learning_question: "How do we have high standards AND have fun together?",
+          }
+        },
             foundation_courses: [
               {
                 id: "ls-new-fc-04",
