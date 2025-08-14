@@ -3191,19 +3191,93 @@ const AuthenticatedApp = () => {
     console.log('🔄 User data loading complete');
     setLoading(false);
   };
-            monthly_activities: [
-              {
-                month: 1,
-                title: "Conversation Courage Building",
-                in_flow_activity: "Practice having one 'slightly difficult' conversation each week with increasing confidence",
-                document_section: {
-                  title: "Difficult Conversation Practice Log",
-                  description: "Conversations you've had and what you learned",
-                  portfolio_integration: true
-                },
-                leadership_integration: "Apply conversation skills to daily interactions",
-                journal_prompt: "What makes difficult conversations easier for me? How has my confidence in addressing issues changed?"
-              },
+
+  // STEP 2: Create loadCompetenciesFromAPI() function (NEW - Parallel to existing hardcoded setup)
+  const loadCompetenciesFromAPI = async () => {
+    console.log('🔧 STEP 2: Creating loadCompetenciesFromAPI() function for backend data processing');
+    
+    try {
+      // Call backend API to get competencies
+      console.log('📡 Calling backend /api/competencies endpoint...');
+      const response = await axios.get(`${API}/competencies`, {
+        timeout: 15000,
+        validateStatus: (status) => status < 500
+      });
+      
+      if (response.status === 200 && response.data) {
+        console.log('✅ STEP 2: Successfully loaded competencies from API');
+        console.log('📊 API Response contains:', Object.keys(response.data).length, 'competency areas');
+        
+        // Process the backend data to ensure UI compatibility
+        const processedCompetencies = {};
+        
+        Object.keys(response.data).forEach(competencyKey => {
+          const competency = response.data[competencyKey];
+          console.log(`🔧 Processing competency: ${competencyKey}`);
+          
+          // Ensure all required UI fields are present
+          processedCompetencies[competencyKey] = {
+            ...competency,
+            overall_progress: competency.overall_progress || 0,
+            completion_percentage: competency.completion_percentage || 0,
+            completed_tasks: competency.completed_tasks || 0,
+            total_tasks: competency.total_tasks || 16,
+            competency_area: competencyKey,
+            // Ensure sub_competencies exist
+            sub_competencies: competency.sub_competencies || {}
+          };
+          
+          // Process sub-competencies if they exist
+          if (competency.sub_competencies) {
+            Object.keys(competency.sub_competencies).forEach(subKey => {
+              const subComp = competency.sub_competencies[subKey];
+              processedCompetencies[competencyKey].sub_competencies[subKey] = {
+                ...subComp,
+                progress_percentage: subComp.progress_percentage || 0,
+                completed_tasks: subComp.completed_tasks || 0,
+                total_tasks: subComp.total_tasks || 4,
+                // Ensure required arrays exist
+                foundation_courses: subComp.foundation_courses || [],
+                monthly_activities: subComp.monthly_activities || [],
+                dive_deeper_resources: subComp.dive_deeper_resources || []
+              };
+            });
+          }
+        });
+        
+        console.log('✅ STEP 2: Data processing completed successfully');
+        console.log('📋 Processed competencies:', Object.keys(processedCompetencies));
+        
+        // Return processed data (but don't set it yet - Step 2 is parallel/testing only)
+        return {
+          success: true,
+          data: processedCompetencies,
+          source: 'backend_api',
+          timestamp: new Date().toISOString()
+        };
+        
+      } else {
+        console.warn('⚠️ STEP 2: Backend API returned invalid response:', response.status);
+        return {
+          success: false,
+          error: `Invalid response status: ${response.status}`,
+          source: 'backend_api',
+          timestamp: new Date().toISOString()
+        };
+      }
+      
+    } catch (error) {
+      console.error('❌ STEP 2: Failed to load competencies from backend API:', error.message);
+      return {
+        success: false,
+        error: error.message,
+        source: 'backend_api',
+        timestamp: new Date().toISOString()
+      };
+    }
+  };
+
+  const loadUserData = async (userId, refinedCompetencies = null) => {
               {
                 month: 2,
                 title: "Relationship-First Approach",
