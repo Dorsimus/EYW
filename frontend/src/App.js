@@ -542,7 +542,8 @@ const AuthenticatedApp = () => {
       console.log('Admin state restored from existing token');
     } else {
       // Regular user demo data
-      const userData = {
+      try {
+        const userData = {
         id: "demo-user-123",
         email: "demo@earnwings.com", 
         name: "Demo Navigator",
