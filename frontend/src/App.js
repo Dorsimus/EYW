@@ -3276,15 +3276,8 @@ const AuthenticatedApp = () => {
       };
     }
   };
-                  description: "How focusing on relationships changed conversation outcomes",
-                  portfolio_integration: true
-                },
-                cross_functional_integration: "Practice difficult conversations across departments",
-                journal_prompt: "How does leading with relationship care change the dynamic of difficult conversations?"
-              },
-              {
-                month: 3,
-                title: "Proactive Problem Prevention",
+
+  const loadUserData = async (userId, refinedCompetencies = null) => {
                 in_flow_activity: "Develop systems for addressing small issues before they become difficult conversations",
                 document_section: {
                   title: "Prevention Systems in Action",
