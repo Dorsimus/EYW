@@ -3203,7 +3203,35 @@ const AuthenticatedApp = () => {
         console.log('💾 Saving competency progress to backend...');
         // The backend expects this to be updated through task completions
         // We'll save to localStorage for now and sync on next load
-            description: "What makes someone excited to come to work for you specifically?",
+        localStorage.setItem('user_competencies_pending', JSON.stringify(progressData.competencies));
+      }
+
+      // Save portfolio updates
+      if (progressData.portfolio) {
+        console.log('💾 Saving portfolio updates to backend...');
+        localStorage.setItem('user_portfolio_pending', JSON.stringify(progressData.portfolio));
+      }
+
+      // Save flightbook entries 
+      if (progressData.flightbook) {
+        console.log('💾 Saving flightbook entries to localStorage...');
+        localStorage.setItem('flightbook_entries', JSON.stringify(progressData.flightbook));
+      }
+
+      console.log('✅ User progress saved successfully');
+      return true;
+    } catch (error) {
+      console.error('❌ Error saving user progress:', error);
+      // Still save to localStorage even if backend fails
+      if (progressData.competencies) {
+        localStorage.setItem('user_competencies_local', JSON.stringify(progressData.competencies));
+      }
+      if (progressData.portfolio) {
+        localStorage.setItem('user_portfolio_local', JSON.stringify(progressData.portfolio));
+      }
+      return false;
+    }
+  };
             duration: "3-4 months",
             weekly_time: "~15 minutes",
             progress_percentage: 0,
