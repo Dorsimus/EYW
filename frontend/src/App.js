@@ -3068,16 +3068,7 @@ const AuthenticatedApp = () => {
     }
   };
 
-          mastering_difficult_conversations: {
-            name: "Mastering Difficult Conversations",
-            description: "How do I turn the conversations I dread into opportunities for stronger relationships?",
-            duration: "3-4 months",
-            weekly_time: "~15 minutes",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 4,
-            core_learning_question: "How do I turn the conversations I dread into opportunities for stronger relationships?",
-            foundation_courses: [
+  // Enhanced auto-save function that preserves user work
               {
                 title: "Conflict Resolution (Supervisor Version)",
                 duration: "2 hours",
