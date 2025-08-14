@@ -5247,8 +5247,57 @@ const AuthenticatedApp = () => {
   const loadUserData = async (userId, refinedCompetencies = null) => {
     console.log(`🔄 Loading user data for ID: ${userId}`);
     
-    // Use provided refined competencies or current state as fallback
-    const baseCompetencies = refinedCompetencies || competencies;
+    // ARCHITECTURAL FIX: Always load competencies from backend API to ensure admin-user sync
+    let baseCompetencies = null;
+    
+    try {
+      // Always try to load competencies from backend first
+      console.log('📚 Loading competencies from backend API for user sync...');
+      const competenciesResponse = await axios.get(`${API}/users/${userId}/competencies`, {
+        timeout: 10000,
+        validateStatus: (status) => status < 500
+      });
+      
+      if (competenciesResponse.status === 200 && competenciesResponse.data) {
+        console.log('✅ Successfully loaded backend competency data');
+        baseCompetencies = competenciesResponse.data;
+        
+        // Update main competencies state with backend data
+        setCompetencies(baseCompetencies);
+        
+        // Apply any converted task updates if available
+        if (Array.isArray(convertedTasks) && convertedTasks.length > 0) {
+          console.log('🔄 Applying converted task updates:', convertedTasks);
+          const updatedCompetencies = applyConvertedTaskUpdates(baseCompetencies, convertedTasks);
+          setCompetencies(updatedCompetencies);
+          baseCompetencies = updatedCompetencies;
+        }
+        
+        console.log('✅ Competency data merged successfully');
+        
+        // Save merged data to localStorage as cache
+        localStorage.setItem('competencies', JSON.stringify(baseCompetencies));
+        console.log('💾 Competency data saved to localStorage');
+      } else {
+        console.warn('⚠️ Backend competencies not available, trying fallback...');
+        throw new Error('Backend competencies not available');
+      }
+    } catch (competenciesError) {
+      console.warn('⚠️ Failed to load competencies from backend, using fallback:', competenciesError.message);
+      
+      // Fallback hierarchy: 1) Provided competencies, 2) Current state, 3) Setup hardcoded
+      if (refinedCompetencies) {
+        console.log('📋 Using provided refined competencies as fallback');
+        baseCompetencies = refinedCompetencies;
+      } else if (competencies && Object.keys(competencies).length > 0) {
+        console.log('📋 Using current competencies state as fallback');
+        baseCompetencies = competencies;
+      } else {
+        console.warn('⚠️ No competencies available, setting up hardcoded competencies (should only happen in development)');
+        baseCompetencies = await setupRefinedCompetencies();
+        setCompetencies(baseCompetencies);
+      }
+    }
     
     try {
       // Add timeout and error handling for API calls
