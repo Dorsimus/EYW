@@ -2988,6 +2988,123 @@ const AuthenticatedApp = () => {
     }
   };
 
+  // STEP 3: Add Toggle Switch - setupRefinedCompetencies with API/Hardcoded Toggle
+  const setupRefinedCompetencies = async () => {
+    console.log('🔧 STEP 3: setupRefinedCompetencies with toggle functionality');
+    
+    // Check environment variable for toggle setting
+    const useApiCompetencies = process.env.REACT_APP_USE_API_COMPETENCIES === 'true';
+    console.log(`🎛️ STEP 3: USE_API_COMPETENCIES = ${useApiCompetencies}`);
+    
+    if (useApiCompetencies) {
+      console.log('📡 STEP 3: Using API-loaded competencies (NEW MODE)');
+      
+      // Try to use the new loadCompetenciesFromAPI function
+      const apiResult = await loadCompetenciesFromAPI();
+      
+      if (apiResult.success) {
+        console.log('✅ STEP 3: Successfully loaded competencies from API');
+        setCompetencies(apiResult.data);
+        return apiResult.data;
+      } else {
+        console.warn('⚠️ STEP 3: API loading failed, falling back to hardcoded data');
+        console.warn('API Error:', apiResult.error);
+        // Fall through to hardcoded fallback
+      }
+    } else {
+      console.log('💾 STEP 3: Using hardcoded competencies (ORIGINAL MODE)');
+    }
+    
+    // Hardcoded fallback (original functionality)
+    console.log('📚 STEP 3: Loading hardcoded competency structure as fallback');
+    
+    // UNIFIED DATA SOURCE: Load all competency data from backend API
+    try {
+      console.log('📡 Attempting to fetch competencies from backend API...');
+      const competenciesResponse = await axios.get(`${API}/competencies`, {
+        headers: authToken ? { Authorization: `Bearer ${authToken}` } : {},
+        timeout: 10000,
+        validateStatus: (status) => status < 500
+      });
+      
+      if (competenciesResponse.status === 200 && competenciesResponse.data) {
+        console.log('✅ Successfully loaded competencies from backend API');
+        
+        // STEP 1 AUDIT: Detailed analysis of backend API response
+        const backendCompetencies = competenciesResponse.data;
+        console.log('🔍 STEP 1 AUDIT: Backend API Response Structure Analysis');
+        console.log('📊 Total competency areas found:', Object.keys(backendCompetencies).length);
+        console.log('📋 Competency area keys:', Object.keys(backendCompetencies));
+        
+        // Audit each competency area for detailed content
+        Object.keys(backendCompetencies).forEach(competencyKey => {
+          const competency = backendCompetencies[competencyKey];
+          console.log(`🎯 AUDITING: ${competencyKey}`);
+          console.log('  - Name:', competency.name);
+          console.log('  - Description:', competency.description);
+          console.log('  - Sub-competencies count:', competency.sub_competencies ? Object.keys(competency.sub_competencies).length : 0);
+          console.log('  - Sub-competency keys:', competency.sub_competencies ? Object.keys(competency.sub_competencies) : []);
+          
+          // Check for detailed content (foundation courses, monthly activities, dive deeper resources)
+          if (competency.sub_competencies) {
+            Object.keys(competency.sub_competencies).forEach(subKey => {
+              const subComp = competency.sub_competencies[subKey];
+              if (typeof subComp === 'object' && subComp.foundation_courses) {
+                console.log(`    📚 ${subKey}: foundation_courses (${subComp.foundation_courses?.length || 0})`);
+              }
+              if (typeof subComp === 'object' && subComp.monthly_activities) {
+                console.log(`    📅 ${subKey}: monthly_activities (${subComp.monthly_activities?.length || 0})`);
+              }
+              if (typeof subComp === 'object' && subComp.dive_deeper_resources) {
+                console.log(`    📖 ${subKey}: dive_deeper_resources (${subComp.dive_deeper_resources?.length || 0})`);
+              }
+            });
+          }
+        });
+        
+        console.log('✅ STEP 1 AUDIT COMPLETE: Backend API structure analyzed');
+        
+        setCompetencies(backendCompetencies);
+        return backendCompetencies;
+      } else {
+        console.warn('⚠️ Backend API returned invalid response, using hardcoded fallback');
+        throw new Error('Invalid backend response');
+      }
+      
+    } catch (error) {
+      console.error('❌ Failed to load competencies from backend, using hardcoded structure:', error.message);
+      console.warn('⚠️ Falling back to basic hardcoded competency structure for development');
+      
+      // Minimal hardcoded structure for fallback
+      const fallbackCompetencies = {
+        leadership_supervision: {
+          name: "Leadership & Supervision",
+          description: "Leading people and managing teams effectively",
+          competency_area: "leadership_supervision",
+          overall_progress: 0,
+          completion_percentage: 0,
+          completed_tasks: 0,
+          total_tasks: 16,
+          sub_competencies: {}
+        },
+        financial_management: {
+          name: "Financial Management & Business Acumen", 
+          description: "Understanding business impact and financial decisions",
+          competency_area: "financial_management",
+          overall_progress: 0,
+          completion_percentage: 0,
+          completed_tasks: 0,
+          total_tasks: 16,
+          sub_competencies: {}
+        }
+      };
+      
+      console.log('📚 Using minimal hardcoded fallback structure');
+      setCompetencies(fallbackCompetencies);
+      return fallbackCompetencies;
+    }
+  };
+
   // Function to save user progress to backend
   const saveUserProgress = async (userId, competencyData) => {
     try {
