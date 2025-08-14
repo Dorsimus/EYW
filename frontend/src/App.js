@@ -3175,7 +3175,7 @@ const AuthenticatedApp = () => {
   };
 
   // Function to save user progress to backend
-          time_required: "5 minutes of thinking",
+  const saveUserProgressToBackend = async (progressData) => {
           reflection_prompts: [
             "What's one leadership moment from this week that I keep thinking about?",
             "If I could ask any great leader three questions, what would they be?",
