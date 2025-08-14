@@ -3279,8 +3279,7 @@ const AuthenticatedApp = () => {
 
 
 
-  const loadUserData = async (userId, refinedCompetencies = null) => {
-              {
+
                 month: 2,
                 title: "Collaboration Catalyst Activities",
                 in_flow_activity: "Implement practices that naturally encourage team collaboration and mutual support",
