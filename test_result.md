@@ -383,7 +383,7 @@ user_problem_statement: "CRITICAL: Two data synchronization failures - 1) Admin 
 
 ## agent_communication:
 ##     - agent: "main"
-##     - message: "🚀 STARTING PHASE 1 STEP 2: CREATE NEW API FUNCTION (PARALLEL). Following the approved 10-step plan, now implementing Step 2: Create loadCompetenciesFromAPI() function alongside existing hardcoded function. STEP 2 GOAL: Create new function that calls backend, processes data, but doesn't replace anything yet - keeping existing functionality intact. SUCCESS CRITERIA: Function successfully loads and processes backend data with no impact on current app functionality. APPROACH: Will create parallel function that can be tested independently before any integration. Risk Level: LOW - No existing functionality affected. Will first resolve remaining parsing errors to enable testing, then implement the new API function."
+##     - message: "🚀 PHASE 1 STEP 3: ADD TOGGLE SWITCH - IMPLEMENTATION STARTED. Following the 10-step plan, now implementing Step 3: Add environment variable toggle between hardcoded vs API data. STEP 3 GOAL: Add USE_API_COMPETENCIES=true/false in .env file to safely switch between old hardcoded and new API data without breaking app functionality. SUCCESS CRITERIA: Can switch between old and new data sources seamlessly with fallback always available. APPROACH: Will add environment variable to frontend .env, create toggle logic in setupRefinedCompetencies function, and test both modes. Risk Level: LOW - Fallback to hardcoded data always available. This enables safe testing of Step 2 loadCompetenciesFromAPI function before full migration."
 
 backend:
   - task: "Comprehensive Admin Change Propagation System - Critical for Scaling"
