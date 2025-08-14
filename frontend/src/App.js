@@ -3111,6 +3111,9 @@ const AuthenticatedApp = () => {
           sub_competencies: {}
         }
       };
+      
+      setCompetencies(fallbackCompetencies);
+      return fallbackCompetencies;
     }
   };
       leadership_supervision: {
