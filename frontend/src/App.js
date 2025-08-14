@@ -3151,35 +3151,7 @@ const AuthenticatedApp = () => {
   };
 
   // Function to save user progress to backend
-  const saveUserProgress = async (userId, competencyData) => {
-    try {
-      const response = await fetch(`${API}/users/${userId}/progress`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(competencyData)
-      });
-      
-      if (response.ok) {
-        console.log('Progress saved successfully');
-        return true;
-      } else {
-        console.error('Failed to save progress');
-        return false;
-      }
-    } catch (error) {
-      console.error('Error saving progress:', error);
-      return false;
-    }
-  };
-
-  // Setup refined competencies function
-  const setupRefinedCompetencies = () => {
-    const refinedCompetencies = {
-      leadership_supervision: {
-        name: "Leadership & Supervision",
-        description: "Leadership Isn't a Title, It's How You Show Up Every Day",
+        philosophy: "The Navigator Leadership & Supervision development transforms department supervisors into inspiring people leaders through their daily work. Every task builds real leadership skills while creating tangible value for residents and the property. This is learning in action, not learning in addition.",
         time_commitment: "~12 minutes per week + natural work integration",
         duration: "12-15 months (competency-based progression)",
         focus: "Curiosity-driven leadership development through authentic work experiences",
