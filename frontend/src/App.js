@@ -3278,17 +3278,7 @@ const AuthenticatedApp = () => {
   };
 
 
-  const loadUserData = async (userId, refinedCompetencies = null) => {
-            foundation_courses: [
-              {
-                title: "Building a Team Culture",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Creating unified team environment",
-                link_type: "external",
-                url: "https://performancehq.com/team-culture"
-              }
-            ],
+
             monthly_activities: [
               {
                 month: 1,
