@@ -1854,21 +1854,33 @@ async def create_portfolio_item(
     return serialize_doc(portfolio_item.dict())
 
 @api_router.get("/users/{user_id}/portfolio")
-async def get_user_portfolio(user_id: str, visibility: Optional[str] = None):
-    """Get user's portfolio items with optional visibility filter"""
-    query = {"user_id": user_id, "status": "active"}
-    
-    if visibility:
-        query["visibility"] = visibility
-    
-    items = await db.portfolio_items.find(query).sort("upload_date", -1).to_list(1000)
-    
-    # Add file size formatting for display
-    for item in items:
-        if item.get("file_size"):
-            item["file_size_formatted"] = format_file_size(item["file_size"])
-    
-    return [serialize_doc(item) for item in items]
+async def get_user_portfolio(user_id: str, visibility: Optional[str] = None, current_user: dict = Depends(get_current_user)):
+    """Get user's portfolio items with optional visibility filter - enhanced with proper authorization"""
+    try:
+        # CRITICAL: Verify user can only access their own portfolio
+        if current_user.get("sub") != user_id:
+            logging.warning(f"Authorization denied: User {current_user.get('sub')} attempted to access portfolio for user {user_id}")
+            raise HTTPException(status_code=403, detail="Access denied: Cannot access other users' portfolio")
+        
+        logging.info(f"Fetching portfolio for user: {user_id}")
+        query = {"user_id": user_id, "status": "active"}
+        
+        if visibility:
+            query["visibility"] = visibility
+        
+        items = await db.portfolio_items.find(query).sort("upload_date", -1).to_list(1000)
+        
+        # Add file size formatting for display
+        for item in items:
+            if item.get("file_size"):
+                item["file_size_formatted"] = format_file_size(item["file_size"])
+        
+        return [serialize_doc(item) for item in items]
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error fetching portfolio for user {user_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 @api_router.delete("/users/{user_id}/portfolio/{item_id}")
 async def delete_portfolio_item(user_id: str, item_id: str):
