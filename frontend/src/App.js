@@ -590,7 +590,7 @@ const AuthenticatedApp = () => {
   const setupDemoUser = useCallback(() => {
     console.log('🎯 Setting up demo user...');
     
-    setUser({
+    setLocalUser({
       id: 'demo-user',
       username: 'Demo User',
       level: 'Navigator',
@@ -613,6 +613,7 @@ const AuthenticatedApp = () => {
     // FINAL OVERRIDE: Ensure dashboard view is set after all processing
     console.log('🔒 FINAL OVERRIDE: Setting dashboard view for all users');
     setCurrentView('dashboard');
+  }, []);
             foundation_courses: [
               {
                 id: "ls-new-fc-01",
