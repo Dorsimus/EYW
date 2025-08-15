@@ -1155,8 +1155,8 @@ const AuthenticatedApp = () => {
                 // STEP 5 MIGRATION: Use dive_deeper_resources from API (admin-updateable)
                 dive_deeper_resources: subComp.dive_deeper_resources || [],
                 
-                // STEP 5 ISOLATION: Keep monthly_activities hardcoded for safety (will migrate in Step 6)
-                monthly_activities: getHardcodedMonthlyActivities(competencyKey, subKey) || []
+                // STEP 6 MIGRATION: Use monthly_activities from API (admin-updateable) - COMPLETED!
+                monthly_activities: subComp.monthly_activities || []
               };
               
               // Log the progressive migration
