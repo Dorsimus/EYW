@@ -617,22 +617,7 @@ const AuthenticatedApp = () => {
 
   // Load tasks from competencies when admin is active and competencies are available
 
-              {
-                month: 2,
-                title: "Motivation in Action",
-                in_the_flow_activity: "Based on what you discovered in the Leadership Style Discovery, create an individualized motivational approach for each team member that you'll implement this month. Create a plan and document it below, along with your results.",
-                document: "Motivation Experiment Results (5 minutes weekly)",
-                integrations: ["Financial Integration: Track team performance metrics during motivation experiments", "Cross-Functional Integration: Share motivation successes with opposite department Navigator"],
-                journal_prompt: "What motivation experiments surprised me? What didn't work as expected?"
-              },
-              {
-                month: 3,
-                title: "Sustainable Motivation Systems",
-                in_the_flow_activity: "Create simple, sustainable motivational practices for your team. Use the Team Motivation Playbook to help you create a simple, one-page guide.",
-                document: "Team Motivation Playbook (one-page guide you actually use)",
-                integrations: ["Operational Integration: Connect motivation practices to daily operational routines"],
-                curiosity_question: "How can motivation become as natural as breathing in our daily work?"
-              }
+
             ],
             competency_gate: "Team members report higher engagement in brief surveys + Observable behavior changes in team dynamics",
             dive_deeper_resources: [
