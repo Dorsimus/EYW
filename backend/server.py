@@ -545,10 +545,82 @@ NAVIGATOR_COMPETENCIES = {
         "name": "Financial Management & Business Acumen",
         "description": "Every Decision Has a Dollar Impact - Make Them Count",
         "sub_competencies": {
-            "property_pl_understanding": "Property P&L Understanding",
-            "departmental_budget_management": "Departmental Budget Management",
-            "cost_conscious_decision_making": "Cost-Conscious Decision Making",
-            "financial_communication_business_understanding": "Financial Communication & Business Understanding"
+            "departmental_budget_management": {
+                "name": "Departmental Budget Management",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Budget Analysis Basics",
+                        "in_the_flow_activity": "Track daily departmental expenses and identify patterns",
+                        "document": "Budget Tracking Report",
+                        "reflection": "Where does our money actually go vs. where I thought it went?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Cost Control Implementation",
+                        "in_the_flow_activity": "Implement one cost-saving initiative based on budget analysis",
+                        "document": "Cost Savings Initiative Results",
+                        "journal_prompt": "What surprised me about implementing budget controls?"
+                    }
+                ]
+            },
+            "cost_conscious_decision_making": {
+                "name": "Cost-Conscious Decision Making",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Decision Impact Analysis",
+                        "in_the_flow_activity": "Document the financial impact of daily operational decisions",
+                        "document": "Decision Impact Log",
+                        "reflection": "How do small decisions add up to big financial impacts?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "ROI-Focused Decision Making",
+                        "in_the_flow_activity": "Apply ROI thinking to upcoming department decisions",
+                        "document": "ROI Analysis Framework",
+                        "journal_prompt": "How has ROI thinking changed my decision-making process?"
+                    }
+                ]
+            },
+            "property_pl_understanding": {
+                "name": "Property P&L Understanding",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "P&L Deep Dive",
+                        "in_the_flow_activity": "Study property P&L and understand how department impacts overall performance",
+                        "document": "P&L Analysis Notes",
+                        "reflection": "How does my department's performance show up in the property P&L?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Performance Connection",
+                        "in_the_flow_activity": "Connect daily activities to P&L line items",
+                        "document": "Activity-to-P&L Connection Map",
+                        "journal_prompt": "What daily activities have the biggest P&L impact?"
+                    }
+                ]
+            },
+            "financial_performance_analysis": {
+                "name": "Financial Performance Analysis",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Variance Analysis Practice",
+                        "in_the_flow_activity": "Analyze budget variances and identify root causes",
+                        "document": "Variance Analysis Report",
+                        "reflection": "What patterns do I see in our financial performance?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Performance Improvement Plans",
+                        "in_the_flow_activity": "Create action plans to address identified financial performance gaps",
+                        "document": "Financial Performance Improvement Plan",
+                        "journal_prompt": "How can I influence financial performance through operational excellence?"
+                    }
+                ]
+            }
         }
     },
     "operational_management": {
