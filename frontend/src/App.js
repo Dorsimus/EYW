@@ -618,28 +618,7 @@ const AuthenticatedApp = () => {
   // Load tasks from competencies when admin is active and competencies are available
 
 
-            ],
-            competency_gate: "Team members report higher engagement in brief surveys + Observable behavior changes in team dynamics",
-            dive_deeper_resources: [
-              {
-                title: "The Five Languages of Appreciation in the Workplace",
-                type: "Book",
-                description: "Understanding different ways people feel valued at work",
-                url: "https://www.5lovelanguages.com/languages-of-appreciation/"
-              },
-              {
-                title: "Drive: The Surprising Truth About What Motivates Us",
-                type: "Book/Video",
-                description: "Dan Pink's research on intrinsic motivation",
-                url: "https://www.danpink.com/books/drive/"
-              },
-              {
-                title: "One Minute Manager Meets the Monkey",
-                type: "Book",
-                description: "Time management and delegation insights",
-                url: "#"
-              }
-            ]
+
           },
           mastering_difficult_conversations: {
             name: "Mastering Difficult Conversations",
