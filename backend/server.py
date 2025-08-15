@@ -728,10 +728,82 @@ NAVIGATOR_COMPETENCIES = {
         "name": "Cross-Functional Collaboration", 
         "description": "Breaking Down Silos & Building Unified Property Teams",
         "sub_competencies": {
-            "understanding_other_department": "Understanding & Appreciating the Other Department",
-            "unified_resident_experience": "Unified Resident Experience Creation",
-            "communication_across_departments": "Effective Communication Across Departments",
-            "stakeholder_relationship_building": "Stakeholder Relationship Building"
+            "understanding_other_department": {
+                "name": "Understanding & Appreciating the Other Department",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Department Shadow Study",
+                        "in_the_flow_activity": "Spend time with the other department to understand their daily challenges",
+                        "document": "Department Understanding Report",
+                        "reflection": "What challenges does the other department face that I didn't realize?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Cross-Department Collaboration",
+                        "in_the_flow_activity": "Identify and implement one way to better support the other department",
+                        "document": "Collaboration Success Story",
+                        "journal_prompt": "How did understanding the other department change my perspective?"
+                    }
+                ]
+            },
+            "unified_resident_experience": {
+                "name": "Unified Resident Experience Creation",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Resident Journey Mapping",
+                        "in_the_flow_activity": "Map the complete resident experience across both departments",
+                        "document": "Resident Experience Journey Map",
+                        "reflection": "Where do residents experience friction between departments?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Experience Enhancement",
+                        "in_the_flow_activity": "Implement one improvement to create a more seamless resident experience",
+                        "document": "Resident Experience Improvement Results",
+                        "journal_prompt": "How did improving the resident experience strengthen interdepartmental cooperation?"
+                    }
+                ]
+            },
+            "communication_across_departments": {
+                "name": "Effective Communication Across Departments",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Communication Assessment",
+                        "in_the_flow_activity": "Evaluate current interdepartmental communication effectiveness",
+                        "document": "Communication Assessment Report",
+                        "reflection": "What communication gaps exist between departments?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Communication Enhancement",
+                        "in_the_flow_activity": "Implement new communication practices to improve collaboration",
+                        "document": "Communication Improvement Results",
+                        "journal_prompt": "How has better communication improved our teamwork?"
+                    }
+                ]
+            },
+            "stakeholder_relationship_building": {
+                "name": "Stakeholder Relationship Building",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Stakeholder Mapping",
+                        "in_the_flow_activity": "Identify key stakeholders and assess relationship strength",
+                        "document": "Stakeholder Relationship Map",
+                        "reflection": "Which stakeholder relationships need the most attention?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Relationship Strengthening",
+                        "in_the_flow_activity": "Focus on building stronger relationships with key stakeholders",
+                        "document": "Stakeholder Relationship Building Results",
+                        "journal_prompt": "How have stronger stakeholder relationships improved our work outcomes?"
+                    }
+                ]
+            }
         }
     },
     "strategic_thinking": {
