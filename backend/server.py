@@ -463,10 +463,82 @@ NAVIGATOR_COMPETENCIES = {
         "name": "Leadership & Supervision",
         "description": "Leadership Isn't a Title, It's How You Show Up Every Day",
         "sub_competencies": {
-            "inspiring_team_motivation": "Inspiring Team Motivation & Engagement",
-            "mastering_difficult_conversations": "Mastering Difficult Conversations",
-            "building_collaborative_culture": "Building Collaborative Team Culture",
-            "developing_others_success": "Developing Others for Success"
+            "inspiring_team_motivation": {
+                "name": "Inspiring Team Motivation & Engagement",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Leadership Style Discovery",
+                        "in_the_flow_activity": "Practice understanding individual team member motivation styles",
+                        "document": "Leadership Style Notes",
+                        "reflection": "What motivates each team member differently?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Motivation in Action",
+                        "in_the_flow_activity": "Create individualized motivational approaches for each team member",
+                        "document": "Motivation Experiment Results",
+                        "journal_prompt": "What motivation experiments surprised me? What didn't work as expected?"
+                    }
+                ]
+            },
+            "mastering_difficult_conversations": {
+                "name": "Mastering Difficult Conversations",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Feedback Foundations",
+                        "in_the_flow_activity": "Give meaningful feedback to each team member weekly",
+                        "document": "Weekly Feedback Log",
+                        "reflection": "What makes feedback feel helpful vs. hurtful?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Performance Conversations",
+                        "in_the_flow_activity": "Address one performance issue using a structured approach",
+                        "document": "Performance Conversation Template",
+                        "journal_prompt": "How do I balance care for the person with accountability for results?"
+                    }
+                ]
+            },
+            "building_collaborative_culture": {
+                "name": "Building Collaborative Culture",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Culture Assessment & Vision",
+                        "in_the_flow_activity": "Observe and document current team culture during regular work",
+                        "document": "Team Culture Snapshot",
+                        "reflection": "What does our culture feel like day-to-day? What do we want it to feel like?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Culture Building Experiments",
+                        "in_the_flow_activity": "Try one small culture-building practice monthly",
+                        "document": "Culture Experiment Results",
+                        "journal_prompt": "What culture practices feel natural to our team?"
+                    }
+                ]
+            },
+            "developing_individual_team_members": {
+                "name": "Developing Individual Team Members",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Individual Development Planning",
+                        "in_the_flow_activity": "Create development plans with each team member",
+                        "document": "Development Plans & Progress",
+                        "reflection": "What development opportunities excite each team member most?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Development in Action",
+                        "in_the_flow_activity": "Implement and track individual development activities",
+                        "document": "Development Progress Report",
+                        "journal_prompt": "How has supporting individual development changed our team dynamics?"
+                    }
+                ]
+            }
         }
     },
     "financial_management": {
