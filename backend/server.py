@@ -465,6 +465,38 @@ NAVIGATOR_COMPETENCIES = {
         "sub_competencies": {
             "inspiring_team_motivation": {
                 "name": "Inspiring Team Motivation & Engagement",
+                "foundation_courses": [
+                    {
+                        "id": "ls-fc-01",
+                        "title": "Employee Motivation",
+                        "duration": "1 hour",
+                        "platform": "PerformanceHQ",
+                        "description": "Why people do what they do",
+                        "url": "https://www.performancehq.com/course/employee-motivation"
+                    },
+                    {
+                        "id": "ls-fc-02", 
+                        "title": "Leadership Styles",
+                        "duration": "45 minutes",
+                        "platform": "PerformanceHQ",
+                        "description": "Adapting your leadership style to individual needs",
+                        "url": "https://www.performancehq.com/course/leadership-styles"
+                    }
+                ],
+                "dive_deeper_resources": [
+                    {
+                        "title": "The Five Languages of Appreciation in the Workplace",
+                        "type": "Book",
+                        "description": "Understanding different ways people feel valued at work",
+                        "url": "https://www.5lovelanguages.com/languages-of-appreciation/"
+                    },
+                    {
+                        "title": "Drive: The Surprising Truth About What Motivates Us",
+                        "type": "Book/Video", 
+                        "description": "Dan Pink's research on intrinsic motivation",
+                        "url": "https://www.danpink.com/books/drive/"
+                    }
+                ],
                 "monthly_activities": [
                     {
                         "month": 1,
