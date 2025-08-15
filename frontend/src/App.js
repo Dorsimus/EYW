@@ -1001,9 +1001,11 @@ const AuthenticatedApp = () => {
     return () => clearInterval(autoSaveInterval);
   }, [competencies, portfolio, competencyTaskProgress, coreValueEntries]);
 
-
-
-                in_flow_activity: "Create systems and practices that maintain collaborative culture over time",
+  const loadUserData = async (userId, refinedCompetencies = null) => {
+    console.log(`🔄 Loading user data for ID: ${userId}`);
+    
+    // ARCHITECTURAL FIX: Always load competencies from backend API to ensure admin-user sync
+    let baseCompetencies = null;
     
     try {
       // Always try to load competencies from backend first
