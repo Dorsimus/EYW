@@ -1247,11 +1247,7 @@ const AuthenticatedApp = () => {
     return hardcodedActivities[competencyKey]?.[subKey] || [];
   };
 
-
-
-
-                month: 2,
-                title: "Collaboration Catalyst Activities",
+  const loadUserData = async (userId, refinedCompetencies = null) => {
                 in_flow_activity: "Implement practices that naturally encourage team collaboration and mutual support",
                 document_section: {
                   title: "Collaboration Success Stories",
