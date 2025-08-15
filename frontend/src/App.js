@@ -1246,22 +1246,7 @@ const AuthenticatedApp = () => {
     console.log('🔄 User data loading complete');
     setLoading(false);
   };
-                },
-                operational_integration: "Build financial thinking into routine decision processes",
-                journal_prompt: "How has thinking about money changed the way I make decisions? What decisions have bigger financial impact than I realized?"
-              },
-              {
-                month: 3,
-                title: "P&L Improvement Ideas",
-                in_flow_activity: "Generate and implement ideas for improving your department's financial contribution",
-                document_section: {
-                  title: "Financial Improvement Results",
-                  description: "Ideas you've implemented to improve department financial performance",
-                  portfolio_integration: true
-                },
-                strategic_integration: "Connect improvement ideas to long-term property financial goals",
-                curiosity_question: "What could my department do differently to have an even more positive financial impact on the property?"
-              }
+  const loadCompetenciesFromAPI = async () => {
             ],
             competency_gate: "Accurately explain department's P&L impact + Implement financial improvement"
           },
