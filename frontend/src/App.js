@@ -1159,10 +1159,11 @@ const AuthenticatedApp = () => {
                 monthly_activities: subComp.monthly_activities || []
               };
               
-              // Log the progressive migration
+              // Log the STEP 6 migration completion
               const foundationCoursesCount = subComp.foundation_courses?.length || 0;
               const diveDeeperCount = subComp.dive_deeper_resources?.length || 0;
-              console.log(`    📚 STEP 5: ${subKey} - foundation_courses: ${foundationCoursesCount} (API), dive_deeper_resources: ${diveDeeperCount} (API), monthly_activities: (hardcoded)`);
+              const monthlyActivitiesCount = subComp.monthly_activities?.length || 0;
+              console.log(`    📚 STEP 6 COMPLETE: ${subKey} - foundation_courses: ${foundationCoursesCount} (API), dive_deeper_resources: ${diveDeeperCount} (API), monthly_activities: ${monthlyActivitiesCount} (API)`);
             });
           }
         });
