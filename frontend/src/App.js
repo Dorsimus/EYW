@@ -1248,15 +1248,7 @@ const AuthenticatedApp = () => {
   };
 
 
-                  description: "Examples of improved teamwork and collaboration",
-                  portfolio_integration: true
-                },
-                leadership_integration: "Model collaborative leadership behavior",
-                journal_prompt: "Which collaboration practices feel most natural to my team? How has increased collaboration affected our work quality?"
-              },
-              {
-                month: 3,
-                title: "Culture Sustainability",
+
                 in_flow_activity: "Create systems and practices that maintain collaborative culture over time",
                 document_section: {
                   title: "Culture Maintenance Systems",
