@@ -1247,8 +1247,7 @@ const AuthenticatedApp = () => {
     return hardcodedActivities[competencyKey]?.[subKey] || [];
   };
 
-  const loadUserData = async (userId, refinedCompetencies = null) => {
-                in_flow_activity: "Implement practices that naturally encourage team collaboration and mutual support",
+
                 document_section: {
                   title: "Collaboration Success Stories",
                   description: "Examples of improved teamwork and collaboration",
