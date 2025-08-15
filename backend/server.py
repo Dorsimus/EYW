@@ -892,10 +892,82 @@ NAVIGATOR_COMPETENCIES = {
         "name": "Client Confidence & Connection",
         "description": "Building the Foundation for Exceptional Client Partnership",
         "sub_competencies": {
-            "understanding_client_impact": "Understanding Client Impact & Connection",
-            "service_excellence_presence": "Service Excellence & Professional Presence", 
-            "client_communication_skills": "Client Communication & Relationship Skills",
-            "client_advocacy_value": "Client Advocacy & Value Creation"
+            "understanding_client_impact": {
+                "name": "Understanding Client Impact & Connection",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Client Impact Assessment",
+                        "in_the_flow_activity": "Document how daily activities impact client experience and satisfaction",
+                        "document": "Client Impact Analysis",
+                        "reflection": "How do my actions directly affect our clients' experience?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Client Connection Enhancement",
+                        "in_the_flow_activity": "Implement practices to strengthen client relationships and trust",
+                        "document": "Client Connection Improvement Results",
+                        "journal_prompt": "What client connection strategies work best for building trust?"
+                    }
+                ]
+            },
+            "service_excellence_presence": {
+                "name": "Service Excellence & Professional Presence",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Service Excellence Audit",
+                        "in_the_flow_activity": "Evaluate current service delivery and identify excellence opportunities",
+                        "document": "Service Excellence Assessment",
+                        "reflection": "Where can I elevate my service delivery to exceed expectations?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Professional Presence Development",
+                        "in_the_flow_activity": "Focus on enhancing professional presence in client interactions",
+                        "document": "Professional Presence Development Log",
+                        "journal_prompt": "How has improving my professional presence affected client relationships?"
+                    }
+                ]
+            },
+            "client_communication_skills": {
+                "name": "Client Communication & Relationship Skills",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Communication Skills Assessment",
+                        "in_the_flow_activity": "Evaluate current client communication effectiveness",
+                        "document": "Client Communication Assessment",
+                        "reflection": "What communication approaches work best with different client types?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Relationship Building Practice",
+                        "in_the_flow_activity": "Apply advanced relationship building techniques in client interactions",
+                        "document": "Client Relationship Building Results",
+                        "journal_prompt": "How have stronger communication skills improved client satisfaction?"
+                    }
+                ]
+            },
+            "client_advocacy_value": {
+                "name": "Client Advocacy & Value Creation",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Client Advocacy Assessment",
+                        "in_the_flow_activity": "Identify opportunities to better advocate for client needs",
+                        "document": "Client Advocacy Opportunities Report",
+                        "reflection": "How can I be a stronger advocate for our clients?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Value Creation Implementation",
+                        "in_the_flow_activity": "Implement initiatives that create additional value for clients",
+                        "document": "Client Value Creation Results",
+                        "journal_prompt": "What value creation efforts had the most positive client impact?"
+                    }
+                ]
+            }
         }
     }
 }
