@@ -1247,8 +1247,7 @@ const AuthenticatedApp = () => {
     return hardcodedActivities[competencyKey]?.[subKey] || [];
   };
 
-  const loadUserData = async (userId, refinedCompetencies = null) => {
-                  title: "Collaboration Success Stories",
+
                   description: "Examples of improved teamwork and collaboration",
                   portfolio_integration: true
                 },
