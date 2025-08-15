@@ -1246,7 +1246,6 @@ const AuthenticatedApp = () => {
     console.log('🔄 User data loading complete');
     setLoading(false);
   };
-  const loadCompetenciesFromAPI = async () => {
             ],
             competency_gate: "Accurately explain department's P&L impact + Implement financial improvement"
           },
