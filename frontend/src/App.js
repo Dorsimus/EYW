@@ -1102,9 +1102,9 @@ const AuthenticatedApp = () => {
     setLoading(false);
   };
 
-  // STEP 2 + STEP 4 + STEP 5: Create loadCompetenciesFromAPI() function with Foundation Courses + Dive Deeper Resources Migration
+  // STEP 2 + STEP 4 + STEP 5 + STEP 6: loadCompetenciesFromAPI() with COMPLETE API Migration - ALL COMPONENTS FROM API
   const loadCompetenciesFromAPI = async () => {
-    console.log('🔧 STEP 2 + STEP 4 + STEP 5: loadCompetenciesFromAPI() with Foundation Courses + Dive Deeper Resources Migration');
+    console.log('🔧 STEP 6 COMPLETE: loadCompetenciesFromAPI() with FULL API migration - Foundation Courses + Dive Deeper Resources + Monthly Activities');
     
     try {
       // Call backend API to get competencies
@@ -1115,10 +1115,10 @@ const AuthenticatedApp = () => {
       });
       
       if (response.status === 200 && response.data) {
-        console.log('✅ STEP 5: Successfully loaded competencies from API for Foundation Courses + Dive Deeper Resources migration');
-        console.log('📊 API Response contains:', Object.keys(response.data).length, 'competency areas');
+        console.log('✅ STEP 6 COMPLETE: Successfully loaded competencies from API for FULL migration - All components now from API');
+        console.log('📊 API Response contains:', Object.keys(response.data).length, 'competency areas with complete data');
         
-        // STEP 4 + STEP 5: Process the backend data with PROGRESSIVE MIGRATION - Foundation Courses + Dive Deeper Resources
+        // STEP 6 COMPLETE: Process the backend data with FULL API MIGRATION - All Components
         const processedCompetencies = {};
         
         Object.keys(response.data).forEach(competencyKey => {
