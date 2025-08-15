@@ -1245,9 +1245,6 @@ const AuthenticatedApp = () => {
     
     return hardcodedActivities[competencyKey]?.[subKey] || [];
   };
-
-  // STEP 2 + STEP 4 + STEP 5 + STEP 6: loadCompetenciesFromAPI() with COMPLETE API Migration - ALL COMPONENTS FROM API
-  const loadCompetenciesFromAPI = async () => {
       // Always try to load competencies from backend first
       console.log('📚 Loading competencies from backend API for user sync...');
       const competenciesResponse = await axios.get(`${API}/users/${userId}/competencies`, {
