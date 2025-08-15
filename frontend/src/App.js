@@ -1168,15 +1168,15 @@ const AuthenticatedApp = () => {
           }
         });
         
-        console.log('✅ STEP 5: Foundation Courses + Dive Deeper Resources progressive migration completed successfully');
-        console.log('📋 Processed competencies with foundation courses + dive deeper resources from API:', Object.keys(processedCompetencies));
+        console.log('✅ STEP 6 COMPLETE: Foundation Courses + Dive Deeper Resources + Monthly Activities FULL API migration completed successfully');
+        console.log('📋 Processed competencies with ALL components from API:', Object.keys(processedCompetencies));
         
-        // Return processed data with Step 5 migration
+        // Return processed data with Step 6 migration COMPLETE
         return {
           success: true,
           data: processedCompetencies,
-          source: 'step5_foundation_courses_dive_deeper_api',
-          migration_status: 'foundation_courses_dive_deeper_from_api_monthly_activities_hardcoded',
+          source: 'step6_full_api_migration_complete',
+          migration_status: 'all_components_from_api_migration_complete',
           timestamp: new Date().toISOString()
         };
         
