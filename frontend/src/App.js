@@ -1248,11 +1248,7 @@ const AuthenticatedApp = () => {
     
     console.log('🔄 User data loading complete');
     setLoading(false);
-  };",
-                document_section: {
-                  title: "Financial Decision Log",
-                  description: "Daily decisions and their financial implications",
-                  portfolio_integration: true
+  };
                 },
                 operational_integration: "Build financial thinking into routine decision processes",
                 journal_prompt: "How has thinking about money changed the way I make decisions? What decisions have bigger financial impact than I realized?"
