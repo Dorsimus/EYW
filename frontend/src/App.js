@@ -614,16 +614,8 @@ const AuthenticatedApp = () => {
     console.log('🔒 FINAL OVERRIDE: Setting dashboard view for all users');
     setCurrentView('dashboard');
   }, []);
-            foundation_courses: [
-              {
-                id: "ls-new-fc-01",
-                title: "Employee Motivation",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Why people do what they do"
-              }
-            ],
-            monthly_activities: [
+
+  // Load tasks from competencies when admin is active and competencies are available
               {
                 month: 1,
                 title: "Leadership Style Discovery",
