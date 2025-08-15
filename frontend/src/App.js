@@ -573,31 +573,18 @@ const AuthenticatedApp = () => {
       console.log('Initializing user with data:', userData);
       console.log('Setting loading to true');
       console.log('Setting user data and loading user data...');
-        overall_progress: 0,
-        completion_percentage: 0,
-        completed_tasks: 0,
-        total_tasks: 16,
-        competency_area: "leadership_supervision",
-        curiosity_ignition: {
-          title: "Leadership Curiosity Assessment",
-          description: "Before diving in, spark curiosity about your leadership journey",
-          time_required: "5 minutes of thinking",
-          reflection_prompts: [
-            "What's one leadership moment from this week that I keep thinking about?",
-            "If I could ask any great leader three questions, what would they be?",
-            "What does leadership look like when no one's watching?",
-            "How do I want people to feel after working with me?"
-          ],
-          setup_requirement: "Create a simple place to capture leadership observations, questions, and 'aha moments' throughout the program."
-        },
-        sub_competencies: {
-          inspiring_team_motivation: {
-            name: "Inspiring Team Motivation & Engagement",
-            description: "What makes someone excited to come to work for you specifically?",
-            duration: "3-4 months",
-            weekly_time: "~15 minutes",
-            progress_percentage: 0,
-            completed_tasks: 0,
+      
+      // Set user data
+      setUser(userData);
+      setLoading(false);
+      
+      console.log('✅ User initialization complete');
+      
+    } catch (error) {
+      console.error('Error initializing user:', error);
+      setLoading(false);
+    }
+  };
             total_tasks: 4,
             core_learning_question: "What makes someone excited to come to work for me specifically?",
             foundation_courses: [
