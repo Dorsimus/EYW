@@ -1001,7 +1001,11 @@ const AuthenticatedApp = () => {
     return () => clearInterval(autoSaveInterval);
   }, [competencies, portfolio, competencyTaskProgress, coreValueEntries]);
 
-  const loadUserData = async (userId, refinedCompetencies = null) => {
+
+
+
+                month: 2,
+                title: "Collaboration Catalyst Activities",
     console.log(`🔄 Loading user data for ID: ${userId}`);
     
     // ARCHITECTURAL FIX: Always load competencies from backend API to ensure admin-user sync
