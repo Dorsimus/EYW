@@ -1154,204 +1154,101 @@ const AuthenticatedApp = () => {
     
     // ARCHITECTURAL FIX: Always load competencies from backend API to ensure admin-user sync
     let baseCompetencies = null;
-                document_section: {
-                  title: "Culture Maintenance Systems",
-                  description: "Sustainable practices for maintaining collaborative culture",
-                  portfolio_integration: true
-                },
-                operational_integration: "Build collaboration into routine operations and processes",
-                curiosity_question: "How can collaborative culture become so natural that it continues even when I'm not directly involved?"
-              }
-            ],
-            competency_gate: "Measurable improvement in team collaboration + Sustainable culture practices implemented"
-          },
-          developing_others_success: {
-            name: "Developing Others for Success",
-            description: "How do I help each team member grow in ways that matter to them and benefit our property?",
-            duration: "3-4 months",
-            weekly_time: "~15 minutes",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 4,
-            core_learning_question: "How do I help each team member grow in ways that matter to them and benefit our property?",
-            foundation_courses: [
-              {
-                title: "Performance Management",
-                duration: "1 hour",
-                platform: "PerformanceHQ",
-                description: "Developing and managing team performance",
-                link_type: "external",
-                url: "https://performancehq.com/performance-management"
-              }
-            ],
-            monthly_activities: [
-              {
-                month: 1,
-                title: "Individual Development Discovery",
-                in_flow_activity: "Have development-focused conversations with each team member to understand their growth interests",
-                document_section: {
-                  title: "Team Development Plans",
-                  description: "Individual development goals and growth opportunities for each team member",
-                  portfolio_integration: true
-                },
-                financial_integration: "Connect individual development to property value creation",
-                journal_prompt: "What development opportunities would most benefit each team member and our property? How can I support growth that serves both?"
-              },
-              {
-                month: 2,
-                title: "Development in Daily Work",
-                in_flow_activity: "Create opportunities for skill building and growth within regular work responsibilities",
-                document_section: {
-                  title: "Growth-in-Work Examples",
-                  description: "How you've created development opportunities within daily operations",
-                  portfolio_integration: true
-                },
-                cross_functional_integration: "Arrange development opportunities with other departments",
-                journal_prompt: "How can development become part of how we work rather than something extra? What growth opportunities exist in our daily activities?"
-              },
-              {
-                month: 3,
-                title: "Success Celebration & Future Planning",
-                in_flow_activity: "Recognize team member growth achievements and plan next development steps",
-                document_section: {
-                  title: "Development Success Stories",
-                  description: "Team member growth achievements and future development plans",
-                  portfolio_integration: true
-                },
-                leadership_integration: "Use team member development to strengthen overall team capability",
-                curiosity_question: "How can I make development so integrated into our work that team members constantly grow while delivering great results?"
-              }
-            ],
-            competency_gate: "Each team member has clear development plan + Demonstrated skill/career growth"
-          }
-        },
-        // Additional leadership framework elements...
-        leadership_integration_activities: {
-          weekly_cm_shadowing: {
-            duration: "15 minutes weekly - rotated focus",
-            month_1_3: "Leadership style observation and daily leadership decisions",
-            month_4_6: "Team development practices and people leadership approaches",
-            month_7_9: "Communication effectiveness and relationship building",
-            month_10_12: "Leadership challenges and advancement preparation"
-          },
-          cross_department_collaboration: {
-            duration: "Monthly - 20 minutes",
-            activities: [
-              "Share leadership insights with opposite department Navigator",
-              "Collaborate on cross-department team initiatives",
-              "Practice leadership in property-wide scenarios"
-            ]
-          },
-          leadership_curiosity_journal: {
-            duration: "5 minutes weekly",
-            focus: [
-              "Document leadership observations, questions, and insights",
-              "Track 'aha moments' when leadership approaches work or don't work",
-              "Reflect on leadership growth and team development"
-            ]
-          }
-        },
-        culminating_leadership_project: {
-          title: "Leadership Excellence Initiative",
-          timeline: "Final 2-3 months of program",
-          challenge: "Design and implement one leadership initiative that demonstrates your growth as a people leader",
-          options: [
-            "Team Development Program: Create comprehensive development program for your team",
-            "Leadership Culture Project: Lead initiative that improves property-wide leadership culture",
-            "Succession Planning: Develop and implement plan for developing future leaders",
-            "Cross-Department Leadership: Lead initiative requiring leadership across multiple departments"
-          ],
-          deliverables: [
-            "Leadership opportunity analysis and initiative plan (1 page)",
-            "Implementation approach with team involvement (1 page)",
-            "Results documentation with leadership impact and lessons learned (1 page)"
-          ],
-          presentation: "15-minute presentation to CM and Regional Manager on leadership development and people impact"
-        },
-        competency_validation: {
-          evidence_portfolio: [
-            "Team Motivation: Demonstrated ability to inspire and motivate team members",
-            "Difficult Conversations: Successfully navigated challenging conversations with relationship building",
-            "Collaborative Culture: Created team environment where collaboration thrives",
-            "Development Leadership: Evidence of team member growth and development under your leadership"
-          ],
-          portfolio_defense: {
-            duration: "20 minutes",
-            components: [
-              "Leadership Journey Story: How your leadership approach has evolved",
-              "People Impact Evidence: Specific examples of team development and motivation",
-              "Relationship Building: How you've strengthened relationships through leadership",
-              "Future Leadership Vision: How you'll continue developing as a people leader"
-            ]
-          },
-          cm_readiness_indicators: [
-            "People Leadership: Consistently develops and motivates team members",
-            "Relationship Excellence: Builds strong working relationships across all levels",
-            "Communication Mastery: Handles difficult conversations with skill and care",
-            "Culture Development: Creates positive team environment that drives results"
-          ]
+    
+    try {
+      // Always try to load competencies from backend first
+      console.log('📚 Loading competencies from backend API for user sync...');
+      const competenciesResponse = await axios.get(`${API}/users/${userId}/competencies`, {
+        timeout: 10000,
+        validateStatus: (status) => status < 500
+      });
+      
+      if (competenciesResponse.status === 200 && competenciesResponse.data) {
+        console.log('✅ Successfully loaded competencies from backend API for user data');
+        baseCompetencies = competenciesResponse.data;
+      } else {
+        console.warn('⚠️ Backend user competencies API returned invalid response, using fallback');
+        throw new Error('Invalid user competencies response');
+      }
+      
+    } catch (error) {
+      console.error('❌ Failed to load user competencies from backend:', error.message);
+      
+      // Fall back to general competencies API
+      try {
+        console.log('📚 Fallback: Loading general competencies from backend API...');
+        const generalCompetenciesResponse = await axios.get(`${API}/competencies`, {
+          timeout: 10000,
+          validateStatus: (status) => status < 500
+        });
+        
+        if (generalCompetenciesResponse.status === 200 && generalCompetenciesResponse.data) {
+          console.log('✅ Successfully loaded general competencies as fallback');
+          baseCompetencies = generalCompetenciesResponse.data;
         }
-      },
-      financial_management: {
-        name: "Financial Management & Business Acumen",
-        description: "Every Decision Has a Dollar Impact - Make Them Count",
-        philosophy: "The Navigator Financial Management development transforms department supervisors into financially-savvy leaders who understand the money side of property management. Every activity connects daily decisions to financial outcomes while building the business acumen essential for Community Manager success.",
-        time_commitment: "~12 minutes per week + natural work integration",
-        duration: "12-15 months (competency-based progression)",
-        focus: "Financial curiosity and business understanding through real budget and revenue work",
-        overall_progress: 0,
-        completion_percentage: 0,
-        completed_tasks: 0,
-        total_tasks: 16,
-        competency_area: "financial_management",
-        curiosity_ignition: {
-          title: "💰 Financial Curiosity Assessment",
-          description: "Before diving in, spark curiosity about the money side of your work",
-          time_required: "5 minutes of thinking",
-          reflection_prompts: [
-            "What's one decision I made this week that probably had a financial impact I didn't consider?",
-            "If I owned this property, what would keep me up at night financially?",
-            "How does my department's work show up in dollars and cents?",
-            "What financial questions do I wish I knew how to answer?"
-          ],
-          setup_requirement: "Create a simple place to capture financial observations, questions, and 'connection moments' throughout the program."
-        },
-        sub_competencies: {
-          property_pl_understanding: {
-            name: "Property P&L Understanding",
-            description: "How does my department's daily work show up on the property's financial statement?",
-            duration: "3-4 months",
-            weekly_time: "~15 minutes",
-            progress_percentage: 0,
-            completed_tasks: 0,
-            total_tasks: 4,
-            core_learning_question: "How does my department's daily work show up on the property's financial statement?",
-            foundation_courses: [
-              {
-                title: "Property Management Financials",
-                duration: "1 hour 15 minutes",
-                platform: "PerformanceHQ",
-                description: "Understanding property financial statements",
-                link_type: "external"
-              }
-            ],
-            monthly_activities: [
-              {
-                month: 1,
-                title: "P&L Connection Discovery",
-                in_flow_activity: "Review last month's P&L with your CM and identify where your department's work appears",
-                document_section: {
-                  title: "Department P&L Impact Map",
-                  description: "Where and how your department shows up in property financials",
-                  portfolio_integration: true
-                },
-                leadership_integration: "Share P&L insights with your team to build financial awareness",
-                journal_prompt: "Where does my department create revenue and where do we create expenses? What surprised me about our financial impact?"
-              },
-              {
-                month: 2,
-                title: "Financial Decision Making",
-                in_flow_activity: "For every significant department decision, consider and document the financial impact",
+        
+      } catch (fallbackError) {
+        console.error('❌ Failed to load fallback competencies:', fallbackError.message);
+      }
+    }
+    
+    // If we successfully loaded competencies from API, use them
+    if (baseCompetencies) {
+      console.log('✅ Using competencies from API for consistent admin-user sync');
+      setCompetencies(baseCompetencies);
+    } else {
+      console.warn('⚠️ No competencies available from API, using existing state');
+    }
+    
+    // Load other user data from localStorage
+    const savedCompetencies = localStorage.getItem(`competencies_${userId}`);
+    const savedPortfolio = localStorage.getItem(`portfolio_${userId}`);
+    const savedTaskProgress = localStorage.getItem(`competencyTaskProgress_${userId}`);
+    const savedCoreValueEntries = localStorage.getItem(`coreValueEntries_${userId}`);
+    
+    if (savedCompetencies) {
+      console.log('📚 Loading saved competency progress from localStorage');
+      try {
+        const parsedCompetencies = JSON.parse(savedCompetencies);
+        setCompetencies(prevCompetencies => ({...prevCompetencies, ...parsedCompetencies}));
+      } catch (error) {
+        console.error('Error parsing saved competencies:', error);
+      }
+    }
+    
+    if (savedPortfolio) {
+      console.log('📁 Loading saved portfolio from localStorage');
+      try {
+        const parsedPortfolio = JSON.parse(savedPortfolio);
+        setPortfolio(parsedPortfolio);
+      } catch (error) {
+        console.error('Error parsing saved portfolio:', error);
+      }
+    }
+    
+    if (savedTaskProgress) {
+      console.log('✅ Loading saved task progress from localStorage');
+      try {
+        const parsedTaskProgress = JSON.parse(savedTaskProgress);
+        setCompetencyTaskProgress(parsedTaskProgress);
+      } catch (error) {
+        console.error('Error parsing saved task progress:', error);
+      }
+    }
+    
+    if (savedCoreValueEntries) {
+      console.log('💎 Loading saved core value entries from localStorage');
+      try {
+        const parsedCoreValueEntries = JSON.parse(savedCoreValueEntries);
+        setCoreValueEntries(parsedCoreValueEntries);
+      } catch (error) {
+        console.error('Error parsing saved core value entries:', error);
+      }
+    }
+    
+    console.log('🔄 User data loading complete');
+    setLoading(false);
+  };",
                 document_section: {
                   title: "Financial Decision Log",
                   description: "Daily decisions and their financial implications",
