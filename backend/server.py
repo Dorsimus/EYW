@@ -627,11 +627,101 @@ NAVIGATOR_COMPETENCIES = {
         "name": "Operational Management",
         "description": "Great Operations Are Invisible - Bad Operations Are Obvious",
         "sub_competencies": {
-            "process_improvement_efficiency": "Process Improvement & Efficiency",
-            "quality_control_standards": "Quality Control & Standards",
-            "safety_leadership_risk_awareness": "Safety Leadership & Risk Awareness",
-            "technology_system_optimization": "Technology & System Optimization",
-            "compliance_risk_management": "Compliance & Risk Management"
+            "process_improvement_efficiency": {
+                "name": "Process Improvement & Efficiency",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Process Mapping & Analysis",
+                        "in_the_flow_activity": "Map current processes and identify inefficiencies",
+                        "document": "Process Analysis Report",
+                        "reflection": "What processes take more time than they should?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Efficiency Implementation",
+                        "in_the_flow_activity": "Implement one process improvement and measure results",
+                        "document": "Process Improvement Results",
+                        "journal_prompt": "How did the process improvement impact team productivity?"
+                    }
+                ]
+            },
+            "quality_control_standards": {
+                "name": "Quality Control & Standards",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Quality Standards Assessment",
+                        "in_the_flow_activity": "Document current quality standards and identify gaps",
+                        "document": "Quality Standards Audit",
+                        "reflection": "Where do our quality standards need to be stronger?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Quality Improvement Initiative",
+                        "in_the_flow_activity": "Implement one quality improvement and track outcomes",
+                        "document": "Quality Improvement Tracking",
+                        "journal_prompt": "How has improved quality affected customer satisfaction?"
+                    }
+                ]
+            },
+            "safety_leadership_risk_awareness": {
+                "name": "Safety Leadership & Risk Awareness",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Safety Risk Assessment",
+                        "in_the_flow_activity": "Conduct safety walkthrough and identify potential risks",
+                        "document": "Safety Risk Assessment Report",
+                        "reflection": "What safety risks did I not notice before?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Safety Culture Building",
+                        "in_the_flow_activity": "Implement safety initiatives that engage the entire team",
+                        "document": "Safety Culture Initiative Results",
+                        "journal_prompt": "How can I make safety a natural part of our daily culture?"
+                    }
+                ]
+            },
+            "technology_system_optimization": {
+                "name": "Technology & System Optimization",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Technology Assessment",
+                        "in_the_flow_activity": "Evaluate current technology tools and identify optimization opportunities",
+                        "document": "Technology Optimization Analysis",
+                        "reflection": "How can technology better support our daily work?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "System Enhancement",
+                        "in_the_flow_activity": "Implement one technology or system improvement",
+                        "document": "System Enhancement Results",
+                        "journal_prompt": "What was the impact of the technology improvement on team efficiency?"
+                    }
+                ]
+            },
+            "compliance_risk_management": {
+                "name": "Compliance & Risk Management",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Compliance Review",
+                        "in_the_flow_activity": "Review current compliance practices and identify gaps",
+                        "document": "Compliance Assessment Report",
+                        "reflection": "Where are our compliance vulnerabilities?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Risk Mitigation Planning",
+                        "in_the_flow_activity": "Develop and implement risk mitigation strategies",
+                        "document": "Risk Mitigation Plan",
+                        "journal_prompt": "How has proactive risk management changed our operational confidence?"
+                    }
+                ]
+            }
         }
     },
     "cross_functional_collaboration": {
