@@ -516,6 +516,38 @@ NAVIGATOR_COMPETENCIES = {
             },
             "mastering_difficult_conversations": {
                 "name": "Mastering Difficult Conversations",
+                "foundation_courses": [
+                    {
+                        "id": "ls-fc-03",
+                        "title": "Performance Management",
+                        "duration": "1 hour", 
+                        "platform": "PerformanceHQ",
+                        "description": "How to have conversations that matter",
+                        "url": "https://www.performancehq.com/course/performance-management"
+                    },
+                    {
+                        "id": "ls-fc-04",
+                        "title": "Coaching Foundations",
+                        "duration": "1 hour",
+                        "platform": "PerformanceHQ", 
+                        "description": "Coaching vs. fixing mindset",
+                        "url": "https://www.performancehq.com/course/coaching-foundations"
+                    }
+                ],
+                "dive_deeper_resources": [
+                    {
+                        "title": "Crucial Conversations: Tools for Talking When Stakes Are High",
+                        "type": "Book",
+                        "description": "Master the framework for difficult conversations",
+                        "url": "https://cruciallearning.com/crucial-conversations-book/"
+                    },
+                    {
+                        "title": "Difficult Conversations: How to Discuss What Matters Most",
+                        "type": "Book",
+                        "description": "Harvard Negotiation Project insights on tough talks",
+                        "url": "https://hbr.org/product/difficult-conversations/an/BR9713-PBK-ENG"
+                    }
+                ],
                 "monthly_activities": [
                     {
                         "month": 1,
