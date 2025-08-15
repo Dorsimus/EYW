@@ -1248,9 +1248,11 @@ const AuthenticatedApp = () => {
     return hardcodedActivities[competencyKey]?.[subKey] || [];
   };
 
-
-
-                in_flow_activity: "Create systems and practices that maintain collaborative culture over time",
+  const loadUserData = async (userId, refinedCompetencies = null) => {
+    console.log(`🔄 Loading user data for ID: ${userId}`);
+    
+    // ARCHITECTURAL FIX: Always load competencies from backend API to ensure admin-user sync
+    let baseCompetencies = null;
                 document_section: {
                   title: "Culture Maintenance Systems",
                   description: "Sustainable practices for maintaining collaborative culture",
