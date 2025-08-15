@@ -810,10 +810,82 @@ NAVIGATOR_COMPETENCIES = {
         "name": "Strategic Thinking & Planning",
         "description": "Think Beyond Today - Lead for Tomorrow",
         "sub_competencies": {
-            "seeing_patterns_anticipating_trends": "Seeing Patterns & Anticipating Trends",
-            "innovation_continuous_improvement": "Innovation & Continuous Improvement Thinking",
-            "problem_solving_future_focus": "Problem-Solving with Future Focus",
-            "planning_goal_achievement": "Planning & Goal Achievement with Strategic Perspective"
+            "seeing_patterns_anticipating_trends": {
+                "name": "Seeing Patterns & Anticipating Trends",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Pattern Recognition Practice",
+                        "in_the_flow_activity": "Document patterns observed in daily operations and resident behavior",
+                        "document": "Pattern Recognition Log",
+                        "reflection": "What patterns am I starting to notice that I missed before?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Trend Analysis Application",
+                        "in_the_flow_activity": "Use identified patterns to anticipate and prepare for upcoming trends",
+                        "document": "Trend Anticipation Plan",
+                        "journal_prompt": "How can recognizing patterns help us be more proactive?"
+                    }
+                ]
+            },
+            "innovation_continuous_improvement": {
+                "name": "Innovation & Continuous Improvement Thinking",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Innovation Opportunity Identification",
+                        "in_the_flow_activity": "Identify areas where innovative approaches could improve outcomes",
+                        "document": "Innovation Opportunity Assessment",
+                        "reflection": "Where could we do things differently to get better results?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Innovation Implementation",
+                        "in_the_flow_activity": "Test one innovative approach and measure its effectiveness",
+                        "document": "Innovation Implementation Results",
+                        "journal_prompt": "What did I learn from trying a new approach?"
+                    }
+                ]
+            },
+            "problem_solving_future_focus": {
+                "name": "Problem-Solving with Future Focus",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Future-Focused Problem Analysis",
+                        "in_the_flow_activity": "Analyze current problems with consideration for long-term implications",
+                        "document": "Future-Focused Problem Analysis",
+                        "reflection": "How might this problem evolve if we don't address the root cause?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Strategic Solution Implementation",
+                        "in_the_flow_activity": "Implement solutions that address both immediate and future concerns",
+                        "document": "Strategic Solution Results",
+                        "journal_prompt": "How did thinking about the future change my problem-solving approach?"
+                    }
+                ]
+            },
+            "planning_goal_achievement": {
+                "name": "Planning & Goal Achievement with Strategic Perspective",
+                "monthly_activities": [
+                    {
+                        "month": 1,
+                        "title": "Strategic Goal Setting",
+                        "in_the_flow_activity": "Develop goals that align with long-term strategic objectives",
+                        "document": "Strategic Goal Development Plan",
+                        "reflection": "How do my immediate goals contribute to our long-term success?"
+                    },
+                    {
+                        "month": 2,
+                        "title": "Strategic Plan Execution",
+                        "in_the_flow_activity": "Execute strategic plans with regular progress assessment",
+                        "document": "Strategic Plan Progress Report",
+                        "journal_prompt": "What have I learned about balancing short-term actions with long-term vision?"
+                    }
+                ]
+            }
         }
     },
     "client_confidence_connection": {
