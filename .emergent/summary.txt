@@ -1,58 +1,74 @@
 <analysis>
-The AI engineer's work focused on stabilizing and expanding the Earn Your Wings Platform. Initially, efforts addressed critical data synchronization and corrected invalid sub-competency references. A significant phase involved debugging Core Values integration with the Flightbook, resolving  and API fallback issues. The engineer then tackled ensuring *all* typed content flows to the Flightbook by fixing a stub function and addressing duplicate entries via unique database constraints and refined frontend logic. Most recently, the focus shifted to fixing journal prompts not showing full questions and, critically, identifying and planning to resolve a widespread hardcoded data problem causing major admin-user view discrepancies across the entire platform.
+The previous AI engineer's work centered on resolving a pervasive dual data source issue within the Earn Your Wings Platform, where hardcoded frontend data conflicted with backend-managed content. A systematic 10-step plan, divided into three phases, was adopted. Phase 1 (Investigation & Preparation) involved auditing the backend API, creating a parallel API function (), and implementing a toggle switch (). Phase 2 (Component-by-Component Migration) began with migrating Foundation Courses and Dive Deeper Resources. While the core logic for these steps was implemented and backend API readiness was confirmed, persistent and complex frontend parsing errors (primarily duplicate function declarations and malformed hardcoded data structures in ) significantly hindered visual testing and overall progress, leading to multiple debugging cycles and  interventions.
 </analysis>
 
 <product_requirements>
-The Earn Your Wings Platform is a leadership development application, built with React, FastAPI, and MongoDB. It aims to track user development through Curiosity Ignition reflections, monthly activities, and Dive Deeper resources, all logged in a My Leadership Flightbook and an enhanced portfolio. Key requirements include robust Clerk.com authentication, content restoration, and reliable data persistence and synchronization between admin and user views. The platform's current focus is on the Navigator (Level 3) for deployment. The user explicitly requested that all uploaded documentation flows to My Portfolio, while all typed notes, journal entries, reflections, and core value stories flow to the Flightbook. A major identified issue is a dual data source problem, where hardcoded frontend data conflicts with dynamic admin updates, creating inconsistencies across the platform.
+The Earn Your Wings Platform is a leadership development application built with React, FastAPI, and MongoDB. Its purpose is to track user development through Curiosity Ignition reflections, monthly activities, and Dive Deeper resources, all to be logged in a My Leadership Flightbook and an enhanced portfolio. Robust Clerk.com authentication is required, alongside content restoration and reliable data persistence and synchronization between admin and user views. The platform is currently focused on the Navigator (Level 3) for deployment. All uploaded documentation must flow to My Portfolio, while all typed notes, journal entries, reflections, and core value stories must flow to the Flightbook. A critical identified problem is a dual data source where extensive hardcoded frontend data causes inconsistencies with dynamic updates made through the admin panel.
 </product_requirements>
 
 <key_technical_concepts>
--   **Full-Stack Development**: React.js, FastAPI, MongoDB.
--   **Authentication**: Clerk.com (SDK, JWT validation), demo mode bypass.
--   **State Management**: React's , ,  for fallback.
--   **Data Persistence**: MongoDB with unique indexing for duplicate prevention.
--   **API Communication**: Axios-like client for backend interaction.
--   **Debugging**: Console logging, screenshot verification, systematic troubleshooting.
+- **Full-Stack Development**: React.js for frontend, FastAPI for backend, MongoDB for database.
+- **Authentication**: Clerk.com SDK for JWT validation, with a demo mode bypass.
+- **State Management**: React's  and , leveraging  for data fallback.
+- **Data Persistence**: MongoDB, utilizing unique indexing to prevent data duplication.
+- **API Communication**: Interaction with backend via an Axios-like client.
+- **Debugging**: Extensive use of console logging, screenshot verification, and systematic troubleshooting.
 </key_technical_concepts>
 
 <code_architecture>
-The application utilizes a monorepo structure under , bifurcated into  (FastAPI, MongoDB) and  (React).
+The application uses a monorepo structure under , with  (FastAPI, MongoDB) and  (React).
 
 
--   ****: The core FastAPI application, responsible for integrating Clerk JWT validation, handling admin routes, and connecting  and .
+
+-   ****: Serves as the main FastAPI application, handling Clerk JWT validation, admin routes, and integrating  and .
+    - **Summary of importance**: Core of the backend, defines API endpoints including .
+    - **Summary of changes made**: Referenced for confirming  endpoint existence and its role in serving competency data.
 -   ****: Implements business logic for flightbook data interaction with MongoDB.
-    -   **Changes**: Modified to add a unique index on  within the MongoDB collection to prevent duplicate entries (Message 164).
--   ****: The central React component managing application state, routing, and core logic.
-    -   **Summary of importance**: This file is critical as it orchestrates most frontend functionalities, including authentication handling, API interactions, state management for competencies and flightbook entries, and rendering various views.
-    -   **Summary of changes made**:
-        -    was updated to correctly use  and ensure  fallback in demo mode, by refining authentication error handling (Messages 93, 166).
-        -   The Culminating Projects navigation tab was removed, then temporarily re-added for feature testing, and finally removed again to align with user requests (Messages 57, 59, 61, 106, 108, 110).
-        -   The  component was updated to correctly receive and display  from the main  state, resolving the 0 entries display bug (Messages 114, 116, 124).
-        -   The  function, initially a stub, was fully implemented to save task completion notes to the flightbook database (Message 153).
-        -   Logic in  and its local counterpart was extensively refactored to extract the *full journal prompt question* and include it in the flightbook entry title, handling diverse  patterns (Messages 185, 189, 198, 200, 229, 231, 254, 256).
-        -   An immediate fix was applied to line 3042 to correct a hardcoded description and URL for the Being a Team Player course (Message 267).
-        -   The  function was modified to load competencies primarily from the backend API, reducing reliance on hardcoded data in  and aiming for unified data synchronization between admin and user views (Messages 275, 279).
--   ****: A new React component designed to manage and display culminating project details.
-    -   **Summary of importance**: This file is crucial for the new culminating projects feature, enabling project creation and file/note management.
-    -   **Summary of changes made**:  was modified to correctly integrate file uploads with the Portfolio, and a  helper function was added to flow project notes to the Flightbook (Messages 33, 37).
--   ****: This file contains the testing protocol and records communication and outcomes with testing agents.
-    -   **Summary of importance**: Essential for managing the testing workflow and maintaining a record of testing progress and user feedback.
-    -   **Summary of changes made**: Periodically updated to reflect current implementation status, test results, and user feedback (Message 63).
+    - **Summary of importance**: Manages flightbook entries persistence.
+    - **Summary of changes made**: Modified to add a unique index on  within the MongoDB collection to prevent duplicate entries.
+-   ****: The central React component, managing application state, routing, and core logic.
+    - **Summary of importance**: Orchestrates most frontend functionalities, including authentication, API interactions, state management for competencies and flightbook entries, and rendering various views. It's the primary file affected by the hardcoded data problem.
+    - **Summary of changes made**:
+        -  was updated to use  and ensure  fallback.
+        - Culminating Projects navigation tab was removed/re-added based on user requests.
+        -  component was updated to correctly receive and display .
+        -  function was fully implemented to save task completion notes.
+        -  was refactored to extract full journal prompt questions.
+        - An immediate fix corrected a hardcoded description and URL for Being a Team Player course (line 3042).
+        - **Significant changes for dual data source fix**:
+            -  function was modified to load competencies primarily from the backend API.
+            -  function was targeted for refactoring to remove hardcoded data.
+            - New  function was created to fetch and process backend data, running in parallel.
+            - Logic was added to use an environment variable () to toggle between hardcoded and API data sources.
+            - Initial logic for merging Foundation Courses and Dive Deeper Resources from the API into the competency structure was implemented.
+            - **Numerous attempts were made to fix persistent parsing errors and duplicate function declarations (e.g., , , ) stemming from large, malformed hardcoded data sections, particularly around lines 560, 725, 1086, 2991, 3074, 3177, 3194, and 3236.**
+-   ****: A new React component for managing and displaying culminating project details.
+    - **Summary of importance**: Crucial for the new culminating projects feature.
+    - **Summary of changes made**:  was modified for Portfolio integration;  was added to flow project notes to Flightbook.
+-   ****: Contains testing protocols, records communication, and outcomes with testing agents.
+    - **Summary of importance**: Essential for managing the testing workflow and maintaining a record of progress and feedback.
+    - **Summary of changes made**: Periodically updated to reflect implementation status, test results (e.g., backend API verification), and user feedback.
+
 </code_architecture>
 
 <pending_tasks>
--   **Culminating Project Notes/Files Integration**: Further integration of specific notes and files associated with culminating projects into the portfolio, beyond the initial component and API scaffolding.
--   **Multi-Level Progression**: Implementation of progression beyond Navigator (Level 3) to higher levels (4-6), including the ability to view work from previous levels.
+- **Culminating Project Notes/Files Integration**: Further integration of specific notes and files associated with culminating projects into the portfolio.
+- **Multi-Level Progression**: Implementation of progression beyond Navigator (Level 3) to higher levels (4-6), including viewing work from previous levels.
 </pending_tasks>
 
 <current_work>
-Immediately prior to this summary, the AI engineer was focused on resolving a critical dual data source problem where the frontend's user view relied on over 312 hardcoded data items, leading to inconsistencies with dynamic data updated through the admin panel. This issue affected Foundation Courses, Dive Deeper Resources, and Monthly Activities descriptions, titles, and URLs.
+Immediately prior to this summary, the AI engineer was systematically addressing a critical dual data source problem where the frontend's user view relied heavily on over 312 hardcoded data items for Foundation Courses, Dive Deeper Resources, and Monthly Activities. This hardcoding caused inconsistencies with dynamic data updated via the admin panel.
 
-The engineer applied an immediate fix for a specific Being a Team Player course discrepancy in  (line 3042). Subsequently, an architectural change was initiated in  within the  function. The goal was to ensure user competencies are loaded primarily from the backend API, thus moving away from hardcoded data within  and establishing the backend as the single source of truth for both admin and user views.
+A 10-step plan was adopted to resolve this. The engineer had completed the following steps:
+1.  **Phase 1, Step 1: Audit Backend API**: Console logging was added to  to inspect the backend  response. Backend testing confirmed the API delivers the expected data structure, verifying its readiness.
+2.  **Phase 1, Step 2: Create New API Function**: A  function was created in  as a parallel, independent function to fetch and process data from the backend.
+3.  **Phase 1, Step 3: Add Toggle Switch**: An environment variable  was added to , and logic was introduced in  to conditionally use either the new API function or the existing hardcoded logic.
+4.  **Phase 2, Step 4: Foundation Courses Migration**: The  function was modified to fetch and selectively integrate Foundation Courses data from the backend API.
+5.  **Phase 2, Step 5: Dive Deeper Resources Migration**: The  function was further extended to include Dive Deeper Resources from the backend API.
 
-However, the complete refactoring of the massive  function proved complex due to its size and intricate hardcoded structure. The current work culminated in the user requesting a bite-sized, step-by-step plan to systematically address this comprehensive hardcoded data issue and unify the data flow. The AI engineer responded with a detailed 10-step plan, divided into three phases: Investigation & Preparation, Component-by-Component Migration, and Full Migration & Cleanup, each with clear success criteria and risk mitigation.
+Despite this functional progress in integrating backend data, the frontend () remains plagued by persistent and complex JavaScript parsing errors. These errors stem from numerous deeply intertwined, malformed hardcoded data structures and duplicate function declarations (, , ). Repeated attempts to fix these syntax issues, including using the , have not yet yielded a stable, fully loading frontend application. The last reported parsing error was at line 577 in .
 </current_work>
 
 <optional_next_step>
-The next step is to begin Step 1: Audit Backend API from the proposed plan to analyze the backend  response structure.
+Address and resolve the persistent parsing errors in  (currently reported at line 577) to enable the frontend to load, then proceed with Step 6: Add Monthly Activities migration.
 </optional_next_step>
