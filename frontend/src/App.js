@@ -1000,6 +1000,20 @@ const AuthenticatedApp = () => {
     const autoSaveInterval = setInterval(autoSaveUserProgress, 30000);
     return () => clearInterval(autoSaveInterval);
   }, [competencies, portfolio, competencyTaskProgress, coreValueEntries]);
+
+  const loadUserData = async (userId, refinedCompetencies = null) => {
+    console.log(`🔄 Loading user data for ID: ${userId}`);
+    
+    // ARCHITECTURAL FIX: Always load competencies from backend API to ensure admin-user sync
+    let baseCompetencies = null;
+    
+    try {
+      // Always try to load competencies from backend first
+      console.log('📚 Loading competencies from backend API for user sync...');
+      const competenciesResponse = await axios.get(`${API}/users/${userId}/competencies`, {
+        timeout: 10000,
+        validateStatus: (status) => status < 500
+      });
       
       if (competenciesResponse.status === 200 && competenciesResponse.data) {
         console.log('✅ Successfully loaded competencies from backend API for user data');
