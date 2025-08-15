@@ -585,8 +585,34 @@ const AuthenticatedApp = () => {
       setLoading(false);
     }
   };
-            total_tasks: 4,
-            core_learning_question: "What makes someone excited to come to work for me specifically?",
+
+  // Setup demo user with empty competencies - actual data loaded by setupRefinedCompetencies
+  const setupDemoUser = useCallback(() => {
+    console.log('🎯 Setting up demo user...');
+    
+    setUser({
+      id: 'demo-user',
+      username: 'Demo User',
+      level: 'Navigator',
+      isDemo: true
+    });
+    
+    // Set demo competencies with PROPER structure matching what UI expects
+    // Initialize with basic competency structure - actual data loaded by setupRefinedCompetencies
+    setCompetencies({});
+    
+    console.log('✅ Demo user setup complete - competencies will be loaded by setupRefinedCompetencies');
+    
+    // Set empty portfolio
+    setPortfolio([]);
+    
+    // Clear loading state
+    setLoading(false);
+    console.log('Demo environment ready - can now fix text visibility issues');
+    
+    // FINAL OVERRIDE: Ensure dashboard view is set after all processing
+    console.log('🔒 FINAL OVERRIDE: Setting dashboard view for all users');
+    setCurrentView('dashboard');
             foundation_courses: [
               {
                 id: "ls-new-fc-01",
