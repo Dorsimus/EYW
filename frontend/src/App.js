@@ -568,23 +568,6 @@ const AuthenticatedApp = () => {
     }
   };
 
-  const initializeUser = async (userData) => {
-    try {
-      console.log('Initializing user with data:', userData);
-      console.log('Setting loading to true');
-      console.log('Setting user data and loading user data...');
-      
-      // Set user data
-      setUser(userData);
-      setLoading(false);
-      
-      console.log('✅ User initialization complete');
-      
-    } catch (error) {
-      console.error('Error initializing user:', error);
-      setLoading(false);
-    }
-  };
 
   // Setup demo user with empty competencies - actual data loaded by setupRefinedCompetencies
   const setupDemoUser = useCallback(() => {
