@@ -1246,8 +1246,6 @@ const AuthenticatedApp = () => {
     console.log('🔄 User data loading complete');
     setLoading(false);
   };
-            ],
-            competency_gate: "Accurately explain department's P&L impact + Implement financial improvement"
           },
           departmental_budget_management: {
             name: "Departmental Budget Management",
