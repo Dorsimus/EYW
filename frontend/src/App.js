@@ -302,4 +302,7 @@ const App = () => {
   );
 };
 
+// Export AuthenticatedApp for use in ClerkApp.js
+export { AuthenticatedApp };
+
 export default App;
