@@ -19,8 +19,23 @@ from functools import lru_cache
 from passlib.context import CryptContext
 import asyncio
 
-# AI Service imports
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+# AI Service imports - temporarily disabled due to dependency issues
+# from emergentintegrations.llm.chat import LlmChat, UserMessage
+
+# Temporary stub classes to prevent undefined name errors
+class LlmChat:
+    def __init__(self, *args, **kwargs):
+        pass
+    def with_model(self, *args, **kwargs):
+        return self
+    def with_max_tokens(self, *args, **kwargs):
+        return self
+    async def send_message(self, *args, **kwargs):
+        return "AI service temporarily disabled"
+
+class UserMessage:
+    def __init__(self, *args, **kwargs):
+        pass
 
 # Import flightbook router
 from routers.flightbook import router as flightbook_router
