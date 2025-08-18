@@ -144,12 +144,14 @@ def require_roles(required_roles: List[str]):
         user_metadata = current_user.get("metadata", {})
         user_roles = user_metadata.get("roles", [])
         
-        # TEMPORARY FIX: If metadata is missing but we know this is an admin user
-        # Check if this is Matt Williams (the admin user) by user ID
+        # Environment-based admin user configuration
         user_id = current_user.get("sub", "")
-        if user_id == "user_30vth9baPWjZZCkjLSUgOrW2Mvy":
-            logging.info(f"Granting admin access to known admin user: {user_id}")
-            user_roles = ["admin"]  # Temporarily grant admin role
+        admin_user_ids = os.getenv("ADMIN_USER_IDS", "").split(",")
+        admin_user_ids = [uid.strip() for uid in admin_user_ids if uid.strip()]
+        
+        if user_id in admin_user_ids:
+            logging.info(f"Granting admin access to environment-configured admin user: {user_id}")
+            user_roles = ["admin"]
         
         # Also check for public_metadata as fallback
         if not user_roles:
