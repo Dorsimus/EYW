@@ -12,7 +12,7 @@ import time
 from datetime import datetime
 
 class BackendHealthChecker:
-    def __init__(self, base_url="https://earn-wings-migrate.preview.emergentagent.com"):
+    def __init__(self, base_url="https://deploy-setup.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.tests_run = 0
