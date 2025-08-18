@@ -694,6 +694,38 @@ NAVIGATOR_COMPETENCIES = {
         "sub_competencies": {
             "departmental_budget_management": {
                 "name": "Departmental Budget Management",
+                "foundation_courses": [
+                    {
+                        "id": "fm-fc-01",
+                        "title": "Budget Management Fundamentals",
+                        "duration": "2 hours",
+                        "platform": "PerformanceHQ",
+                        "description": "Creating and managing departmental budgets",
+                        "url": "https://www.performancehq.com/course/budget-management"
+                    },
+                    {
+                        "id": "fm-fc-02",
+                        "title": "Financial Analysis for Managers",
+                        "duration": "1.5 hours",
+                        "platform": "PerformanceHQ",
+                        "description": "Reading and interpreting financial reports",
+                        "url": "https://www.performancehq.com/course/financial-analysis"
+                    }
+                ],
+                "dive_deeper_resources": [
+                    {
+                        "title": "The Manager's Guide to Financial Statement Analysis",
+                        "type": "Book",
+                        "description": "Understanding financial statements and budget variance analysis",
+                        "url": "https://www.amanet.org/financial-statement-analysis/"
+                    },
+                    {
+                        "title": "Zero-Based Budgeting Methodology",
+                        "type": "Guide/Methodology",
+                        "description": "Modern budgeting approaches for better resource allocation",
+                        "url": "https://www.mckinsey.com/capabilities/operations/our-insights/zero-based-budgeting"
+                    }
+                ],
                 "monthly_activities": [
                     {
                         "month": 1,
