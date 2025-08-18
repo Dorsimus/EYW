@@ -12,7 +12,7 @@ from datetime import datetime
 import io
 
 class ComprehensiveBackendAPITester:
-    def __init__(self, base_url="https://mongo-health-check.preview.emergentagent.com"):
+    def __init__(self, base_url="https://auth-validation-1.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.tests_run = 0

@@ -9,7 +9,7 @@ import requests
 import sys
 
 # Configuration
-API_URL = "https://mongo-health-check.preview.emergentagent.com/api"
+API_URL = "https://auth-validation-1.preview.emergentagent.com/api"
 
 async def create_admin():
     print("🔧 Creating Admin User for Earn Your Wings Platform")
