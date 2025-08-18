@@ -586,6 +586,38 @@ NAVIGATOR_COMPETENCIES = {
             },
             "building_collaborative_culture": {
                 "name": "Building Collaborative Culture",
+                "foundation_courses": [
+                    {
+                        "id": "ls-fc-05",
+                        "title": "Building High-Performing Teams",
+                        "duration": "1.5 hours",
+                        "platform": "PerformanceHQ",
+                        "description": "Creating collaborative team environments",
+                        "url": "https://www.performancehq.com/course/high-performing-teams"
+                    },
+                    {
+                        "id": "ls-fc-06",
+                        "title": "Organizational Culture Change",
+                        "duration": "1 hour",
+                        "platform": "PerformanceHQ",
+                        "description": "Leading cultural transformation initiatives",
+                        "url": "https://www.performancehq.com/course/culture-change"
+                    }
+                ],
+                "dive_deeper_resources": [
+                    {
+                        "title": "The Culture Code: The Secrets of Highly Successful Groups",
+                        "type": "Book",
+                        "description": "Daniel Coyle's insights on building successful team cultures",
+                        "url": "https://danielcoyle.com/the-culture-code/"
+                    },
+                    {
+                        "title": "Psychological Safety and Innovation",
+                        "type": "Research/Article",
+                        "description": "Amy Edmondson's work on creating safe team environments",
+                        "url": "https://hbr.org/topics/psychological-safety"
+                    }
+                ],
                 "monthly_activities": [
                     {
                         "month": 1,
