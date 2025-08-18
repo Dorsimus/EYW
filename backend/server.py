@@ -116,9 +116,11 @@ def validate_clerk_token(token: str) -> Dict[str, Any]:
             detail="Token has expired"
         )
     except jwt.InvalidTokenError as e:
+        # Log the detailed error for debugging but don't expose it to the client
+        logging.warning(f"JWT validation failed: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Invalid token: {str(e)}"
+            detail="Invalid token"
         )
 
 # Authentication dependency
