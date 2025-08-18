@@ -745,6 +745,38 @@ NAVIGATOR_COMPETENCIES = {
             },
             "cost_conscious_decision_making": {
                 "name": "Cost-Conscious Decision Making",
+                "foundation_courses": [
+                    {
+                        "id": "fm-fc-03",
+                        "title": "Cost-Benefit Analysis",
+                        "duration": "1.5 hours",
+                        "platform": "PerformanceHQ",
+                        "description": "Evaluating financial impact of business decisions",
+                        "url": "https://www.performancehq.com/course/cost-benefit-analysis"
+                    },
+                    {
+                        "id": "fm-fc-04",
+                        "title": "ROI Calculation Methods",
+                        "duration": "1 hour",
+                        "platform": "PerformanceHQ",
+                        "description": "Measuring return on investment for projects",
+                        "url": "https://www.performancehq.com/course/roi-calculation"
+                    }
+                ],
+                "dive_deeper_resources": [
+                    {
+                        "title": "The CFO Guidebook: Third Edition",
+                        "type": "Book",
+                        "description": "Financial decision-making frameworks for managers",
+                        "url": "https://www.accountingtools.com/books/cfo-guidebook"
+                    },
+                    {
+                        "title": "Capital Allocation and Decision Making",
+                        "type": "Course/Guide",
+                        "description": "Advanced techniques for resource allocation decisions",
+                        "url": "https://www.investopedia.com/articles/investing/112114/capital-allocation-key-factor-returns.asp"
+                    }
+                ],
                 "monthly_activities": [
                     {
                         "month": 1,
