@@ -796,6 +796,38 @@ NAVIGATOR_COMPETENCIES = {
             },
             "property_pl_understanding": {
                 "name": "Property P&L Understanding",
+                "foundation_courses": [
+                    {
+                        "id": "fm-fc-05",
+                        "title": "Property P&L Analysis",
+                        "duration": "2 hours",
+                        "platform": "PerformanceHQ",
+                        "description": "Understanding property profit and loss statements",
+                        "url": "https://www.performancehq.com/course/property-pl-analysis"
+                    },
+                    {
+                        "id": "fm-fc-06",
+                        "title": "Real Estate Financial Metrics",
+                        "duration": "1.5 hours",
+                        "platform": "PerformanceHQ",
+                        "description": "Key performance indicators for property management",
+                        "url": "https://www.performancehq.com/course/real-estate-metrics"
+                    }
+                ],
+                "dive_deeper_resources": [
+                    {
+                        "title": "Real Estate Finance and Investments",
+                        "type": "Book",
+                        "description": "Comprehensive guide to property financial analysis",
+                        "url": "https://www.mheducation.com/highered/product/real-estate-finance-investments-brueggeman-fisher/M9781259919688.html"
+                    },
+                    {
+                        "title": "NARPM Financial Management Guide",
+                        "type": "Industry Guide",
+                        "description": "Property management financial best practices",
+                        "url": "https://www.narpm.org/education/financial-management"
+                    }
+                ],
                 "monthly_activities": [
                     {
                         "month": 1,
