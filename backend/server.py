@@ -237,8 +237,8 @@ ALLOWED_MIME_TYPES = {
     'text/rtf'
 }
 
-# Security configuration
-SECRET_KEY = "your-secret-key-here-change-in-production"  # In production, use proper secret
+# Security configuration - Environment-based secret key
+SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-here-change-in-production")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
