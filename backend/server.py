@@ -847,6 +847,38 @@ NAVIGATOR_COMPETENCIES = {
             },
             "financial_performance_analysis": {
                 "name": "Financial Performance Analysis",
+                "foundation_courses": [
+                    {
+                        "id": "fm-fc-07",
+                        "title": "Variance Analysis Techniques",
+                        "duration": "1.5 hours",
+                        "platform": "PerformanceHQ",
+                        "description": "Analyzing budget vs actual performance",
+                        "url": "https://www.performancehq.com/course/variance-analysis"
+                    },
+                    {
+                        "id": "fm-fc-08",
+                        "title": "Financial Forecasting",
+                        "duration": "2 hours",
+                        "platform": "PerformanceHQ",
+                        "description": "Predicting financial performance and trends",
+                        "url": "https://www.performancehq.com/course/financial-forecasting"
+                    }
+                ],
+                "dive_deeper_resources": [
+                    {
+                        "title": "Financial Statement Analysis & Valuation",
+                        "type": "Book",
+                        "description": "Advanced financial analysis techniques",
+                        "url": "https://www.cengage.com/c/financial-statement-analysis-valuation-5e-easton"
+                    },
+                    {
+                        "title": "Business Intelligence for Finance",
+                        "type": "Course/Tool",
+                        "description": "Using data analytics for financial insights",
+                        "url": "https://www.tableau.com/learn/articles/financial-analysis"
+                    }
+                ],
                 "monthly_activities": [
                     {
                         "month": 1,
