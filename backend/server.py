@@ -637,6 +637,38 @@ NAVIGATOR_COMPETENCIES = {
             },
             "developing_individual_team_members": {
                 "name": "Developing Individual Team Members",
+                "foundation_courses": [
+                    {
+                        "id": "ls-fc-07",
+                        "title": "Career Development Coaching",
+                        "duration": "1.5 hours",
+                        "platform": "PerformanceHQ",
+                        "description": "Coaching techniques for individual development",
+                        "url": "https://www.performancehq.com/course/career-coaching"
+                    },
+                    {
+                        "id": "ls-fc-08",
+                        "title": "Strengths-Based Leadership",
+                        "duration": "1 hour",
+                        "platform": "PerformanceHQ",
+                        "description": "Leveraging individual strengths for team success",
+                        "url": "https://www.performancehq.com/course/strengths-leadership"
+                    }
+                ],
+                "dive_deeper_resources": [
+                    {
+                        "title": "The Coaching Habit: Say Less, Ask More & Change the Way You Lead Forever",
+                        "type": "Book",
+                        "description": "Michael Bungay Stanier's practical coaching framework",
+                        "url": "https://boxofcrayons.com/the-coaching-habit-book/"
+                    },
+                    {
+                        "title": "StrengthsFinder 2.0",
+                        "type": "Assessment/Book",
+                        "description": "Identifying and developing individual strengths",
+                        "url": "https://www.gallup.com/cliftonstrengths/"
+                    }
+                ],
                 "monthly_activities": [
                     {
                         "month": 1,
