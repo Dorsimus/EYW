@@ -187,8 +187,7 @@ async def get_storage_stats(admin_user = Depends(require_admin)):
         
         return total_size, file_count
     
-    # Define storage directories
-    from server import PORTFOLIO_DIR, EVIDENCE_DIR, TEMP_DIR
+    # Storage directories are already imported
     
     # Get stats for each directory
     portfolio_size, portfolio_files = get_directory_size(PORTFOLIO_DIR)
