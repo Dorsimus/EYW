@@ -3229,7 +3229,7 @@ const AuthenticatedApp = () => {
                 curiosity_question: "How can I create such open communication that difficult conversations become rare because issues get addressed early?"
               }
             ],
-            competency_gate: "Successfully navigate challenging conversation + Demonstrate relationship strengthening"
+            competency_gate: "Successfully navigate challenging conversation + Demonstrate relationship strengthening",
           },
           building_collaborative_culture: {
             name: "Building Collaborative Team Culture",
