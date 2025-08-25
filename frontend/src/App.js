@@ -3195,7 +3195,7 @@ const AuthenticatedApp = () => {
   // Core Values Functions
   const handleAddCoreValueEntry = async (valueKey) => {
     console.log('🎯 handleAddCoreValueEntry called with valueKey:', valueKey);
-            foundation_courses: [
+    console.log('📝 newEntry.story:', newEntry.story);
               {
                 title: "Building a Team Culture",
                 duration: "1 hour",
