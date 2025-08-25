@@ -14,8 +14,9 @@ from models.competency import TaskCreate, TaskUpdate, TaskCompletionCreate, Task
 from models.portfolio import PortfolioItemCreate, PortfolioItemUpdate, PortfolioItemResponse
 from models.flightbook import FlightbookEntryCreate, FlightbookEntryUpdate, FlightbookEntryResponse
 
-# Import authentication dependencies from existing server
-from server import get_current_user, require_admin, save_uploaded_file
+# Import authentication and file handling utilities
+from auth_utils import get_current_user, require_admin
+from file_utils import save_uploaded_file
 
 # Create API router
 api_router = APIRouter(prefix="/api")
