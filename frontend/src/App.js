@@ -3191,53 +3191,6 @@ const AuthenticatedApp = () => {
     console.log('🔄 User data loading complete');
     setLoading(false);
   };
-
-  // Core Values Data
-  const coreValues = {
-              {
-                month: 1,
-                title: "Conversation Courage Building",
-                in_flow_activity: "Practice having one 'slightly difficult' conversation each week with increasing confidence",
-                document_section: {
-                  title: "Difficult Conversation Practice Log",
-                  description: "Conversations you've had and what you learned",
-                  portfolio_integration: true
-                },
-                leadership_integration: "Apply conversation skills to daily interactions",
-                journal_prompt: "What makes difficult conversations easier for me? How has my confidence in addressing issues changed?"
-              },
-              {
-                month: 2,
-                title: "Relationship-First Approach",
-                in_flow_activity: "Focus on strengthening relationships before, during, and after difficult conversations",
-                document_section: {
-                  title: "Relationship Impact Results",
-                  description: "How focusing on relationships changed conversation outcomes",
-                  portfolio_integration: true
-                },
-                cross_functional_integration: "Practice difficult conversations across departments",
-                journal_prompt: "How does leading with relationship care change the dynamic of difficult conversations?"
-              },
-              {
-                month: 3,
-                title: "Proactive Problem Prevention",
-                in_flow_activity: "Develop systems for addressing small issues before they become difficult conversations",
-                document_section: {
-                  title: "Prevention Systems in Action",
-                  description: "Systems you've created to prevent conflicts",
-                  portfolio_integration: true
-                },
-                operational_integration: "Build conflict prevention into regular management practices",
-                curiosity_question: "How can I create such open communication that difficult conversations become rare because issues get addressed early?"
-              }
-            ],
-            competency_gate: "Successfully navigate challenging conversation + Demonstrate relationship strengthening",
-          },
-          building_collaborative_culture: {
-            name: "Building Collaborative Team Culture",
-            description: "How do I create a team environment where collaboration feels natural, not forced?",
-            duration: "3-4 months",
-            weekly_time: "~15 minutes",
             progress_percentage: 0,
             completed_tasks: 0,
             total_tasks: 4,
