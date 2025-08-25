@@ -3191,7 +3191,9 @@ const AuthenticatedApp = () => {
     console.log('🔄 User data loading complete');
     setLoading(false);
   };
-            monthly_activities: [
+
+  // Core Values Data
+  const coreValues = {
               {
                 month: 1,
                 title: "Conversation Courage Building",
