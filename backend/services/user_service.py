@@ -188,7 +188,8 @@ class UserService:
         users_by_level = {result['_id']: result['count'] for result in level_results}
         
         # Recent registrations (last 30 days)
-        thirty_days_ago = datetime.utcnow().replace(day=datetime.utcnow().day - 30)
+        from datetime import timedelta
+        thirty_days_ago = datetime.utcnow() - timedelta(days=30)
         recent_registrations = await self.users_collection.count_documents({
             'created_at': {'$gte': thirty_days_ago}
         })
