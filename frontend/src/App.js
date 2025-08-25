@@ -3193,7 +3193,7 @@ const AuthenticatedApp = () => {
   };
 
   // Core Values Functions
-            total_tasks: 4,
+  const handleAddCoreValueEntry = async (valueKey) => {
             core_learning_question: "How do I create a team environment where collaboration feels natural, not forced?",
             foundation_courses: [
               {
