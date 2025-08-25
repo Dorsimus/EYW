@@ -19,11 +19,12 @@ from api_routes import api_router, set_database_manager
 from routers.flightbook import router as flightbook_router
 from routers.project import router as project_router
 
-# Import authentication utilities from the original server
-from server import (
-    get_current_user, require_admin, require_admin_or_moderator,
+# Import authentication and file utilities
+from auth_utils import get_current_user, require_admin
+from file_utils import (
     save_uploaded_file, validate_file, generate_secure_filename,
-    get_file_storage_path, delete_file, format_file_size
+    get_file_storage_path, delete_file, format_file_size,
+    PORTFOLIO_DIR, EVIDENCE_DIR, TEMP_DIR, UPLOAD_DIR
 )
 
 # Configure logging
