@@ -2988,6 +2988,88 @@ const AuthenticatedApp = () => {
     }
   };
 
+  // Load competency tasks function
+  const loadCompetencyTasks = (areaKey, subKey = null) => {
+    console.log(`🔍 Loading competency tasks for area: ${areaKey}, sub: ${subKey}`);
+    
+    if (areaKey && competencies[areaKey]) {
+      setSelectedCompetency({ area: areaKey, sub: subKey });
+      
+      // Extract tasks for this competency area/sub-competency
+      const areaData = competencies[areaKey];
+      let tasks = [];
+      
+      if (subKey && areaData.sub_competencies && areaData.sub_competencies[subKey]) {
+        // Load tasks for specific sub-competency
+        const subData = areaData.sub_competencies[subKey];
+        
+        // Collect different types of tasks
+        if (subData.foundation_courses) {
+          tasks = tasks.concat(subData.foundation_courses.map(course => ({
+            ...course,
+            type: 'foundation_course',
+            competency_area: areaKey,
+            sub_competency: subKey
+          })));
+        }
+        
+        if (subData.monthly_activities) {
+          tasks = tasks.concat(subData.monthly_activities.map(activity => ({
+            ...activity,
+            type: 'monthly_activity',
+            competency_area: areaKey,
+            sub_competency: subKey
+          })));
+        }
+        
+        if (subData.dive_deeper_resources) {
+          tasks = tasks.concat(subData.dive_deeper_resources.map(resource => ({
+            ...resource,
+            type: 'dive_deeper_resource',
+            competency_area: areaKey,
+            sub_competency: subKey
+          })));
+        }
+      } else {
+        // Load all tasks for the competency area
+        Object.entries(areaData.sub_competencies || {}).forEach(([subCompKey, subCompData]) => {
+          if (subCompData.foundation_courses) {
+            tasks = tasks.concat(subCompData.foundation_courses.map(course => ({
+              ...course,
+              type: 'foundation_course',
+              competency_area: areaKey,
+              sub_competency: subCompKey
+            })));
+          }
+          
+          if (subCompData.monthly_activities) {
+            tasks = tasks.concat(subCompData.monthly_activities.map(activity => ({
+              ...activity,
+              type: 'monthly_activity',
+              competency_area: areaKey,
+              sub_competency: subCompKey
+            })));
+          }
+          
+          if (subCompData.dive_deeper_resources) {
+            tasks = tasks.concat(subCompData.dive_deeper_resources.map(resource => ({
+              ...resource,
+              type: 'dive_deeper_resource',
+              competency_area: areaKey,
+              sub_competency: subCompKey
+            })));
+          }
+        });
+      }
+      
+      setCompetencyTasks(tasks);
+      console.log(`✅ Loaded ${tasks.length} tasks for ${areaKey}${subKey ? ` -> ${subKey}` : ''}`);
+    } else {
+      console.warn(`⚠️ Competency area ${areaKey} not found`);
+      setCompetencyTasks([]);
+    }
+  };
+
   // PHASE 1 STEP 1: Backend API Audit - setupRefinedCompetencies function with comprehensive logging
   const setupRefinedCompetencies = async () => {
     try {
