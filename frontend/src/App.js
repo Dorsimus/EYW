@@ -3194,7 +3194,7 @@ const AuthenticatedApp = () => {
 
   // Core Values Functions
   const handleAddCoreValueEntry = async (valueKey) => {
-            core_learning_question: "How do I create a team environment where collaboration feels natural, not forced?",
+    console.log('🎯 handleAddCoreValueEntry called with valueKey:', valueKey);
             foundation_courses: [
               {
                 title: "Building a Team Culture",
