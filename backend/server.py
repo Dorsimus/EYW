@@ -19,8 +19,8 @@ from functools import lru_cache
 from passlib.context import CryptContext
 import asyncio
 
-# AI Service imports
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+# AI Service imports - temporarily disabled
+# from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 # Import flightbook router
 from routers.flightbook import router as flightbook_router
