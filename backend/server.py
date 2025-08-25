@@ -254,7 +254,7 @@ async def detailed_health_check():
     
     # Check database connectivity
     try:
-        if db_manager and db_manager.db:
+        if db_manager is not None and db_manager.db is not None:
             await db_manager.db.command('ping')
             health_status["components"]["database"] = {
                 "status": "healthy",
