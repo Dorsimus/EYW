@@ -2988,6 +2988,17 @@ const AuthenticatedApp = () => {
     }
   };
 
+  // Complete task function - delegates to handleCompleteCompetencyTask
+  const completeTask = async (taskId, notes = '', taskType = 'course') => {
+    console.log(`🎯 Completing task: ${taskId}`);
+    
+    if (selectedCompetency && selectedCompetency.area && selectedCompetency.sub) {
+      await handleCompleteCompetencyTask(selectedCompetency.area, selectedCompetency.sub, taskId, notes, taskType);
+    } else {
+      console.warn('⚠️ No selected competency for task completion');
+    }
+  };
+
   // Load competency tasks function
   const loadCompetencyTasks = (areaKey, subKey = null) => {
     console.log(`🔍 Loading competency tasks for area: ${areaKey}, sub: ${subKey}`);
