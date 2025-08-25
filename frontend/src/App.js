@@ -2988,6 +2988,52 @@ const AuthenticatedApp = () => {
     }
   };
 
+  // Reload portfolio function
+  const reloadPortfolio = async () => {
+    try {
+      console.log('🔄 Reloading portfolio data...');
+      
+      if (user?.id) {
+        // Try to load from backend API first
+        try {
+          const response = await axios.get(`${API}/users/${user.id}/portfolio`, {
+            timeout: 5000,
+            validateStatus: (status) => status < 500
+          });
+          
+          if (response.status === 200 && response.data) {
+            setPortfolio(response.data);
+            console.log(`✅ Loaded ${response.data.length} portfolio items from backend`);
+            return;
+          }
+        } catch (apiError) {
+          console.warn('⚠️ Backend portfolio API not available, using localStorage');
+        }
+      }
+      
+      // Fallback to localStorage
+      const localUserId = user?.id || getStoredUserId();
+      const savedPortfolio = localStorage.getItem(`portfolio_${localUserId}`);
+      
+      if (savedPortfolio) {
+        try {
+          const parsedPortfolio = JSON.parse(savedPortfolio);
+          setPortfolio(parsedPortfolio);
+          console.log(`✅ Loaded ${parsedPortfolio.length} portfolio items from localStorage`);
+        } catch (error) {
+          console.error('❌ Error parsing saved portfolio:', error);
+          setPortfolio([]);
+        }
+      } else {
+        console.log('ℹ️ No portfolio data found, starting with empty portfolio');
+        setPortfolio([]);
+      }
+    } catch (error) {
+      console.error('❌ Error reloading portfolio:', error);
+      setPortfolio([]);
+    }
+  };
+
   // Complete task function - delegates to handleCompleteCompetencyTask
   const completeTask = async (taskId, notes = '', taskType = 'course') => {
     console.log(`🎯 Completing task: ${taskId}`);
