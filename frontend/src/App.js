@@ -3191,7 +3191,6 @@ const AuthenticatedApp = () => {
     console.log('🔄 User data loading complete');
     setLoading(false);
   };
-            progress_percentage: 0,
             completed_tasks: 0,
             total_tasks: 4,
             core_learning_question: "How do I create a team environment where collaboration feels natural, not forced?",
