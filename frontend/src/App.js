@@ -6704,13 +6704,13 @@ const CompetenciesView = ({
   const handleViewDetails = async (areaKey, subKey) => {
     console.log(`🔍 View Details clicked: ${areaKey} -> ${subKey}`);
     
-    if (expandedArea?.area === areaKey && expandedArea?.sub === subKey) {
+    if (expandedArea === `${areaKey}_${subKey}`) {
       // Already expanded, collapse it
       setExpandedArea(null);
       setCompetencyTasks([]);
     } else {
       // Expand new area and load tasks from database
-      setExpandedArea({ area: areaKey, sub: subKey });
+      setExpandedArea(`${areaKey}_${subKey}`);
       console.log(`📡 Loading tasks from database API for ${areaKey}/${subKey}...`);
       
       try {
