@@ -1147,9 +1147,11 @@ async def get_user_tasks_for_competency(user_id: str, competency_area: str, sub_
     serialized_tasks = []
     for task in tasks:
         task_data = serialize_doc(task)
-        task_data["completed"] = task["id"] in completion_map
+        # Handle both id and _id fields consistently
+        task_id = task.get("id", str(task["_id"]))
+        task_data["completed"] = task_id in completion_map
         if task_data["completed"]:
-            task_data["completion_data"] = completion_map[task["id"]]
+            task_data["completion_data"] = completion_map[task_id]
         serialized_tasks.append(task_data)
     
     return serialized_tasks
