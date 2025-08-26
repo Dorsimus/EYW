@@ -211,18 +211,22 @@ const AuthenticatedApp = () => {
 
   // Load tasks from competencies whenever competencies data changes
   useEffect(() => {
-    if (Object.keys(competencies).length > 0) {
-      console.log('🔄 Updating tasks from competencies data...');
-      console.log('📊 Competencies available:', Object.keys(competencies));
-      const realTasks = await getAllTasksFromCompetencies(competencies);
-      console.log(`📚 Updated ${realTasks.length} tasks for content management`);
-      if (realTasks.length > 0) {
-        console.log('📝 Sample task:', realTasks[0]);
+    const loadTasks = async () => {
+      if (Object.keys(competencies).length > 0) {
+        console.log('🔄 Updating tasks from competencies data...');
+        console.log('📊 Competencies available:', Object.keys(competencies));
+        const realTasks = await getAllTasksFromCompetencies(competencies);
+        console.log(`📚 Updated ${realTasks.length} tasks for content management`);
+        if (realTasks.length > 0) {
+          console.log('📝 Sample task:', realTasks[0]);
+        }
+        setAllTasks(realTasks);
+      } else {
+        console.log('⏳ Competencies not loaded yet, waiting...');
       }
-      setAllTasks(realTasks);
-    } else {
-      console.log('⏳ Competencies not loaded yet, waiting...');
-    }
+    };
+    
+    loadTasks();
   }, [competencies]);
 
   // CRITICAL FIX: Process converted tasks when allTasks and databaseTasksForProcessing update
