@@ -3135,13 +3135,40 @@ const AuthenticatedApp = () => {
           console.log(`   - Sub-competency keys:`, Object.keys(areaData.sub_competencies || {}));
         });
         
-        // Set the competencies state with backend data
-        setCompetencies(backendCompetencies);
+        // Transform backend data to match frontend expectations
+        console.log('🔄 Transforming backend data to match frontend format...');
+        const transformedCompetencies = {};
+        
+        Object.entries(backendCompetencies).forEach(([areaKey, areaData]) => {
+          transformedCompetencies[areaKey] = {
+            ...areaData,
+            sub_competencies: {}
+          };
+          
+          // Transform sub_competencies from strings to objects
+          if (areaData.sub_competencies) {
+            Object.entries(areaData.sub_competencies).forEach(([subKey, subName]) => {
+              transformedCompetencies[areaKey].sub_competencies[subKey] = {
+                name: subName,
+                description: `${subName} competency development`,
+                completed_tasks: 0,
+                total_tasks: 0,
+                progress_percentage: 0
+              };
+            });
+          }
+        });
+        
+        console.log('✅ Data transformation complete');
+        console.log('📊 Transformed competencies structure:', transformedCompetencies);
+        
+        // Set the competencies state with transformed data
+        setCompetencies(transformedCompetencies);
         
         console.log('✅ PHASE 1 STEP 1 COMPLETE: Backend API audit logging successful');
         console.log('📋 NEXT STEPS: Proceed to Step 2 (Create loadCompetenciesFromAPI function)');
         
-        return backendCompetencies;
+        return transformedCompetencies;
       } else {
         console.error('❌ Backend API audit failed - invalid response:', response.status);
         throw new Error(`Backend API returned status: ${response.status}`);
