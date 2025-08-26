@@ -6653,6 +6653,7 @@ const CompetenciesView = ({
   onViewTasks, 
   selectedCompetency, 
   competencyTasks, 
+  setCompetencyTasks,
   onCompleteTask,
   competencyTaskProgress,
   onCompleteCompetencyTask,
