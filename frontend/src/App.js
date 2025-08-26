@@ -3183,20 +3183,68 @@ const AuthenticatedApp = () => {
           name: "Leadership & Supervision",
           description: "Leadership Isn't a Title, It's How You Show Up Every Day",
           sub_competencies: {
-            inspiring_team_motivation: "Inspiring Team Motivation & Engagement",
-            mastering_difficult_conversations: "Mastering Difficult Conversations", 
-            building_collaborative_culture: "Building Collaborative Team Culture",
-            developing_others_success: "Developing Others for Success"
+            inspiring_team_motivation: {
+              name: "Inspiring Team Motivation & Engagement",
+              description: "What makes someone excited to come to work for you specifically?",
+              completed_tasks: 0,
+              total_tasks: 0,
+              progress_percentage: 0
+            },
+            mastering_difficult_conversations: {
+              name: "Mastering Difficult Conversations",
+              description: "How do I have conversations that strengthen relationships while raising standards?",
+              completed_tasks: 0,
+              total_tasks: 0,
+              progress_percentage: 0
+            },
+            building_collaborative_culture: {
+              name: "Building Collaborative Team Culture",
+              description: "How do we have high standards AND have fun together?",
+              completed_tasks: 0,
+              total_tasks: 0,
+              progress_percentage: 0
+            },
+            developing_others_success: {
+              name: "Developing Others for Success",
+              description: "How do I help each person become the best version of themselves?",
+              completed_tasks: 0,
+              total_tasks: 0,
+              progress_percentage: 0
+            }
           }
         },
         financial_management: {
           name: "Financial Management & Business Acumen",
           description: "Every Decision Has a Dollar Impact - Make Them Count",
           sub_competencies: {
-            property_pl_understanding: "Property P&L Understanding",
-            departmental_budget_management: "Departmental Budget Management",
-            cost_conscious_decision_making: "Cost-Conscious Decision Making",
-            financial_communication_business_understanding: "Financial Communication & Business Understanding"
+            property_pl_understanding: {
+              name: "Property P&L Understanding",
+              description: "How does my department's daily work show up on the property's financial statement?",
+              completed_tasks: 0,
+              total_tasks: 0,
+              progress_percentage: 0
+            },
+            departmental_budget_management: {
+              name: "Departmental Budget Management",
+              description: "How do I create a budget that challenges us to improve while being realistic?",
+              completed_tasks: 0,
+              total_tasks: 0,
+              progress_percentage: 0
+            },
+            cost_conscious_decision_making: {
+              name: "Cost-Conscious Decision Making",
+              description: "What's the real cost of this decision, including everything I might not see immediately?",
+              completed_tasks: 0,
+              total_tasks: 0,
+              progress_percentage: 0
+            },
+            financial_communication_business_understanding: {
+              name: "Financial Communication & Business Understanding",
+              description: "How do I communicate financial information effectively?",
+              completed_tasks: 0,
+              total_tasks: 0,
+              progress_percentage: 0
+            }
           }
         }
       };
