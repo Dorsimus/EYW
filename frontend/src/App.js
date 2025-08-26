@@ -6701,6 +6701,51 @@ const CompetenciesView = ({
     }
   };
 
+  const handleViewDetails = async (areaKey, subKey) => {
+    console.log(`🔍 View Details clicked: ${areaKey} -> ${subKey}`);
+    
+    if (expandedArea?.area === areaKey && expandedArea?.sub === subKey) {
+      // Already expanded, collapse it
+      setExpandedArea(null);
+      setCompetencyTasks([]);
+    } else {
+      // Expand new area and load tasks from database
+      setExpandedArea({ area: areaKey, sub: subKey });
+      console.log(`📡 Loading tasks from database API for ${areaKey}/${subKey}...`);
+      
+      try {
+        // Load tasks from database API
+        const response = await axios.get(`${API}/tasks/${areaKey}/${subKey}`);
+        const databaseTasks = response.data;
+        
+        console.log(`✅ Loaded ${databaseTasks.length} tasks from database for ${areaKey}/${subKey}`);
+        
+        // Convert database tasks to frontend format for display
+        const formattedTasks = databaseTasks.map(task => ({
+          id: task.id,
+          title: task.title,
+          description: task.description,
+          task_type: task.task_type,
+          competency_area: task.competency_area,
+          sub_competency: task.sub_competency,
+          external_link: task.external_link,
+          estimated_hours: task.estimated_hours,
+          instructions: task.instructions,
+          required: task.required !== false,
+          order: task.order || 1,
+          completed: false // Will be updated based on user progress
+        }));
+        
+        setCompetencyTasks(formattedTasks);
+        console.log(`📋 Set ${formattedTasks.length} formatted tasks for display`);
+        
+      } catch (error) {
+        console.error(`❌ Error loading tasks for ${areaKey}/${subKey}:`, error);
+        setCompetencyTasks([]);
+      }
+    }
+  };
+
   const handleCompleteCulminatingTask = async (taskId, evidenceDescription = "", file = null) => {
     try {
       // Mark task as complete
