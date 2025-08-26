@@ -3237,28 +3237,28 @@ const AuthenticatedApp = () => {
               name: "Property P&L Understanding",
               description: "How does my department's daily work show up on the property's financial statement?",
               completed_tasks: 0,
-              total_tasks: 0,
+              total_tasks: 9,
               progress_percentage: 0
             },
             departmental_budget_management: {
               name: "Departmental Budget Management",
               description: "How do I create a budget that challenges us to improve while being realistic?",
               completed_tasks: 0,
-              total_tasks: 0,
+              total_tasks: 7,
               progress_percentage: 0
             },
             cost_conscious_decision_making: {
               name: "Cost-Conscious Decision Making",
               description: "What's the real cost of this decision, including everything I might not see immediately?",
               completed_tasks: 0,
-              total_tasks: 0,
+              total_tasks: 8,
               progress_percentage: 0
             },
             financial_communication_business_understanding: {
               name: "Financial Communication & Business Understanding",
               description: "How do I communicate financial information effectively?",
               completed_tasks: 0,
-              total_tasks: 0,
+              total_tasks: 6,
               progress_percentage: 0
             }
           }
