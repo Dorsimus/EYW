@@ -972,7 +972,7 @@ async def calculate_competency_progress(user_id: str, competency_area: str, sub_
     total_tasks = len(tasks)
     
     # Get completed tasks for this user
-    task_ids = [task["id"] for task in tasks]
+    task_ids = [str(task["_id"]) for task in tasks]
     completed = await db.task_completions.find({
         "user_id": user_id,
         "task_id": {"$in": task_ids}
