@@ -499,51 +499,55 @@ const AuthenticatedApp = () => {
     
     // Check if user has admin access via Clerk
     if (hasAdminAccess) {
-      console.log('User has admin access, loading admin data but keeping regular view...');
-      // Start with regular dashboard - admin can navigate to admin panels manually
-      
-      // Set all admin demo data including REAL COMPETENCY TASKS
-      setAdminStats({
-        total_users: 45,
-        total_tasks: 26, // Updated for real competency tasks  
-        total_completions: 18,
-        completion_rate: 2.4,
-        active_competency_areas: 5
-      });
-      
-      // Load tasks from actual competencies data
-      console.log('🔧 Loading tasks from competencies for admin user...');
-      console.log('📋 Competencies object:', competencies);
-      console.log('📊 Competencies keys:', Object.keys(competencies));
-      const realTasks = await getAllTasksFromCompetencies(competencies);
-      console.log(`✅ Loaded ${realTasks.length} tasks from competencies`);
-      console.log('📝 Sample task:', realTasks[0]);
-      setAllTasks(realTasks);
-      
-      // Load users from localStorage with demo user fallback
-      const savedUsers = JSON.parse(localStorage.getItem('admin_all_users') || '[]');
-      const defaultDemoUser = { 
-        id: 'demo-user-123', 
-        name: 'Demo Navigator', 
-        email: 'demo@earnwings.com',
-        level: 3,
-        overall_progress: 0,
-        created_at: '2024-01-01',
-        last_activity: new Date().toISOString()
+      const loadAdminData = async () => {
+        console.log('User has admin access, loading admin data but keeping regular view...');
+        // Start with regular dashboard - admin can navigate to admin panels manually
+        
+        // Set all admin demo data including REAL COMPETENCY TASKS
+        setAdminStats({
+          total_users: 45,
+          total_tasks: 26, // Updated for real competency tasks  
+          total_completions: 18,
+          completion_rate: 2.4,
+          active_competency_areas: 5
+        });
+        
+        // Load tasks from actual competencies data
+        console.log('🔧 Loading tasks from competencies for admin user...');
+        console.log('📋 Competencies object:', competencies);
+        console.log('📊 Competencies keys:', Object.keys(competencies));
+        const realTasks = await getAllTasksFromCompetencies(competencies);
+        console.log(`✅ Loaded ${realTasks.length} tasks from competencies`);
+        console.log('📝 Sample task:', realTasks[0]);
+        setAllTasks(realTasks);
+        
+        // Load users from localStorage with demo user fallback
+        const savedUsers = JSON.parse(localStorage.getItem('admin_all_users') || '[]');
+        const defaultDemoUser = { 
+          id: 'demo-user-123', 
+          name: 'Demo Navigator', 
+          email: 'demo@earnwings.com',
+          level: 3,
+          overall_progress: 0,
+          created_at: '2024-01-01',
+          last_activity: new Date().toISOString()
+        };
+        
+        const allUsersData = savedUsers.length > 0 ? savedUsers : [defaultDemoUser];
+        setAllUsers(allUsersData);
+        
+        // Save demo user if no users exist
+        if (savedUsers.length === 0) {
+          localStorage.setItem('admin_all_users', JSON.stringify([defaultDemoUser]));
+        }
+        
+        console.log(`Loaded ${allUsersData.length} users for existing admin session`);
+        
+        setLoading(false);
+        console.log('Admin state restored from existing token');
       };
       
-      const allUsersData = savedUsers.length > 0 ? savedUsers : [defaultDemoUser];
-      setAllUsers(allUsersData);
-      
-      // Save demo user if no users exist
-      if (savedUsers.length === 0) {
-        localStorage.setItem('admin_all_users', JSON.stringify([defaultDemoUser]));
-      }
-      
-      console.log(`Loaded ${allUsersData.length} users for existing admin session`);
-      
-      setLoading(false);
-      console.log('Admin state restored from existing token');
+      loadAdminData();
     } else {
       // Regular user demo data
       const userData = {
