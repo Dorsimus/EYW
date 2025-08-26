@@ -3137,6 +3137,17 @@ const AuthenticatedApp = () => {
         
         // Transform backend data to match frontend expectations
         console.log('🔄 Transforming backend data to match frontend format...');
+        
+        // Load tasks from database to get accurate counts
+        let databaseTasks = [];
+        try {
+          const tasksResponse = await axios.get(`${API}/tasks`);
+          databaseTasks = tasksResponse.data;
+          console.log(`📊 Loaded ${databaseTasks.length} tasks from database for count calculation`);
+        } catch (taskError) {
+          console.warn('⚠️ Could not load tasks for count calculation:', taskError);
+        }
+        
         const transformedCompetencies = {};
         
         Object.entries(backendCompetencies).forEach(([areaKey, areaData]) => {
@@ -3148,11 +3159,16 @@ const AuthenticatedApp = () => {
           // Transform sub_competencies from strings to objects
           if (areaData.sub_competencies) {
             Object.entries(areaData.sub_competencies).forEach(([subKey, subName]) => {
+              // Calculate task counts for this sub-competency from database
+              const subCompetencyTasks = databaseTasks.filter(task => 
+                task.competency_area === areaKey && task.sub_competency === subKey
+              );
+              
               transformedCompetencies[areaKey].sub_competencies[subKey] = {
                 name: subName,
                 description: `${subName} competency development`,
-                completed_tasks: 0,
-                total_tasks: 0,
+                completed_tasks: 0, // TODO: Calculate from user progress
+                total_tasks: subCompetencyTasks.length,
                 progress_percentage: 0
               };
             });
