@@ -3203,28 +3203,28 @@ const AuthenticatedApp = () => {
               name: "Inspiring Team Motivation & Engagement",
               description: "What makes someone excited to come to work for you specifically?",
               completed_tasks: 0,
-              total_tasks: 0,
+              total_tasks: 8,
               progress_percentage: 0
             },
             mastering_difficult_conversations: {
               name: "Mastering Difficult Conversations",
               description: "How do I have conversations that strengthen relationships while raising standards?",
               completed_tasks: 0,
-              total_tasks: 0,
+              total_tasks: 6,
               progress_percentage: 0
             },
             building_collaborative_culture: {
               name: "Building Collaborative Team Culture",
               description: "How do we have high standards AND have fun together?",
               completed_tasks: 0,
-              total_tasks: 0,
+              total_tasks: 7,
               progress_percentage: 0
             },
             developing_others_success: {
               name: "Developing Others for Success",
               description: "How do I help each person become the best version of themselves?",
               completed_tasks: 0,
-              total_tasks: 0,
+              total_tasks: 5,
               progress_percentage: 0
             }
           }
