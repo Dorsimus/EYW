@@ -7269,11 +7269,82 @@ const CompetenciesView = ({
                         </div>
                       </div>
 
-                      {/* Expanded Sub-competency Details */}
+                      {/* Expanded Sub-competency Details - DATABASE TASKS */}
                       {expandedArea === `${areaKey}_${subKey}` && (
                         <div className="px-6 py-4 space-y-6">
-                          {/* Foundation Courses */}
-                          {subData?.foundation_courses && subData.foundation_courses.length > 0 && (
+                          {/* Database Tasks */}
+                          {competencyTasks && competencyTasks.length > 0 && (
+                            <div>
+                              <h5 className="font-semibold text-gray-900 mb-3 flex items-center">
+                                📋 <span className="ml-2">Tasks from Database ({competencyTasks.length} tasks)</span>
+                              </h5>
+                              <div className="grid grid-cols-1 gap-3">
+                                {competencyTasks.map((task, index) => (
+                                  <div key={task.id || index} className="border border-gray-200 rounded-lg p-4 bg-white hover:shadow-md transition-shadow">
+                                    <div className="flex items-start justify-between">
+                                      <div className="flex-1">
+                                        <h6 className="text-sm font-semibold text-gray-900 mb-2">
+                                          {task.title}
+                                        </h6>
+                                        <p className="text-sm text-gray-600 mb-2">
+                                          {task.description}
+                                        </p>
+                                        {task.instructions && (
+                                          <div className="text-sm text-blue-800 bg-blue-50 p-2 rounded mb-2">
+                                            <strong>Instructions:</strong> {task.instructions}
+                                          </div>
+                                        )}
+                                        <div className="flex items-center gap-4 text-xs text-gray-500">
+                                          <span className="px-2 py-1 bg-gray-100 rounded">
+                                            {task.task_type}
+                                          </span>
+                                          {task.estimated_hours && (
+                                            <span>⏱️ {task.estimated_hours}h</span>
+                                          )}
+                                          {task.external_link && (
+                                            <a 
+                                              href={task.external_link}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="text-blue-600 hover:text-blue-800"
+                                            >
+                                              🔗 External Link
+                                            </a>
+                                          )}
+                                        </div>
+                                      </div>
+                                      <div className="ml-4">
+                                        {task.completed ? (
+                                          <div className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-green-700 bg-green-100 border border-green-200 rounded-md">
+                                            ✅ Completed
+                                          </div>
+                                        ) : (
+                                          <button 
+                                            onClick={() => console.log(`Complete task: ${task.id}`)}
+                                            className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-blue-700 bg-blue-100 border border-blue-200 rounded-md hover:bg-blue-200"
+                                          >
+                                            📝 Start Task
+                                          </button>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* No Tasks Message */}
+                          {competencyTasks && competencyTasks.length === 0 && (
+                            <div className="text-center py-8 text-gray-500">
+                              <div className="text-lg mb-2">📋</div>
+                              <div>No tasks found for this sub-competency</div>
+                              <div className="text-sm">Tasks may be loading...</div>
+                            </div>
+                          )}
+
+                          {/* Legacy Foundation Courses (Hidden but kept for compatibility) */}
+                          {false && subData?.foundation_courses && subData.foundation_courses.length > 0 && (
                             <div>
                               <h5 className="font-semibold text-gray-900 mb-3 flex items-center">
                                 📚 <span className="ml-2">Foundation Courses (PerformanceHQ)</span>
