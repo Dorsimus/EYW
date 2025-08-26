@@ -5274,6 +5274,7 @@ const AuthenticatedApp = () => {
             onViewTasks={loadCompetencyTasks}
             selectedCompetency={selectedCompetency}
             competencyTasks={competencyTasks}
+            setCompetencyTasks={setCompetencyTasks}
             onCompleteTask={completeTask}
             competencyTaskProgress={competencyTaskProgress}
             onCompleteCompetencyTask={handleCompleteCompetencyTask}
