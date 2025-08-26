@@ -3507,6 +3507,7 @@ const AuthenticatedApp = () => {
   };
 
   // LOAD ALL TASKS FROM DATABASE - REPLACES HARDCODED EXTRACTION
+  // LOAD ALL TASKS FROM DATABASE - REPLACES 155 LINES OF HARDCODED EXTRACTION
   const getAllTasksFromCompetencies = async (competenciesData) => {
     console.log('🔧 getAllTasksFromCompetencies - LOADING FROM DATABASE');
     
@@ -3541,126 +3542,7 @@ const AuthenticatedApp = () => {
     } catch (error) {
       console.error('❌ Error loading tasks from database:', error);
       return []; // Return empty array instead of hardcoded fallback
-    
-    Object.entries(competenciesData).forEach(([areaKey, area]) => {
-      // Skip core_values as it's handled differently
-      if (areaKey === 'core_values') return;
-      
-      // Add Curiosity Ignition as a task (only if not converted)
-      if (area.curiosity_ignition) {
-        const taskId = `${areaKey}_curiosity_ignition`;
-        if (!convertedTasks.has(taskId)) {
-          allTasks.push({
-            id: taskId,
-            title: area.curiosity_ignition.title,
-            description: area.curiosity_ignition.description,
-            task_type: 'assessment',
-            competency_area: areaKey,
-            sub_competency: 'curiosity_ignition',
-            estimated_hours: 0.25,
-            instructions: `Reflection prompts: ${area.curiosity_ignition.reflection_prompts?.join(', ')}`,
-            active: true,
-            required: true
-          });
-        }
-      }
-      
-      // Add tasks from sub_competencies
-      if (area.sub_competencies) {
-        Object.entries(area.sub_competencies).forEach(([subKey, subComp]) => {
-          // Add foundation courses (only if not converted)
-          if (subComp.foundation_courses) {
-            subComp.foundation_courses.forEach((course, index) => {
-              const taskId = `${areaKey}_${subKey}_course_${index}`;
-              const isConverted = convertedTasks.has(taskId);
-              console.log(`📋 Foundation course ${taskId}: ${isConverted ? 'SKIPPED (converted)' : 'ADDED'}`);
-              
-              if (!isConverted) {
-                allTasks.push({
-                  id: taskId,
-                  title: course.title,
-                  description: course.description,
-                  task_type: 'course_link',
-                  competency_area: areaKey,
-                  sub_competency: subKey,
-                  estimated_hours: course.duration === '1 hour' ? 1 : 0.5,
-                  external_link: course.url || '#',
-                  instructions: `Platform: ${course.platform}`,
-                  active: true,
-                  required: true
-                });
-              }
-            });
-          }
-          
-          // Add monthly activities (only if not converted)
-          if (subComp.monthly_activities) {
-            subComp.monthly_activities.forEach((activity, index) => {
-              const taskId = `${areaKey}_${subKey}_activity_${index}`;
-              if (!convertedTasks.has(taskId)) {
-                allTasks.push({
-                  id: taskId,
-                  title: activity.title,
-                  description: activity.in_flow_activity,
-                  task_type: 'project',
-                  competency_area: areaKey,
-                  sub_competency: subKey,
-                  estimated_hours: 0.5,
-                  instructions: `Journal Prompt: ${activity.journal_prompt}`,
-                  document_section: activity.document_section?.title,
-                  active: true,
-                  required: true
-                });
-              }
-            });
-          }
-          
-          // Add Dive Deeper resources (only if not converted)
-          if (subComp.dive_deeper_resources) {
-            subComp.dive_deeper_resources.forEach((resource, index) => {
-              const taskId = `${areaKey}_${subKey}_resource_${index}`;
-              if (!convertedTasks.has(taskId)) {
-                allTasks.push({
-                  id: taskId,
-                  title: resource.title,
-                  description: resource.description,
-                  task_type: resource.type === 'course' ? 'course_link' : 'reading',
-                  competency_area: areaKey,
-                  sub_competency: subKey,
-                  estimated_hours: resource.duration === '1 hour' ? 1 : 0.25,
-                  external_link: resource.url || '#',
-                  instructions: resource.why_this_matters,
-                  active: true,
-                  required: false
-                });
-              }
-            });
-          }
-        });
-      }
-      
-      // Add Culminating Project (only if not converted)
-      if (area.culminating_project) {
-        const taskId = `${areaKey}_culminating_project`;
-        if (!convertedTasks.has(taskId)) {
-          allTasks.push({
-            id: taskId,
-            title: area.culminating_project.title,
-            description: area.culminating_project.challenge,
-            task_type: 'project',
-            competency_area: areaKey,
-            sub_competency: 'culminating_project',
-            estimated_hours: 20, // Major project
-            instructions: `Options: ${area.culminating_project.options?.join(' | ')}`,
-            active: true,
-            required: true,
-            is_culminating: true
-          });
-        }
-      }
-    });
-    
-    return allTasks;
+    }
   };
 
   // UPDATE CONVERTED TASK IN COMPETENCIES STRUCTURE
