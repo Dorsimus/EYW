@@ -2815,14 +2815,15 @@ const AuthenticatedApp = () => {
 
   // Load tasks from competencies when admin is active and competencies are available
   useEffect(() => {
-    if (isAdmin && competencies && Object.keys(competencies).length > 0) {
-      // Loading tasks from competencies for admin panel...
-      console.log('📋 Loading tasks from competencies for admin panel...');
-      const generatedTasks = getAllTasksFromCompetencies(competencies);
-      console.log(`📊 Generated ${generatedTasks.length} tasks from competencies`);
-      
-      // Add database tasks from backend
-      const loadDatabaseTasks = async () => {
+    const loadAllAdminTasks = async () => {
+      if (isAdmin && competencies && Object.keys(competencies).length > 0) {
+        console.log('📋 Loading tasks from competencies for admin panel...');
+        
+        // Load tasks from database API (replaces hardcoded generation)
+        const generatedTasks = await getAllTasksFromCompetencies(competencies);
+        console.log(`📊 Generated ${generatedTasks.length} tasks from competencies`);
+        
+        // Add database tasks from backend
         console.log('📋 Loading database tasks from backend...');
         let databaseTasks = [];
         try {
@@ -2835,15 +2836,13 @@ const AuthenticatedApp = () => {
           console.warn('⚠️ Could not load database tasks:', taskError);
         }
         
-        // Combine generated and database tasks
-        const combinedTasks = [...generatedTasks, ...databaseTasks];
-        console.log(`📊 TOTAL COMBINED TASKS: ${combinedTasks.length} (${generatedTasks.length} generated + ${databaseTasks.length} database)`);
-        
-        setAllTasks(combinedTasks);
-      };
-      
-      loadDatabaseTasks();
-    }
+        // Use only database tasks (no need to combine since getAllTasksFromCompetencies now loads from database)
+        console.log(`📊 TOTAL TASKS: ${generatedTasks.length} from database`);
+        setAllTasks(generatedTasks);
+      }
+    };
+    
+    loadAllAdminTasks();
   }, [isAdmin, competencies]); // Add competencies as dependency
 
   // Handle admin access setup for Clerk users
