@@ -1134,8 +1134,8 @@ async def get_user_tasks_for_competency(user_id: str, competency_area: str, sub_
         "active": True
     }).sort("order", 1).to_list(1000)
     
-    # Get user's completed tasks
-    task_ids = [task["id"] for task in tasks]
+    # Get user's completed tasks (handle both _id and id fields)
+    task_ids = [task.get("id", str(task["_id"])) for task in tasks]
     completions = await db.task_completions.find({
         "user_id": user_id,
         "task_id": {"$in": task_ids}
