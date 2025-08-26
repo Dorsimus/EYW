@@ -11,7 +11,14 @@ import App, { AuthenticatedApp } from './App';
 
 const ClerkApp = () => {
   // Check for demo mode to bypass Clerk authentication for testing
-  const isDemoMode = window.location.search.includes('demo=true');
+  const isDemoMode = window.location.search.includes('demo=true') || 
+                     window.location.hash.includes('demo=true') ||
+                     localStorage.getItem('demo_mode') === 'true';
+  
+  // Set demo mode in localStorage for persistence
+  if (window.location.search.includes('demo=true')) {
+    localStorage.setItem('demo_mode', 'true');
+  }
   
   if (isDemoMode) {
     console.log('🎮 DEMO MODE DETECTED - Bypassing Clerk authentication');
