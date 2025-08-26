@@ -7,7 +7,7 @@ import {
 } from '@clerk/clerk-react';
 
 // Import the full authenticated app component from App.js
-import { AuthenticatedApp } from './App';
+import App, { AuthenticatedApp } from './App';
 
 const ClerkApp = () => {
   // Check for demo mode to bypass Clerk authentication for testing
