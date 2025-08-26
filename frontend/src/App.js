@@ -3045,84 +3045,55 @@ const AuthenticatedApp = () => {
     }
   };
 
-  // Load competency tasks function
-  const loadCompetencyTasks = (areaKey, subKey = null) => {
-    console.log(`🔍 Loading competency tasks for area: ${areaKey}, sub: ${subKey}`);
+  // Load competency tasks function - NOW LOADS FROM DATABASE
+  const loadCompetencyTasks = async (areaKey, subKey = null) => {
+    console.log(`🔍 Loading competency tasks from DATABASE for area: ${areaKey}, sub: ${subKey}`);
     
-    if (areaKey && competencies[areaKey]) {
+    try {
       setSelectedCompetency({ area: areaKey, sub: subKey });
       
-      // Extract tasks for this competency area/sub-competency
-      const areaData = competencies[areaKey];
-      let tasks = [];
-      
-      if (subKey && areaData.sub_competencies && areaData.sub_competencies[subKey]) {
-        // Load tasks for specific sub-competency
-        const subData = areaData.sub_competencies[subKey];
-        
-        // Collect different types of tasks
-        if (subData.foundation_courses) {
-          tasks = tasks.concat(subData.foundation_courses.map(course => ({
-            ...course,
-            type: 'foundation_course',
-            competency_area: areaKey,
-            sub_competency: subKey
-          })));
-        }
-        
-        if (subData.monthly_activities) {
-          tasks = tasks.concat(subData.monthly_activities.map(activity => ({
-            ...activity,
-            type: 'monthly_activity',
-            competency_area: areaKey,
-            sub_competency: subKey
-          })));
-        }
-        
-        if (subData.dive_deeper_resources) {
-          tasks = tasks.concat(subData.dive_deeper_resources.map(resource => ({
-            ...resource,
-            type: 'dive_deeper_resource',
-            competency_area: areaKey,
-            sub_competency: subKey
-          })));
-        }
-      } else {
-        // Load all tasks for the competency area
-        Object.entries(areaData.sub_competencies || {}).forEach(([subCompKey, subCompData]) => {
-          if (subCompData.foundation_courses) {
-            tasks = tasks.concat(subCompData.foundation_courses.map(course => ({
-              ...course,
-              type: 'foundation_course',
-              competency_area: areaKey,
-              sub_competency: subCompKey
-            })));
-          }
-          
-          if (subCompData.monthly_activities) {
-            tasks = tasks.concat(subCompData.monthly_activities.map(activity => ({
-              ...activity,
-              type: 'monthly_activity',
-              competency_area: areaKey,
-              sub_competency: subCompKey
-            })));
-          }
-          
-          if (subCompData.dive_deeper_resources) {
-            tasks = tasks.concat(subCompData.dive_deeper_resources.map(resource => ({
-              ...resource,
-              type: 'dive_deeper_resource',
-              competency_area: areaKey,
-              sub_competency: subCompKey
-            })));
-          }
-        });
+      // Load tasks from database API
+      let apiUrl = `${API}/tasks`;
+      if (areaKey && subKey) {
+        apiUrl = `${API}/tasks/${areaKey}/${subKey}`;
+      } else if (areaKey) {
+        // Load all tasks for competency area and filter
+        apiUrl = `${API}/tasks`;
       }
       
-      setCompetencyTasks(tasks);
-      console.log(`✅ Loaded ${tasks.length} tasks for ${areaKey}${subKey ? ` -> ${subKey}` : ''}`);
-    } else {
-      console.warn(`⚠️ Competency area ${areaKey} not found`);
+      const response = await axios.get(apiUrl);
+      let tasks = response.data;
+      
+      // Filter tasks if needed
+      if (areaKey && !subKey) {
+        tasks = tasks.filter(task => task.competency_area === areaKey);
+      } else if (areaKey && subKey) {
+        tasks = tasks.filter(task => 
+          task.competency_area === areaKey && task.sub_competency === subKey
+        );
+      }
+      
+      // Convert database tasks to frontend format
+      const formattedTasks = tasks.map(task => ({
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        type: task.task_type,
+        competency_area: task.competency_area,
+        sub_competency: task.sub_competency,
+        url: task.external_link,
+        estimated_hours: task.estimated_hours,
+        instructions: task.instructions,
+        required: task.required || true,
+        order: task.order || 1
+      }));
+      
+      setCompetencyTasks(formattedTasks);
+      console.log(`✅ Loaded ${formattedTasks.length} tasks from DATABASE for ${areaKey}${subKey ? ` -> ${subKey}` : ''}`);
+      
+    } catch (error) {
+      console.error(`❌ Error loading tasks from database:`, error);
+      // Fallback to empty array instead of hardcoded data
       setCompetencyTasks([]);
     }
   };
