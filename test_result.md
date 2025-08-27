@@ -403,9 +403,9 @@ user_problem_statement: "CRITICAL: Two data synchronization failures - 1) Admin 
 ##
 ## test_plan:
 ##   current_focus:
-##     - "Complete Task Extraction from Hardcoded Data to Database"
-##     - "Replace Placeholder Tasks with Rich Content"
-##     - "Extract Foundation Courses, Monthly Activities, Dive Deeper Resources"
+##     - "Leadership & Supervision Competency Framework Database Implementation"
+##     - "Complete Missing Sub-Competency Tasks (developing_others_success, mastering_difficult_conversations, building_collaborative_culture)"
+##     - "Add Required GraceHillVision External Links"
 ##     - "Verify Rich Content Display in Frontend View Details"
 ##   stuck_tasks: 
 ##     - "Complete Task Extraction from Hardcoded Data to Database"
