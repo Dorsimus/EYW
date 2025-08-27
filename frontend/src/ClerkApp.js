@@ -30,7 +30,8 @@ const ClerkApp = () => {
     console.log('🎮 DEMO MODE ACTIVATED via URL parameter');
   }
   
-  if (isDemoMode) {
+  // FORCE DEMO MODE FOR TESTING
+  if (isDemoMode || window.location.search.includes('demo=true')) {
     console.log('🎮 DEMO MODE DETECTED - Bypassing Clerk authentication');
     return (
       <div className="App">
