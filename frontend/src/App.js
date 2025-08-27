@@ -8858,9 +8858,9 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                                       {!isSubtaskComplete && (
                                         <button
                                           onClick={() => setSelectedTask(subtaskId)}
-                                          className="ml-2 px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 text-xs"
+                                          className="complete-task-btn ml-2 text-xs"
                                         >
-                                          Mark Complete
+                                          ✅ Mark Complete
                                         </button>
                                       )}
                                     </div>
