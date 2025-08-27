@@ -388,12 +388,12 @@ user_problem_statement: "CRITICAL: Two data synchronization failures - 1) Admin 
 ##
 ## test_plan:
 ##   current_focus:
-##     - "Remove Hardcoded Data and Connect Frontend to Database APIs"
-##     - "Database Task Loading Implementation"
-##     - "Hardcoded Array Removal"
-##     - "Admin-to-Frontend Data Flow Verification"
+##     - "Complete Task Extraction from Hardcoded Data to Database"
+##     - "Replace Placeholder Tasks with Rich Content"
+##     - "Extract Foundation Courses, Monthly Activities, Dive Deeper Resources"
+##     - "Verify Rich Content Display in Frontend View Details"
 ##   stuck_tasks: 
-##     - "Remove Hardcoded Data and Connect Frontend to Database APIs"
+##     - "Complete Task Extraction from Hardcoded Data to Database"
 ##   test_all: false
 ##   test_priority: "critical"
 ##
