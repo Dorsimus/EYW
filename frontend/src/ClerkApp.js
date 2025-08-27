@@ -11,13 +11,23 @@ import App, { AuthenticatedApp } from './App';
 
 const ClerkApp = () => {
   // Check for demo mode to bypass Clerk authentication for testing
-  const isDemoMode = window.location.search.includes('demo=true') || 
+  const urlParams = new URLSearchParams(window.location.search);
+  const isDemoParam = urlParams.get('demo') === 'true';
+  const isDemoMode = isDemoParam || 
                      window.location.hash.includes('demo=true') ||
                      localStorage.getItem('demo_mode') === 'true';
   
+  console.log('🔍 Demo mode check:', {
+    urlSearch: window.location.search,
+    isDemoParam: isDemoParam,
+    isDemoMode: isDemoMode,
+    localStorage: localStorage.getItem('demo_mode')
+  });
+  
   // Set demo mode in localStorage for persistence
-  if (window.location.search.includes('demo=true')) {
+  if (isDemoParam) {
     localStorage.setItem('demo_mode', 'true');
+    console.log('🎮 DEMO MODE ACTIVATED via URL parameter');
   }
   
   if (isDemoMode) {
