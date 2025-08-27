@@ -7424,29 +7424,61 @@ const CompetenciesView = ({
                                   const isCompleted = isCompetencyTaskComplete(areaKey, subKey, course.id);
                                   const courseNotes = getCompetencyTaskNotes(areaKey, subKey, course.id);
                                   
+                                  // Determine task type for styling
+                                  const taskType = displayData.task_type || 'course_link';
+                                  const taskTypeClass = taskType.replace('_', '-');
+                                  
                                   return (
-                                    <div key={index} className={`rounded-lg p-4 border-2 transition-all ${isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
-                                      <div className="flex items-start justify-between mb-3">
-                                        <div className="flex-1">
-                                          <div className="flex items-center mb-2">
-                                            {isCompleted && <span className="text-green-600 mr-2">✅</span>}
-                                            <h6 className="font-semibold text-sm text-gray-900">
-                                              {displayData.title}
-                                            </h6>
-                                            {convertedTaskData && (
-                                              <span className="ml-2 px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
-                                                Updated
-                                              </span>
-                                            )}
+                                    <div key={index} className={`task-card ${taskTypeClass} ${isCompleted ? 'opacity-75' : ''}`}>
+                                      <div className="task-header">
+                                        <div className="task-icon"></div>
+                                        <div className="task-meta">
+                                          <span className="task-type-badge">{taskType.replace('_', ' ')}</span>
+                                          <span className="task-time">⏱️ {displayData.estimated_hours || displayData.duration || course.duration || '1h'}</span>
+                                        </div>
+                                      </div>
+                                      
+                                      <div className="task-content">
+                                        <h3 className="task-title">
+                                          {isCompleted && <span className="mr-2">✅</span>}
+                                          {displayData.title}
+                                          {convertedTaskData && (
+                                            <span className="ml-2 px-2 py-0.5 text-xs bg-white bg-opacity-20 rounded-full">
+                                              Updated
+                                            </span>
+                                          )}
+                                        </h3>
+                                        <p className="task-description">
+                                          {displayData.description}
+                                        </p>
+                                        
+                                        {displayData.instructions && (
+                                          <div className="task-instructions">
+                                            <strong>Instructions:</strong> {displayData.instructions}
                                           </div>
-                                          <p className="text-xs text-gray-600 mb-2">
-                                            {displayData.description}
-                                          </p>
-                                          <div className="flex items-center space-x-3 text-xs text-gray-500 mb-3">
-                                            <span>⏱️ {displayData.duration || course.duration}</span>
-                                            <span>•</span>
-                                            <span>{displayData.platform || course.platform}</span>
-                                          </div>
+                                        )}
+                                        
+                                        <div className="task-actions">
+                                          {/* External Link with Provider Branding */}
+                                          <a 
+                                            href={convertedTaskData?.external_link || course.url || `https://performancehq.com/courses/${course.id}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`external-link-btn ${(convertedTaskData?.external_link || course.url || '').includes('gracehillvision') ? 'gracehillvision' : 'performancehq'}`}
+                                          >
+                                            🔗 {(convertedTaskData?.external_link || course.url || '').includes('gracehillvision') ? 'GraceHillVision' : 'PerformanceHQ'}
+                                          </a>
+                                          
+                                          <button
+                                            onClick={() => {
+                                              setShowTaskModal({ areaKey, subKey, task: course, taskType: 'course' });
+                                              const existingNotes = getCompetencyTaskNotes(areaKey, subKey, course.id);
+                                              setTaskNotes(existingNotes);
+                                            }}
+                                            className="start-task-btn"
+                                          >
+                                            ⚡ {isCompleted ? 'View Notes' : 'Start Task'}
+                                          </button>
                                         </div>
                                       </div>
                                       
