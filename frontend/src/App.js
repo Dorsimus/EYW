@@ -5085,6 +5085,74 @@ const AuthenticatedApp = () => {
     return Math.round(totalProgress / Object.keys(competencies).length);
   };
 
+  // Handle task completion
+  const handleCompleteTask = async (task) => {
+    console.log(`🎯 Complete task clicked: ${task.title}`);
+    setSelectedTask(task);
+    setIsCompletionModalOpen(true);
+    setCompletionNotes('');
+    setCompletionError('');
+  };
+
+  // Submit task completion with notes
+  const submitTaskCompletion = async () => {
+    if (!selectedTask) return;
+    
+    try {
+      setIsSubmittingCompletion(true);
+      setCompletionError('');
+      
+      // Get current user data
+      const userData = user;
+      if (!userData) {
+        throw new Error('User not found');
+      }
+      
+      // Submit completion to database
+      const formData = new FormData();
+      formData.append('task_id', selectedTask.id);
+      formData.append('user_id', userData.id);
+      formData.append('notes', completionNotes);
+      formData.append('completed_at', new Date().toISOString());
+      
+      const response = await axios.post(`${API}/users/${userData.id}/tasks/${selectedTask.id}/complete`, formData, {
+        headers: {
+          'Authorization': `Bearer ${await getToken()}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      
+      if (response.status === 200) {
+        setCompletionSuccess(true);
+        showSuccessMessage(`Task "${selectedTask.title}" completed successfully!`);
+        
+        // Update local task progress
+        const updatedProgress = {
+          ...competencyTaskProgress,
+          [`${selectedTask.competency_area}_${selectedTask.sub_competency}_${selectedTask.id}`]: {
+            completed: true,
+            notes: completionNotes,
+            completed_at: new Date().toISOString()
+          }
+        };
+        setCompetencyTaskProgress(updatedProgress);
+        saveDataWithBackup('competency_task_progress', updatedProgress);
+        
+        // Close modal after short delay
+        setTimeout(() => {
+          setIsCompletionModalOpen(false);
+          setSelectedTask(null);
+          setCompletionSuccess(false);
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('❌ Error completing task:', error);
+      setCompletionError(error.response?.data?.detail || 'Failed to complete task. Please try again.');
+    } finally {
+      setIsSubmittingCompletion(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
