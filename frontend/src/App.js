@@ -7531,36 +7531,33 @@ const CompetenciesView = ({
                                             {isCompleted && <span className="mr-2">✅</span>}
                                             {monthActivity.title}
                                           </h3>
+                                          
+                                          {monthActivity.in_the_flow_activity && (
+                                            <div className="task-instructions">
+                                              <strong>In-the-Flow Activity:</strong> {monthActivity.in_the_flow_activity}
                                             </div>
-                                          </div>
-                                          <div className="flex items-center space-x-2">
-                                            {!isCompleted && (
-                                              <button
-                                                onClick={() => {
-                                                  setShowTaskModal({ 
-                                                    areaKey, 
-                                                    subKey, 
-                                                    task: {
-                                                      ...monthActivity,
-                                                      id: activityKey,
-                                                      title: monthActivity.title,
-                                                      type: 'monthly_activity'
-                                                    }, 
-                                                    taskType: 'monthly_activity' 
-                                                  });
-                                                  setTaskNotes(activityNotes);
-                                                }}
-                                                className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-blue-600 border border-blue-600 rounded-md hover:bg-blue-700 transition-colors"
-                                              >
-                                                ✓ Mark Complete
-                                              </button>
-                                            )}
-                                            
-                                            {isCompleted && (
-                                              <div className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-green-700 bg-green-100 border border-green-200 rounded-md">
-                                                ✅ Completed
-                                              </div>
-                                            )}
+                                          )}
+                                          
+                                          <div className="task-actions">
+                                            <button
+                                              onClick={() => {
+                                                setShowTaskModal({ 
+                                                  areaKey, 
+                                                  subKey, 
+                                                  task: {
+                                                    ...monthActivity,
+                                                    id: activityKey,
+                                                    title: monthActivity.title,
+                                                    type: 'monthly_activity'
+                                                  }, 
+                                                  taskType: 'monthly_activity' 
+                                                });
+                                                setTaskNotes(activityNotes);
+                                              }}
+                                              className="start-task-btn"
+                                            >
+                                              ⚡ {isCompleted ? 'View Notes' : 'Start Activity'}
+                                            </button>
                                           </div>
                                         </div>
                                         
