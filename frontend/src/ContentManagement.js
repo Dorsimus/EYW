@@ -186,15 +186,88 @@ const EnhancedTaskEditor = ({ task, onSave, onCancel, competencyAreas }) => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      📋 Detailed Instructions
+                      📋 Detailed Instructions <span className="text-blue-600 text-xs">(Supports Rich Formatting)</span>
                     </label>
+                    
+                    {/* Formatting Guide */}
+                    <div className="mb-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                      <div className="text-xs text-blue-800 font-medium mb-2">✨ Formatting Guide:</div>
+                      <div className="text-xs text-blue-700 space-y-1">
+                        <div><span className="font-mono bg-white px-1 rounded">- </span> or <span className="font-mono bg-white px-1 rounded">* </span> for bullet points</div>
+                        <div><span className="font-mono bg-white px-1 rounded">1. 2. 3. </span> for numbered lists</div>
+                        <div><span className="font-mono bg-white px-1 rounded">**bold**</span> and <span className="font-mono bg-white px-1 rounded">*italic*</span> text</div>
+                        <div>Press Enter twice for paragraph breaks</div>
+                      </div>
+                    </div>
+                    
                     <textarea
                       value={formData.instructions}
                       onChange={(e) => setFormData({ ...formData, instructions: e.target.value })}
-                      rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="Step-by-step instructions for completing this task..."
+                      rows={6}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
+                      placeholder={`Example with formatting:
+
+1. First, complete the initial setup
+2. Review the **important guidelines**
+3. Follow these steps:
+   - Check your progress regularly
+   - *Document your findings*
+   - Submit for review
+
+Press Enter twice for paragraph spacing.`}
                     />
+                    
+                    {/* Live Preview */}
+                    {formData.instructions && (
+                      <div className="mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <div className="text-xs font-medium text-gray-700 mb-2">👁️ Preview (How users will see it):</div>
+                        <div className="task-instructions-preview">
+                          <div className="instruction-header-preview">
+                            <span className="instruction-icon-preview">✨</span>
+                            <strong>Instructions:</strong>
+                          </div>
+                          <div className="instruction-content-wrapper-preview">
+                            {formData.instructions.split('\n').map((line, index) => {
+                              const trimmedLine = line.trim();
+                              if (!trimmedLine) return <div key={index} className="py-1"></div>;
+                              
+                              // Bullet points
+                              if (trimmedLine.match(/^[-*]\s+/)) {
+                                const content = trimmedLine.replace(/^[-*]\s+/, '');
+                                return (
+                                  <div key={index} className="flex items-start gap-2 mb-1">
+                                    <span className="text-blue-600 font-bold">•</span>
+                                    <span>{content}</span>
+                                  </div>
+                                );
+                              }
+                              
+                              // Numbered lists
+                              if (trimmedLine.match(/^\d+\.\s+/)) {
+                                const match = trimmedLine.match(/^(\d+)\.\s+(.+)$/);
+                                if (match) {
+                                  return (
+                                    <div key={index} className="flex items-start gap-2 mb-1">
+                                      <span className="text-blue-600 font-semibold">{match[1]}.</span>
+                                      <span>{match[2]}</span>
+                                    </div>
+                                  );
+                                }
+                              }
+                              
+                              // Regular text with bold/italic
+                              const formatted = trimmedLine
+                                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                .replace(/\*(.*?)\*/g, '<em>$1</em>');
+                              
+                              return (
+                                <div key={index} className="mb-2" dangerouslySetInnerHTML={{ __html: formatted }} />
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div>
