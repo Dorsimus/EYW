@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 
 class FileStorageSystemTester:
-    def __init__(self, base_url="https://determined-hodgkin.preview.emergentagent.com"):
+    def __init__(self, base_url="https://dbdriven-taskapp.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.tests_run = 0
