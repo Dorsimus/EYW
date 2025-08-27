@@ -7517,16 +7517,20 @@ const CompetenciesView = ({
                                     const activityNotes = getCompetencyTaskNotes(areaKey, subKey, activityKey);
                                     
                                     return (
-                                      <div key={monthIndex} className={`p-4 rounded-lg border-2 transition-all ${isCompleted ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'}`}>
-                                        <div className="flex items-start justify-between mb-3">
-                                          <div className="flex items-center">
-                                            <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
-                                              {monthActivity.month}
-                                            </div>
-                                            <div>
-                                              <h6 className={`font-bold text-lg ${isCompleted ? 'text-green-800' : 'text-gray-900'}`}>
-                                                {monthActivity.title}
-                                              </h6>
+                                      <div key={monthIndex} className={`task-card project ${isCompleted ? 'opacity-75' : ''}`}>
+                                        <div className="task-header">
+                                          <div className="task-icon"></div>
+                                          <div className="task-meta">
+                                            <span className="task-type-badge">Month {monthActivity.month}</span>
+                                            <span className="task-time">⏱️ Weekly Activity</span>
+                                          </div>
+                                        </div>
+                                        
+                                        <div className="task-content">
+                                          <h3 className="task-title">
+                                            {isCompleted && <span className="mr-2">✅</span>}
+                                            {monthActivity.title}
+                                          </h3>
                                             </div>
                                           </div>
                                           <div className="flex items-center space-x-2">
