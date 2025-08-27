@@ -10,34 +10,36 @@ import {
 import App, { AuthenticatedApp } from './App';
 
 const ClerkApp = () => {
-  // Check for demo mode to bypass Clerk authentication for testing
+  // Enhanced demo mode detection - check multiple sources
   const urlParams = new URLSearchParams(window.location.search);
   const isDemoParam = urlParams.get('demo') === 'true';
-  const isDemoMode = isDemoParam || 
-                     window.location.hash.includes('demo=true') ||
-                     localStorage.getItem('demo_mode') === 'true';
+  const isHashDemo = window.location.hash.includes('demo=true');
+  const isStoredDemo = localStorage.getItem('demo_mode') === 'true';
+  const isPathDemo = window.location.pathname.includes('demo');
+  const isHrefDemo = window.location.href.includes('demo=true');
   
-  console.log('🔍 Demo mode check:', {
+  // Force demo mode if any demo indicator is found
+  const isDemoMode = isDemoParam || isHashDemo || isStoredDemo || isPathDemo || isHrefDemo;
+  
+  console.log('🔍 Enhanced demo mode check:', {
     urlSearch: window.location.search,
+    fullURL: window.location.href,
     isDemoParam: isDemoParam,
-    isDemoMode: isDemoMode,
-    localStorage: localStorage.getItem('demo_mode'),
-    fullURL: window.location.href
+    isHashDemo: isHashDemo,
+    isStoredDemo: isStoredDemo,
+    isPathDemo: isPathDemo,
+    isHrefDemo: isHrefDemo,
+    finalDemoMode: isDemoMode
   });
   
   // Set demo mode in localStorage for persistence
-  if (isDemoParam) {
+  if (isDemoParam || isHrefDemo) {
     localStorage.setItem('demo_mode', 'true');
     console.log('🎮 DEMO MODE ACTIVATED via URL parameter');
   }
   
-  // ENHANCED DEMO MODE DETECTION - Multiple checks
-  const forceDemo = isDemoMode || 
-                    window.location.search.includes('demo=true') ||
-                    window.location.href.includes('demo=true') ||
-                    window.location.pathname.includes('demo');
-  
-  if (forceDemo) {
+  // ENHANCED DEMO MODE BYPASS - Multiple detection methods
+  if (isDemoMode) {
     console.log('🎮 DEMO MODE DETECTED - Bypassing Clerk authentication');
     console.log('🎮 Rendering AuthenticatedApp directly without Clerk wrapper');
     return (
