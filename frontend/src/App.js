@@ -8981,13 +8981,13 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                 <button
                   onClick={() => handleCompleteTask(selectedTask)}
                   disabled={!evidenceDescription.trim()}
-                  className={`px-4 py-2 rounded-md text-sm font-medium ${
-                    evidenceDescription.trim() 
-                      ? 'bg-blue-600 text-white hover:bg-blue-700' 
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  className={`complete-task-btn ${
+                    !evidenceDescription.trim() 
+                      ? 'opacity-50 cursor-not-allowed' 
+                      : ''
                   }`}
                 >
-                  Mark as Complete
+                  🎯 Mark as Complete
                 </button>
               </div>
             </div>
