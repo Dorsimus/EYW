@@ -6731,7 +6731,16 @@ const CompetenciesView = ({
   taskNotes,
   setTaskNotes
 }) => {
-  const { getToken } = useAuth();
+  // Demo mode detection for CompetenciesView
+  const urlParams = new URLSearchParams(window.location.search);
+  const isDemoMode = urlParams.get('demo') === 'true' || 
+                     window.location.hash.includes('demo=true') ||
+                     localStorage.getItem('demo_mode') === 'true';
+  
+  // Use mock token in demo mode, real Clerk hooks in production
+  const getToken = isDemoMode ? 
+    (() => Promise.resolve('demo-token-123')) : 
+    useAuth().getToken;
   const [expandedArea, setExpandedArea] = useState(null);
   const [taskModal, setTaskModal] = useState(null);
   const [selectedCulminatingTask, setSelectedCulminatingTask] = useState(null);
