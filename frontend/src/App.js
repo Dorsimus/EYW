@@ -6679,6 +6679,7 @@ const CompetenciesView = ({
   taskNotes,
   setTaskNotes
 }) => {
+  const { getToken } = useAuth();
   const [expandedArea, setExpandedArea] = useState(null);
   const [taskModal, setTaskModal] = useState(null);
   const [selectedCulminatingTask, setSelectedCulminatingTask] = useState(null);
