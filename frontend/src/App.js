@@ -130,10 +130,50 @@ const AuthenticationPrompt = () => {
 
 // Main authenticated application
 const AuthenticatedApp = () => {
-  const { getToken } = useAuth();
-  const { user } = useUser();
-  const { organization, membership } = useOrganization();
-  const { organizationList } = useOrganizationList();
+  // Demo mode detection
+  const urlParams = new URLSearchParams(window.location.search);
+  const isDemoMode = urlParams.get('demo') === 'true' || 
+                     window.location.hash.includes('demo=true') ||
+                     localStorage.getItem('demo_mode') === 'true';
+  
+  // Mock data for demo mode
+  const mockUser = {
+    id: 'demo-user-123',
+    firstName: 'Navigator',
+    lastName: 'Demo',
+    fullName: 'Navigator Demo',
+    emailAddresses: [{ emailAddress: 'navigator@demo.com' }],
+    publicMetadata: { roles: ['admin'] },
+    privateMetadata: {}
+  };
+  
+  const mockAuth = {
+    getToken: () => Promise.resolve('demo-token-123')
+  };
+  
+  // Use mock data in demo mode, real Clerk hooks in production
+  let getToken, user, organization, membership, organizationList;
+  
+  if (isDemoMode) {
+    console.log('🎮 Using demo mode mock data');
+    getToken = mockAuth.getToken;
+    user = mockUser;
+    organization = { name: 'Earn Your Wings' };
+    membership = { role: 'admin' };
+    organizationList = [];
+  } else {
+    console.log('🔒 Using real Clerk authentication');
+    const authHook = useAuth();
+    const userHook = useUser();
+    const orgHook = useOrganization();
+    const orgListHook = useOrganizationList();
+    
+    getToken = authHook.getToken;
+    user = userHook.user;
+    organization = orgHook.organization;
+    membership = orgHook.membership;
+    organizationList = orgListHook.organizationList;
+  }
   
   const [currentView, setCurrentView] = useState('dashboard');
   const [localUser, setLocalUser] = useState(null);
