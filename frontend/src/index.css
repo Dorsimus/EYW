@@ -484,15 +484,15 @@ body {
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(217, 119, 6, 0.05) 100%);
   border: 1px solid rgba(245, 158, 11, 0.15);
   border-left: 4px solid rgba(245, 158, 11, 0.4);
-  border-left: 4px solid #B45309;
-  color: white;
+  color: #1f2937;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .task-card.document-upload:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.08) 100%);
 }
 
 .task-card.document-upload .task-icon::before { 
@@ -501,18 +501,20 @@ body {
   margin-right: 0.5rem;
 }
 
-/* Assessment - Purple theme with chart icon */
+/* Assessment - Subtle Purple theme with chart icon */
 .task-card.assessment {
-  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
-  border-left: 4px solid #6D28D9;
-  color: white;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(124, 58, 237, 0.05) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  border-left: 4px solid rgba(139, 92, 246, 0.4);
+  color: #1f2937;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .task-card.assessment:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.08);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(124, 58, 237, 0.08) 100%);
 }
 
 .task-card.assessment .task-icon::before { 
