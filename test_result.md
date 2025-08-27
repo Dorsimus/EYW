@@ -49,11 +49,10 @@
 ##
 ## test_plan:
 ##   current_focus:
-##     - "Critical JavaScript Runtime Error Fix"
-##     - "Bidirectional Sync Function Accessibility"
-##     - "Complete Reflection-to-Flightbook Sync Restoration"
+##     - "Enhanced Task Display UI/UX - Make Tasks Vibrant and Visually Appealing"
+##     - "Demo Mode Authentication Bypass Fix"
 ##   stuck_tasks:
-##     - "Bidirectional Sync Comprehensive Validation - All Reflection Fields"
+##     - "Enhanced Task Display UI/UX - Make Tasks Vibrant and Visually Appealing"
 ##   test_all: false
 ##   test_priority: "critical_first"
 ##
