@@ -433,6 +433,217 @@ body {
   background: linear-gradient(135deg, var(--client-subtle) 0%, rgba(255, 255, 255, 0.95) 100%);
 }
 
+/* VIBRANT TASK CARD VISUAL DESIGN - Enhanced Task Type Differentiation */
+
+/* Course Links - Blue theme with graduation icon */
+.task-card.course-link {
+  background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+  border-left: 4px solid #1D4ED8;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.task-card.course-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+}
+
+.task-card.course-link .task-icon::before { 
+  content: "🎓"; 
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+/* Projects - Green theme with rocket icon */
+.task-card.project {
+  background: linear-gradient(135deg, #10B981 0%, #047857 100%);
+  border-left: 4px solid #059669;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.task-card.project:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+}
+
+.task-card.project .task-icon::before { 
+  content: "🚀"; 
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+/* Document Upload - Orange theme with document icon */
+.task-card.document-upload {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  border-left: 4px solid #B45309;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.task-card.document-upload:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
+}
+
+.task-card.document-upload .task-icon::before { 
+  content: "📄"; 
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+/* Assessment - Purple theme with chart icon */
+.task-card.assessment {
+  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  border-left: 4px solid #6D28D9;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.task-card.assessment:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
+}
+
+.task-card.assessment .task-icon::before { 
+  content: "📊"; 
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+/* Enhanced Task Card Structure */
+.task-card {
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.task-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.task-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.task-type-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.task-time {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.task-content {
+  color: white;
+}
+
+.task-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.task-description {
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.task-instructions {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.task-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Provider Branding for External Links */
+.external-link-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.external-link-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.external-link-btn.performancehq {
+  background: linear-gradient(135deg, #FF6B35 0%, #FF5722 100%);
+  color: white;
+}
+
+.external-link-btn.gracehillvision {
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  color: white;
+}
+
+.start-task-btn {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.start-task-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
 .redstone-modal-content {
   background: var(--redstone-gray);
   backdrop-filter: blur(20px);
