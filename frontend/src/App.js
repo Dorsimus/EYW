@@ -7278,58 +7278,109 @@ const CompetenciesView = ({
                               <h5 className="font-semibold text-gray-900 mb-3 flex items-center">
                                 📋 <span className="ml-2">Tasks from Database ({competencyTasks.length} tasks)</span>
                               </h5>
-                              <div className="grid grid-cols-1 gap-3">
-                                {competencyTasks.map((task, index) => (
-                                  <div key={task.id || index} className="border border-gray-200 rounded-lg p-4 bg-white hover:shadow-md transition-shadow">
-                                    <div className="flex items-start justify-between">
-                                      <div className="flex-1">
-                                        <h6 className="text-sm font-semibold text-gray-900 mb-2">
+                              <div className="space-y-4">
+                                {competencyTasks.map((task, index) => {
+                                  // Determine task type for enhanced styling
+                                  const taskType = task.task_type || 'course_link';
+                                  const taskTypeClass = taskType.replace('_', '-');
+                                  
+                                  // Determine provider for branding
+                                  const isPerformanceHQ = task.external_link && task.external_link.includes('performancehq');
+                                  const isGraceHillVision = task.external_link && task.external_link.includes('gracehillvision');
+                                  const provider = isGraceHillVision ? 'GraceHillVision' : 'PerformanceHQ';
+                                  const providerClass = isGraceHillVision ? 'gracehillvision' : 'performancehq';
+                                  
+                                  // Get action button text based on task type
+                                  const getActionText = (type) => {
+                                    switch(type) {
+                                      case 'course_link': return '🎓 Take Course';
+                                      case 'project': return '🚀 Start Project';
+                                      case 'document_upload': return '📄 Create Document';
+                                      case 'assessment': return '📊 Take Assessment';
+                                      default: return '⚡ Complete Task';
+                                    }
+                                  };
+                                  
+                                  const getExternalLinkText = (type) => {
+                                    switch(type) {
+                                      case 'course_link': return `🎓 Launch ${provider} Course`;
+                                      case 'assessment': return `📊 Open ${provider} Assessment`;
+                                      default: return `🔗 Access ${provider} Resource`;
+                                    }
+                                  };
+                                  
+                                  return (
+                                    <div key={task.id || index} className={`task-card ${taskTypeClass} ${task.completed ? 'opacity-75' : ''}`}>
+                                      <div className="task-header">
+                                        <div className="task-icon"></div>
+                                        <div className="task-meta">
+                                          <span className="task-type-badge">{taskType.replace('_', ' ')}</span>
+                                          <span className="task-time">⏱️ {task.estimated_hours || '1'}h</span>
+                                        </div>
+                                      </div>
+                                      
+                                      <div className="task-content">
+                                        <h3 className="task-title">
+                                          {task.completed && <span className="mr-2">✅</span>}
                                           {task.title}
-                                        </h6>
-                                        <p className="text-sm text-gray-600 mb-2">
+                                        </h3>
+                                        
+                                        <p className="task-description">
                                           {task.description}
                                         </p>
+                                        
                                         {task.instructions && (
-                                          <div className="text-sm text-blue-800 bg-blue-50 p-2 rounded mb-2">
-                                            <strong>Instructions:</strong> {task.instructions}
+                                          <div className="task-instructions">
+                                            <strong>💡 Instructions:</strong> {task.instructions}
                                           </div>
                                         )}
-                                        <div className="flex items-center gap-4 text-xs text-gray-500">
-                                          <span className="px-2 py-1 bg-gray-100 rounded">
-                                            {task.task_type}
+                                        
+                                        {/* Learning Outcomes */}
+                                        <div className="learning-outcomes">
+                                          <strong>🎯 What You'll Achieve:</strong> 
+                                          <span className="ml-2">
+                                            {taskType === 'course_link' && 'Master new skills through structured learning'}
+                                            {taskType === 'project' && 'Create real value through hands-on application'}
+                                            {taskType === 'document_upload' && 'Build portfolio evidence of your growth'}
+                                            {taskType === 'assessment' && 'Validate your competency development'}
                                           </span>
-                                          {task.estimated_hours && (
-                                            <span>⏱️ {task.estimated_hours}h</span>
-                                          )}
+                                        </div>
+                                        
+                                        <div className="task-actions">
+                                          {/* Enhanced External Link Button */}
                                           {task.external_link && (
                                             <a 
                                               href={task.external_link}
                                               target="_blank"
                                               rel="noopener noreferrer"
-                                              className="text-blue-600 hover:text-blue-800"
+                                              className={`external-link-btn ${providerClass}`}
                                             >
-                                              🔗 External Link
+                                              {getExternalLinkText(taskType)}
                                             </a>
                                           )}
+                                          
+                                          {/* Enhanced Complete Task Button */}
+                                          <button 
+                                            onClick={() => {
+                                              console.log(`Complete task: ${task.id}`);
+                                              // TODO: Implement task completion workflow
+                                            }}
+                                            className="start-task-btn"
+                                          >
+                                            {task.completed ? '✅ Completed' : getActionText(taskType)}
+                                          </button>
                                         </div>
                                       </div>
-                                      <div className="ml-4">
-                                        {task.completed ? (
-                                          <div className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-green-700 bg-green-100 border border-green-200 rounded-md">
-                                            ✅ Completed
-                                          </div>
-                                        ) : (
-                                          <button 
-                                            onClick={() => console.log(`Complete task: ${task.id}`)}
-                                            className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-blue-700 bg-blue-100 border border-blue-200 rounded-md hover:bg-blue-200"
-                                          >
-                                            📝 Start Task
-                                          </button>
-                                        )}
-                                      </div>
+                                      
+                                      {/* Progress indicator */}
+                                      {!task.completed && (
+                                        <div className="task-progress">
+                                          <div className="progress-text">Ready to begin your learning journey</div>
+                                        </div>
+                                      )}
                                     </div>
-                                  </div>
-                                ))}
+                                  );
+                                })}
                               </div>
                             </div>
                           )}
