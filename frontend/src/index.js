@@ -10,9 +10,41 @@ if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Clerk Publishable Key");
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
+// Demo mode check at root level - BEFORE ClerkProvider initialization
+const urlParams = new URLSearchParams(window.location.search);
+const isDemoParam = urlParams.get('demo') === 'true';
+const isHashDemo = window.location.hash.includes('demo=true');
+const isStoredDemo = localStorage.getItem('demo_mode') === 'true';
+const isHrefDemo = window.location.href.includes('demo=true');
+
+// Enable demo mode if any demo indicator is found
+const isDemoMode = isDemoParam || isHashDemo || isStoredDemo || isHrefDemo;
+
+console.log('🔍 ROOT LEVEL Demo mode check:', {
+  urlSearch: window.location.search,
+  fullURL: window.location.href,
+  isDemoParam: isDemoParam,
+  isHashDemo: isHashDemo,
+  isStoredDemo: isStoredDemo,
+  isHrefDemo: isHrefDemo,
+  finalDemoMode: isDemoMode
+});
+
+// Set demo mode in localStorage for persistence
+if (isDemoParam || isHrefDemo) {
+  localStorage.setItem('demo_mode', 'true');
+  console.log('🎮 DEMO MODE ACTIVATED at root level');
+}
+
+// Conditional Root Component
+const Root = () => {
+  if (isDemoMode) {
+    console.log('🎮 DEMO MODE DETECTED - Bypassing ClerkProvider entirely');
+    return <ClerkApp />;
+  }
+
+  console.log('🔒 Production mode - Using ClerkProvider wrapper');
+  return (
     <ClerkProvider 
       publishableKey={PUBLISHABLE_KEY} 
       afterSignOutUrl="/"
@@ -39,5 +71,12 @@ root.render(
     >
       <ClerkApp />
     </ClerkProvider>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <Root />
   </React.StrictMode>
 );
