@@ -7696,7 +7696,13 @@ const CompetenciesView = ({
                                         
                                         {displayData.instructions && (
                                           <div className="task-instructions">
-                                            <strong>Instructions:</strong> {displayData.instructions}
+                                            <div className="instruction-header">
+                                              <span className="instruction-icon">✨</span>
+                                              <strong>Instructions:</strong>
+                                            </div>
+                                            <div className="instruction-content-wrapper">
+                                              {formatInstructions(displayData.instructions)}
+                                            </div>
                                           </div>
                                         )}
                                         
