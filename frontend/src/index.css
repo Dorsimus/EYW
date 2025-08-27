@@ -644,6 +644,50 @@ body {
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
+/* Enhanced Complete Task Button - Actionable and Engaging */
+.complete-task-btn {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.complete-task-btn:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.complete-task-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+}
+
+/* Completed Task Indicator */
+.completed-task-indicator {
+  background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
 /* Learning Outcomes and Progress Sections */
 .learning-outcomes {
   background: rgba(255, 255, 255, 0.1);
