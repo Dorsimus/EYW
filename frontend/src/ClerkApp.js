@@ -21,7 +21,8 @@ const ClerkApp = () => {
     urlSearch: window.location.search,
     isDemoParam: isDemoParam,
     isDemoMode: isDemoMode,
-    localStorage: localStorage.getItem('demo_mode')
+    localStorage: localStorage.getItem('demo_mode'),
+    fullURL: window.location.href
   });
   
   // Set demo mode in localStorage for persistence
@@ -30,9 +31,15 @@ const ClerkApp = () => {
     console.log('🎮 DEMO MODE ACTIVATED via URL parameter');
   }
   
-  // FORCE DEMO MODE FOR TESTING
-  if (isDemoMode || window.location.search.includes('demo=true')) {
+  // ENHANCED DEMO MODE DETECTION - Multiple checks
+  const forceDemo = isDemoMode || 
+                    window.location.search.includes('demo=true') ||
+                    window.location.href.includes('demo=true') ||
+                    window.location.pathname.includes('demo');
+  
+  if (forceDemo) {
     console.log('🎮 DEMO MODE DETECTED - Bypassing Clerk authentication');
+    console.log('🎮 Rendering AuthenticatedApp directly without Clerk wrapper');
     return (
       <div className="App">
         <AuthenticatedApp />
