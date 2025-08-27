@@ -644,6 +644,29 @@ body {
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
+/* Learning Outcomes and Progress Sections */
+.learning-outcomes {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.task-progress {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.progress-text {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  font-style: italic;
+  text-align: center;
+}
+
 .redstone-modal-content {
   background: var(--redstone-gray);
   backdrop-filter: blur(20px);
