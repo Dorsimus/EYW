@@ -6780,7 +6780,7 @@ const CompetenciesView = ({
       setCompletionError('');
       
       // Get current user data
-      const userData = user || localUser;
+      const userData = user;
       if (!userData) {
         throw new Error('User not found');
       }
