@@ -6742,12 +6742,6 @@ const CompetenciesView = ({
   });
   
   // Task completion state for CompetenciesView
-  const [selectedTask, setSelectedTask] = useState(null);
-  const [isCompletionModalOpen, setIsCompletionModalOpen] = useState(false);
-  const [completionNotes, setCompletionNotes] = useState('');
-  const [isSubmittingCompletion, setIsSubmittingCompletion] = useState(false);
-  const [completionSuccess, setCompletionSuccess] = useState(false);
-  const [completionError, setCompletionError] = useState('');
 
   const handleViewTasks = (areaKey, subKey) => {
     if (areaKey === 'culminating_project') {
