@@ -7482,58 +7482,11 @@ const CompetenciesView = ({
                                         </div>
                                       </div>
                                       
-                                      {/* Action Buttons */}
-                                      <div className="flex items-center justify-between">
-                                        <div className="flex items-center space-x-2">
-                                          {/* LMS Link Button */}
-                                          <a 
-                                            href={convertedTaskData?.external_link || course.url || `https://performancehq.com/courses/${course.id}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors"
-                                          >
-                                            🔗 Open in LMS
-                                          </a>
-                                          
-                                          {/* Notes Button */}
-                                          <button
-                                            onClick={() => {
-                                              setShowTaskModal({ areaKey, subKey, task: course, taskType: 'course' });
-                                              const existingNotes = getCompetencyTaskNotes(areaKey, subKey, course.id);
-                                              setTaskNotes(existingNotes);
-                                            }}
-                                            className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors"
-                                          >
-                                            📝 {courseNotes ? 'View Notes' : 'Add Notes'}
-                                          </button>
-                                        </div>
-                                        
-                                        {/* Mark Complete Button */}
-                                        {!isCompleted && (
-                                          <button
-                                            onClick={() => {
-                                              setShowTaskModal({ areaKey, subKey, task: course, taskType: 'course' });
-                                              const existingNotes = getCompetencyTaskNotes(areaKey, subKey, course.id);
-                                              setTaskNotes(existingNotes);
-                                            }}
-                                            className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-green-600 border border-green-600 rounded-md hover:bg-green-700 transition-colors"
-                                          >
-                                            ✓ Mark Complete
-                                          </button>
-                                        )}
-                                        
-                                        {isCompleted && (
-                                          <div className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-green-700 bg-green-100 border border-green-200 rounded-md">
-                                            ✅ Completed
-                                          </div>
-                                        )}
-                                      </div>
-                                      
                                       {/* Show notes if they exist */}
                                       {courseNotes && (
-                                        <div className="mt-3 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs">
-                                          <p className="font-medium text-yellow-800 mb-1">📝 Your Notes:</p>
-                                          <p className="text-yellow-700">{courseNotes}</p>
+                                        <div className="mt-3 p-3 bg-white bg-opacity-20 rounded-lg">
+                                          <p className="font-medium mb-1">📝 Your Notes:</p>
+                                          <p className="text-sm opacity-90">{courseNotes}</p>
                                         </div>
                                       )}
                                     </div>
