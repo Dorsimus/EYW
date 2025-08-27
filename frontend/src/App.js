@@ -6754,6 +6754,77 @@ const CompetenciesView = ({
     }
   };
 
+  // Handle task completion
+  const handleCompleteTask = async (task) => {
+    console.log(`🎯 Complete task clicked: ${task.title}`);
+    setSelectedTask(task);
+    setIsCompletionModalOpen(true);
+    setCompletionNotes('');
+    setCompletionError('');
+  };
+
+  // Submit task completion with notes
+  const submitTaskCompletion = async () => {
+    if (!selectedTask) return;
+    
+    try {
+      setIsSubmittingCompletion(true);
+      setCompletionError('');
+      
+      // Get current user data
+      const userData = user || localUser;
+      if (!userData) {
+        throw new Error('User not found');
+      }
+      
+      // Submit completion to database
+      const formData = new FormData();
+      formData.append('task_id', selectedTask.id);
+      formData.append('evidence_description', completionNotes);
+      formData.append('notes', completionNotes);
+      
+      const token = await getToken();
+      const response = await axios.post(
+        `${API}/users/${userData.id}/tasks/complete`,
+        formData,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+      
+      console.log('✅ Task completion successful:', response.data);
+      
+      // Update task state optimistically
+      setCompetencyTasks(prevTasks => 
+        prevTasks.map(task => 
+          task.id === selectedTask.id 
+            ? { ...task, completed: true, completion_notes: completionNotes }
+            : task
+        )
+      );
+      
+      // Show success message
+      setCompletionSuccess(true);
+      setTimeout(() => setCompletionSuccess(false), 3000);
+      
+      // Close modal
+      setIsCompletionModalOpen(false);
+      setSelectedTask(null);
+      setCompletionNotes('');
+      
+      return response.data;
+      
+    } catch (error) {
+      console.error('❌ Task completion failed:', error);
+      setCompletionError('Failed to complete task. Please try again.');
+    } finally {
+      setIsSubmittingCompletion(false);
+    }
+  };
+
   const handleCompleteCulminatingTask = async (taskId, evidenceDescription = "", file = null) => {
     try {
       // Mark task as complete
