@@ -7360,15 +7360,18 @@ const CompetenciesView = ({
                                           )}
                                           
                                           {/* Enhanced Complete Task Button */}
-                                          <button 
-                                            onClick={() => {
-                                              console.log(`Complete task: ${task.id}`);
-                                              // TODO: Implement task completion workflow
-                                            }}
-                                            className="start-task-btn"
-                                          >
-                                            {task.completed ? '✅ Completed' : getActionText(taskType)}
-                                          </button>
+                                          {!task.completed ? (
+                                            <button 
+                                              onClick={() => handleCompleteTask(task)}
+                                              className="complete-task-btn"
+                                            >
+                                              ✅ Mark as Complete
+                                            </button>
+                                          ) : (
+                                            <div className="completed-task-indicator">
+                                              ✅ Completed
+                                            </div>
+                                          )}
                                         </div>
                                       </div>
                                       
