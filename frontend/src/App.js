@@ -373,6 +373,14 @@ const AuthenticatedApp = () => {
   });
   const [showTaskModal, setShowTaskModal] = useState(null);
   const [taskNotes, setTaskNotes] = useState('');
+  
+  // Task completion state
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [isCompletionModalOpen, setIsCompletionModalOpen] = useState(false);
+  const [completionNotes, setCompletionNotes] = useState('');
+  const [isSubmittingCompletion, setIsSubmittingCompletion] = useState(false);
+  const [completionSuccess, setCompletionSuccess] = useState(false);
+  const [completionError, setCompletionError] = useState('');
 
   // Simple data persistence functions
   const saveDataWithBackup = (key, data) => {
