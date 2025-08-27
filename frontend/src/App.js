@@ -53,6 +53,51 @@ const getCompetencyClass = (areaKey) => {
   return classMap[areaKey] || '';
 };
 
+// Enhanced instructions formatting function
+const formatInstructions = (instructions) => {
+  if (!instructions) return null;
+  
+  // Split by line breaks and process each line
+  const lines = instructions.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+  
+  return lines.map((line, index) => {
+    // Handle bullet points (- or * at start)
+    if (line.match(/^[-*]\s+/)) {
+      const content = line.replace(/^[-*]\s+/, '');
+      return (
+        <div key={index} className="instruction-bullet-item">
+          <span className="instruction-bullet">•</span>
+          <span className="instruction-content">{content}</span>
+        </div>
+      );
+    }
+    
+    // Handle numbered lists (1. 2. etc.)
+    if (line.match(/^\d+\.\s+/)) {
+      const match = line.match(/^(\d+)\.\s+(.+)$/);
+      if (match) {
+        return (
+          <div key={index} className="instruction-numbered-item">
+            <span className="instruction-number">{match[1]}.</span>
+            <span className="instruction-content">{match[2]}</span>
+          </div>
+        );
+      }
+    }
+    
+    // Handle bold text **text**
+    const boldFormatted = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    // Handle italic text *text*
+    const italicFormatted = boldFormatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    // Regular paragraph
+    return (
+      <div key={index} className="instruction-paragraph" dangerouslySetInnerHTML={{ __html: italicFormatted }} />
+    );
+  });
+};
+
 const App = () => {
   return (
     <div className="App">
