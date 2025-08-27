@@ -553,8 +553,8 @@ body {
 }
 
 .task-type-badge {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
   padding: 4px 8px;
   border-radius: 6px;
   font-size: 0.75rem;
@@ -563,8 +563,8 @@ body {
 }
 
 .task-time {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: rgba(107, 114, 128, 0.1);
+  color: #4b5563;
   padding: 4px 8px;
   border-radius: 6px;
   font-size: 0.75rem;
@@ -572,30 +572,33 @@ body {
 }
 
 .task-content {
-  color: white;
+  color: #1f2937;
 }
 
 .task-title {
   font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 8px;
-  color: white;
+  color: #1f2937;
 }
 
 .task-description {
   font-size: 0.9rem;
   margin-bottom: 12px;
-  opacity: 0.9;
+  opacity: 0.8;
   line-height: 1.4;
+  color: #4b5563;
 }
 
 .task-instructions {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.1);
   padding: 12px;
   border-radius: 8px;
   margin-bottom: 16px;
   font-size: 0.85rem;
   line-height: 1.4;
+  color: #374151;
 }
 
 .task-actions {
