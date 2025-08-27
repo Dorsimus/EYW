@@ -435,18 +435,20 @@ body {
 
 /* VIBRANT TASK CARD VISUAL DESIGN - Enhanced Task Type Differentiation */
 
-/* Course Links - Blue theme with graduation icon */
+/* Course Links - Subtle Blue theme with graduation cap icon */
 .task-card.course-link {
-  background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
-  border-left: 4px solid #1D4ED8;
-  color: white;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(30, 64, 175, 0.05) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-left: 4px solid rgba(59, 130, 246, 0.4);
+  color: #1f2937;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .task-card.course-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(30, 64, 175, 0.08) 100%);
 }
 
 .task-card.course-link .task-icon::before { 
@@ -455,18 +457,20 @@ body {
   margin-right: 0.5rem;
 }
 
-/* Projects - Green theme with rocket icon */
+/* Projects - Subtle Green theme with rocket icon */
 .task-card.project {
-  background: linear-gradient(135deg, #10B981 0%, #047857 100%);
-  border-left: 4px solid #059669;
-  color: white;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(4, 120, 87, 0.05) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-left: 4px solid rgba(16, 185, 129, 0.4);
+  color: #1f2937;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .task-card.project:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(4, 120, 87, 0.08) 100%);
 }
 
 .task-card.project .task-icon::before { 
@@ -475,9 +479,11 @@ body {
   margin-right: 0.5rem;
 }
 
-/* Document Upload - Orange theme with document icon */
+/* Document Upload - Subtle Orange theme with document icon */
 .task-card.document-upload {
-  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(217, 119, 6, 0.05) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  border-left: 4px solid rgba(245, 158, 11, 0.4);
   border-left: 4px solid #B45309;
   color: white;
   transition: all 0.3s ease;
