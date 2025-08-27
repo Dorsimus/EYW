@@ -657,15 +657,15 @@ body {
 
 /* Enhanced Complete Task Button - Actionable and Engaging */
 .complete-task-btn {
-  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.9) 0%, rgba(5, 150, 105, 0.9) 100%);
   color: white;
   padding: 10px 20px;
   border-radius: 8px;
   font-weight: 600;
-  border: none;
+  border: 1px solid rgba(16, 185, 129, 0.3);
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.15);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -675,14 +675,15 @@ body {
 }
 
 .complete-task-btn:hover {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.5);
 }
 
 .complete-task-btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+  transform: translateY(0px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
 /* Completed Task Indicator */
