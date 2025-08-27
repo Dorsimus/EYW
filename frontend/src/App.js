@@ -5093,11 +5093,23 @@ const AuthenticatedApp = () => {
                     {user?.emailAddresses?.[0]?.emailAddress}
                   </span>
                   <span className="text-gray-300">•</span>
-                  <SignOutButton>
-                    <button className="text-xs text-red-600 hover:text-red-800 font-medium transition-colors">
-                      Sign Out
+                  {!isDemoMode ? (
+                    <SignOutButton>
+                      <button className="text-xs text-red-600 hover:text-red-800 font-medium transition-colors">
+                        Sign Out
+                      </button>
+                    </SignOutButton>
+                  ) : (
+                    <button 
+                      className="text-xs text-red-600 hover:text-red-800 font-medium transition-colors"
+                      onClick={() => {
+                        localStorage.removeItem('demo_mode');
+                        window.location.reload();
+                      }}
+                    >
+                      Exit Demo
                     </button>
-                  </SignOutButton>
+                  )}
                 </div>
               </div>
             </div>
