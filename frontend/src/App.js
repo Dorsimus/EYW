@@ -5464,6 +5464,18 @@ const AuthenticatedApp = () => {
             setShowTaskModal={setShowTaskModal}
             taskNotes={taskNotes}
             setTaskNotes={setTaskNotes}
+            selectedTask={selectedTask}
+            setSelectedTask={setSelectedTask}
+            isCompletionModalOpen={isCompletionModalOpen}
+            setIsCompletionModalOpen={setIsCompletionModalOpen}
+            completionNotes={completionNotes}
+            setCompletionNotes={setCompletionNotes}
+            isSubmittingCompletion={isSubmittingCompletion}
+            setIsSubmittingCompletion={setIsSubmittingCompletion}
+            completionSuccess={completionSuccess}
+            setCompletionSuccess={setCompletionSuccess}
+            completionError={completionError}
+            setCompletionError={setCompletionError}
           />
         )}
         
