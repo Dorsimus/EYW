@@ -7615,17 +7615,26 @@ const CompetenciesView = ({
                                             </a>
                                           )}
                                           
-                                          {/* Enhanced Complete Task Button */}
+                                          {/* Enhanced Complete Task Button with Timestamp */}
                                           {!task.completed ? (
                                             <button 
                                               onClick={() => handleCompleteTask(task)}
                                               className="complete-task-btn"
                                             >
-                                              ✅ Mark as Complete
+                                              📋 Mark as Complete
                                             </button>
                                           ) : (
-                                            <div className="completed-task-indicator">
-                                              ✅ Completed
+                                            <div className="flex items-center gap-3">
+                                              <div className="completed-task-btn">
+                                                ✅ Completed
+                                              </div>
+                                              {/* Completion Timestamp */}
+                                              {task.completed_at && (
+                                                <div className="text-xs text-gray-500 flex items-center gap-1">
+                                                  <span>🕒</span>
+                                                  <span>Completed {new Date(task.completed_at).toLocaleDateString()}</span>
+                                                </div>
+                                              )}
                                             </div>
                                           )}
                                         </div>
