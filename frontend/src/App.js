@@ -5094,7 +5094,7 @@ const AuthenticatedApp = () => {
     setCompletionError('');
   };
 
-  // Submit task completion with notes
+  // Submit task completion with notes and timestamp
   const submitTaskCompletion = async () => {
     if (!selectedTask) return;
     
@@ -5108,37 +5108,54 @@ const AuthenticatedApp = () => {
         throw new Error('User not found');
       }
       
-      // Submit completion to database
-      const formData = new FormData();
-      formData.append('task_id', selectedTask.id);
-      formData.append('user_id', userData.id);
-      formData.append('notes', completionNotes);
-      formData.append('completed_at', new Date().toISOString());
+      // Create completion timestamp
+      const completedAt = new Date().toISOString();
       
-      const response = await axios.post(`${API}/users/${userData.id}/tasks/${selectedTask.id}/complete`, formData, {
-        headers: {
-          'Authorization': `Bearer ${await getToken()}`,
-          'Content-Type': 'multipart/form-data'
+      // Submit completion to new specific endpoint
+      const completionData = {
+        notes: completionNotes,
+        evidence_description: completionNotes,
+        completed_at: completedAt
+      };
+      
+      const token = await getToken();
+      const response = await axios.post(
+        `${API}/users/${userData.id}/tasks/${selectedTask.id}/complete`,
+        completionData,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
         }
-      });
+      );
       
       if (response.status === 200) {
         setCompletionSuccess(true);
         showSuccessMessage(`Task "${selectedTask.title}" completed successfully!`);
         
-        // Update local task progress
+        // Update task completion status with timestamp
+        setCompetencyTasks(prevTasks => 
+          prevTasks.map(task => 
+            task.id === selectedTask.id 
+              ? { ...task, completed: true, completed_at: completedAt, notes: completionNotes }
+              : task
+          )
+        );
+        
+        // Update local progress tracking
         const updatedProgress = {
           ...competencyTaskProgress,
           [`${selectedTask.competency_area}_${selectedTask.sub_competency}_${selectedTask.id}`]: {
             completed: true,
             notes: completionNotes,
-            completed_at: new Date().toISOString()
+            completed_at: completedAt
           }
         };
         setCompetencyTaskProgress(updatedProgress);
         saveDataWithBackup('competency_task_progress', updatedProgress);
         
-        // Close modal after short delay
+        // Close modal after short delay to show success
         setTimeout(() => {
           setIsCompletionModalOpen(false);
           setSelectedTask(null);
