@@ -1242,6 +1242,84 @@ async def complete_task_new(
     
     return serialize_doc(completion.dict())
 
+# Specific endpoint structure as requested in review: POST /api/users/{user_id}/tasks/{task_id}/complete
+@api_router.post("/users/{user_id}/tasks/{task_id}/complete")
+async def complete_specific_task(
+    user_id: str,
+    task_id: str,
+    request: Request
+):
+    """
+    Task completion endpoint with specific URL structure as requested.
+    Accepts both JSON and form data for task completion with timestamp recording.
+    """
+    try:
+        # Parse request data (support both JSON and form data)
+        if request.headers.get("content-type", "").startswith("application/json"):
+            data = await request.json()
+            notes = data.get("notes", "")
+            evidence_description = data.get("evidence_description", "")
+            completed_at = data.get("completed_at")  # Allow custom timestamp
+        else:
+            # Handle form data
+            form = await request.form()
+            notes = form.get("notes", "")
+            evidence_description = form.get("evidence_description", "")
+            completed_at = form.get("completed_at")
+        
+        # Check if task exists
+        task = await db.tasks.find_one({"id": task_id})
+        if not task:
+            raise HTTPException(status_code=404, detail="Task not found")
+        
+        # Check if already completed
+        existing = await db.task_completions.find_one({"user_id": user_id, "task_id": task_id})
+        if existing:
+            raise HTTPException(status_code=400, detail="Task already completed")
+        
+        # Create completion with custom timestamp if provided
+        completion_data = {
+            "user_id": user_id,
+            "task_id": task_id,
+            "evidence_description": evidence_description,
+            "notes": notes
+        }
+        
+        # Use custom timestamp if provided, otherwise use current time
+        if completed_at:
+            try:
+                # Parse the provided timestamp
+                if isinstance(completed_at, str):
+                    completion_data["completed_at"] = datetime.fromisoformat(completed_at.replace('Z', '+00:00'))
+                else:
+                    completion_data["completed_at"] = completed_at
+            except (ValueError, TypeError):
+                # If timestamp parsing fails, use current time
+                completion_data["completed_at"] = datetime.utcnow()
+        else:
+            completion_data["completed_at"] = datetime.utcnow()
+        
+        completion = TaskCompletion(**completion_data)
+        
+        # Save to database
+        await db.task_completions.insert_one(completion.dict())
+        
+        # Update competency progress
+        await update_all_competency_progress(user_id)
+        
+        # Return completion data with timestamp
+        return {
+            "success": True,
+            "completion": serialize_doc(completion.dict()),
+            "message": "Task completed successfully",
+            "completed_at": completion.completed_at.isoformat()
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Task completion failed: {str(e)}")
+
 # Admin Task Management Routes
 @api_router.post("/admin/tasks", response_model=Task)
 async def admin_create_task(task_data: TaskCreate, admin_user = Depends(require_admin)):
