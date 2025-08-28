@@ -6854,7 +6854,19 @@ const CompetenciesView = ({
   showTaskModal,
   setShowTaskModal,
   taskNotes,
-  setTaskNotes
+  setTaskNotes,
+  selectedTask,
+  setSelectedTask,
+  isCompletionModalOpen,
+  setIsCompletionModalOpen,
+  completionNotes,
+  setCompletionNotes,
+  isSubmittingCompletion,
+  setIsSubmittingCompletion,
+  completionSuccess,
+  setCompletionSuccess,
+  completionError,
+  setCompletionError
 }) => {
   // Demo mode detection for CompetenciesView
   const urlParams = new URLSearchParams(window.location.search);
