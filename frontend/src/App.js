@@ -9053,8 +9053,14 @@ const TaskModal = ({ area, sub, tasks, onClose, onComplete, isProjectPhase, phas
                     </p>
                     
                     {task.instructions && (
-                      <div className="bg-blue-50 p-3 rounded mb-3">
-                        <p className="text-sm text-blue-800">📋 <strong>Instructions:</strong> {String(task.instructions)}</p>
+                      <div className="task-instructions">
+                        <div className="instruction-header">
+                          <span className="instruction-icon">✨</span>
+                          <strong>Instructions:</strong>
+                        </div>
+                        <div className="instruction-content-wrapper">
+                          {formatInstructions(task.instructions)}
+                        </div>
                       </div>
                     )}
                     
