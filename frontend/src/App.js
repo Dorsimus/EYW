@@ -2993,6 +2993,111 @@ const AuthenticatedApp = () => {
     }
   };
 
+  // 🔐 SURGICAL USER DATA LOADING - Real user integration with backend
+  const loadUserData = async (userId, refinedCompetencies = null) => {
+    try {
+      console.log('🔐 Loading user data and progress for:', userId);
+      
+      // Use refined competencies if provided, otherwise load from backend
+      let baseCompetencies = refinedCompetencies;
+      if (!baseCompetencies) {
+        baseCompetencies = await setupRefinedCompetencies();
+      }
+      
+      // For authenticated users, load their progress
+      if (user?.id && !isDemoMode) {
+        const token = await getToken();
+        if (token) {
+          try {
+            const userProgressResponse = await axios.get(`${API}/users/${userId}/progress`, {
+              headers: { 'Authorization': `Bearer ${token}` },
+              timeout: 10000
+            });
+            
+            if (userProgressResponse.data) {
+              console.log('✅ User progress loaded from backend');
+              const userProgress = userProgressResponse.data;
+              
+              // 🎨 PRESERVE UI - Merge progress with beautiful competency structure
+              Object.keys(baseCompetencies).forEach(areaKey => {
+                const areaProgress = userProgress[areaKey];
+                if (areaProgress) {
+                  baseCompetencies[areaKey].overall_progress = areaProgress.overall_progress || 0;
+                  baseCompetencies[areaKey].completion_percentage = areaProgress.completion_percentage || 0;
+                  baseCompetencies[areaKey].completed_tasks = areaProgress.completed_tasks || 0;
+                }
+              });
+            }
+          } catch (progressError) {
+            console.warn('⚠️ Could not load user progress, using base competencies:', progressError);
+          }
+        }
+      }
+      
+      // Set the final competencies state
+      setCompetencies(baseCompetencies);
+      console.log('✅ User data loading complete');
+      
+    } catch (error) {
+      console.error('❌ User data loading failed:', error);
+      // Fallback to base competencies
+      if (!refinedCompetencies) {
+        await setupRefinedCompetencies();
+      }
+    }
+  };
+
+  // 🎯 SURGICAL TASK COMPLETION - Preserve UI while connecting to backend
+  const completeTaskBackend = async (taskId, completionNotes) => {
+    try {
+      if (!user?.id) {
+        throw new Error('User not authenticated');
+      }
+      
+      const token = await getToken();
+      console.log('🔄 Submitting task completion to backend...');
+      
+      const response = await axios.post(`${API}/users/${user.id}/tasks/${taskId}/complete`, {
+        notes: completionNotes,
+        evidence_description: completionNotes,
+        completed_at: new Date().toISOString()
+      }, {
+        headers: { 'Authorization': `Bearer ${token}` },
+        timeout: 10000
+      });
+      
+      if (response.data) {
+        console.log('✅ Task completion saved to backend');
+        
+        // 🎨 PRESERVE UI - Update local state for immediate feedback
+        setCompetencies(prevCompetencies => {
+          const updated = { ...prevCompetencies };
+          
+          // Find and update the task in competencies structure
+          Object.keys(updated).forEach(areaKey => {
+            Object.keys(updated[areaKey].sub_competencies || {}).forEach(subKey => {
+              const subComp = updated[areaKey].sub_competencies[subKey];
+              if (subComp.foundation_courses) {
+                subComp.foundation_courses = subComp.foundation_courses.map(course => 
+                  course.id === taskId ? { ...course, completed: true, completion_date: new Date() } : course
+                );
+              }
+            });
+          });
+          
+          return updated;
+        });
+        
+        return response.data;
+      }
+    } catch (error) {
+      console.error('❌ Task completion failed:', error);
+      throw error;
+    }
+  };
+
+  // Load user portfolio from backend
+
   const initializeUser = async () => {
     console.log('initializeUser starting...');
     try {
