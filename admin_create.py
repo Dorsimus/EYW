@@ -9,7 +9,7 @@ import requests
 import sys
 
 # Configuration
-API_URL = "https://dbdriven-taskapp.preview.emergentagent.com/api"
+API_URL = "https://prelaunch-check.preview.emergentagent.com/api"
 
 async def create_admin():
     print("🔧 Creating Admin User for Earn Your Wings Platform")

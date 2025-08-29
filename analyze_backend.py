@@ -3,7 +3,7 @@ import json
 
 def analyze_backend_structure():
     """Analyze the backend structure in detail"""
-    base_url = "https://dbdriven-taskapp.preview.emergentagent.com/api"
+    base_url = "https://prelaunch-check.preview.emergentagent.com/api"
     
     print("🔍 DETAILED BACKEND STRUCTURE ANALYSIS")
     print("=" * 60)

@@ -10,7 +10,7 @@ from collections import defaultdict
 def analyze_task_distribution():
     """Analyze how tasks are distributed across competencies and sub-competencies"""
     
-    base_url = "https://dbdriven-taskapp.preview.emergentagent.com/api"
+    base_url = "https://prelaunch-check.preview.emergentagent.com/api"
     
     print("🔍 DETAILED TASK DISTRIBUTION ANALYSIS")
     print("=" * 60)

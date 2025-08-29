@@ -1,7 +1,7 @@
 // Test script to verify the competency data transformation fix
 const axios = require('axios');
 
-const BACKEND_URL = 'https://dbdriven-taskapp.preview.emergentagent.com';
+const BACKEND_URL = 'https://prelaunch-check.preview.emergentagent.com';
 const API = `${BACKEND_URL}/api`;
 
 async function testCompetencyDataTransformation() {
