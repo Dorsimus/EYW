@@ -3198,11 +3198,10 @@ const AuthenticatedApp = () => {
     }
   };
 
-  // PHASE 1 STEP 1: Backend API Audit - setupRefinedCompetencies function with comprehensive logging
+  // 🚀 SURGICAL BACKEND INTEGRATION - Preserves 100% UI while loading from backend
   const setupRefinedCompetencies = async () => {
     try {
-      console.log('🚀 PHASE 1 STEP 1: Starting Backend API Audit - setupRefinedCompetencies');
-      console.log('📡 Loading competencies from backend API for audit analysis...');
+      console.log('🚀 SURGICAL INTEGRATION: Loading competencies from backend API...');
       
       // Load competencies from backend API
       const response = await axios.get(`${API}/competencies`, {
@@ -3212,147 +3211,290 @@ const AuthenticatedApp = () => {
       
       if (response.status === 200 && response.data) {
         const backendCompetencies = response.data;
+        console.log('✅ Backend competencies loaded successfully:', Object.keys(backendCompetencies).length, 'areas');
         
-        // COMPREHENSIVE BACKEND API AUDIT LOGGING
-        console.log('✅ BACKEND API AUDIT RESULTS:');
-        console.log('1) Backend API Response Structure:', backendCompetencies);
-        console.log('2) Total competency areas found:', Object.keys(backendCompetencies).length);
-        console.log('3) Competency area keys:', Object.keys(backendCompetencies));
-        
-        // Analyze each competency area in detail
-        Object.entries(backendCompetencies).forEach(([areaKey, areaData]) => {
-          console.log(`📊 COMPETENCY AREA: ${areaKey}`);
-          console.log(`   - Name: ${areaData.name}`);
-          console.log(`   - Description: ${areaData.description}`);
-          console.log(`   - Sub-competencies: ${Object.keys(areaData.sub_competencies || {}).length}`);
-          console.log(`   - Sub-competency keys:`, Object.keys(areaData.sub_competencies || {}));
-        });
-        
-        // Transform backend data to match frontend expectations
-        console.log('🔄 Transforming backend data to match frontend format...');
-        
-        // Load tasks from database to get accurate counts
+        // Load tasks from database to get accurate counts and structure
         let databaseTasks = [];
         try {
           const tasksResponse = await axios.get(`${API}/tasks`);
           databaseTasks = tasksResponse.data;
-          console.log(`📊 Loaded ${databaseTasks.length} tasks from database for count calculation`);
+          console.log(`📊 Loaded ${databaseTasks.length} tasks from database`);
         } catch (taskError) {
           console.warn('⚠️ Could not load tasks for count calculation:', taskError);
         }
         
-        const transformedCompetencies = {};
+        // 🎨 PRESERVE BEAUTIFUL UI STRUCTURE - Transform backend to match UI expectations
+        const enrichedCompetencies = {};
         
         Object.entries(backendCompetencies).forEach(([areaKey, areaData]) => {
-          transformedCompetencies[areaKey] = {
-            ...areaData,
+          // Calculate area-level totals
+          const areaTasks = databaseTasks.filter(task => task.competency_area === areaKey);
+          
+          enrichedCompetencies[areaKey] = {
+            name: areaData.name,
+            description: areaData.description,
+            // 🎨 PRESERVE UI PHILOSOPHY - Keep beautiful content structure
+            philosophy: areaData.philosophy || `The Navigator ${areaData.name} development transforms department supervisors into skilled professionals through their daily work.`,
+            time_commitment: "~12 minutes per week + natural work integration",
+            duration: "12-15 months (competency-based progression)",
+            focus: `${areaData.name} development through authentic work experiences`,
+            overall_progress: 0,
+            completion_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: areaTasks.length,
+            competency_area: areaKey,
+            // 🎨 PRESERVE CURIOSITY IGNITION - Keep beautiful UI elements
+            curiosity_ignition: {
+              title: `${areaData.name} Curiosity Assessment`,
+              description: `Before diving in, spark curiosity about your ${areaData.name.toLowerCase()} journey`,
+              time_required: "5 minutes of thinking",
+              reflection_prompts: [
+                `What's one ${areaData.name.toLowerCase()} moment from this week that I keep thinking about?`,
+                `What questions do I have about ${areaData.name.toLowerCase()}?`,
+                `How does ${areaData.name.toLowerCase()} show up in my daily work?`,
+                `What would mastery in ${areaData.name.toLowerCase()} look like for me?`
+              ],
+              setup_requirement: `Create a simple place to capture ${areaData.name.toLowerCase()} observations, questions, and 'aha moments' throughout the program.`
+            },
             sub_competencies: {}
           };
           
-          // Transform sub_competencies from strings to objects
+          // Transform sub_competencies with rich UI structure
           if (areaData.sub_competencies) {
             Object.entries(areaData.sub_competencies).forEach(([subKey, subName]) => {
-              // Calculate task counts for this sub-competency from database
               const subCompetencyTasks = databaseTasks.filter(task => 
                 task.competency_area === areaKey && task.sub_competency === subKey
               );
               
-              transformedCompetencies[areaKey].sub_competencies[subKey] = {
+              enrichedCompetencies[areaKey].sub_competencies[subKey] = {
                 name: subName,
                 description: `${subName} competency development`,
-                completed_tasks: 0, // TODO: Calculate from user progress
+                duration: "3-4 months",
+                weekly_time: "~15 minutes", 
+                progress_percentage: 0,
+                completed_tasks: 0,
                 total_tasks: subCompetencyTasks.length,
-                progress_percentage: 0
+                core_learning_question: `How can I excel at ${subName.toLowerCase()}?`,
+                // 🎨 PRESERVE TASK STRUCTURE - Load from backend but maintain UI format
+                foundation_courses: subCompetencyTasks.filter(task => task.task_type === 'course_link').map(task => ({
+                  id: task.id,
+                  title: task.title,
+                  duration: `${task.estimated_hours} hour${task.estimated_hours !== 1 ? 's' : ''}`,
+                  platform: "PerformanceHQ",
+                  description: task.description
+                })),
+                monthly_activities: [
+                  {
+                    month: 1,
+                    title: `${subName} Foundation`,
+                    in_the_flow_activity: `Practice ${subName.toLowerCase()} skills during your regular work activities.`,
+                    document: `${subName} Practice Log (weekly notes on progress)`,
+                    reflection: `What am I learning about ${subName.toLowerCase()}?`
+                  },
+                  {
+                    month: 2,
+                    title: `${subName} Application`,
+                    in_the_flow_activity: `Apply ${subName.toLowerCase()} techniques in real situations.`,
+                    document: `${subName} Application Results`,
+                    journal_prompt: `How is ${subName.toLowerCase()} changing my approach to work?`
+                  },
+                  {
+                    month: 3,
+                    title: `${subName} Mastery`,
+                    in_the_flow_activity: `Demonstrate mastery of ${subName.toLowerCase()} skills.`,
+                    document: `${subName} Mastery Evidence`,
+                    curiosity_question: `How can ${subName.toLowerCase()} become natural in my daily work?`
+                  }
+                ],
+                competency_gate: `Demonstrate proficiency in ${subName.toLowerCase()} + Observable behavior changes`,
+                dive_deeper_resources: [
+                  {
+                    title: `Advanced ${subName} Techniques`,
+                    type: "Resource",
+                    description: `Deep dive into ${subName.toLowerCase()} best practices`,
+                    url: "#"
+                  }
+                ]
               };
             });
           }
         });
         
-        console.log('✅ Data transformation complete');
-        console.log('📊 Transformed competencies structure:', transformedCompetencies);
+        console.log('✅ Surgical integration complete - UI structure preserved with backend data');
+        setCompetencies(enrichedCompetencies);
+        return enrichedCompetencies;
         
-        // Set the competencies state with transformed data
-        setCompetencies(transformedCompetencies);
-        
-        console.log('✅ PHASE 1 STEP 1 COMPLETE: Backend API audit logging successful');
-        console.log('📋 NEXT STEPS: Proceed to Step 2 (Create loadCompetenciesFromAPI function)');
-        
-        return transformedCompetencies;
       } else {
-        console.error('❌ Backend API audit failed - invalid response:', response.status);
         throw new Error(`Backend API returned status: ${response.status}`);
       }
     } catch (error) {
-      console.error('❌ PHASE 1 STEP 1 FAILED: Backend API audit error:', error);
+      console.error('❌ Backend loading failed, using UI fallback:', error);
       
-      // Fallback to hardcoded competencies for demo purposes
-      console.log('🔄 Falling back to hardcoded competencies structure...');
+      // Fallback to simplified competencies structure
       const fallbackCompetencies = {
         leadership_supervision: {
           name: "Leadership & Supervision",
           description: "Leadership Isn't a Title, It's How You Show Up Every Day",
+          philosophy: "The Navigator Leadership & Supervision development transforms department supervisors into inspiring people leaders through their daily work.",
+          time_commitment: "~12 minutes per week + natural work integration",
+          duration: "12-15 months (competency-based progression)",
+          focus: "Curiosity-driven leadership development through authentic work experiences",
+          overall_progress: 0,
+          completion_percentage: 0,
+          completed_tasks: 0,
+          total_tasks: 16,
+          competency_area: "leadership_supervision",
+          curiosity_ignition: {
+            title: "Leadership Curiosity Assessment",
+            description: "Before diving in, spark curiosity about your leadership journey",
+            time_required: "5 minutes of thinking",
+            reflection_prompts: [
+              "What's one leadership moment from this week that I keep thinking about?",
+              "If I could ask any great leader three questions, what would they be?",
+              "What does leadership look like when no one's watching?",
+              "How do I want people to feel after working with me?"
+            ],
+            setup_requirement: "Create a simple place to capture leadership observations, questions, and 'aha moments' throughout the program."
+          },
           sub_competencies: {
             inspiring_team_motivation: {
               name: "Inspiring Team Motivation & Engagement",
               description: "What makes someone excited to come to work for you specifically?",
+              duration: "3-4 months",
+              weekly_time: "~15 minutes",
+              progress_percentage: 0,
               completed_tasks: 0,
-              total_tasks: 8,
-              progress_percentage: 0
+              total_tasks: 4,
+              core_learning_question: "What makes someone excited to come to work for me specifically?",
+              foundation_courses: [],
+              monthly_activities: [],
+              competency_gate: "Team members report higher engagement + Observable behavior changes",
+              dive_deeper_resources: []
             },
             mastering_difficult_conversations: {
-              name: "Mastering Difficult Conversations",
+              name: "Mastering Difficult Conversations", 
               description: "How do I have conversations that strengthen relationships while raising standards?",
+              duration: "3-4 months",
+              weekly_time: "~15 minutes",
+              progress_percentage: 0,
               completed_tasks: 0,
-              total_tasks: 6,
-              progress_percentage: 0
+              total_tasks: 4,
+              core_learning_question: "How do I have conversations that strengthen relationships while raising standards?",
+              foundation_courses: [],
+              monthly_activities: [],
+              competency_gate: "Successfully resolve documented conflict + Team member feedback",
+              dive_deeper_resources: []
             },
             building_collaborative_culture: {
               name: "Building Collaborative Team Culture",
               description: "How do we have high standards AND have fun together?",
+              duration: "3-4 months",
+              weekly_time: "~15 minutes",
+              progress_percentage: 0,
               completed_tasks: 0,
-              total_tasks: 7,
-              progress_percentage: 0
+              total_tasks: 4,
+              core_learning_question: "How do we have high standards AND have fun together?",
+              foundation_courses: [],
+              monthly_activities: [],
+              competency_gate: "Team reports improved culture + Observable changes in interactions",
+              dive_deeper_resources: []
             },
             developing_others_success: {
               name: "Developing Others for Success",
-              description: "How do I help each person become the best version of themselves?",
+              description: "How do I help each person become the best version of themselves?", 
+              duration: "3-4 months",
+              weekly_time: "~15 minutes",
+              progress_percentage: 0,
               completed_tasks: 0,
-              total_tasks: 5,
-              progress_percentage: 0
+              total_tasks: 4,
+              core_learning_question: "How do I help each person become the best version of themselves?",
+              foundation_courses: [],
+              monthly_activities: [],
+              competency_gate: "Team member demonstrates advancement + Peer recognition",
+              dive_deeper_resources: []
             }
           }
         },
         financial_management: {
           name: "Financial Management & Business Acumen",
           description: "Every Decision Has a Dollar Impact - Make Them Count",
+          philosophy: "The Navigator Financial Management development transforms department supervisors into business-minded leaders who understand the financial impact of their daily decisions.",
+          time_commitment: "~12 minutes per week + natural work integration",
+          duration: "12-15 months (competency-based progression)",
+          focus: "Financial literacy through real department decisions and daily operations",
+          overall_progress: 0,
+          completion_percentage: 0,
+          completed_tasks: 0,
+          total_tasks: 16,
+          competency_area: "financial_management",
+          curiosity_ignition: {
+            title: "Financial Curiosity Assessment",
+            description: "Before diving in, spark curiosity about the money side of your work",
+            time_required: "5 minutes of thinking",
+            reflection_prompts: [
+              "What's one decision I made this week that probably had a financial impact I didn't consider?",
+              "If I owned this property, what would keep me up at night financially?",
+              "How does my department's work show up in dollars and cents?",
+              "What financial questions do I wish I knew how to answer?"
+            ],
+            setup_requirement: "Create a simple place to capture financial observations, questions, and 'connection moments' throughout the program."
+          },
           sub_competencies: {
             property_pl_understanding: {
               name: "Property P&L Understanding",
               description: "How does my department's daily work show up on the property's financial statement?",
+              duration: "3-4 months",
+              weekly_time: "~15 minutes",
+              progress_percentage: 0,
               completed_tasks: 0,
-              total_tasks: 9,
-              progress_percentage: 0
+              total_tasks: 4,
+              core_learning_question: "How does my department's daily work show up on the property's financial statement?",
+              foundation_courses: [],
+              monthly_activities: [],
+              competency_gate: "Accurately identify 5+ P&L line items your department affects + Explain department's financial role to team",
+              dive_deeper_resources: []
             },
             departmental_budget_management: {
               name: "Departmental Budget Management",
               description: "How do I create a budget that challenges us to improve while being realistic?",
+              duration: "3-4 months",
+              weekly_time: "~15 minutes",
+              progress_percentage: 0,
               completed_tasks: 0,
-              total_tasks: 7,
-              progress_percentage: 0
+              total_tasks: 4,
+              core_learning_question: "How do I create a budget that challenges us to improve while being realistic about what we can achieve?",
+              foundation_courses: [],
+              monthly_activities: [],
+              competency_gate: "Create realistic department budget + Track performance against budget",
+              dive_deeper_resources: []
             },
             cost_conscious_decision_making: {
               name: "Cost-Conscious Decision Making",
               description: "What's the real cost of this decision, including everything I might not see immediately?",
+              duration: "3-4 months",
+              weekly_time: "~15 minutes",
+              progress_percentage: 0,
               completed_tasks: 0,
-              total_tasks: 8,
-              progress_percentage: 0
+              total_tasks: 4,
+              core_learning_question: "What's the real cost of this decision, including everything I might not see immediately?",
+              foundation_courses: [],
+              monthly_activities: [],
+              competency_gate: "Demonstrate cost-benefit analysis skills + Document cost savings achieved",
+              dive_deeper_resources: []
             },
             financial_communication_business_understanding: {
               name: "Financial Communication & Business Understanding",
               description: "How do I communicate financial information effectively?",
+              duration: "3-4 months",
+              weekly_time: "~15 minutes",
+              progress_percentage: 0,
               completed_tasks: 0,
-              total_tasks: 6,
-              progress_percentage: 0
+              total_tasks: 4,
+              core_learning_question: "How do I communicate financial information effectively?",
+              foundation_courses: [],
+              monthly_activities: [],
+              competency_gate: "Present financial information clearly + Team understands financial impact of their work",
+              dive_deeper_resources: []
             }
           }
         }
