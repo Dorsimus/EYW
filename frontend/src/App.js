@@ -3660,7 +3660,60 @@ const AuthenticatedApp = () => {
     return () => clearInterval(autoSaveInterval);
   }, [competencies, portfolio, competencyTaskProgress, coreValueEntries]);
 
-  const loadUserData = async (userId, refinedCompetencies = null) => {
+  // 🎯 PRODUCTION USER LOADING - Real authentication for mgwilliams81@gmail.com
+  const loadUserCompetencies = async (userId) => {
+    try {
+      console.log('🔐 Loading competencies for authenticated user:', userId);
+      
+      // Get authentication token
+      const token = await getToken();
+      if (!token) {
+        throw new Error('No authentication token available');
+      }
+      
+      // Load user-specific competency progress
+      const userProgressResponse = await axios.get(`${API}/users/${userId}/progress`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+        timeout: 10000
+      });
+      
+      // Load base competencies with task completion status
+      const baseCompetencies = await setupRefinedCompetencies();
+      
+      if (userProgressResponse.data) {
+        console.log('✅ User progress loaded, integrating with competencies');
+        const userProgress = userProgressResponse.data;
+        
+        // 🎨 PRESERVE UI - Merge user progress with beautiful competency structure
+        Object.keys(baseCompetencies).forEach(areaKey => {
+          const areaProgress = userProgress[areaKey];
+          if (areaProgress) {
+            baseCompetencies[areaKey].overall_progress = areaProgress.overall_progress || 0;
+            baseCompetencies[areaKey].completion_percentage = areaProgress.completion_percentage || 0;
+            baseCompetencies[areaKey].completed_tasks = areaProgress.completed_tasks || 0;
+            
+            // Update sub-competency progress
+            Object.keys(baseCompetencies[areaKey].sub_competencies).forEach(subKey => {
+              const subProgress = areaProgress.sub_competencies?.[subKey];
+              if (subProgress) {
+                baseCompetencies[areaKey].sub_competencies[subKey].progress_percentage = subProgress.progress_percentage || 0;
+                baseCompetencies[areaKey].sub_competencies[subKey].completed_tasks = subProgress.completed_tasks || 0;
+              }
+            });
+          }
+        });
+      }
+      
+      console.log('✅ User competencies loaded with progress tracking');
+      setCompetencies(baseCompetencies);
+      return baseCompetencies;
+      
+    } catch (error) {
+      console.error('❌ User competency loading failed:', error);
+      // Fall back to base competencies without user progress
+      return await setupRefinedCompetencies();
+    }
+  };
     console.log(`🔄 Loading user data for ID: ${userId}`);
     
     // ARCHITECTURAL FIX: Always load competencies from backend API to ensure admin-user sync
