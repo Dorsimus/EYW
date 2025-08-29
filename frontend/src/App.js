@@ -3198,6 +3198,57 @@ const AuthenticatedApp = () => {
     }
   };
 
+  // 🎨 UI PRESERVATION HELPERS - Maintain beautiful content structure
+  const loadFallbackCompetencies = async () => {
+    console.log('🔄 Loading fallback competencies with full UI structure...');
+    const fallbackCompetencies = {
+      leadership_supervision: {
+        name: "Leadership & Supervision",
+        description: "Leadership Isn't a Title, It's How You Show Up Every Day",
+        philosophy: "The Navigator Leadership & Supervision development transforms department supervisors into inspiring people leaders through their daily work.",
+        time_commitment: "~12 minutes per week + natural work integration",
+        duration: "12-15 months (competency-based progression)",
+        focus: "Curiosity-driven leadership development through authentic work experiences",
+        overall_progress: 0,
+        completion_percentage: 0,
+        completed_tasks: 0,
+        total_tasks: 16,
+        competency_area: "leadership_supervision",
+        curiosity_ignition: {
+          title: "Leadership Curiosity Assessment",
+          description: "Before diving in, spark curiosity about your leadership journey",
+          time_required: "5 minutes of thinking",
+          reflection_prompts: [
+            "What's one leadership moment from this week that I keep thinking about?",
+            "If I could ask any great leader three questions, what would they be?",
+            "What does leadership look like when no one's watching?",
+            "How do I want people to feel after working with me?"
+          ],
+          setup_requirement: "Create a simple place to capture leadership observations, questions, and 'aha moments' throughout the program."
+        },
+        sub_competencies: {
+          inspiring_team_motivation: {
+            name: "Inspiring Team Motivation & Engagement",
+            description: "What makes someone excited to come to work for you specifically?",
+            duration: "3-4 months",
+            weekly_time: "~15 minutes",
+            progress_percentage: 0,
+            completed_tasks: 0,
+            total_tasks: 4,
+            core_learning_question: "What makes someone excited to come to work for me specifically?",
+            foundation_courses: [],
+            monthly_activities: [],
+            competency_gate: "Team members report higher engagement",
+            dive_deeper_resources: []
+          }
+        }
+      }
+    };
+    
+    setCompetencies(fallbackCompetencies);
+    return fallbackCompetencies;
+  };
+
   // 🚀 SURGICAL BACKEND INTEGRATION - Preserves 100% UI while loading from backend
   const setupRefinedCompetencies = async () => {
     try {
