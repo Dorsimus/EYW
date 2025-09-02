@@ -564,6 +564,18 @@ const AuthenticatedApp = () => {
     { area: 'client_confidence_connection', subs: ['understanding_client_impact', 'service_excellence_presence', 'client_communication_skills', 'client_advocacy_value'] }
   ];
 
+  // 🔄 LOAD PROGRESS ON APP INITIALIZATION
+  useEffect(() => {
+    const initializeProgress = async () => {
+      if (user?.id || isDemoMode) {
+        console.log('📊 Initializing user progress tracking...');
+        await loadUserProgress();
+      }
+    };
+    
+    initializeProgress();
+  }, [user?.id, isDemoMode]);
+
   // BYPASS DEMO ENVIRONMENT: Set admin view if user has admin role
   useEffect(() => {
     console.log('Setting up demo environment...');
