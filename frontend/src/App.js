@@ -8041,6 +8041,7 @@ const CompetenciesView = ({
                                             </div>
                                           )}
                                         </div>
+                                      </div>
                                     </div>
                                   );
                                 })}
