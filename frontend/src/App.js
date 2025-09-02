@@ -4862,42 +4862,70 @@ const AuthenticatedApp = () => {
     }, 500);
   };
 
-  // PRODUCTION VERSION: Create or update flightbook entry from journal reflection using backend API
-  const createOrUpdateFlightbookFromJournalReflection = async (areaKey, subKey, taskId, notes, taskType = 'curiosity_reflection') => {
-    if (!user?.id || !notes || notes.trim().length === 0) return null;
+  // 🔧 ENHANCED FLIGHTBOOK INTEGRATION - Handles demo mode and task completion takeaways
+  const createOrUpdateFlightbookFromJournalReflection = async (areaKey, subKey, taskId, notes, taskType = 'task_completion') => {
+    if (!notes || notes.trim().length === 0) return null;
 
     try {
-      console.log('🚀 Creating/updating flightbook entry via production API:', { areaKey, subKey, taskId, taskType });
+      console.log('📖 Creating flightbook entry from task completion:', { areaKey, subKey, taskId, taskType });
       
-      // Universal prompt extraction - get the actual task/prompt being worked on
-      const competencyData = competencies[areaKey];
-      let promptText = '';
-      let entryTitle = 'Leadership Reflection'; // Default fallback
+      // Create entry title based on task type and context
+      let entryTitle = 'Leadership Reflection';
       
-      // Extract prompt from the current modal or task context
-      if (showTaskModal && showTaskModal.task) {
-        // If we have the actual task being worked on, extract its prompt/description
-        const currentTask = showTaskModal.task;
-        
-        if (currentTask.reflection) {
-          promptText = currentTask.reflection;
-          entryTitle = `Leadership Reflection: "${promptText}"`;
-        } else if (currentTask.journal_prompt) {
-          promptText = currentTask.journal_prompt;
-          entryTitle = `Leadership Reflection: "${promptText}"`;
-        } else if (currentTask.curiosity_question) {
-          promptText = currentTask.curiosity_question;
-          entryTitle = `Leadership Reflection: "${promptText}"`;
-        } else if (currentTask.description) {
-          promptText = currentTask.description;
-          entryTitle = `Task Reflection: "${promptText}"`;
-        } else if (currentTask.title && currentTask.title !== 'Task Reflection') {
-          promptText = currentTask.title;
-          entryTitle = `Leadership Reflection: "${promptText}"`;
-        }
-        
-        console.log('📝 Extracted prompt from current task:', promptText?.substring(0, 100));
+      if (taskType === 'task_completion') {
+        // For task completions, create a meaningful title
+        const taskTitle = selectedTask?.title || 'Leadership Task';
+        entryTitle = `Task Completion: ${taskTitle}`;
+      } else if (taskId.includes('task_completion_')) {
+        entryTitle = 'Task Completion Reflection';
       }
+      
+      // Prepare flightbook entry data
+      const entryData = {
+        title: entryTitle,
+        content: notes.trim(),
+        competency_area: areaKey,
+        sub_competency: subKey,
+        task_id: taskId,
+        task_type: taskType,
+        entry_type: 'task_completion',
+        created_at: new Date().toISOString(),
+        user_id: user?.id || 'demo-user-123'
+      };
+      
+      console.log('📝 Flightbook entry data:', entryData);
+      
+      // Try backend API first (for authenticated users)
+      if (!isDemoMode && user?.id) {
+        try {
+          const token = await getToken();
+          const response = await flightbookAPIClient.createOrUpdateFromJournal(entryData);
+          
+          if (response) {
+            console.log('✅ Flightbook entry saved to backend');
+            
+            // Update local flightbook state
+            const currentEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+            const updatedEntries = [...currentEntries, entryData];
+            setFlightbook(updatedEntries);
+            localStorage.setItem('flightbook_entries', JSON.stringify(updatedEntries));
+            
+            return response;
+          }
+        } catch (apiError) {
+          console.warn('⚠️ Backend flightbook save failed, using localStorage:', apiError);
+        }
+      }
+      
+      // Fallback to localStorage for demo mode or if API fails
+      console.log('💾 Saving flightbook entry to localStorage');
+      return await createOrUpdateFlightbookFromJournalReflectionLocally(areaKey, subKey, taskId, notes, taskType);
+      
+    } catch (error) {
+      console.error('❌ Error creating flightbook entry:', error);
+      return null;
+    }
+  };
       
       // Fallback to competency data structure if no current task
       if (!promptText) {
