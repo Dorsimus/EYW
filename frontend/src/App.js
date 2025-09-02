@@ -8075,6 +8075,21 @@ const CompetenciesView = ({
                                               {/* Completion Timestamp */}
                                               {task.completed_at && (
                                                 <div className="text-xs text-gray-500 flex items-center gap-1">
+                                                  📅 {new Date(task.completed_at).toLocaleDateString()}
+                                                </div>
+                                              )}
+                                            </div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
                                                   <span>🕒</span>
                                                   <span>Completed {new Date(task.completed_at).toLocaleDateString()}</span>
                                                 </div>
