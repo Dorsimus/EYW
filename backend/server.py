@@ -972,7 +972,9 @@ async def calculate_competency_progress(user_id: str, competency_area: str, sub_
     total_tasks = len(tasks)
     
     # Get completed tasks for this user
-    task_ids = [str(task["_id"]) for task in tasks]
+    # CRITICAL FIX: Use task.id (UUID) instead of task._id (MongoDB ObjectId)
+    # Task completions are stored with the UUID id field, not the MongoDB _id
+    task_ids = [task.get("id", str(task["_id"])) for task in tasks]
     completed = await db.task_completions.find({
         "user_id": user_id,
         "task_id": {"$in": task_ids}
