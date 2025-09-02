@@ -3251,53 +3251,56 @@ const AuthenticatedApp = () => {
   };
 
   // Load competency tasks function - NOW LOADS FROM DATABASE
+  // 🔧 FIXED: Load tasks with completion status from user-specific endpoint
   const loadCompetencyTasks = async (areaKey, subKey = null) => {
-    console.log(`🔍 Loading competency tasks from DATABASE for area: ${areaKey}, sub: ${subKey}`);
-    
     try {
-      setSelectedCompetency({ area: areaKey, sub: subKey });
+      console.log(`📡 Loading tasks with completion status for ${areaKey}${subKey ? '/' + subKey : ''}...`);
       
-      // Load tasks from database API
-      let apiUrl = `${API}/tasks`;
-      if (areaKey && subKey) {
-        apiUrl = `${API}/tasks/${areaKey}/${subKey}`;
-      } else if (areaKey) {
-        // Load all tasks for competency area and filter
-        apiUrl = `${API}/tasks`;
+      // Use user-specific endpoint that includes completion status
+      const endpoint = subKey 
+        ? `${API}/users/${user?.id || 'demo-user-123'}/tasks/${areaKey}/${subKey}`
+        : `${API}/users/${user?.id || 'demo-user-123'}/tasks/${areaKey}`;
+      
+      const token = await getToken();
+      const response = await axios.get(endpoint, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+        timeout: 10000
+      });
+      
+      if (response.data) {
+        console.log(`✅ Loaded ${response.data.length} tasks with completion status`);
+        
+        // Tasks already include completion status from backend
+        const formattedTasks = response.data.map(task => ({
+          id: task.id,
+          title: task.title,
+          description: task.description,
+          task_type: task.task_type,
+          competency_area: task.competency_area,
+          sub_competency: task.sub_competency,
+          external_link: task.external_link,
+          estimated_hours: task.estimated_hours,
+          instructions: task.instructions,
+          required: task.required !== false,
+          order: task.order || 1,
+          // 🎯 CRITICAL FIX: Include completion status from backend
+          completed: task.completed || false,
+          completed_at: task.completion_data?.completed_at || null,
+          main_takeaways: task.completion_data?.notes || null,
+          completion_timestamp: task.completion_data?.completed_at || null
+        }));
+        
+        // Update competency tasks state
+        setCompetencyTasks(formattedTasks);
+        
+        // Update progress tracking from backend data
+        const completedTasks = formattedTasks.filter(task => task.completed);
+        console.log(`📊 Completion status: ${completedTasks.length}/${formattedTasks.length} tasks completed`);
+        
+        return formattedTasks;
       }
-      
-      const response = await axios.get(apiUrl);
-      let tasks = response.data;
-      
-      // Filter tasks if needed
-      if (areaKey && !subKey) {
-        tasks = tasks.filter(task => task.competency_area === areaKey);
-      } else if (areaKey && subKey) {
-        tasks = tasks.filter(task => 
-          task.competency_area === areaKey && task.sub_competency === subKey
-        );
-      }
-      
-      // Convert database tasks to frontend format
-      const formattedTasks = tasks.map(task => ({
-        id: task.id,
-        title: task.title,
-        description: task.description,
-        type: task.task_type,
-        competency_area: task.competency_area,
-        sub_competency: task.sub_competency,
-        url: task.external_link,
-        estimated_hours: task.estimated_hours,
-        instructions: task.instructions,
-        required: task.required || true,
-        order: task.order || 1
-      }));
-      
-      setCompetencyTasks(formattedTasks);
-      console.log(`✅ Loaded ${formattedTasks.length} tasks from DATABASE for ${areaKey}${subKey ? ` -> ${subKey}` : ''}`);
-      
     } catch (error) {
-      console.error(`❌ Error loading tasks from database:`, error);
+      console.error('❌ Error loading tasks with completion status:', error);
       // Fallback to empty array instead of hardcoded data
       setCompetencyTasks([]);
     }
