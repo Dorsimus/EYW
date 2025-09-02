@@ -524,6 +524,31 @@ body {
   overflow: hidden;
 }
 
+/* Completed Task Styling - Subtle grey-out effect */
+.task-card.completed {
+  opacity: 0.75;
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.task-card.completed .task-title {
+  color: #6b7280;
+}
+
+.task-card.completed .task-description {
+  color: #9ca3af;
+}
+
+/* Uncomplete button styling */
+.uncomplete-btn {
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.uncomplete-btn:hover {
+  transform: scale(1.02);
+}
+
 .task-header {
   display: flex;
   justify-content: space-between;
