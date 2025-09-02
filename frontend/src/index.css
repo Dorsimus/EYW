@@ -498,12 +498,12 @@ body {
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.08) 100%);
 }
 
-/* Assessment - Subtle Purple theme with chart icon */
+/* Assessment - Clean purple theme */
 .task-card.assessment {
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(124, 58, 237, 0.05) 100%);
   border: 1px solid rgba(139, 92, 246, 0.15);
   border-left: 4px solid rgba(139, 92, 246, 0.4);
-  color: #1f2937;
+  padding: 20px;
   transition: all 0.3s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
@@ -512,12 +512,6 @@ body {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(139, 92, 246, 0.08);
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(124, 58, 237, 0.08) 100%);
-}
-
-.task-card.assessment .task-icon::before { 
-  content: "📊"; 
-  font-size: 1.5rem;
-  margin-right: 0.5rem;
 }
 
 /* Enhanced Task Card Structure */
