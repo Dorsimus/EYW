@@ -5814,6 +5814,7 @@ const AuthenticatedApp = () => {
             setCompletionSuccess={setCompletionSuccess}
             completionError={completionError}
             setCompletionError={setCompletionError}
+            handleCompleteTask={handleCompleteTask}
           />
         )}
         
