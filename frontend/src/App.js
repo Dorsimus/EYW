@@ -6225,6 +6225,103 @@ const AuthenticatedApp = () => {
         </div>
       )}
 
+      {/* 🎯 ENHANCED TASK COMPLETION MODAL - My Main Takeaways */}
+      {isCompletionModalOpen && selectedTask && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-60"
+          onClick={() => setIsCompletionModalOpen(false)}
+        >
+          <div 
+            className="bg-white rounded-lg max-w-lg w-full mx-4 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6">
+              {/* Modal Header */}
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">🎯 Complete Task</h3>
+                  <p className="text-sm text-gray-600 mt-1">{selectedTask.title}</p>
+                </div>
+                <button 
+                  onClick={() => setIsCompletionModalOpen(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  ✕
+                </button>
+              </div>
+              
+              {/* Task Completion Form */}
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    📝 My Main Takeaways
+                  </label>
+                  <p className="text-xs text-gray-500 mb-3">
+                    Share your key insights, learnings, or reflections from completing this task. 
+                    These will be saved to your Leadership Flightbook.
+                  </p>
+                  <textarea
+                    value={completionNotes}
+                    onChange={(e) => setCompletionNotes(e.target.value)}
+                    placeholder="What were your main takeaways from this task? What did you learn? How will you apply this?"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    rows="4"
+                  />
+                  <div className="text-xs text-gray-400 text-right mt-1">
+                    {completionNotes.length} characters
+                  </div>
+                </div>
+                
+                {/* Task Completion Info */}
+                <div className="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-400">
+                  <div className="text-sm text-blue-900">
+                    <div className="font-medium">✅ Completing this task will:</div>
+                    <ul className="mt-2 text-blue-800 text-xs space-y-1">
+                      <li>• Create a completion timestamp in your progress tracking</li>
+                      <li>• Save your takeaways to your Leadership Flightbook</li>
+                      <li>• Update your competency progress metrics</li>
+                      <li>• Mark the task as complete in the database</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Error Display */}
+              {completionError && (
+                <div className="mt-4 bg-red-50 border-l-4 border-red-400 p-3">
+                  <div className="text-sm text-red-700">{completionError}</div>
+                </div>
+              )}
+              
+              {/* Success Display */}
+              {completionSuccess && (
+                <div className="mt-4 bg-green-50 border-l-4 border-green-400 p-3">
+                  <div className="text-sm text-green-700">✅ Task completed and saved to your Flightbook!</div>
+                </div>
+              )}
+              
+              {/* Modal Actions */}
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={() => setIsCompletionModalOpen(false)}
+                  className="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300"
+                  disabled={isSubmittingCompletion}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={submitTaskCompletion}
+                  disabled={isSubmittingCompletion || !completionNotes.trim()}
+                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmittingCompletion ? 'Completing...' : '✅ Complete Task'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Competency Task Completion Modal */}
       {showTaskModal && (
         <div 
