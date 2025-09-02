@@ -8072,22 +8072,41 @@ const CompetenciesView = ({
                                         
                                         {/* General Complete Task Action (for any task type without specific interface) */}
                                         <div className="general-task-actions mt-4">
+                                          {/* Enhanced Complete Task Button */}
                                           {!task.completed ? (
                                             <button 
                                               onClick={() => handleCompleteTask(task)}
-                                              className="complete-task-btn bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+                                              className="complete-task-btn bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
                                             >
                                               {getActionText(taskType)}
                                             </button>
                                           ) : (
-                                            <div className="flex items-center gap-3">
-                                              <div className="completed-task-btn bg-green-100 text-green-800 px-4 py-2 rounded-lg border border-green-300">
-                                                ✅ Completed
+                                            <div className="completed-task-section bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                              <div className="flex items-center justify-between mb-3">
+                                                <div className="flex items-center gap-3">
+                                                  <div className="completed-badge bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                                                    ✅ Completed
+                                                  </div>
+                                                  {task.completed_at && (
+                                                    <div className="text-sm text-gray-500">
+                                                      📅 {new Date(task.completed_at).toLocaleDateString()} at {new Date(task.completed_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                                    </div>
+                                                  )}
+                                                </div>
+                                                <button 
+                                                  onClick={() => handleUnCompleteTask(task)}
+                                                  className="uncomplete-btn bg-orange-100 text-orange-700 px-3 py-1 rounded text-sm hover:bg-orange-200 border border-orange-300"
+                                                  title="Mark as incomplete"
+                                                >
+                                                  🤔 Wait, I'm not done!
+                                                </button>
                                               </div>
-                                              {/* Completion Timestamp */}
-                                              {task.completed_at && (
-                                                <div className="text-xs text-gray-500 flex items-center gap-1">
-                                                  📅 {new Date(task.completed_at).toLocaleDateString()}
+                                              
+                                              {/* Show takeaways if available */}
+                                              {task.main_takeaways && (
+                                                <div className="takeaways-display bg-white p-3 rounded border border-gray-200">
+                                                  <div className="text-sm font-medium text-gray-700 mb-1">📝 My Main Takeaways:</div>
+                                                  <div className="text-sm text-gray-600 italic">"{task.main_takeaways}"</div>
                                                 </div>
                                               )}
                                             </div>
