@@ -1635,6 +1635,99 @@ async def get_storage_stats(admin_user = Depends(require_admin)):
         }
     }
 
+# Demo Flightbook Endpoints for Demo Users
+@api_router.post("/demo/flightbook/entries")
+async def create_demo_flightbook_entry(
+    user_id: str = Form(...),
+    title: str = Form(...),
+    content: str = Form(...),
+    competency_area: str = Form(""),
+    sub_competency: str = Form(""),
+    entry_type: str = Form("task_completion"),
+    task_id: str = Form(None),
+    task_title: str = Form(""),
+    tags: str = Form("[]")
+):
+    """Demo mode flightbook entry creation without authentication"""
+    try:
+        # Parse tags if provided as JSON string
+        try:
+            tags_list = json.loads(tags) if tags else []
+        except json.JSONDecodeError:
+            tags_list = []
+        
+        demo_service = DemoFlightbookService(db)
+        
+        entry_data = {
+            "title": title,
+            "content": content,
+            "competency_area": competency_area,
+            "sub_competency": sub_competency,
+            "entry_type": entry_type,
+            "task_id": task_id,
+            "task_title": task_title,
+            "tags": tags_list
+        }
+        
+        entry = await demo_service.create_demo_flightbook_entry(user_id, entry_data)
+        
+        return {
+            "success": True,
+            "entry": serialize_doc(entry),
+            "message": "Demo flightbook entry created successfully"
+        }
+        
+    except Exception as e:
+        logging.error(f"Demo flightbook entry creation failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to create demo flightbook entry: {str(e)}")
+
+@api_router.get("/demo/flightbook/entries/{user_id}")
+async def get_demo_flightbook_entries(
+    user_id: str,
+    competency_area: Optional[str] = None,
+    sub_competency: Optional[str] = None,
+    entry_type: Optional[str] = None
+):
+    """Get flightbook entries for demo user"""
+    try:
+        demo_service = DemoFlightbookService(db)
+        
+        filters = {}
+        if competency_area:
+            filters["competency_area"] = competency_area
+        if sub_competency:
+            filters["sub_competency"] = sub_competency
+        if entry_type:
+            filters["entry_type"] = entry_type
+        
+        entries = await demo_service.get_demo_flightbook_entries(user_id, filters)
+        
+        return {
+            "success": True,
+            "entries": entries,
+            "count": len(entries)
+        }
+        
+    except Exception as e:
+        logging.error(f"Failed to get demo flightbook entries: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get demo flightbook entries: {str(e)}")
+
+@api_router.get("/demo/flightbook/statistics/{user_id}")
+async def get_demo_flightbook_statistics(user_id: str):
+    """Get flightbook statistics for demo user"""
+    try:
+        demo_service = DemoFlightbookService(db)
+        stats = await demo_service.get_demo_statistics(user_id)
+        
+        return {
+            "success": True,
+            "statistics": stats
+        }
+        
+    except Exception as e:
+        logging.error(f"Failed to get demo flightbook statistics: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get demo flightbook statistics: {str(e)}")
+
 # Include the router in the main app
 app.include_router(api_router)
 
