@@ -8042,7 +8042,7 @@ const CompetenciesView = ({
                                         </div>
                                         
                                         <div className="task-actions">
-                                      </div>
+                                        </div>
                                     </div>
                                   );
                                 })}
