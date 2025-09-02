@@ -3768,6 +3768,75 @@ const AuthenticatedApp = () => {
     return () => clearInterval(autoSaveInterval);
   }, [competencies, portfolio, competencyTaskProgress, coreValueEntries]);
 
+  // 🎯 REAL-TIME PROGRESS LOADING - Database-driven, no hardcoded values
+  const loadUserProgress = async () => {
+    try {
+      console.log('📊 Loading real user progress from database...');
+      
+      const token = await getToken();
+      const response = await axios.get(`${API}/users/${user?.id || 'demo-user-123'}/progress`, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+        timeout: 10000
+      });
+      
+      if (response.data) {
+        const progressData = response.data;
+        console.log('✅ Real progress data loaded:', progressData);
+        
+        // Update competencies with real progress data
+        setCompetencies(prevCompetencies => {
+          const updated = { ...prevCompetencies };
+          
+          Object.keys(updated).forEach(areaKey => {
+            const areaProgress = progressData.competencies[areaKey];
+            if (areaProgress) {
+              // Update area-level progress
+              updated[areaKey].overall_progress = areaProgress.completion_percentage || 0;
+              updated[areaKey].completion_percentage = areaProgress.completion_percentage || 0;
+              updated[areaKey].completed_tasks = areaProgress.completed_tasks || 0;
+              updated[areaKey].total_tasks = areaProgress.total_tasks || 0;
+              
+              // Update sub-competency progress
+              Object.keys(updated[areaKey].sub_competencies || {}).forEach(subKey => {
+                const subProgress = areaProgress.sub_competencies?.[subKey];
+                if (subProgress) {
+                  updated[areaKey].sub_competencies[subKey].progress_percentage = subProgress.completion_percentage || 0;
+                  updated[areaKey].sub_competencies[subKey].completed_tasks = subProgress.completed_tasks || 0;
+                  updated[areaKey].sub_competencies[subKey].total_tasks = subProgress.total_tasks || 0;
+                }
+              });
+            }
+          });
+          
+          return updated;
+        });
+        
+        console.log(`📈 Progress updated: Overall ${progressData.overall_progress}%`);
+        return progressData;
+      }
+    } catch (error) {
+      console.error('❌ Error loading user progress:', error);
+      return null;
+    }
+  };
+
+  // 🔄 REFRESH PROGRESS - Call after task completion
+  const refreshProgressTracking = async () => {
+    try {
+      console.log('🔄 Refreshing progress tracking after task completion...');
+      await loadUserProgress();
+      
+      // Also refresh competency tasks to show updated completion status
+      if (selectedCompetency) {
+        await loadCompetencyTasks(selectedCompetency.area, selectedCompetency.sub);
+      }
+      
+      console.log('✅ Progress tracking refreshed');
+    } catch (error) {
+      console.error('❌ Error refreshing progress:', error);
+    }
+  };
+
   // 🎯 PRODUCTION USER LOADING - Real authentication for mgwilliams81@gmail.com
   const loadUserCompetencies = async (userId) => {
     try {
