@@ -8088,29 +8088,6 @@ const CompetenciesView = ({
                               </div>
                             </div>
                           )}
-                        </div>
-                      )}
-                                                  <span>🕒</span>
-                                                  <span>Completed {new Date(task.completed_at).toLocaleDateString()}</span>
-                                                </div>
-                                              )}
-                                            </div>
-                                          )}
-                                        </div>
-                                      </div>
-                                      
-                                      {/* Progress indicator */}
-                                      {!task.completed && (
-                                        <div className="task-progress">
-                                          <div className="progress-text">Ready to begin your learning journey</div>
-                                        </div>
-                                      )}
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            </div>
-                          )}
 
                           {/* No Tasks Message */}
                           {competencyTasks && competencyTasks.length === 0 && (
