@@ -6,6 +6,7 @@ Integrates task completion with flightbook entry creation
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 import logging
+import uuid
 from demo_flightbook_service import DemoFlightbookService
 
 logger = logging.getLogger(__name__)
