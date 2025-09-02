@@ -5418,7 +5418,7 @@ const AuthenticatedApp = () => {
       if (completionNotes && completionNotes.trim()) {
         try {
           console.log('📖 Creating flightbook entry from task completion...');
-          await handleJournalReflectionComplete(
+          await createOrUpdateFlightbookFromJournalReflection(
             selectedTask.competency_area,
             selectedTask.sub_competency,
             `task_completion_${selectedTask.id}`,
