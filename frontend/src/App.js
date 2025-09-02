@@ -8040,6 +8040,7 @@ const CompetenciesView = ({
                                             </div>
                                           )}
                                         </div>
+                                        
                                     </div>
                                   );
                                 })}
