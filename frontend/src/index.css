@@ -531,12 +531,6 @@ body {
   margin-bottom: 12px;
 }
 
-.task-icon {
-  display: inline-flex;
-  align-items: center;
-  font-size: 1.5rem;
-}
-
 .task-meta {
   display: flex;
   gap: 12px;
