@@ -7393,11 +7393,12 @@ const CompetenciesView = ({
       console.log(`📡 Loading tasks from database API for ${areaKey}/${subKey}...`);
       
       try {
-        // Load tasks from database API
-        const response = await axios.get(`${API}/tasks/${areaKey}/${subKey}`);
+        // Load tasks from database API with user-specific completion status
+        const userId = user?.id || 'demo-user-123';
+        const response = await axios.get(`${API}/users/${userId}/tasks/${areaKey}/${subKey}`);
         const databaseTasks = response.data;
         
-        console.log(`✅ Loaded ${databaseTasks.length} tasks from database for ${areaKey}/${subKey}`);
+        console.log(`✅ Loaded ${databaseTasks.length} tasks with completion status from database for ${areaKey}/${subKey}`);
         
         // Convert database tasks to frontend format for display
         const formattedTasks = databaseTasks.map(task => ({
@@ -7412,15 +7413,48 @@ const CompetenciesView = ({
           instructions: task.instructions,
           required: task.required !== false,
           order: task.order || 1,
-          completed: false // Will be updated based on user progress
+          completed: task.completed || false, // Use completion status from backend
+          completion_data: task.completion_data || null // Include completion details
         }));
         
         setCompetencyTasks(formattedTasks);
-        console.log(`📋 Set ${formattedTasks.length} formatted tasks for display`);
+        console.log(`📋 Set ${formattedTasks.length} formatted tasks for display with completion status`);
+        
+        // Log completion status for debugging
+        const completedTasks = formattedTasks.filter(task => task.completed);
+        console.log(`📊 Completion status: ${completedTasks.length}/${formattedTasks.length} tasks completed`);
         
       } catch (error) {
         console.error(`❌ Error loading tasks for ${areaKey}/${subKey}:`, error);
-        setCompetencyTasks([]);
+        
+        // Fallback to generic endpoint if user-specific fails
+        try {
+          console.log(`🔄 Falling back to generic task endpoint for ${areaKey}/${subKey}...`);
+          const fallbackResponse = await axios.get(`${API}/tasks/${areaKey}/${subKey}`);
+          const fallbackTasks = fallbackResponse.data;
+          
+          const formattedFallbackTasks = fallbackTasks.map(task => ({
+            id: task.id,
+            title: task.title,
+            description: task.description,
+            task_type: task.task_type,
+            competency_area: task.competency_area,
+            sub_competency: task.sub_competency,
+            external_link: task.external_link,
+            estimated_hours: task.estimated_hours,
+            instructions: task.instructions,
+            required: task.required !== false,
+            order: task.order || 1,
+            completed: false // No completion status available
+          }));
+          
+          setCompetencyTasks(formattedFallbackTasks);
+          console.log(`📋 Set ${formattedFallbackTasks.length} tasks from fallback endpoint`);
+          
+        } catch (fallbackError) {
+          console.error(`❌ Fallback also failed for ${areaKey}/${subKey}:`, fallbackError);
+          setCompetencyTasks([]);
+        }
       }
     }
   };
