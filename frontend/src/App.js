@@ -5413,6 +5413,9 @@ const AuthenticatedApp = () => {
       setCompetencyTaskProgress(updatedProgress);
       saveDataWithBackup('competency_task_progress', updatedProgress);
       
+      // 🔄 REFRESH PROGRESS TRACKING - Real-time updates
+      await refreshProgressTracking();
+      
       // Show success and close modal
       setCompletionSuccess(true);
       setTimeout(() => {
