@@ -7207,7 +7207,8 @@ const CompetenciesView = ({
   setCompletionSuccess,
   completionError,
   setCompletionError,
-  handleCompleteTask
+  handleCompleteTask,
+  handleUnCompleteTask
 }) => {
   // Demo mode detection for CompetenciesView
   const urlParams = new URLSearchParams(window.location.search);
