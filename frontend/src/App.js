@@ -7800,17 +7800,7 @@ const CompetenciesView = ({
                                     <div key={task.id || index} className={`task-card ${taskTypeClass} ${task.completed ? 'opacity-75 completed' : ''}`}>
                                       <div className="task-header">
                                         <div className="task-icon">
-                                          {taskType === 'foundation_course' && '🎓'}
-                                          {taskType === 'course_link' && '📚'} 
-                                          {taskType === 'project' && '🚀'}
-                                          {taskType === 'document_upload' && '📄'}
-                                          {taskType === 'document_creation' && '📝'}
-                                          {taskType === 'assessment' && '📊'}
-                                          {taskType === 'shadowing' && '👥'}
-                                          {taskType === 'reflection_activity' && '🤔'}
-                                          {taskType === 'journal_prompt' && '✏️'}
-                                          {taskType === 'integration_activity' && '🔗'}
-                                          {taskType === 'culminating_project' && '🏆'}
+                                          {/* Task type styling without emojis */}
                                         </div>
                                         <div className="task-meta">
                                           <span className="task-type-badge">{taskType.replace('_', ' ')}</span>
