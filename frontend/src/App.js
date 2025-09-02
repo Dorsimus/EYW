@@ -5337,13 +5337,158 @@ const AuthenticatedApp = () => {
     return Math.round(totalProgress / Object.keys(competencies).length);
   };
 
-  // Handle task completion
+  // 🎯 ENHANCED TASK COMPLETION WORKFLOW - Database-driven with reflection capture
   const handleCompleteTask = async (task) => {
     console.log(`🎯 Complete task clicked: ${task.title}`);
     setSelectedTask(task);
     setIsCompletionModalOpen(true);
     setCompletionNotes('');
     setCompletionError('');
+  };
+
+  // 🎯 SUBMIT TASK COMPLETION WITH TAKEAWAYS AND FLIGHTBOOK INTEGRATION
+  const submitTaskCompletion = async () => {
+    if (!selectedTask) return;
+    
+    try {
+      setIsSubmittingCompletion(true);
+      setCompletionError('');
+      
+      // Create completion timestamp
+      const completedAt = new Date().toISOString();
+      
+      console.log(`📝 Submitting task completion for: ${selectedTask.title}`);
+      console.log(`✏️ Takeaways: ${completionNotes}`);
+      
+      // Submit to backend API with timestamp and takeaways
+      const token = await getToken();
+      const completionData = {
+        notes: completionNotes,
+        evidence_description: completionNotes,
+        completed_at: completedAt,
+        main_takeaways: completionNotes // Store takeaways specifically
+      };
+      
+      const response = await axios.post(
+        `${API}/users/${user?.id || 'demo-user-123'}/tasks/${selectedTask.id}/complete`,
+        completionData,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          timeout: 10000
+        }
+      );
+      
+      console.log('✅ Task completion saved to database:', response.data);
+      
+      // 📖 SAVE TO FLIGHTBOOK - Create flightbook entry from takeaways
+      if (completionNotes && completionNotes.trim()) {
+        try {
+          console.log('📖 Creating flightbook entry from task completion...');
+          await onJournalReflectionComplete(
+            selectedTask.competency_area,
+            selectedTask.sub_competency,
+            `task_completion_${selectedTask.id}`,
+            completionNotes,
+            'task_completion'
+          );
+          console.log('✅ Task takeaways saved to Leadership Flightbook');
+        } catch (flightbookError) {
+          console.warn('⚠️ Flightbook save failed, but task completion succeeded:', flightbookError);
+        }
+      }
+      
+      // 🎨 UPDATE UI - Mark task as completed with timestamp
+      setCompetencyTasks(prevTasks => 
+        prevTasks.map(task => 
+          task.id === selectedTask.id 
+            ? { 
+                ...task, 
+                completed: true, 
+                completed_at: completedAt, 
+                main_takeaways: completionNotes,
+                completion_timestamp: completedAt
+              }
+            : task
+        )
+      );
+      
+      // Update progress tracking
+      const updatedProgress = {
+        ...competencyTaskProgress,
+        [`${selectedTask.competency_area}_${selectedTask.sub_competency}_${selectedTask.id}`]: {
+          completed: true,
+          notes: completionNotes,
+          completed_at: completedAt,
+          main_takeaways: completionNotes
+        }
+      };
+      setCompetencyTaskProgress(updatedProgress);
+      saveDataWithBackup('competency_task_progress', updatedProgress);
+      
+      // Show success and close modal
+      setCompletionSuccess(true);
+      setTimeout(() => {
+        setCompletionSuccess(false);
+        setIsCompletionModalOpen(false);
+        setSelectedTask(null);
+        setCompletionNotes('');
+      }, 2000);
+      
+      return response.data;
+      
+    } catch (error) {
+      console.error('❌ Task completion failed:', error);
+      setCompletionError('Failed to complete task. Please try again.');
+    } finally {
+      setIsSubmittingCompletion(false);
+    }
+  };
+
+  // 🔄 UN-COMPLETE TASK - "Wait, I'm not done!" functionality
+  const handleUnCompleteTask = async (task) => {
+    try {
+      console.log(`🔄 Un-completing task: ${task.title}`);
+      
+      // Remove completion from backend
+      const token = await getToken();
+      await axios.delete(
+        `${API}/users/${user?.id || 'demo-user-123'}/tasks/${task.id}/complete`,
+        {
+          headers: { 'Authorization': `Bearer ${token}` },
+          timeout: 10000
+        }
+      );
+      
+      // Update UI state
+      setCompetencyTasks(prevTasks => 
+        prevTasks.map(t => 
+          t.id === task.id 
+            ? { 
+                ...t, 
+                completed: false, 
+                completed_at: null, 
+                main_takeaways: null,
+                completion_timestamp: null
+              }
+            : t
+        )
+      );
+      
+      // Update progress tracking
+      const updatedProgress = { ...competencyTaskProgress };
+      delete updatedProgress[`${task.competency_area}_${task.sub_competency}_${task.id}`];
+      setCompetencyTaskProgress(updatedProgress);
+      saveDataWithBackup('competency_task_progress', updatedProgress);
+      
+      console.log('✅ Task un-completed successfully');
+      
+    } catch (error) {
+      console.error('❌ Un-complete task failed:', error);
+      alert('Failed to un-complete task. Please try again.');
+    }
   };
 
   // Submit task completion with notes and timestamp
