@@ -8042,28 +8042,6 @@ const CompetenciesView = ({
                                         </div>
                                         
                                         <div className="task-actions">
-                                          {/* Enhanced Complete Task Button */}
-                                          {!task.completed ? (
-                                            <button 
-                                              onClick={() => handleCompleteTask(task)}
-                                              className="complete-task-btn"
-                                            >
-                                              {getActionText(taskType)}
-                                            </button>
-                                          ) : (
-                                            <div className="flex items-center gap-3">
-                                              <div className="completed-task-btn">
-                                                ✅ Completed
-                                              </div>
-                                              {/* Completion Timestamp */}
-                                              {task.completed_at && (
-                                                <div className="text-xs text-gray-500 flex items-center gap-1">
-                                                  📅 {new Date(task.completed_at).toLocaleDateString()}
-                                                </div>
-                                              )}
-                                            </div>
-                                          )}
-                                        </div>
                                       </div>
                                     </div>
                                   );
