@@ -7821,16 +7821,50 @@ const CompetenciesView = ({
                                       </div>
                                       
                                       <div className="task-content">
+                                        {/* 1. TITLE */}
                                         <h3 className="task-title">
                                           {task.completed && <span className="mr-2">✅</span>}
                                           {task.title}
                                         </h3>
                                         
+                                        {/* 2. DESCRIPTION */}
                                         <p className="task-description">
                                           {task.description}
                                         </p>
                                         
-                                        {/* Task Type Specific Content */}
+                                        {/* 3. WHAT YOU'LL ACHIEVE */}
+                                        <div className="learning-outcomes">
+                                          <strong>🎯 What You'll Achieve:</strong> 
+                                          <span className="ml-2">
+                                            {taskType === 'foundation_course' && 'Build foundational knowledge and understanding'}
+                                            {taskType === 'course_link' && 'Master new skills through structured learning'}
+                                            {taskType === 'project' && 'Create real value through hands-on application'}
+                                            {taskType === 'document_upload' && 'Build portfolio evidence of your growth'}
+                                            {taskType === 'document_creation' && 'Develop practical tools and templates'}
+                                            {taskType === 'assessment' && 'Validate your competency development'}
+                                            {taskType === 'reflection_activity' && 'Gain insights through thoughtful reflection'}
+                                            {taskType === 'journal_prompt' && 'Document your leadership journey and growth'}
+                                            {taskType === 'shadowing' && 'Learn through observation and mentoring'}
+                                            {taskType === 'integration_activity' && 'Connect learning across competency areas'}
+                                          </span>
+                                        </div>
+                                        
+                                        {/* 4. INSTRUCTIONS */}
+                                        {task.instructions && (
+                                          <div className="task-instructions">
+                                            <div className="instruction-header">
+                                              <span className="instruction-icon">✨</span>
+                                              <strong>Instructions:</strong>
+                                            </div>
+                                            <div className="instruction-content-wrapper">
+                                              {formatInstructions(task.instructions)}
+                                            </div>
+                                          </div>
+                                        )}
+                                        
+                                        {/* 5. TASK ACTION (Based on Task Type) */}
+                                        
+                                        {/* Course/Training Action */}
                                         {(taskType === 'foundation_course' || taskType === 'course_link') && task.external_link && (
                                           <div className="course-info bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400 my-4">
                                             <div className="flex items-center justify-between">
@@ -7850,14 +7884,17 @@ const CompetenciesView = ({
                                           </div>
                                         )}
                                         
-                                        {(taskType === 'reflection_activity' || taskType === 'journal_prompt') && (
+                                        {/* Reflection/Journal Action - ENHANCED TO CATCH ALL REFLECTION TYPES */}
+                                        {(taskType === 'reflection_activity' || taskType === 'journal_prompt' || 
+                                          taskType === 'reflection' || task.title.toLowerCase().includes('reflection') ||
+                                          task.title.toLowerCase().includes('journal') || task.description.toLowerCase().includes('reflect')) && (
                                           <div className="reflection-interface bg-orange-50 p-4 rounded-lg border-l-4 border-orange-400 my-4">
                                             <div className="mb-3">
                                               <label className="block text-orange-900 font-medium mb-2">
                                                 ✏️ Write your reflection:
                                               </label>
                                               <textarea
-                                                placeholder="Take your time to reflect and document your thoughts..."
+                                                placeholder="Take your time to reflect and document your thoughts... This will be saved to your Leadership Flightbook."
                                                 className="w-full p-3 border border-orange-200 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
                                                 rows="6"
                                                 value={getCompetencyTaskNotes(areaKey, subKey, task.id) || ''}
@@ -7865,21 +7902,35 @@ const CompetenciesView = ({
                                                   onJournalReflectionChange(areaKey, subKey, task.id, e.target.value);
                                                 }}
                                               />
+                                              <div className="flex items-center justify-between mt-2">
+                                                <span className="text-sm text-orange-600">
+                                                  💡 Tip: These thoughts will be included in your printable Leadership Flightbook
+                                                </span>
+                                                <span className="text-xs text-orange-500">
+                                                  {(getCompetencyTaskNotes(areaKey, subKey, task.id) || '').length} characters
+                                                </span>
+                                              </div>
                                             </div>
                                             <button 
                                               onClick={() => {
                                                 const notes = getCompetencyTaskNotes(areaKey, subKey, task.id);
-                                                if (notes) {
+                                                if (notes && notes.trim()) {
                                                   onJournalReflectionComplete(areaKey, subKey, task.id, notes, 'reflection_entry');
+                                                  // Show success feedback
+                                                  alert('Reflection saved to your Leadership Flightbook! ✏️');
+                                                } else {
+                                                  alert('Please write your reflection before saving.');
                                                 }
                                               }}
-                                              className="save-reflection-btn bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700"
+                                              className="save-reflection-btn bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 disabled:opacity-50"
+                                              disabled={!getCompetencyTaskNotes(areaKey, subKey, task.id)?.trim()}
                                             >
                                               ✏️ Save to Flightbook
                                             </button>
                                           </div>
                                         )}
                                         
+                                        {/* Document Upload/Creation Action */}
                                         {(taskType === 'document_upload' || taskType === 'document_creation') && (
                                           <div className="document-interface bg-green-50 p-4 rounded-lg border-l-4 border-green-400 my-4">
                                             <div className="mb-3">
@@ -7907,6 +7958,7 @@ const CompetenciesView = ({
                                           </div>
                                         )}
                                         
+                                        {/* Assessment Action */}
                                         {taskType === 'assessment' && (
                                           <div className="assessment-interface bg-purple-50 p-4 rounded-lg border-l-4 border-purple-400 my-4">
                                             <div className="flex items-center justify-between">
@@ -7921,7 +7973,8 @@ const CompetenciesView = ({
                                           </div>
                                         )}
                                         
-                                        {taskType === 'project' && (
+                                        {/* Project Action */}
+                                        {(taskType === 'project' || taskType === 'culminating_project') && (
                                           <div className="project-interface bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-400 my-4">
                                             <div className="flex items-center justify-between">
                                               <div>
@@ -7935,6 +7988,7 @@ const CompetenciesView = ({
                                           </div>
                                         )}
                                         
+                                        {/* Shadowing Action */}
                                         {taskType === 'shadowing' && (
                                           <div className="shadowing-interface bg-teal-50 p-4 rounded-lg border-l-4 border-teal-400 my-4">
                                             <div className="flex items-center justify-between">
@@ -7949,33 +8003,42 @@ const CompetenciesView = ({
                                           </div>
                                         )}
                                         
-                                        {task.instructions && (
-                                          <div className="task-instructions">
-                                            <div className="instruction-header">
-                                              <span className="instruction-icon">✨</span>
-                                              <strong>Instructions:</strong>
-                                            </div>
-                                            <div className="instruction-content-wrapper">
-                                              {formatInstructions(task.instructions)}
+                                        {/* Integration Activity Action */}
+                                        {taskType === 'integration_activity' && (
+                                          <div className="integration-interface bg-cyan-50 p-4 rounded-lg border-l-4 border-cyan-400 my-4">
+                                            <div className="flex items-center justify-between">
+                                              <div>
+                                                <p className="text-cyan-900 font-medium">🔗 Integration Activity</p>
+                                                <p className="text-cyan-700 text-sm">Connect learning across competency areas</p>
+                                              </div>
+                                              <button className="integration-btn bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700">
+                                                🔗 Start Integration
+                                              </button>
                                             </div>
                                           </div>
                                         )}
                                         
-                                        {/* Learning Outcomes */}
-                                        <div className="learning-outcomes">
-                                          <strong>🎯 What You'll Achieve:</strong> 
-                                          <span className="ml-2">
-                                            {taskType === 'foundation_course' && 'Build foundational knowledge and understanding'}
-                                            {taskType === 'course_link' && 'Master new skills through structured learning'}
-                                            {taskType === 'project' && 'Create real value through hands-on application'}
-                                            {taskType === 'document_upload' && 'Build portfolio evidence of your growth'}
-                                            {taskType === 'document_creation' && 'Develop practical tools and templates'}
-                                            {taskType === 'assessment' && 'Validate your competency development'}
-                                            {taskType === 'reflection_activity' && 'Gain insights through thoughtful reflection'}
-                                            {taskType === 'journal_prompt' && 'Document your leadership journey and growth'}
-                                            {taskType === 'shadowing' && 'Learn through observation and mentoring'}
-                                            {taskType === 'integration_activity' && 'Connect learning across competency areas'}
-                                          </span>
+                                        {/* General Complete Task Action (for any task type without specific interface) */}
+                                        <div className="general-task-actions mt-4">{!task.completed ? (
+                                            <button 
+                                              onClick={() => handleCompleteTask(task)}
+                                              className="complete-task-btn bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+                                            >
+                                              {getActionText(taskType)}
+                                            </button>
+                                          ) : (
+                                            <div className="flex items-center gap-3">
+                                              <div className="completed-task-btn bg-green-100 text-green-800 px-4 py-2 rounded-lg border border-green-300">
+                                                ✅ Completed
+                                              </div>
+                                              {/* Completion Timestamp */}
+                                              {task.completed_at && (
+                                                <div className="text-xs text-gray-500 flex items-center gap-1">
+                                                  📅 {new Date(task.completed_at).toLocaleDateString()}
+                                                </div>
+                                              )}
+                                            </div>
+                                          )}
                                         </div>
                                         
                                         <div className="task-actions">
