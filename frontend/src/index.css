@@ -435,12 +435,12 @@ body {
 
 /* VIBRANT TASK CARD VISUAL DESIGN - Enhanced Task Type Differentiation */
 
-/* Course Links - Subtle Blue theme with graduation cap icon */
+/* Course/Training - Clean blue theme */
 .task-card.course-link {
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(30, 64, 175, 0.05) 100%);
   border: 1px solid rgba(59, 130, 246, 0.15);
   border-left: 4px solid rgba(59, 130, 246, 0.4);
-  color: #1f2937;
+  padding: 20px;
   transition: all 0.3s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
@@ -451,10 +451,19 @@ body {
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(30, 64, 175, 0.08) 100%);
 }
 
-.task-card.course-link .task-icon::before { 
-  content: "🎓"; 
-  font-size: 1.5rem;
-  margin-right: 0.5rem;
+.task-card.foundation-course {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(30, 64, 175, 0.05) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-left: 4px solid rgba(59, 130, 246, 0.4);
+  padding: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.task-card.foundation-course:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(30, 64, 175, 0.08) 100%);
 }
 
 /* Projects - Subtle Green theme with rocket icon */
