@@ -1117,6 +1117,126 @@ async def get_user_competencies(user_id: str):
     
     return organized
 
+# Progress endpoint - returns user progress in the expected format
+@api_router.get("/users/{user_id}/progress")
+async def get_user_progress(user_id: str):
+    """Get user progress with task completion data as JSON"""
+    # Handle demo users without authentication
+    is_demo_user = user_id == "demo-user-123" or user_id.startswith("demo-") or user_id.startswith("test-")
+    
+    # Update progress before returning
+    await update_all_competency_progress(user_id)
+    
+    competencies = await db.competency_progress.find({"user_id": user_id}).to_list(1000)
+    
+    # Organize by competency area
+    organized_competencies = {}
+    overall_progress_sum = 0
+    overall_progress_count = 0
+    
+    for comp in competencies:
+        comp = serialize_doc(comp)
+        area = comp["competency_area"]
+        
+        # Handle case where competency area doesn't exist in current structure
+        if area not in NAVIGATOR_COMPETENCIES:
+            continue
+            
+        if area not in organized_competencies:
+            organized_competencies[area] = {
+                "completion_percentage": 0.0,
+                "completed_tasks": 0,
+                "total_tasks": 0,
+                "sub_competencies": {}
+            }
+        
+        sub_comp = comp["sub_competency"]
+        
+        # Handle case where sub-competency doesn't exist in current structure
+        if sub_comp not in NAVIGATOR_COMPETENCIES[area]["sub_competencies"]:
+            continue
+            
+        organized_competencies[area]["sub_competencies"][sub_comp] = {
+            "completion_percentage": comp["completion_percentage"],
+            "completed_tasks": comp["completed_tasks"],
+            "total_tasks": comp["total_tasks"]
+        }
+        
+        # Add to area totals
+        organized_competencies[area]["completed_tasks"] += comp["completed_tasks"]
+        organized_competencies[area]["total_tasks"] += comp["total_tasks"]
+    
+    # Calculate overall progress for each area and overall
+    for area_key, area_data in organized_competencies.items():
+        if area_data["sub_competencies"]:
+            total = sum(sub["completion_percentage"] for sub in area_data["sub_competencies"].values())
+            count = len(area_data["sub_competencies"])
+            area_data["completion_percentage"] = round(total / count, 1) if count > 0 else 0
+            overall_progress_sum += area_data["completion_percentage"]
+            overall_progress_count += 1
+    
+    # Calculate overall progress
+    overall_progress = round(overall_progress_sum / overall_progress_count, 1) if overall_progress_count > 0 else 0
+    
+    return {
+        "user_id": user_id,
+        "overall_progress": overall_progress,
+        "competencies": organized_competencies
+    }
+
+# User tasks endpoint - returns all tasks for a user with completion status
+@api_router.get("/users/{user_id}/tasks")
+async def get_user_tasks(user_id: str):
+    """Return user tasks with completion status as JSON"""
+    # Handle demo users without authentication
+    is_demo_user = user_id == "demo-user-123" or user_id.startswith("demo-") or user_id.startswith("test-")
+    
+    # Get all active tasks
+    tasks = await db.tasks.find({"active": True}).sort("competency_area", 1).sort("sub_competency", 1).sort("order", 1).to_list(1000)
+    
+    # Get user's completed tasks
+    task_ids = [task.get("id", str(task["_id"])) for task in tasks]
+    completions = await db.task_completions.find({
+        "user_id": user_id,
+        "task_id": {"$in": task_ids}
+    }).to_list(1000)
+    
+    completion_map = {comp["task_id"]: serialize_doc(comp) for comp in completions}
+    
+    # Add completion status to tasks
+    serialized_tasks = []
+    for task in tasks:
+        task_data = serialize_doc(task)
+        task_id = task.get("id", str(task["_id"]))
+        task_data["completed"] = task_id in completion_map
+        if task_data["completed"]:
+            task_data["completion_data"] = completion_map[task_id]
+        serialized_tasks.append(task_data)
+    
+    return serialized_tasks
+
+# Health check endpoint
+@api_router.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    try:
+        # Test database connectivity
+        await db.command('ping')
+        return {
+            "status": "healthy",
+            "database": "connected",
+            "timestamp": datetime.utcnow().isoformat(),
+            "service": "earn-your-wings-backend"
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "database": "disconnected",
+            "error": str(e),
+            "timestamp": datetime.utcnow().isoformat(),
+            "service": "earn-your-wings-backend"
+        }
+
 @api_router.get("/tasks")
 async def get_all_tasks():
     tasks = await db.tasks.find({"active": True}).sort("competency_area", 1).sort("sub_competency", 1).sort("order", 1).to_list(1000)
