@@ -7293,15 +7293,6 @@ const CompetenciesView = ({
     }
   };
 
-  // Handle task completion
-  const handleCompleteTask = async (task) => {
-    console.log(`🎯 Complete task clicked: ${task.title}`);
-    setSelectedTask(task);
-    setIsCompletionModalOpen(true);
-    setCompletionNotes('');
-    setCompletionError('');
-  };
-
   const handleCompleteCulminatingTask = async (taskId, evidenceDescription = "", file = null) => {
     try {
       // Mark task as complete
