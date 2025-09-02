@@ -7877,12 +7877,26 @@ const CompetenciesView = ({
                                   };
                                   
                                   return (
-                                    <div key={task.id || index} className={`task-card ${taskTypeClass} ${task.completed ? 'opacity-75' : ''}`}>
+                                    <div key={task.id || index} className={`task-card ${taskTypeClass} ${task.completed ? 'opacity-75 completed' : ''}`}>
                                       <div className="task-header">
-                                        <div className="task-icon"></div>
+                                        <div className="task-icon">
+                                          {taskType === 'foundation_course' && '🎓'}
+                                          {taskType === 'course_link' && '📚'} 
+                                          {taskType === 'project' && '🚀'}
+                                          {taskType === 'document_upload' && '📄'}
+                                          {taskType === 'document_creation' && '📝'}
+                                          {taskType === 'assessment' && '📊'}
+                                          {taskType === 'shadowing' && '👥'}
+                                          {taskType === 'reflection_activity' && '🤔'}
+                                          {taskType === 'journal_prompt' && '✏️'}
+                                          {taskType === 'integration_activity' && '🔗'}
+                                          {taskType === 'culminating_project' && '🏆'}
+                                        </div>
                                         <div className="task-meta">
                                           <span className="task-type-badge">{taskType.replace('_', ' ')}</span>
-                                          <span className="task-time">⏱️ {task.estimated_hours || '1'}h</span>
+                                          {task.estimated_hours && (
+                                            <span className="task-time">⏱️ {task.estimated_hours}h</span>
+                                          )}
                                         </div>
                                       </div>
                                       
@@ -7895,6 +7909,125 @@ const CompetenciesView = ({
                                         <p className="task-description">
                                           {task.description}
                                         </p>
+                                        
+                                        {/* Task Type Specific Content */}
+                                        {(taskType === 'foundation_course' || taskType === 'course_link') && task.external_link && (
+                                          <div className="course-info bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400 my-4">
+                                            <div className="flex items-center justify-between">
+                                              <div>
+                                                <p className="text-blue-900 font-medium">📚 Course Platform: {provider}</p>
+                                                <p className="text-blue-700 text-sm">Duration: {task.estimated_hours}h</p>
+                                              </div>
+                                              <a 
+                                                href={task.external_link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`external-link-btn ${providerClass}`}
+                                              >
+                                                🎓 Launch Course
+                                              </a>
+                                            </div>
+                                          </div>
+                                        )}
+                                        
+                                        {(taskType === 'reflection_activity' || taskType === 'journal_prompt') && (
+                                          <div className="reflection-interface bg-orange-50 p-4 rounded-lg border-l-4 border-orange-400 my-4">
+                                            <div className="mb-3">
+                                              <label className="block text-orange-900 font-medium mb-2">
+                                                ✏️ Write your reflection:
+                                              </label>
+                                              <textarea
+                                                placeholder="Take your time to reflect and document your thoughts..."
+                                                className="w-full p-3 border border-orange-200 rounded-lg text-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
+                                                rows="6"
+                                                value={getCompetencyTaskNotes(areaKey, subKey, task.id) || ''}
+                                                onChange={(e) => {
+                                                  onJournalReflectionChange(areaKey, subKey, task.id, e.target.value);
+                                                }}
+                                              />
+                                            </div>
+                                            <button 
+                                              onClick={() => {
+                                                const notes = getCompetencyTaskNotes(areaKey, subKey, task.id);
+                                                if (notes) {
+                                                  onJournalReflectionComplete(areaKey, subKey, task.id, notes, 'reflection_entry');
+                                                }
+                                              }}
+                                              className="save-reflection-btn bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700"
+                                            >
+                                              ✏️ Save to Flightbook
+                                            </button>
+                                          </div>
+                                        )}
+                                        
+                                        {(taskType === 'document_upload' || taskType === 'document_creation') && (
+                                          <div className="document-interface bg-green-50 p-4 rounded-lg border-l-4 border-green-400 my-4">
+                                            <div className="mb-3">
+                                              <p className="text-green-900 font-medium mb-2">📁 Document Creation/Upload</p>
+                                              {task.metadata?.template_url && (
+                                                <a 
+                                                  href={task.metadata.template_url}
+                                                  target="_blank"
+                                                  rel="noopener noreferrer"
+                                                  className="template-download-btn bg-green-100 text-green-800 px-3 py-2 rounded border border-green-300 hover:bg-green-200 inline-flex items-center mb-3"
+                                                >
+                                                  📄 Download Template
+                                                </a>
+                                              )}
+                                              <div className="upload-dropzone border-dashed border-2 border-green-300 p-4 rounded-lg bg-white text-center">
+                                                <input type="file" className="hidden" id={`upload-${task.id}`} />
+                                                <label htmlFor={`upload-${task.id}`} className="cursor-pointer">
+                                                  <div className="text-green-600">
+                                                    📎 Drop files here or click to browse
+                                                  </div>
+                                                  <p className="text-sm text-green-500 mt-1">Accepted: PDF, DOC, DOCX</p>
+                                                </label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        
+                                        {taskType === 'assessment' && (
+                                          <div className="assessment-interface bg-purple-50 p-4 rounded-lg border-l-4 border-purple-400 my-4">
+                                            <div className="flex items-center justify-between">
+                                              <div>
+                                                <p className="text-purple-900 font-medium">📊 Assessment Task</p>
+                                                <p className="text-purple-700 text-sm">Complete evaluation and submit results</p>
+                                              </div>
+                                              <button className="assessment-btn bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+                                                📊 Start Assessment
+                                              </button>
+                                            </div>
+                                          </div>
+                                        )}
+                                        
+                                        {taskType === 'project' && (
+                                          <div className="project-interface bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-400 my-4">
+                                            <div className="flex items-center justify-between">
+                                              <div>
+                                                <p className="text-indigo-900 font-medium">🚀 Project Task</p>
+                                                <p className="text-indigo-700 text-sm">Multi-step initiative with deliverables</p>
+                                              </div>
+                                              <button className="project-btn bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                                                🚀 Begin Project
+                                              </button>
+                                            </div>
+                                          </div>
+                                        )}
+                                        
+                                        {taskType === 'shadowing' && (
+                                          <div className="shadowing-interface bg-teal-50 p-4 rounded-lg border-l-4 border-teal-400 my-4">
+                                            <div className="flex items-center justify-between">
+                                              <div>
+                                                <p className="text-teal-900 font-medium">👥 Shadowing Experience</p>
+                                                <p className="text-teal-700 text-sm">Observation and mentoring activity</p>
+                                              </div>
+                                              <button className="shadowing-btn bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700">
+                                                👥 Start Shadowing
+                                              </button>
+                                            </div>
+                                          </div>
+                                        )}
                                         
                                         {task.instructions && (
                                           <div className="task-instructions">
@@ -7912,33 +8045,27 @@ const CompetenciesView = ({
                                         <div className="learning-outcomes">
                                           <strong>🎯 What You'll Achieve:</strong> 
                                           <span className="ml-2">
+                                            {taskType === 'foundation_course' && 'Build foundational knowledge and understanding'}
                                             {taskType === 'course_link' && 'Master new skills through structured learning'}
                                             {taskType === 'project' && 'Create real value through hands-on application'}
                                             {taskType === 'document_upload' && 'Build portfolio evidence of your growth'}
+                                            {taskType === 'document_creation' && 'Develop practical tools and templates'}
                                             {taskType === 'assessment' && 'Validate your competency development'}
+                                            {taskType === 'reflection_activity' && 'Gain insights through thoughtful reflection'}
+                                            {taskType === 'journal_prompt' && 'Document your leadership journey and growth'}
+                                            {taskType === 'shadowing' && 'Learn through observation and mentoring'}
+                                            {taskType === 'integration_activity' && 'Connect learning across competency areas'}
                                           </span>
                                         </div>
                                         
                                         <div className="task-actions">
-                                          {/* Enhanced External Link Button */}
-                                          {task.external_link && (
-                                            <a 
-                                              href={task.external_link}
-                                              target="_blank"
-                                              rel="noopener noreferrer"
-                                              className={`external-link-btn ${providerClass}`}
-                                            >
-                                              {getExternalLinkText(taskType)}
-                                            </a>
-                                          )}
-                                          
-                                          {/* Enhanced Complete Task Button with Timestamp */}
+                                          {/* Enhanced Complete Task Button */}
                                           {!task.completed ? (
                                             <button 
                                               onClick={() => handleCompleteTask(task)}
                                               className="complete-task-btn"
                                             >
-                                              📋 Mark as Complete
+                                              {getActionText(taskType)}
                                             </button>
                                           ) : (
                                             <div className="flex items-center gap-3">
