@@ -25,6 +25,10 @@ import asyncio
 # Import flightbook router
 from routers.flightbook import router as flightbook_router
 
+# Import enhanced services
+from enhanced_task_completion import EnhancedTaskCompletionService
+from demo_flightbook_service import DemoFlightbookService
+
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
