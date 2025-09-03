@@ -5053,34 +5053,46 @@ const AuthenticatedApp = () => {
       // Check if updating existing entry
       const existingEntryIndex = existingEntries.findIndex(entry => entry.entry_key === entryKey);
       
-      // Universal prompt extraction - same logic as API version
-      const competencyData = competencies[areaKey];
+      // 📝 ENHANCED CONTEXT EXTRACTION - Use same logic as API version for consistency
       let promptText = '';
       let entryTitle = 'Leadership Reflection'; // Default fallback
+      let contextualDescription = '';
       
-      // Extract prompt from the current modal or task context
-      if (showTaskModal && showTaskModal.task) {
-        // If we have the actual task being worked on, extract its prompt/description
-        const currentTask = showTaskModal.task;
+      // PRIORITY 1: Use selectedTask context (from task completion)
+      if (selectedTask) {
+        const taskTitle = selectedTask.title || 'Leadership Task';
+        const taskDescription = selectedTask.description || '';
         
-        if (currentTask.reflection) {
-          promptText = currentTask.reflection;
-          entryTitle = `Leadership Reflection: "${promptText}"`;
-        } else if (currentTask.journal_prompt) {
-          promptText = currentTask.journal_prompt;
-          entryTitle = `Leadership Reflection: "${promptText}"`;
-        } else if (currentTask.curiosity_question) {
-          promptText = currentTask.curiosity_question;
-          entryTitle = `Leadership Reflection: "${promptText}"`;
-        } else if (currentTask.description) {
-          promptText = currentTask.description;
-          entryTitle = `Task Reflection: "${promptText}"`;
-        } else if (currentTask.title && currentTask.title !== 'Task Reflection') {
-          promptText = currentTask.title;
-          entryTitle = `Leadership Reflection: "${promptText}"`;
+        if (taskType === 'task_completion') {
+          entryTitle = `Task Completion: ${taskTitle}`;
+          if (taskDescription) {
+            entryTitle = `Task Completion: ${taskDescription}`;
+            contextualDescription = taskDescription;
+          }
+        } else {
+          entryTitle = `Leadership Reflection: ${taskTitle}`;
+          if (taskDescription) {
+            entryTitle = `Leadership Reflection: ${taskDescription}`;
+            contextualDescription = taskDescription;
+          }
         }
         
-        console.log('📝 Extracted prompt from current task for localStorage:', promptText?.substring(0, 100));
+        promptText = taskDescription || taskTitle;
+        console.log('📝 Enhanced context from selectedTask:', entryTitle.substring(0, 100));
+      }
+      // PRIORITY 2: Fallback to showTaskModal context if no selectedTask
+      else if (showTaskModal && showTaskModal.task) {
+        const currentTask = showTaskModal.task;
+        
+        if (currentTask.description) {
+          promptText = currentTask.description;
+          entryTitle = `Leadership Reflection: ${currentTask.description}`;
+        } else if (currentTask.title && currentTask.title !== 'Task Reflection') {
+          promptText = currentTask.title;
+          entryTitle = `Leadership Reflection: ${currentTask.title}`;
+        }
+        
+        console.log('📝 Context from showTaskModal:', entryTitle.substring(0, 100));
       }
       
       // Fallback to competency data structure if no current task
