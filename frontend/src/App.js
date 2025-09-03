@@ -12470,23 +12470,18 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
   useEffect(() => {
     console.log('🔄 Flightbook component mounting/updating, syncing with main state');
     
-    // First, sync with main flightbook state if available
+    // 📖 FLIGHTBOOK STATE MANAGEMENT - Use main flightbook state if available
     if (flightbook && flightbook.length > 0) {
       console.log(`📖 Using main flightbook state: ${flightbook.length} entries`);
       setFlightbookEntries(flightbook);
     } else {
-      // Fallback to localStorage and API loading
-      console.log('📖 Main flightbook state empty, loading from localStorage and API');
-      loadFlightbookEntries(); 
+      // Only load if demo mode detection has run and flightbook is still empty
+      console.log('📖 Main flightbook state empty, demo mode loading should handle this');
     }
-  }, [flightbook]); // Watch for changes in main flightbook state
+  }, [flightbook]);
   
-  // Load flightbook entries when component mounts (fallback)
-  useEffect(() => {
-    if (!flightbook || flightbook.length === 0) {
-      loadFlightbookEntries();
-    }
-  }, []);
+  // 🚫 REMOVED: Conflicting fallback loading that overrides demo mode
+  // This was causing enhanced demo entries to be overwritten
 
   // PRODUCTION VERSION: Load flightbook entries from backend API
   const loadFlightbookEntries = async () => {
