@@ -12394,15 +12394,24 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
   // 🔧 ENHANCED FLIGHTBOOK LOADING - Load from backend demo API with contextual titles
   const [flightbookEntries, setFlightbookEntries] = useState([]);
   
-  // Demo mode detection for flightbook component
+  // Demo mode detection for flightbook component - ENHANCED
   const isDemoModeFlightbook = window.location.search.includes('demo=true') || 
                                window.location.hash.includes('demo=true') ||
                                localStorage.getItem('demo_mode') === 'true';
+  
+  // Ensure demo mode is set for flightbook loading
+  if (window.location.search.includes('demo=true')) {
+    localStorage.setItem('demo_mode', 'true');
+  }
   
   // Load flightbook entries from backend demo API
   useEffect(() => {
     const loadFlightbookEntries = async () => {
       try {
+        console.log('📖 Demo mode flightbook detection:', isDemoModeFlightbook);
+        console.log('📖 URL search:', window.location.search);
+        console.log('📖 localStorage demo_mode:', localStorage.getItem('demo_mode'));
+        
         if (isDemoModeFlightbook) {
           console.log('📖 Loading enhanced flightbook entries from backend demo API...');
           
@@ -12411,19 +12420,24 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
             timeout: 10000
           });
           
+          console.log('📖 Raw API response:', response.data);
+          
           if (response.data) {
             // Handle wrapped response structure from backend
             const entries = response.data.entries || response.data || [];
-            console.log(`✅ Loaded ${entries.length} enhanced flightbook entries from backend`);
+            console.log(`✅ Parsed ${entries.length} enhanced flightbook entries from backend`);
             
             if (entries.length > 0) {
-              console.log('📖 Sample enhanced title:', entries[0]?.title?.substring(0, 100));
+              console.log('📖 First enhanced entry title:', entries[0]?.title);
+              console.log('📖 First enhanced entry structure:', entries[0]);
             }
             
             setFlightbookEntries(entries);
             
-            // Also update localStorage for offline capability
+            // Also update localStorage for offline capability  
             localStorage.setItem('flightbook_entries', JSON.stringify(entries));
+            console.log('💾 Enhanced entries saved to localStorage');
+            
           } else {
             console.log('⚠️ No enhanced entries found, checking localStorage fallback...');
             // Fallback to localStorage if API fails
@@ -12432,8 +12446,8 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
             console.log(`📦 Loaded ${localEntries.length} entries from localStorage`);
           }
         } else {
-          // For authenticated users, try real flightbook API with proper auth
-          console.log('🔐 Loading entries for authenticated user...');
+          console.log('🔐 Not in demo mode, using localStorage entries...');
+          // For authenticated users, try localStorage first
           const localEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
           setFlightbookEntries(localEntries);
           console.log(`📦 Loaded ${localEntries.length} entries for authenticated user`);
