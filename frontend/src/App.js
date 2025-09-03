@@ -12381,11 +12381,16 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
   // 🔧 ENHANCED FLIGHTBOOK LOADING - Load from backend demo API with contextual titles
   const [flightbookEntries, setFlightbookEntries] = useState([]);
   
+  // Demo mode detection for flightbook component
+  const isDemoModeFlightbook = window.location.search.includes('demo=true') || 
+                               window.location.hash.includes('demo=true') ||
+                               localStorage.getItem('demo_mode') === 'true';
+  
   // Load flightbook entries from backend demo API
   useEffect(() => {
     const loadFlightbookEntries = async () => {
       try {
-        if (isDemoMode) {
+        if (isDemoModeFlightbook) {
           console.log('📖 Loading enhanced flightbook entries from backend demo API...');
           
           // Load from backend demo flightbook API
@@ -12419,7 +12424,7 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
     };
     
     loadFlightbookEntries();
-  }, [isDemoMode, user?.id]);
+  }, []);
   const [expandedSections, setExpandedSections] = useState({});
   const [editingEntry, setEditingEntry] = useState(null);
   const [editContent, setEditContent] = useState('');
