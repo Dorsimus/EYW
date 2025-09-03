@@ -12378,7 +12378,48 @@ const AdminAnalyticsView = ({ stats, tasks, users }) => {
 
 // My Leadership Flightbook View Component with Accordion Organization
 const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlightbook, setCurrentView, competencyTaskProgress, setCompetencyTaskProgress, flightbookAPIClient }) => {
+  // 🔧 ENHANCED FLIGHTBOOK LOADING - Load from backend demo API with contextual titles
   const [flightbookEntries, setFlightbookEntries] = useState([]);
+  
+  // Load flightbook entries from backend demo API
+  useEffect(() => {
+    const loadFlightbookEntries = async () => {
+      try {
+        if (isDemoMode) {
+          console.log('📖 Loading enhanced flightbook entries from backend demo API...');
+          
+          // Load from backend demo flightbook API
+          const response = await axios.get(`${API}/demo/flightbook/entries/demo-user-123`, {
+            timeout: 10000
+          });
+          
+          if (response.data) {
+            console.log(`✅ Loaded ${response.data.length} enhanced flightbook entries from backend`);
+            setFlightbookEntries(response.data);
+            
+            // Also update localStorage for offline capability
+            localStorage.setItem('flightbook_entries', JSON.stringify(response.data));
+          } else {
+            // Fallback to localStorage if API fails
+            const localEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+            setFlightbookEntries(localEntries);
+            console.log('⚠️ Using localStorage flightbook entries as fallback');
+          }
+        } else {
+          // For authenticated users, load from real flightbook API
+          const localEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+          setFlightbookEntries(localEntries);
+        }
+      } catch (error) {
+        console.error('❌ Error loading flightbook entries:', error);
+        // Fallback to localStorage
+        const localEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
+        setFlightbookEntries(localEntries);
+      }
+    };
+    
+    loadFlightbookEntries();
+  }, [isDemoMode, user?.id]);
   const [expandedSections, setExpandedSections] = useState({});
   const [editingEntry, setEditingEntry] = useState(null);
   const [editContent, setEditContent] = useState('');
