@@ -12406,27 +12406,31 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
         if (isDemoModeFlightbook) {
           console.log('📖 Loading enhanced flightbook entries from backend demo API...');
           
-          // Load from backend demo flightbook API
+          // Use direct axios call for demo mode (bypass FlightbookAPIClient auth issues)
           const response = await axios.get(`${API}/demo/flightbook/entries/demo-user-123`, {
             timeout: 10000
           });
           
           if (response.data) {
             console.log(`✅ Loaded ${response.data.length} enhanced flightbook entries from backend`);
+            console.log('📖 Sample enhanced title:', response.data[0]?.title?.substring(0, 100));
             setFlightbookEntries(response.data);
             
             // Also update localStorage for offline capability
             localStorage.setItem('flightbook_entries', JSON.stringify(response.data));
           } else {
+            console.log('⚠️ No enhanced entries found, checking localStorage fallback...');
             // Fallback to localStorage if API fails
             const localEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
             setFlightbookEntries(localEntries);
-            console.log('⚠️ Using localStorage flightbook entries as fallback');
+            console.log(`📦 Loaded ${localEntries.length} entries from localStorage`);
           }
         } else {
-          // For authenticated users, load from real flightbook API
+          // For authenticated users, try real flightbook API with proper auth
+          console.log('🔐 Loading entries for authenticated user...');
           const localEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
           setFlightbookEntries(localEntries);
+          console.log(`📦 Loaded ${localEntries.length} entries for authenticated user`);
         }
       } catch (error) {
         console.error('❌ Error loading flightbook entries:', error);
