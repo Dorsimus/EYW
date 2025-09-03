@@ -5054,6 +5054,7 @@ const AuthenticatedApp = () => {
       const existingEntryIndex = existingEntries.findIndex(entry => entry.entry_key === entryKey);
       
       // 📝 ENHANCED CONTEXT EXTRACTION - Use same logic as API version for consistency
+      const competencyData = competencies[areaKey];
       let promptText = '';
       let entryTitle = 'Leadership Reflection'; // Default fallback
       let contextualDescription = '';
