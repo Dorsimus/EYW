@@ -77,7 +77,7 @@ class EnhancedTaskCompletionService:
                     is_demo_user = user_id == "demo-user-123" or user_id.startswith("demo-")
                     
                     flightbook_entry_data = {
-                        "title": f"Task Completion: {task.get('title', 'Unknown Task')}",
+                        "title": f"Task Completion: {task.get('description', task.get('title', 'Unknown Task'))}",
                         "content": combined_content,
                         "competency_area": task.get("competency_area", ""),
                         "sub_competency": task.get("sub_competency", ""),
