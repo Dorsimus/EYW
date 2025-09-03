@@ -12695,7 +12695,10 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
       'strategic_thinking'
     ];
 
-    flightbookEntries.forEach(entry => {
+    // Ensure flightbookEntries is always an array
+    const entriesArray = Array.isArray(flightbookEntries) ? flightbookEntries : [];
+    
+    entriesArray.forEach(entry => {
       const competencyKey = entry.competency || entry.competency_area;
       // Handle core_values entries specifically, plus other known competencies
       const isKnownCompetency = competencyKey && (
