@@ -4950,13 +4950,38 @@ const AuthenticatedApp = () => {
     try {
       console.log('📖 Creating flightbook entry from task completion:', { areaKey, subKey, taskId, taskType });
       
-      // Create entry title based on task type and context
+      // 📝 CREATE CONTEXTUAL ENTRY TITLE - Include task description for better context
       let entryTitle = 'Leadership Reflection';
+      let contextualDescription = '';
       
       if (taskType === 'task_completion') {
-        // For task completions, create a meaningful title
+        // For task completions, create a meaningful title with description
         const taskTitle = selectedTask?.title || 'Leadership Task';
+        const taskDescription = selectedTask?.description || '';
+        
         entryTitle = `Task Completion: ${taskTitle}`;
+        
+        // Add description for context if available
+        if (taskDescription && taskDescription.length > 0) {
+          // Truncate description if too long for title
+          const shortDescription = taskDescription.length > 100 
+            ? taskDescription.substring(0, 100) + '...'
+            : taskDescription;
+          entryTitle = `Task Completion: ${shortDescription}`;
+          contextualDescription = taskDescription;
+        }
+      } else if (taskType === 'reflection_activity' || taskType === 'journal_prompt') {
+        // For reflection activities, use the task context
+        const taskTitle = selectedTask?.title || 'Reflection Activity';
+        const taskDescription = selectedTask?.description || '';
+        
+        entryTitle = `Leadership Reflection: ${taskTitle}`;
+        
+        // Add description for context
+        if (taskDescription && taskDescription.length > 0) {
+          entryTitle = `Leadership Reflection: ${taskDescription}`;
+          contextualDescription = taskDescription;
+        }
       } else if (taskId.includes('task_completion_')) {
         entryTitle = 'Task Completion Reflection';
       }
