@@ -12412,12 +12412,18 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
           });
           
           if (response.data) {
-            console.log(`✅ Loaded ${response.data.length} enhanced flightbook entries from backend`);
-            console.log('📖 Sample enhanced title:', response.data[0]?.title?.substring(0, 100));
-            setFlightbookEntries(response.data);
+            // Handle wrapped response structure from backend
+            const entries = response.data.entries || response.data || [];
+            console.log(`✅ Loaded ${entries.length} enhanced flightbook entries from backend`);
+            
+            if (entries.length > 0) {
+              console.log('📖 Sample enhanced title:', entries[0]?.title?.substring(0, 100));
+            }
+            
+            setFlightbookEntries(entries);
             
             // Also update localStorage for offline capability
-            localStorage.setItem('flightbook_entries', JSON.stringify(response.data));
+            localStorage.setItem('flightbook_entries', JSON.stringify(entries));
           } else {
             console.log('⚠️ No enhanced entries found, checking localStorage fallback...');
             // Fallback to localStorage if API fails
