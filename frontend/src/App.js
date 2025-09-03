@@ -4986,7 +4986,7 @@ const AuthenticatedApp = () => {
         entryTitle = 'Task Completion Reflection';
       }
       
-      // Prepare flightbook entry data
+      // Prepare flightbook entry data with contextual information
       const entryData = {
         title: entryTitle,
         content: notes.trim(),
@@ -4996,7 +4996,15 @@ const AuthenticatedApp = () => {
         task_type: taskType,
         entry_type: 'task_completion',
         created_at: new Date().toISOString(),
-        user_id: user?.id || 'demo-user-123'
+        user_id: user?.id || 'demo-user-123',
+        // 📝 ENHANCED CONTEXT - Include task details for better flightbook entries
+        task_title: selectedTask?.title || '',
+        task_description: contextualDescription || selectedTask?.description || '',
+        original_task_context: {
+          title: selectedTask?.title,
+          description: selectedTask?.description,
+          instructions: selectedTask?.instructions?.substring(0, 500) // Truncate long instructions
+        }
       };
       
       console.log('📝 Flightbook entry data:', entryData);
