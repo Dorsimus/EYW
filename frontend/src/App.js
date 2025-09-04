@@ -5027,6 +5027,12 @@ const AuthenticatedApp = () => {
               return;
             }
             
+            // 💾 PROTECTED DEMO MODE SAVE - Don't overwrite enhanced entries
+            if (isDemoModeFlightbook && localStorage.getItem('enhanced_flightbook_loaded') === 'true') {
+              console.log('🛡️ Demo mode: protecting enhanced flightbook entries from localStorage overwrite');
+              return entryData;
+            }
+            
             localStorage.setItem('flightbook_entries', JSON.stringify(updatedEntries));
             
             return response;
