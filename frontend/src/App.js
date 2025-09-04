@@ -4951,7 +4951,7 @@ const AuthenticatedApp = () => {
       console.log('📖 Creating flightbook entry from task completion:', { areaKey, subKey, taskId, taskType });
       
       // 📝 CREATE CONTEXTUAL ENTRY TITLE - Include task description for better context
-      let entryTitle = 'Leadership Reflection';
+      let entryTitle = 'Task Reflection'; // Minimal fallback only
       let contextualDescription = '';
       
       if (taskType === 'task_completion') {
@@ -4961,13 +4961,9 @@ const AuthenticatedApp = () => {
         
         entryTitle = `Task Completion: ${taskTitle}`;
         
-        // Add description for context if available
+        // PRIORITY: Use description for enhanced context if available
         if (taskDescription && taskDescription.length > 0) {
-          // Truncate description if too long for title
-          const shortDescription = taskDescription.length > 100 
-            ? taskDescription.substring(0, 100) + '...'
-            : taskDescription;
-          entryTitle = `Task Completion: ${shortDescription}`;
+          entryTitle = `Task Completion: ${taskDescription}`;
           contextualDescription = taskDescription;
         }
       } else if (taskType === 'reflection_activity' || taskType === 'journal_prompt') {
@@ -4977,13 +4973,15 @@ const AuthenticatedApp = () => {
         
         entryTitle = `Leadership Reflection: ${taskTitle}`;
         
-        // Add description for context
+        // PRIORITY: Use description for enhanced context if available  
         if (taskDescription && taskDescription.length > 0) {
           entryTitle = `Leadership Reflection: ${taskDescription}`;
           contextualDescription = taskDescription;
         }
       } else if (taskId.includes('task_completion_')) {
-        entryTitle = 'Task Completion Reflection';
+        const taskTitle = selectedTask?.title || 'Task Completion';
+        const taskDescription = selectedTask?.description || '';
+        entryTitle = taskDescription ? `Task Completion: ${taskDescription}` : `Task Completion: ${taskTitle}`;
       }
       
       // Prepare flightbook entry data with contextual information
