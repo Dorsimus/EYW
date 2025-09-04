@@ -13391,6 +13391,14 @@ Total Entries: ${totalEntries}
   const { organized, unassigned } = organizeFlightbookByCompetency();
   const journalEntries = getJournalEntries();
   const totalEntries = journalEntries.length;
+  
+  // 🔍 DEBUG: Log flightbook state for troubleshooting
+  console.log('📊 Flightbook render debug:');
+  console.log('  flightbookEntries:', flightbookEntries);
+  console.log('  flightbookEntries.length:', flightbookEntries?.length);
+  console.log('  totalEntries:', totalEntries);
+  console.log('  organized:', organized);
+  console.log('  organized keys:', Object.keys(organized));
 
   return (
     <div className="space-y-6">
