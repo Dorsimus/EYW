@@ -13392,6 +13392,11 @@ Total Entries: ${totalEntries}
 
   // Extract journal entries and reflections from various sources
   const getJournalEntries = () => {
+    console.log('📊 getJournalEntries called - flightbookEntries:', flightbookEntries);
+    console.log('📊 getJournalEntries - entries count:', flightbookEntries?.length || 0);
+    if (flightbookEntries?.length > 0) {
+      console.log('📊 First entry title:', flightbookEntries[0]?.title);
+    }
     return flightbookEntries;
   };
 
