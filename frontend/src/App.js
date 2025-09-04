@@ -12394,56 +12394,74 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
   // 🔧 ENHANCED FLIGHTBOOK LOADING - Load from backend demo API with contextual titles
   const [flightbookEntries, setFlightbookEntries] = useState([]);
   
-  // Demo mode detection for flightbook component - ENHANCED
+  // 🔧 ENHANCED DEMO MODE DETECTION - Reliable activation for flightbook
   const isDemoModeFlightbook = window.location.search.includes('demo=true') || 
                                window.location.hash.includes('demo=true') ||
                                localStorage.getItem('demo_mode') === 'true';
   
-  // Ensure demo mode is set for flightbook loading
-  if (window.location.search.includes('demo=true')) {
-    localStorage.setItem('demo_mode', 'true');
-  }
+  // Force demo mode activation for consistent flightbook access
+  React.useEffect(() => {
+    if (window.location.search.includes('demo=true')) {
+      localStorage.setItem('demo_mode', 'true');
+      console.log('🎯 Demo mode activated for flightbook component');
+    }
+  }, []);
   
   // Load flightbook entries from backend demo API
   useEffect(() => {
     const loadFlightbookEntries = async () => {
       try {
-        console.log('📖 Demo mode flightbook detection:', isDemoModeFlightbook);
+        // Always check demo mode freshly
+        const currentDemoMode = window.location.search.includes('demo=true') || 
+                               localStorage.getItem('demo_mode') === 'true';
+        
+        console.log('📖 Demo mode flightbook detection:', currentDemoMode);
         console.log('📖 URL search:', window.location.search);
         console.log('📖 localStorage demo_mode:', localStorage.getItem('demo_mode'));
         
-        if (isDemoModeFlightbook) {
+        if (currentDemoMode) {
           console.log('📖 Loading enhanced flightbook entries from backend demo API...');
           
           // Use direct axios call for demo mode (bypass FlightbookAPIClient auth issues)
           const response = await axios.get(`${API}/demo/flightbook/entries/demo-user-123`, {
-            timeout: 10000
+            timeout: 10000,
+            validateStatus: status => status < 500
           });
           
-          console.log('📖 Raw API response:', response.data);
+          console.log('📖 Raw API response status:', response.status);
+          console.log('📖 Raw API response data:', response.data);
           
-          if (response.data) {
+          if (response.status === 200 && response.data) {
             // Handle wrapped response structure from backend
             const entries = response.data.entries || response.data || [];
             console.log(`✅ Parsed ${entries.length} enhanced flightbook entries from backend`);
             
             if (entries.length > 0) {
               console.log('📖 First enhanced entry title:', entries[0]?.title);
-              console.log('📖 First enhanced entry structure:', entries[0]);
+              console.log('📖 Enhanced titles in data:');
+              entries.slice(0, 3).forEach((entry, i) => {
+                console.log(`  ${i+1}. ${entry.title}`);
+              });
             }
             
             setFlightbookEntries(entries);
             
-            // Also update localStorage for offline capability  
+            // Force localStorage update with enhanced entries
             localStorage.setItem('flightbook_entries', JSON.stringify(entries));
-            console.log('💾 Enhanced entries saved to localStorage');
+            localStorage.setItem('enhanced_flightbook_loaded', 'true');
+            console.log('💾 Enhanced entries saved to localStorage with force flag');
             
           } else {
-            console.log('⚠️ No enhanced entries found, checking localStorage fallback...');
-            // Fallback to localStorage if API fails
+            console.log('⚠️ API response not successful, checking localStorage...');
+            // Check if we have enhanced entries in localStorage from previous load
             const localEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
-            setFlightbookEntries(localEntries);
-            console.log(`📦 Loaded ${localEntries.length} entries from localStorage`);
+            if (localEntries.length > 0) {
+              console.log(`📦 Using ${localEntries.length} cached enhanced entries`);
+              setFlightbookEntries(localEntries);
+            } else {
+              console.log('❌ No enhanced entries available');
+              setFlightbookEntries([]);
+            }
           }
         } else {
           console.log('🔐 Not in demo mode, using localStorage entries...');
