@@ -5020,6 +5020,13 @@ const AuthenticatedApp = () => {
             const currentEntries = JSON.parse(localStorage.getItem('flightbook_entries') || '[]');
             const updatedEntries = [...currentEntries, entryData];
             setFlightbook(updatedEntries);
+            // 💾 PROTECTED DEMO MODE FLIGHTBOOK SAVE - Prevent overwriting enhanced entries
+            if (isDemoModeFlightbook && localStorage.getItem('enhanced_flightbook_loaded') === 'true') {
+              console.log('🛡️ Demo mode detected - protecting enhanced flightbook entries from overwrite');
+              // Don't overwrite enhanced demo entries - user should see enhanced contextual titles
+              return;
+            }
+            
             localStorage.setItem('flightbook_entries', JSON.stringify(updatedEntries));
             
             return response;
