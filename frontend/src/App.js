@@ -12742,6 +12742,13 @@ const LeadershipFlightbookView = ({ competencies, portfolio, flightbook, setFlig
     // Ensure flightbookEntries is always an array
     const entriesArray = Array.isArray(flightbookEntries) ? flightbookEntries : [];
     
+    console.log('🔍 organizeFlightbookByCompetency debug:');
+    console.log('  entriesArray:', entriesArray);
+    console.log('  entriesArray.length:', entriesArray.length);
+    if (entriesArray.length > 0) {
+      console.log('  First entry title in organization:', entriesArray[0]?.title);
+    }
+    
     entriesArray.forEach(entry => {
       const competencyKey = entry.competency || entry.competency_area;
       // Handle core_values entries specifically, plus other known competencies
