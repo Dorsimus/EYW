@@ -5021,7 +5021,7 @@ const AuthenticatedApp = () => {
             const updatedEntries = [...currentEntries, entryData];
             setFlightbook(updatedEntries);
             // 💾 PROTECTED DEMO MODE FLIGHTBOOK SAVE - Prevent overwriting enhanced entries
-            if (isDemoModeFlightbook && localStorage.getItem('enhanced_flightbook_loaded') === 'true') {
+            if (isDemoMode && localStorage.getItem('enhanced_flightbook_loaded') === 'true') {
               console.log('🛡️ Demo mode detected - protecting enhanced flightbook entries from overwrite');
               // Don't overwrite enhanced demo entries - user should see enhanced contextual titles
               return;
