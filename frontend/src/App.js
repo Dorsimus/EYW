@@ -5054,26 +5054,22 @@ const AuthenticatedApp = () => {
       // 📝 ENHANCED CONTEXT EXTRACTION - Use same logic as API version for consistency
       const competencyData = competencies[areaKey];
       let promptText = '';
-      let entryTitle = 'Leadership Reflection'; // Default fallback
+      let entryTitle = 'Task Reflection'; // Minimal fallback only
       let contextualDescription = '';
       
       // PRIORITY 1: Use selectedTask context (from task completion)
       if (selectedTask) {
-        const taskTitle = selectedTask.title || 'Leadership Task';
+        const taskTitle = selectedTask.title || 'Task';
         const taskDescription = selectedTask.description || '';
         
         if (taskType === 'task_completion') {
-          entryTitle = `Task Completion: ${taskTitle}`;
-          if (taskDescription) {
-            entryTitle = `Task Completion: ${taskDescription}`;
-            contextualDescription = taskDescription;
-          }
+          // ALWAYS prioritize description for enhanced context
+          entryTitle = taskDescription ? `Task Completion: ${taskDescription}` : `Task Completion: ${taskTitle}`;
+          contextualDescription = taskDescription;
         } else {
-          entryTitle = `Leadership Reflection: ${taskTitle}`;
-          if (taskDescription) {
-            entryTitle = `Leadership Reflection: ${taskDescription}`;
-            contextualDescription = taskDescription;
-          }
+          // For reflections, use description if available
+          entryTitle = taskDescription ? `Leadership Reflection: ${taskDescription}` : `Leadership Reflection: ${taskTitle}`;
+          contextualDescription = taskDescription;
         }
         
         promptText = taskDescription || taskTitle;
