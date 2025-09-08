@@ -39,7 +39,7 @@ console.log('🔍 PRODUCTION MODE - Demo detection check:', {
 });
 
 // Set demo mode in localStorage for persistence
-if (isDemoParam || isHrefDemo || isHostDemo) {
+if (isDemoParam || isHrefDemo) {
   localStorage.setItem('demo_mode', 'true');
   console.log('🎮 DEMO MODE ACTIVATED at root level');
 }
