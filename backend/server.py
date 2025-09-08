@@ -27,7 +27,6 @@ from routers.flightbook import router as flightbook_router
 
 # Import enhanced services
 from enhanced_task_completion import EnhancedTaskCompletionService
-from demo_flightbook_service import DemoFlightbookService
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -124,6 +123,19 @@ async def get_current_user(
     token = credentials.credentials
     user_data = validate_clerk_token(token)
     return user_data
+
+# User ID validation dependency
+def validate_user_access(current_user: Dict[str, Any] = Depends(get_current_user)):
+    """Dependency factory that validates user can only access their own data"""
+    def check_user_id(user_id: str):
+        authenticated_user_id = current_user.get("sub")
+        if authenticated_user_id != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: You can only access your own data"
+            )
+        return current_user
+    return check_user_id
 
 # Role-based access control
 def require_roles(required_roles: List[str]):
@@ -915,114 +927,102 @@ SAMPLE_TASKS = [
     },
     {
         "title": "Resident Journey Mapping Project",
-        "description": "Map complete resident experience across departments with improvement recommendations",
+        "description": "Map complete resident experience with cross-department improvement recommendations",
         "task_type": "document_upload",
         "competency_area": "cross_functional_collaboration",
         "sub_competency": "unified_resident_experience",
         "order": 4,
         "required": True,
-        "estimated_hours": 6.0,
-        "instructions": "Include journey maps, friction point analysis, collaborative solutions, and implementation timeline."
+        "estimated_hours": 10.0,
+        "instructions": "Include journey maps, pain point analysis, improvement recommendations, and implementation plan."
     },
     
     # Enhanced Strategic Thinking Portfolio Tasks
     {
-        "title": "Property Market Analysis Report",
-        "description": "Comprehensive market analysis with strategic positioning recommendations",
-        "task_type": "document_upload",
-        "competency_area": "strategic_thinking",
-        "sub_competency": "seeing_patterns_anticipating_trends",
-        "order": 4,
-        "required": True,
-        "estimated_hours": 8.0,
-        "instructions": "Include competitor analysis, market trends, pricing analysis, and strategic recommendations for property positioning."
-    },
-    {
-        "title": "Innovation Proposal Portfolio",
-        "description": "Develop 3 innovation proposals with business case analysis and implementation plans",
-        "task_type": "document_upload",
-        "competency_area": "strategic_thinking",
-        "sub_competency": "innovation_continuous_improvement",
-        "order": 4,
-        "required": True,
-        "estimated_hours": 10.0,
-        "instructions": "Include opportunity identification, business case with ROI, implementation plan, and success metrics."
-    },
-    {
-        "title": "Department Strategic Plan",
-        "description": "Create annual strategic plan for department aligned with property goals",
+        "title": "Strategic Planning Portfolio",
+        "description": "Complete strategic planning project with market analysis and implementation roadmap",
         "task_type": "document_upload",
         "competency_area": "strategic_thinking",
         "sub_competency": "planning_goal_achievement",
         "order": 4,
         "required": True,
         "estimated_hours": 12.0,
-        "instructions": "Include environmental analysis, strategic goals, action plans, resource requirements, and success metrics."
+        "instructions": "Include market analysis, strategic goals, implementation timeline, and success metrics."
+    },
+    {
+        "title": "Innovation Implementation Case Study",
+        "description": "Document successful innovation project from concept to implementation",
+        "task_type": "document_upload",
+        "competency_area": "strategic_thinking",
+        "sub_competency": "innovation_continuous_improvement",
+        "order": 4,
+        "required": True,
+        "estimated_hours": 8.0,
+        "instructions": "Include innovation process, stakeholder engagement, implementation challenges, and results achieved."
     }
 ]
 
-async def calculate_competency_progress(user_id: str, competency_area: str, sub_competency: str):
-    """Calculate progress percentage for a specific sub-competency based on completed tasks"""
-    # Get all tasks for this sub-competency
-    tasks = await db.tasks.find({
-        "competency_area": competency_area,
-        "sub_competency": sub_competency,
-        "active": True
-    }).to_list(1000)
-    
-    if not tasks:
-        return 0.0, 0, 0
-    
-    total_tasks = len(tasks)
-    
-    # Get completed tasks for this user
-    # CRITICAL FIX: Use task.id (UUID) instead of task._id (MongoDB ObjectId)
-    # Task completions are stored with the UUID id field, not the MongoDB _id
-    task_ids = [task.get("id", str(task["_id"])) for task in tasks]
-    completed = await db.task_completions.find({
-        "user_id": user_id,
-        "task_id": {"$in": task_ids}
-    }).to_list(1000)
-    
-    completed_tasks = len(completed)
-    completion_percentage = (completed_tasks / total_tasks) * 100 if total_tasks > 0 else 0.0
-    
-    return completion_percentage, completed_tasks, total_tasks
-
+# Helper function to update competency progress
 async def update_all_competency_progress(user_id: str):
-    """Recalculate all competency progress for a user"""
+    """Update competency progress for all competencies for a user"""
+    
+    # Get all competency areas and sub-competencies
     for area_key, area_data in NAVIGATOR_COMPETENCIES.items():
-        for sub_key in area_data["sub_competencies"].keys():
-            percentage, completed, total = await calculate_competency_progress(user_id, area_key, sub_key)
+        for sub_key, sub_name in area_data["sub_competencies"].items():
+            # Get all tasks for this competency
+            all_tasks = await db.tasks.find({
+                "competency_area": area_key,
+                "sub_competency": sub_key,
+                "active": True
+            }).to_list(1000)
+            
+            # Get completed tasks for this user and competency
+            task_ids = [task.get("id", str(task["_id"])) for task in all_tasks]
+            completed_tasks = await db.task_completions.find({
+                "user_id": user_id,
+                "task_id": {"$in": task_ids}
+            }).to_list(1000)
+            
+            # Calculate progress
+            total_tasks = len(all_tasks)
+            completed_count = len(completed_tasks)
+            completion_percentage = (completed_count / total_tasks * 100) if total_tasks > 0 else 0
             
             # Update or create competency progress record
+            progress_data = {
+                "user_id": user_id,
+                "competency_area": area_key,
+                "sub_competency": sub_key,
+                "completion_percentage": round(completion_percentage, 1),
+                "completed_tasks": completed_count,
+                "total_tasks": total_tasks,
+                "evidence_items": [],  # Will be populated by portfolio items
+                "last_updated": datetime.utcnow()
+            }
+            
             await db.competency_progress.update_one(
-                {"user_id": user_id, "competency_area": area_key, "sub_competency": sub_key},
                 {
-                    "$set": {
-                        "completion_percentage": percentage,
-                        "completed_tasks": completed,
-                        "total_tasks": total,
-                        "last_updated": datetime.utcnow()
-                    },
-                    "$setOnInsert": {
-                        "evidence_items": []
-                    }
+                    "user_id": user_id,
+                    "competency_area": area_key,
+                    "sub_competency": sub_key
                 },
+                {"$set": progress_data},
                 upsert=True
             )
 
-# Routes
-@api_router.get("/")
-async def root():
-    return {"message": "Earn Your Wings Platform API"}
-
-# Authentication Routes - Legacy admin routes removed, now using Clerk authentication
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, specify exact origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # User Management Routes
 @api_router.post("/users", response_model=User)
 async def create_user(user_data: UserCreate):
-    # If a specific ID is provided, check if that exact user exists
+    # Check if user with this ID already exists (for demo users with specific IDs)
     if user_data.id:
         existing_id = await db.users.find_one({"id": user_data.id})
         if existing_id:
@@ -1067,7 +1067,10 @@ async def get_competency_framework():
     return NAVIGATOR_COMPETENCIES
 
 @api_router.get("/users/{user_id}/competencies")
-async def get_user_competencies(user_id: str):
+async def get_user_competencies(user_id: str, current_user = Depends(validate_user_access)):
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
+    
     # Update progress before returning
     await update_all_competency_progress(user_id)
     
@@ -1119,10 +1122,10 @@ async def get_user_competencies(user_id: str):
 
 # Progress endpoint - returns user progress in the expected format
 @api_router.get("/users/{user_id}/progress")
-async def get_user_progress(user_id: str):
-    """Get user progress with task completion data as JSON"""
-    # Handle demo users without authentication
-    is_demo_user = user_id == "demo-user-123" or user_id.startswith("demo-") or user_id.startswith("test-")
+async def get_user_progress(user_id: str, current_user = Depends(validate_user_access)):
+    """Get user progress with task completion data as JSON - REQUIRES AUTHENTICATION"""
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
     
     # Update progress before returning
     await update_all_competency_progress(user_id)
@@ -1186,10 +1189,10 @@ async def get_user_progress(user_id: str):
 
 # User tasks endpoint - returns all tasks for a user with completion status
 @api_router.get("/users/{user_id}/tasks")
-async def get_user_tasks(user_id: str):
-    """Return user tasks with completion status as JSON"""
-    # Handle demo users without authentication
-    is_demo_user = user_id == "demo-user-123" or user_id.startswith("demo-") or user_id.startswith("test-")
+async def get_user_tasks(user_id: str, current_user = Depends(validate_user_access)):
+    """Return user tasks with completion status as JSON - REQUIRES AUTHENTICATION"""
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
     
     # Get all active tasks
     tasks = await db.tasks.find({"active": True}).sort("competency_area", 1).sort("sub_competency", 1).sort("order", 1).to_list(1000)
@@ -1252,7 +1255,10 @@ async def get_tasks_for_competency(competency_area: str, sub_competency: str):
     return [serialize_doc(task) for task in tasks]
 
 @api_router.get("/users/{user_id}/tasks/{competency_area}/{sub_competency}")
-async def get_user_tasks_for_competency(user_id: str, competency_area: str, sub_competency: str):
+async def get_user_tasks_for_competency(user_id: str, competency_area: str, sub_competency: str, current_user = Depends(validate_user_access)):
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
+    
     # Get all tasks for this competency
     tasks = await db.tasks.find({
         "competency_area": competency_area,
@@ -1289,8 +1295,12 @@ async def complete_task(
     task_id: str = Form(...),
     evidence_description: str = Form(""),
     notes: str = Form(""),
-    file: UploadFile = File(None)
+    file: UploadFile = File(None),
+    current_user = Depends(validate_user_access)
 ):
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
+    
     # Check if task exists
     task = await db.tasks.find_one({"id": task_id})
     if not task:
@@ -1332,8 +1342,12 @@ async def complete_task_new(
     task_id: str = Form(...),
     evidence_description: str = Form(""),
     notes: str = Form(""),
-    file: UploadFile = File(None)
+    file: UploadFile = File(None),
+    current_user = Depends(validate_user_access)
 ):
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
+    
     # Check if task exists
     task = await db.tasks.find_one({"id": task_id})
     if not task:
@@ -1373,13 +1387,17 @@ async def complete_task_new(
 async def complete_specific_task(
     user_id: str,
     task_id: str,
-    request: Request
+    request: Request,
+    current_user = Depends(validate_user_access)
 ):
     """
     Enhanced task completion endpoint with integrated flightbook creation.
     Accepts both JSON and form data for task completion with timestamp recording.
-    Automatically creates flightbook entries for demo users when notes are provided.
+    REQUIRES AUTHENTICATION - Users can only complete their own tasks.
     """
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
+    
     try:
         # Initialize enhanced completion service
         enhanced_service = EnhancedTaskCompletionService(db)
@@ -1525,7 +1543,10 @@ async def admin_get_all_users(admin_user = Depends(require_admin)):
 
 # Task Completion Routes
 @api_router.get("/users/{user_id}/task-completions")
-async def get_user_task_completions(user_id: str):
+async def get_user_task_completions(user_id: str, current_user = Depends(validate_user_access)):
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
+    
     completions = await db.task_completions.find({"user_id": user_id}).sort("completed_at", -1).to_list(1000)
     return [serialize_doc(completion) for completion in completions]
 
@@ -1552,8 +1573,12 @@ async def create_portfolio_item(
     competency_areas: str = Form("[]"),
     tags: str = Form("[]"),
     visibility: str = Form("private"),
-    file: UploadFile = File(None)
+    file: UploadFile = File(None),
+    current_user = Depends(validate_user_access)
 ):
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
+    
     try:
         competency_areas_list = json.loads(competency_areas) if competency_areas else []
         tags_list = json.loads(tags) if tags else []
@@ -1602,280 +1627,139 @@ async def create_portfolio_item(
     return serialize_doc(portfolio_item.dict())
 
 @api_router.get("/users/{user_id}/portfolio")
-async def get_user_portfolio(user_id: str, visibility: Optional[str] = None):
-    """Get user's portfolio items with optional visibility filter"""
-    query = {"user_id": user_id, "status": "active"}
+async def get_user_portfolio(user_id: str, current_user = Depends(validate_user_access)):
+    """Get user portfolio items - REQUIRES AUTHENTICATION"""
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
     
-    if visibility:
-        query["visibility"] = visibility
+    portfolio_items = await db.portfolio_items.find({
+        "user_id": user_id,
+        "status": "active"
+    }).sort("upload_date", -1).to_list(1000)
     
-    items = await db.portfolio_items.find(query).sort("upload_date", -1).to_list(1000)
+    return [serialize_doc(item) for item in portfolio_items]
+
+@api_router.get("/users/{user_id}/portfolio/{item_id}")
+async def get_portfolio_item(user_id: str, item_id: str, current_user = Depends(validate_user_access)):
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
     
-    # Add file size formatting for display
-    for item in items:
-        if item.get("file_size"):
-            item["file_size_formatted"] = format_file_size(item["file_size"])
+    item = await db.portfolio_items.find_one({
+        "id": item_id,
+        "user_id": user_id,
+        "status": "active"
+    })
     
-    return [serialize_doc(item) for item in items]
+    if not item:
+        raise HTTPException(status_code=404, detail="Portfolio item not found")
+    
+    return serialize_doc(item)
+
+@api_router.put("/users/{user_id}/portfolio/{item_id}")
+async def update_portfolio_item(
+    user_id: str,
+    item_id: str,
+    title: str = Form(...),
+    description: str = Form(...),
+    competency_areas: str = Form("[]"),
+    tags: str = Form("[]"),
+    visibility: str = Form("private"),
+    current_user = Depends(validate_user_access)
+):
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
+    
+    try:
+        competency_areas_list = json.loads(competency_areas) if competency_areas else []
+        tags_list = json.loads(tags) if tags else []
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Invalid JSON in competency_areas or tags")
+    
+    # Validate visibility
+    if visibility not in ["private", "managers", "mentors", "public"]:
+        visibility = "private"
+    
+    update_data = {
+        "title": title,
+        "description": description,
+        "competency_areas": competency_areas_list,
+        "tags": tags_list,
+        "visibility": visibility,
+        "updated_at": datetime.utcnow()
+    }
+    
+    result = await db.portfolio_items.update_one(
+        {"id": item_id, "user_id": user_id, "status": "active"},
+        {"$set": update_data}
+    )
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Portfolio item not found")
+    
+    # Get updated item
+    updated_item = await db.portfolio_items.find_one({"id": item_id, "user_id": user_id})
+    return serialize_doc(updated_item)
 
 @api_router.delete("/users/{user_id}/portfolio/{item_id}")
-async def delete_portfolio_item(user_id: str, item_id: str):
-    """Delete portfolio item and associated file"""
-    # Get the item first to access file path
+async def delete_portfolio_item(user_id: str, item_id: str, current_user = Depends(validate_user_access)):
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
+    
+    # Get item to check if file needs deletion
     item = await db.portfolio_items.find_one({"id": item_id, "user_id": user_id})
     if not item:
         raise HTTPException(status_code=404, detail="Portfolio item not found")
     
-    # Delete the file if it exists
-    if item.get("file_path"):
-        delete_file(item["file_path"])
-    
-    # Soft delete - mark as deleted instead of removing completely
+    # Mark as deleted (soft delete)
     result = await db.portfolio_items.update_one(
         {"id": item_id, "user_id": user_id},
         {"$set": {"status": "deleted", "updated_at": datetime.utcnow()}}
     )
     
-    if result.modified_count == 0:
+    if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Portfolio item not found")
     
-    # Remove from competency evidence
-    for area in item.get("competency_areas", []):
-        await db.competency_progress.update_many(
-            {"user_id": user_id, "competency_area": area},
-            {"$pull": {"evidence_items": item_id}}
-        )
+    # Delete associated file if exists
+    if item.get("file_path"):
+        delete_file(item["file_path"])
     
     return {"message": "Portfolio item deleted successfully"}
 
-def format_file_size(size_bytes: int) -> str:
-    """Format file size for human readability"""
-    if size_bytes == 0:
-        return "0 B"
+@api_router.get("/users/{user_id}/portfolio/{item_id}/download")
+async def download_portfolio_file(user_id: str, item_id: str, current_user = Depends(validate_user_access)):
+    # Validate user can only access their own data
+    validate_access = current_user(user_id)
     
-    size_names = ["B", "KB", "MB", "GB"]
-    i = 0
-    while size_bytes >= 1024 and i < len(size_names) - 1:
-        size_bytes /= 1024.0
-        i += 1
+    item = await db.portfolio_items.find_one({
+        "id": item_id,
+        "user_id": user_id,
+        "status": "active"
+    })
     
-    return f"{size_bytes:.1f} {size_names[i]}"
-
-# File serving endpoint for secure access
-@api_router.get("/files/{file_type}/{file_id}")
-async def serve_file(file_type: str, file_id: str, user_id: Optional[str] = None):
-    """Serve uploaded files with basic access control"""
-    if file_type not in ["portfolio", "evidence"]:
+    if not item or not item.get("file_path"):
         raise HTTPException(status_code=404, detail="File not found")
     
-    # For portfolio files, check if the item exists and user has access
-    if file_type == "portfolio":
-        item = await db.portfolio_items.find_one({"id": file_id, "status": "active"})
-        if not item:
-            raise HTTPException(status_code=404, detail="File not found")
-        
-        # For now, allow access to the file owner
-        # TODO: Add proper access control based on visibility settings
-        file_path = item.get("file_path")
-        original_filename = item.get("original_filename", "download")
-        
-    elif file_type == "evidence":
-        completion = await db.task_completions.find_one({"id": file_id})
-        if not completion:
-            raise HTTPException(status_code=404, detail="File not found")
-        
-        file_path = completion.get("evidence_file_path")
-        original_filename = f"evidence_{file_id}"
-    
-    if not file_path or not Path(file_path).exists():
-        raise HTTPException(status_code=404, detail="File not found")
+    file_path = Path(item["file_path"])
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="File not found on disk")
     
     return FileResponse(
         path=file_path,
-        filename=original_filename,
-        media_type='application/octet-stream'
+        filename=item.get("original_filename", "download"),
+        media_type=item.get("mime_type", "application/octet-stream")
     )
 
-# Storage management endpoints
-@api_router.get("/admin/storage/stats")
-async def get_storage_stats(admin_user = Depends(require_admin)):
-    """Get storage usage statistics"""
-    def get_directory_size(directory: Path) -> tuple[int, int]:
-        """Get total size and file count of directory"""
-        total_size = 0
-        file_count = 0
-        
-        if directory.exists():
-            for file_path in directory.rglob("*"):
-                if file_path.is_file():
-                    total_size += file_path.stat().st_size
-                    file_count += 1
-        
-        return total_size, file_count
-    
-    # Get stats for each directory
-    portfolio_size, portfolio_files = get_directory_size(PORTFOLIO_DIR)
-    evidence_size, evidence_files = get_directory_size(EVIDENCE_DIR)
-    temp_size, temp_files = get_directory_size(TEMP_DIR)
-    
-    total_size = portfolio_size + evidence_size + temp_size
-    total_files = portfolio_files + evidence_files + temp_files
-    
-    # Get database stats
-    portfolio_items_count = await db.portfolio_items.count_documents({"status": "active"})
-    evidence_items_count = await db.task_completions.count_documents({"evidence_file_path": {"$ne": None}})
-    
-    return {
-        "total_storage_bytes": total_size,
-        "total_storage_formatted": format_file_size(total_size),
-        "total_files": total_files,
-        "breakdown": {
-            "portfolio": {
-                "size_bytes": portfolio_size,
-                "size_formatted": format_file_size(portfolio_size),
-                "file_count": portfolio_files,
-                "db_records": portfolio_items_count
-            },
-            "evidence": {
-                "size_bytes": evidence_size,
-                "size_formatted": format_file_size(evidence_size),
-                "file_count": evidence_files,
-                "db_records": evidence_items_count
-            },
-            "temp": {
-                "size_bytes": temp_size,
-                "size_formatted": format_file_size(temp_size),
-                "file_count": temp_files
-            }
-        },
-        "constraints": {
-            "max_file_size": format_file_size(MAX_FILE_SIZE),
-            "allowed_extensions": list(ALLOWED_EXTENSIONS),
-            "total_allowed_mime_types": len(ALLOWED_MIME_TYPES)
-        }
-    }
-
-# Demo Flightbook Endpoints for Demo Users
-@api_router.post("/demo/flightbook/entries")
-async def create_demo_flightbook_entry(
-    user_id: str = Form(...),
-    title: str = Form(...),
-    content: str = Form(...),
-    competency_area: str = Form(""),
-    sub_competency: str = Form(""),
-    entry_type: str = Form("task_completion"),
-    task_id: str = Form(None),
-    task_title: str = Form(""),
-    tags: str = Form("[]")
-):
-    """Demo mode flightbook entry creation without authentication"""
-    try:
-        # Parse tags if provided as JSON string
-        try:
-            tags_list = json.loads(tags) if tags else []
-        except json.JSONDecodeError:
-            tags_list = []
-        
-        demo_service = DemoFlightbookService(db)
-        
-        entry_data = {
-            "title": title,
-            "content": content,
-            "competency_area": competency_area,
-            "sub_competency": sub_competency,
-            "entry_type": entry_type,
-            "task_id": task_id,
-            "task_title": task_title,
-            "tags": tags_list
-        }
-        
-        entry = await demo_service.create_demo_flightbook_entry(user_id, entry_data)
-        
-        return {
-            "success": True,
-            "entry": serialize_doc(entry),
-            "message": "Demo flightbook entry created successfully"
-        }
-        
-    except Exception as e:
-        logging.error(f"Demo flightbook entry creation failed: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Failed to create demo flightbook entry: {str(e)}")
-
-@api_router.get("/demo/flightbook/entries/{user_id}")
-async def get_demo_flightbook_entries(
-    user_id: str,
-    competency_area: Optional[str] = None,
-    sub_competency: Optional[str] = None,
-    entry_type: Optional[str] = None
-):
-    """Get flightbook entries for demo user"""
-    try:
-        demo_service = DemoFlightbookService(db)
-        
-        filters = {}
-        if competency_area:
-            filters["competency_area"] = competency_area
-        if sub_competency:
-            filters["sub_competency"] = sub_competency
-        if entry_type:
-            filters["entry_type"] = entry_type
-        
-        entries = await demo_service.get_demo_flightbook_entries(user_id, filters)
-        
-        return {
-            "success": True,
-            "entries": entries,
-            "count": len(entries)
-        }
-        
-    except Exception as e:
-        logging.error(f"Failed to get demo flightbook entries: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Failed to get demo flightbook entries: {str(e)}")
-
-@api_router.get("/demo/flightbook/statistics/{user_id}")
-async def get_demo_flightbook_statistics(user_id: str):
-    """Get flightbook statistics for demo user"""
-    try:
-        demo_service = DemoFlightbookService(db)
-        stats = await demo_service.get_demo_statistics(user_id)
-        
-        return {
-            "success": True,
-            "statistics": stats
-        }
-        
-    except Exception as e:
-        logging.error(f"Failed to get demo flightbook statistics: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Failed to get demo flightbook statistics: {str(e)}")
-
-# Include the router in the main app
-app.include_router(api_router)
-
-# Include flightbook routes
+# Include the flightbook router
 app.include_router(flightbook_router)
 
-# Include project routes
-from routers.project import router as project_router
-app.include_router(project_router)
+# Include the API router
+app.include_router(api_router)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Root endpoint
+@app.get("/")
+async def root():
+    return {"message": "Earn Your Wings API", "version": "1.0.0", "status": "active"}
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
-
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
-
-
-# AI service temporarily disabled due to missing dependencies
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8001)
