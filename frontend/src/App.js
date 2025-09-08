@@ -13529,6 +13529,8 @@ Total Entries: ${totalEntries}
                                         <div className={`w-2 h-2 bg-${color}-500 rounded-full`}></div>
                                         <h4 className="text-lg font-semibold text-gray-800 font-serif leading-relaxed">
                                           {entry.title}
+                                          {/* 🔍 DEBUG: Log actual title being rendered */}
+                                          {console.log('🔍 Rendering entry title:', entry.title)}
                                         </h4>
                                       </div>
                                       <div className="flex items-center space-x-4 text-sm text-gray-600">
