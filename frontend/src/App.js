@@ -3262,28 +3262,6 @@ const AuthenticatedApp = () => {
         console.log('📂 No portfolio data found, initializing empty portfolio');
         setPortfolio([]);
       }
-        } catch (apiError) {
-          console.warn('⚠️ Backend portfolio API not available, using localStorage');
-        }
-      }
-      
-      // Fallback to localStorage
-      const localUserId = user?.id || getStoredUserId();
-      const savedPortfolio = localStorage.getItem(`portfolio_${localUserId}`);
-      
-      if (savedPortfolio) {
-        try {
-          const parsedPortfolio = JSON.parse(savedPortfolio);
-          setPortfolio(parsedPortfolio);
-          console.log(`✅ Loaded ${parsedPortfolio.length} portfolio items from localStorage`);
-        } catch (error) {
-          console.error('❌ Error parsing saved portfolio:', error);
-          setPortfolio([]);
-        }
-      } else {
-        console.log('ℹ️ No portfolio data found, starting with empty portfolio');
-        setPortfolio([]);
-      }
     } catch (error) {
       console.error('❌ Error reloading portfolio:', error);
       setPortfolio([]);
