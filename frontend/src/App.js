@@ -3205,24 +3205,51 @@ const AuthenticatedApp = () => {
     }
   };
 
-  // Reload portfolio function
+  // 🔄 FIXED PORTFOLIO LOADING - Database-driven with demo mode support
   const reloadPortfolio = async () => {
     try {
       console.log('🔄 Reloading portfolio data...');
       
-      if (user?.id) {
-        // Try to load from backend API first
+      // Support both authenticated users and demo users
+      const userId = user?.id || 'demo-user-123';
+      console.log('📂 Loading portfolio for user:', userId);
+      
+      // Try to load from backend API first
+      try {
+        const token = await getToken();
+        const response = await axios.get(`${API}/users/${userId}/portfolio`, {
+          headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+          timeout: 10000,
+          validateStatus: (status) => status < 500
+        });
+        
+        if (response.status === 200 && response.data) {
+          setPortfolio(response.data);
+          console.log(`✅ Loaded ${response.data.length} portfolio items from backend`);
+          console.log('📂 Portfolio items:', response.data.map(item => item.title));
+          return;
+        } else {
+          console.warn('⚠️ Backend portfolio API returned:', response.status);
+        }
+      } catch (apiError) {
+        console.error('❌ Backend portfolio API failed:', apiError);
+      }
+      
+      // Fallback to localStorage if backend fails
+      const savedPortfolio = localStorage.getItem(`portfolio_${userId}`);
+      if (savedPortfolio) {
         try {
-          const response = await axios.get(`${API}/users/${user.id}/portfolio`, {
-            timeout: 5000,
-            validateStatus: (status) => status < 500
-          });
-          
-          if (response.status === 200 && response.data) {
-            setPortfolio(response.data);
-            console.log(`✅ Loaded ${response.data.length} portfolio items from backend`);
-            return;
-          }
+          const parsedPortfolio = JSON.parse(savedPortfolio);
+          setPortfolio(parsedPortfolio);
+          console.log(`📦 Loaded ${parsedPortfolio.length} portfolio items from localStorage`);
+        } catch (parseError) {
+          console.error('❌ Error parsing saved portfolio:', parseError);
+          setPortfolio([]);
+        }
+      } else {
+        console.log('📂 No portfolio data found, initializing empty portfolio');
+        setPortfolio([]);
+      }
         } catch (apiError) {
           console.warn('⚠️ Backend portfolio API not available, using localStorage');
         }
