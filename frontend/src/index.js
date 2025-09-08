@@ -38,7 +38,7 @@ console.log('🔍 ROOT LEVEL Demo mode check:', {
 });
 
 // Set demo mode in localStorage for persistence
-if (isDemoParam || isHrefDemo) {
+if (isDemoParam || isHrefDemo || isHostDemo) {
   localStorage.setItem('demo_mode', 'true');
   console.log('🎮 DEMO MODE ACTIVATED at root level');
 }
