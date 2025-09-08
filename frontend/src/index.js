@@ -17,8 +17,12 @@ const isHashDemo = window.location.hash.includes('demo=true');
 const isStoredDemo = localStorage.getItem('demo_mode') === 'true';
 const isHrefDemo = window.location.href.includes('demo=true');
 
-// Enable demo mode if any demo indicator is found
-const isDemoMode = isDemoParam || isHashDemo || isStoredDemo || isHrefDemo;
+// ENHANCED: Also check for demo in pathname and force demo mode for testing
+const isPathDemo = window.location.pathname.includes('demo');
+const isHostDemo = window.location.hostname.includes('preview') || window.location.hostname.includes('demo');
+
+// Enable demo mode if any demo indicator is found OR if on preview environment
+const isDemoMode = isDemoParam || isHashDemo || isStoredDemo || isHrefDemo || isPathDemo || isHostDemo;
 
 console.log('🔍 ROOT LEVEL Demo mode check:', {
   urlSearch: window.location.search,
