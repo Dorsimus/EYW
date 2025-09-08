@@ -7,7 +7,7 @@ import {
 } from '@clerk/clerk-react';
 
 // Import the full authenticated app component from App.js
-import App, { AuthenticatedApp } from './App';
+import { AuthenticatedApp } from './App';
 
 const ClerkApp = () => {
   // Enhanced demo mode detection - check multiple sources
