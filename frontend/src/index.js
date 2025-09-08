@@ -27,10 +27,13 @@ const isDemoMode = isDemoParam || isHashDemo || isStoredDemo || isHrefDemo || is
 console.log('🔍 ROOT LEVEL Demo mode check:', {
   urlSearch: window.location.search,
   fullURL: window.location.href,
+  hostname: window.location.hostname,
   isDemoParam: isDemoParam,
   isHashDemo: isHashDemo,
   isStoredDemo: isStoredDemo,
   isHrefDemo: isHrefDemo,
+  isPathDemo: isPathDemo,
+  isHostDemo: isHostDemo,
   finalDemoMode: isDemoMode
 });
 
