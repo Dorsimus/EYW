@@ -27,17 +27,15 @@ const isPathDemo = window.location.pathname.includes('demo');
 // Enable demo mode ONLY with explicit parameter (not automatic hostname detection)
 const isDemoMode = isDemoParam || isHashDemo || isStoredDemo || isHrefDemo;
 
-console.log('🔍 ROOT LEVEL Demo mode check:', {
+console.log('🔍 PRODUCTION MODE - Demo detection check:', {
   urlSearch: window.location.search,
   fullURL: window.location.href,
   hostname: window.location.hostname,
-  isDemoParam: isDemoParam,
-  isHashDemo: isHashDemo,
-  isStoredDemo: isStoredDemo,
-  isHrefDemo: isHrefDemo,
-  isPathDemo: isPathDemo,
-  isHostDemo: isHostDemo,
-  finalDemoMode: isDemoMode
+  isDemoParam,
+  isHashDemo,
+  isStoredDemo,
+  isHrefDemo,
+  isDemoMode: isDemoMode
 });
 
 // Set demo mode in localStorage for persistence
