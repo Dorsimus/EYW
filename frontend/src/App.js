@@ -564,6 +564,18 @@ const AuthenticatedApp = () => {
     { area: 'client_confidence_connection', subs: ['understanding_client_impact', 'service_excellence_presence', 'client_communication_skills', 'client_advocacy_value'] }
   ];
 
+  // 🔄 LOAD PORTFOLIO ON APP INITIALIZATION - Database-driven
+  useEffect(() => {
+    const initializePortfolio = async () => {
+      if (user?.id || isDemoMode) {
+        console.log('📂 Initializing portfolio on app load...');
+        await reloadPortfolio();
+      }
+    };
+    
+    initializePortfolio();
+  }, [user?.id, isDemoMode]);
+
   // 🔄 LOAD PROGRESS ON APP INITIALIZATION
   useEffect(() => {
     const initializeProgress = async () => {
