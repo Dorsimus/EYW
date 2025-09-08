@@ -1,13 +1,13 @@
 """
 Enhanced Task Completion Service
 Integrates task completion with flightbook entry creation
+PRODUCTION VERSION - NO DEMO MODE BYPASSES
 """
 
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 import logging
 import uuid
-from demo_flightbook_service import DemoFlightbookService
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +16,6 @@ class EnhancedTaskCompletionService:
     
     def __init__(self, db):
         self.db = db
-        self.demo_flightbook_service = DemoFlightbookService(db)
     
     async def complete_task_with_flightbook_integration(
         self, 
@@ -26,6 +25,7 @@ class EnhancedTaskCompletionService:
     ) -> Dict[str, Any]:
         """
         Complete a task and automatically create a flightbook entry if notes are provided
+        PRODUCTION VERSION - REQUIRES PROPER AUTHENTICATION
         """
         
         try:
@@ -73,40 +73,18 @@ class EnhancedTaskCompletionService:
             # Only create flightbook entry if there's substantial content (>10 characters)
             if combined_content and len(combined_content.strip()) > 10:
                 try:
-                    # Determine if this is a demo user
-                    is_demo_user = user_id == "demo-user-123" or user_id.startswith("demo-")
+                    # For authenticated users, we would integrate with the actual flightbook service
+                    # This requires proper Clerk authentication and real flightbook API integration
+                    logger.info(f"Flightbook integration for authenticated users requires proper implementation")
                     
-                    flightbook_entry_data = {
-                        "title": f"Task Completion: {task.get('description', task.get('title', 'Unknown Task'))}",
-                        "content": combined_content,
-                        "competency_area": task.get("competency_area", ""),
-                        "sub_competency": task.get("sub_competency", ""),
-                        "entry_type": "task_completion",
-                        "task_id": task_id,
-                        "task_title": task.get("title", ""),
-                        "tags": [
-                            "task_completion",
-                            task.get("competency_area", "").replace("_", " "),
-                            task.get("task_type", "")
-                        ]
-                    }
+                    # TODO: Implement real flightbook integration with proper authentication
+                    # This would involve:
+                    # 1. Validating user authentication
+                    # 2. Calling the real flightbook API
+                    # 3. Handling proper error responses
                     
-                    if is_demo_user:
-                        # Use demo flightbook service
-                        flightbook_entry = await self.demo_flightbook_service.create_demo_flightbook_entry(
-                            user_id, flightbook_entry_data
-                        )
-                        logger.info(f"Created demo flightbook entry for task {task_id}")
-                    else:
-                        # For real users, we would integrate with the actual flightbook service
-                        # This would require proper Clerk authentication
-                        logger.info(f"Flightbook integration for authenticated users not yet implemented")
-                        flightbook_entry = None
-                    
-                    # Add flightbook entry info to completion response
-                    completion["flightbook_entry_created"] = flightbook_entry is not None
-                    if flightbook_entry:
-                        completion["flightbook_entry_id"] = flightbook_entry.get("id")
+                    completion["flightbook_entry_created"] = False
+                    completion["flightbook_note"] = "Flightbook integration requires proper authentication setup"
                         
                 except Exception as e:
                     logger.error(f"Failed to create flightbook entry for task {task_id}: {str(e)}")
