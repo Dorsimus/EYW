@@ -5535,6 +5535,8 @@ const AuthenticatedApp = () => {
         setIsCompletionModalOpen(false);
         setSelectedTask(null);
         setCompletionNotes('');
+        setEvidenceFile(null);
+        setEvidenceDescription('');
       }, 2000);
       
       return response.data;
