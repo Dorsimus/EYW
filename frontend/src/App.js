@@ -6342,6 +6342,38 @@ const AuthenticatedApp = () => {
                   </div>
                 </div>
                 
+                {/* Evidence Upload Section for Document Upload Tasks */}
+                {selectedTask?.task_type === 'document_upload' && (
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <div className="mb-3">
+                      <label className="block text-sm font-medium text-green-800 mb-2">
+                        📎 Evidence Document (Required)
+                      </label>
+                      <input
+                        type="file"
+                        onChange={(e) => setEvidenceFile(e.target.files[0])}
+                        className="w-full p-2 border border-green-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-100 file:text-green-700 hover:file:bg-green-200"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xls,.xlsx,.ppt,.pptx"
+                      />
+                      <p className="text-xs text-green-600 mt-1">
+                        Accepted: PDF, DOC, DOCX, Images, Presentations
+                      </p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-green-800 mb-2">
+                        📋 Evidence Description
+                      </label>
+                      <textarea
+                        value={evidenceDescription}
+                        onChange={(e) => setEvidenceDescription(e.target.value)}
+                        placeholder="Describe the evidence document and how it demonstrates task completion"
+                        className="w-full p-3 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        rows="2"
+                      />
+                    </div>
+                  </div>
+                )}
+                
                 {/* Task Completion Info */}
                 <div className="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-400">
                   <div className="text-sm text-blue-900">
