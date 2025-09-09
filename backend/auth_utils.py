@@ -107,19 +107,13 @@ def require_roles(required_roles: List[str]):
         user_metadata = current_user.get("metadata", {})
         user_roles = user_metadata.get("roles", [])
         
-        # TEMPORARY FIX: If metadata is missing but we know this is an admin user
-        # Check if this is Matt Williams (the admin user) by user ID
-        user_id = current_user.get("sub", "")
-        if user_id == "user_30vth9baPWjZZCkjLSUgOrW2Mvy":
-            logging.info(f"Granting admin access to known admin user: {user_id}")
-            user_roles = ["admin"]  # Temporarily grant admin role
-        
         # Also check for public_metadata as fallback
         if not user_roles:
             public_metadata = current_user.get("public_metadata", {})
             if public_metadata:
                 user_roles = public_metadata.get("roles", [])
         
+        user_id = current_user.get("sub", "")
         logging.info(f"User {user_id} roles check: metadata_roles={user_metadata.get('roles', [])}, checking_for={required_roles}, granted_roles={user_roles}")
         
         # Check if user has any of the required roles
