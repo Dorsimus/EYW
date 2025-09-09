@@ -2070,7 +2070,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Culminating Project Content Fix - Enhanced System Integration"
+    - "STEP 3.2: Portfolio Display Integration - Navigator Core Functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
