@@ -5431,26 +5431,49 @@ const AuthenticatedApp = () => {
       console.log(`📝 Submitting task completion for: ${selectedTask.title}`);
       console.log(`✏️ Takeaways: ${completionNotes}`);
       
-      // Submit to backend API with timestamp and takeaways
-      const token = await getToken();
-      const completionData = {
-        notes: completionNotes,
-        evidence_description: completionNotes,
-        completed_at: completedAt,
-        main_takeaways: completionNotes // Store takeaways specifically
-      };
-      
-      const response = await axios.post(
-        `${API}/users/${user?.id || 'demo-user-123'}/tasks/${selectedTask.id}/complete`,
-        completionData,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          timeout: 10000
-        }
-      );
+      // 📎 HANDLE EVIDENCE UPLOAD - FormData for document upload tasks
+      let response;
+      if (selectedTask.task_type === 'document_upload' && evidenceFile) {
+        // Use FormData for file upload
+        const formData = new FormData();
+        formData.append('notes', completionNotes);
+        formData.append('evidence_description', evidenceDescription || completionNotes);
+        formData.append('completed_at', completedAt);
+        formData.append('main_takeaways', completionNotes);
+        formData.append('file', evidenceFile);
+        
+        response = await axios.post(
+          `${API}/users/${user?.id || 'demo-user-123'}/tasks/${selectedTask.id}/complete`,
+          formData,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              // Don't set Content-Type - let browser set multipart/form-data
+            },
+            timeout: 30000 // Longer timeout for file upload
+          }
+        );
+      } else {
+        // Use JSON for regular task completion
+        const completionData = {
+          notes: completionNotes,
+          evidence_description: completionNotes,
+          completed_at: completedAt,
+          main_takeaways: completionNotes
+        };
+        
+        response = await axios.post(
+          `${API}/users/${user?.id || 'demo-user-123'}/tasks/${selectedTask.id}/complete`,
+          completionData,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            timeout: 10000
+          }
+        );
+      }
       
       console.log('✅ Task completion saved to database:', response.data);
       
