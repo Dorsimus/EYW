@@ -1084,7 +1084,8 @@ async def get_user(user_id: str):
     return User(**user_data)
 
 @api_router.get("/users", response_model=List[User])
-async def get_all_users():
+async def get_all_users(admin_user = Depends(require_admin)):
+    """Get all users - ADMIN ONLY - Requires admin authentication"""
     users = await db.users.find().to_list(1000)
     return [User(**user) for user in users]
 
