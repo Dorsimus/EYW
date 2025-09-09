@@ -174,7 +174,7 @@ const AuthenticationPrompt = () => {
 };
 
 // Main authenticated application
-export const AuthenticatedApp = () => {
+const AuthenticatedApp = () => {
   // Demo mode detection
   const urlParams = new URLSearchParams(window.location.search);
   const isDemoMode = urlParams.get('demo') === 'true' || 
