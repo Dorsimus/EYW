@@ -173,6 +173,23 @@ const AuthenticationPrompt = () => {
   );
 };
 
+// 📚 GLOBAL TASK LOADING FUNCTION - Database-driven task extraction
+const getAllTasksFromCompetencies = async (competenciesData) => {
+  console.log('🔧 getAllTasksFromCompetencies - LOADING FROM DATABASE');
+  
+  try {
+    // Load all tasks from database API
+    const response = await axios.get(`${BACKEND_URL}/api/tasks`);
+    const databaseTasks = response.data;
+    
+    console.log(`✅ Loaded ${databaseTasks.length} tasks from database API`);
+    return databaseTasks;
+  } catch (error) {
+    console.error('❌ Error loading tasks from database:', error);
+    return [];
+  }
+};
+
 // Main authenticated application
 const AuthenticatedApp = () => {
   // Demo mode detection
