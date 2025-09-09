@@ -221,7 +221,19 @@ ALLOWED_MIME_TYPES = {
 }
 
 # Security configuration
-SECRET_KEY = "your-secret-key-here-change-in-production"  # In production, use proper secret
+# Security configuration
+import secrets
+
+# Generate cryptographically secure SECRET_KEY
+SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY:
+    SECRET_KEY = secrets.token_urlsafe(32)
+    logging.warning("SECRET_KEY not found in environment, generated temporary key")
+
+# Validate production SECRET_KEY
+if SECRET_KEY == "your-secret-key-here-change-in-production":
+    raise ValueError("PRODUCTION SECRET_KEY must be configured - default key is not secure")
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
