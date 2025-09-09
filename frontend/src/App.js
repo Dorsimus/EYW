@@ -3951,28 +3951,51 @@ const AuthenticatedApp = () => {
     localStorage.setItem('core_value_entries', JSON.stringify(updatedEntries));
     console.log('✅ Core Value entry saved to localStorage');
     
-    // Also create a Flightbook entry for this Core Value story
-    const coreValueTitle = coreValues[valueKey]?.title || valueKey;
-    console.log('🚀 Creating Flightbook entry for:', coreValueTitle);
+    // 🎯 ENHANCED CORE VALUES FLIGHTBOOK INTEGRATION - Anchor Point Stories
+    console.log('🚀 Creating enhanced Core Values Flightbook entry for:', coreValueTitle);
     
-    const flightbookEntryData = {
-      title: `Core Value: ${coreValueTitle}`,
+    const enhancedFlightbookEntry = {
+      title: `Core Values Anchor: ${coreValueTitle}`,
       content: newEntry.story,
       competency_area: 'core_values',
       sub_competency: valueKey,
       entry_type: 'core_value_story',
-      tags: ['core-values', 'personal-story', valueKey.replace('_', '-')]
+      task_type: 'core_values_reflection',
+      is_anchor_point: true,
+      anchor_type: 'core_values',
+      development_stage: 'foundation',
+      core_value_context: {
+        value_title: coreValueTitle,
+        value_description: coreValues[valueKey]?.description || '',
+        story_theme: 'Personal application of core values in leadership'
+      },
+      tags: ['core-values', 'anchor-point', 'personal-story', valueKey.replace('_', '-')]
     };
 
-    // Try to add to Flightbook via the production API ONLY - no dual-path creation
+    // Use our enhanced flightbook creation system for consistency
     try {
-      console.log('🌐 Attempting API call to flightbook...');
-      const result = await flightbookAPIClient.createEntry(flightbookEntryData);
-      if (result && result.success) {
-        console.log('✅ Core Value story successfully added to Flightbook via API:', coreValueTitle);
-        showSuccessMessage(`Core Value story "${coreValueTitle}" added to your Flightbook!`);
-      } else {
-        console.log('⚠️ API call failed, but not using localStorage to prevent duplicates');
+      console.log('📖 Creating Core Values anchor point via enhanced flightbook system...');
+      await createOrUpdateFlightbookFromJournalReflection(
+        'core_values',
+        valueKey,
+        `core_value_${valueKey}_${Date.now()}`,
+        newEntry.story,
+        'core_values_reflection'
+      );
+      console.log('✅ Core Value anchor point successfully added to enhanced Flightbook!');
+      showSuccessMessage(`Core Value story "${coreValueTitle}" added to your Leadership Flightbook as an anchor point!`);
+    } catch (enhancedError) {
+      console.log('⚠️ Enhanced flightbook creation failed, using original API method...');
+      
+      // Fallback to original API method
+      try {
+        console.log('🌐 Attempting API call to flightbook...');
+        const result = await flightbookAPIClient.createEntry(enhancedFlightbookEntry);
+        if (result && result.success) {
+          console.log('✅ Core Value story successfully added to Flightbook via API:', coreValueTitle);
+          showSuccessMessage(`Core Value story "${coreValueTitle}" added to your Flightbook!`);
+        } else {
+          console.log('⚠️ API call failed, but not using localStorage to prevent duplicates');
       }
     } catch (error) {
       console.log('⚠️ Authentication error, checking if we should use localStorage fallback:', error.message);
