@@ -6964,13 +6964,15 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
     };
   };
 
-  // Generate competency heat map data
+  // 🔥 REAL COMPETENCY HEAT MAP - Database-driven activity data
   const getCompetencyHeatMap = () => {
     return Object.keys(competencies).map(key => {
       const comp = competencies[key];
       const progress = comp.progress || 0;
-      const recentActivity = Math.random() * 10; // Mock recent activity score
-      const difficulty = Math.random() * 5 + 1; // Mock difficulty rating
+      // Use real completion percentage instead of random values
+      const recentActivity = comp.overall_progress || 0;
+      // Use real task count for difficulty calculation
+      const difficulty = comp.total_tasks > 20 ? 0.8 : comp.total_tasks > 10 ? 0.6 : 0.4;
       
       return {
         key,
