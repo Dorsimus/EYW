@@ -5131,7 +5131,33 @@ const AuthenticatedApp = () => {
         promptText = taskDescription || taskTitle;
         console.log('📝 Enhanced context from selectedTask:', entryTitle.substring(0, 100));
       }
-      // PRIORITY 2: Fallback to showTaskModal context if no selectedTask
+      // PRIORITY 2: Handle curiosity assessment anchor points
+      else if (taskType === 'leadership_curiosity' || subKey === 'curiosity_assessment') {
+        const curiosityPrompts = [
+          "What's one leadership moment from this week that I keep thinking about?",
+          "If I could ask any great leader three questions, what would they be?", 
+          "What does leadership look like when no one's watching?",
+          "How do I want people to feel after working with me?"
+        ];
+        
+        // Extract prompt number from taskId (prompt_0, prompt_1, etc.)
+        const promptMatch = taskId.match(/prompt_(\d+)/);
+        if (promptMatch) {
+          const promptIndex = parseInt(promptMatch[1]);
+          const specificPrompt = curiosityPrompts[promptIndex];
+          if (specificPrompt) {
+            entryTitle = `Leadership Curiosity Anchor: ${specificPrompt}`;
+            promptText = specificPrompt;
+            contextualDescription = 'Initial curiosity reflection - anchor point for growth tracking';
+            console.log('🎯 Curiosity anchor point:', entryTitle.substring(0, 100));
+          }
+        } else {
+          entryTitle = 'Leadership Curiosity Assessment';
+          promptText = 'Foundational leadership reflection';
+          contextualDescription = 'Starting point for Navigator development journey';
+        }
+      }
+      // PRIORITY 3: Fallback to showTaskModal context if no selectedTask or curiosity
       else if (showTaskModal && showTaskModal.task) {
         const currentTask = showTaskModal.task;
         
