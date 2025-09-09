@@ -5027,7 +5027,7 @@ const AuthenticatedApp = () => {
         entryTitle = taskDescription ? `Task Completion: ${taskDescription}` : `Task Completion: ${taskTitle}`;
       }
       
-      // Prepare flightbook entry data with contextual information
+      // Prepare flightbook entry data with contextual information and anchor point metadata
       const entryData = {
         title: entryTitle,
         content: notes.trim(),
@@ -5045,7 +5045,11 @@ const AuthenticatedApp = () => {
           title: selectedTask?.title,
           description: selectedTask?.description,
           instructions: selectedTask?.instructions?.substring(0, 500) // Truncate long instructions
-        }
+        },
+        // 🎯 ANCHOR POINT METADATA - For curiosity assessment tracking
+        is_anchor_point: taskType === 'leadership_curiosity' || subKey === 'curiosity_assessment',
+        anchor_type: taskType === 'leadership_curiosity' ? 'curiosity_assessment' : null,
+        development_stage: taskType === 'leadership_curiosity' ? 'foundation' : 'development'
       };
       
       console.log('📝 Flightbook entry data:', entryData);
