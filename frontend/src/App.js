@@ -6706,9 +6706,7 @@ const AuthenticatedApp = () => {
       )}
     </div>
   );
-};
-
-// AdminLoginModal component removed - using Clerk authentication
+}; // Close AuthenticatedApp component
 
 // Enhanced Dashboard View Component with AI-Powered Intelligence
 const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewCompetencyTasks, setCurrentView, showSuccessMessage, showErrorMessage }) => {
