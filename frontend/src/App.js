@@ -4971,7 +4971,7 @@ const AuthenticatedApp = () => {
     try {
       console.log('📖 Creating flightbook entry from task completion:', { areaKey, subKey, taskId, taskType });
       
-      // 📝 CREATE CONTEXTUAL ENTRY TITLE - Include task description for better context
+      // 📝 CREATE CONTEXTUAL ENTRY TITLE - Enhanced for curiosity assessment anchor points
       let entryTitle = 'Task Reflection'; // Minimal fallback only
       let contextualDescription = '';
       
@@ -4998,6 +4998,28 @@ const AuthenticatedApp = () => {
         if (taskDescription && taskDescription.length > 0) {
           entryTitle = `Leadership Reflection: ${taskDescription}`;
           contextualDescription = taskDescription;
+        }
+      } else if (taskType === 'leadership_curiosity' || subKey === 'curiosity_assessment') {
+        // 🎯 ENHANCED CURIOSITY ASSESSMENT - Anchor point reflections
+        const curiosityPrompts = [
+          "What's one leadership moment from this week that I keep thinking about?",
+          "If I could ask any great leader three questions, what would they be?", 
+          "What does leadership look like when no one's watching?",
+          "How do I want people to feel after working with me?"
+        ];
+        
+        // Extract prompt number from taskId (prompt_0, prompt_1, etc.)
+        const promptMatch = taskId.match(/prompt_(\d+)/);
+        if (promptMatch) {
+          const promptIndex = parseInt(promptMatch[1]);
+          const specificPrompt = curiosityPrompts[promptIndex];
+          if (specificPrompt) {
+            entryTitle = `Leadership Curiosity Anchor: ${specificPrompt}`;
+            contextualDescription = `Initial curiosity reflection - anchor point for growth tracking`;
+          }
+        } else {
+          entryTitle = 'Leadership Curiosity Assessment';
+          contextualDescription = 'Foundational leadership reflection - starting point for development journey';
         }
       } else if (taskId.includes('task_completion_')) {
         const taskTitle = selectedTask?.title || 'Task Completion';
