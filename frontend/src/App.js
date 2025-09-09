@@ -14472,4 +14472,3 @@ const AnalyticsDashboard = ({ competencies, portfolio, competencyTaskProgress, c
 };
 
 export default App;
-export { AuthenticatedApp };
