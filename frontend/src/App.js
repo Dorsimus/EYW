@@ -359,7 +359,7 @@ const AuthenticatedApp = () => {
           if (generatedTask) {
             console.log(`✅ Found matching generated task for conversion: ${taskId}`);
             // Apply the database task data to competencies
-            const updated = applyConvertedTaskToCompetencies(updatedCompetencies, databaseTask, taskId);
+            const updated = applyConvertedTaskToCompetencies(updatedCompetencies, taskId, databaseTask);
             if (updated !== updatedCompetencies) {
               Object.assign(updatedCompetencies, updated);
               hasUpdates = true;
