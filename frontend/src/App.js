@@ -5431,6 +5431,9 @@ const AuthenticatedApp = () => {
       console.log(`📝 Submitting task completion for: ${selectedTask.title}`);
       console.log(`✏️ Takeaways: ${completionNotes}`);
       
+      // Get authentication token
+      const token = await getToken();
+      
       // 📎 HANDLE EVIDENCE UPLOAD - FormData for document upload tasks
       let response;
       if (selectedTask.task_type === 'document_upload' && evidenceFile) {
