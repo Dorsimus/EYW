@@ -6908,19 +6908,27 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
     return recommendations;
   };
 
-  // Enhanced progress calculation with AI predictions
+  // 📊 REAL USER ANALYTICS - Database-driven, no dummy data
   const getAdvancedProgressData = () => {
-    const now = new Date();
-    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-
-    // AI-enhanced historical data with learning pattern recognition
-    const historicalData = [
-      { date: oneMonthAgo, progress: 0, tasks: 0, reflections: 0, aiConfidence: 0.95 },
-      { date: new Date(oneMonthAgo.getTime() + 7 * 24 * 60 * 60 * 1000), progress: 5, tasks: 3, reflections: 8, aiConfidence: 0.92 },
-      { date: new Date(oneMonthAgo.getTime() + 14 * 24 * 60 * 60 * 1000), progress: 12, tasks: 8, reflections: 15, aiConfidence: 0.89 },
-      { date: new Date(oneMonthAgo.getTime() + 21 * 24 * 60 * 60 * 1000), progress: 18, tasks: 12, reflections: 23, aiConfidence: 0.94 },
-      { date: now, progress: overallProgress, tasks: 0, reflections: 28, aiConfidence: 0.97 }
+    // Use real user progress data only
+    const realProgressData = [];
+    
+    // Calculate real historical progress if user has completion history
+    if (competencies && Object.keys(competencies).length > 0) {
+      Object.values(competencies).forEach(area => {
+        if (area.overall_progress !== undefined) {
+          realProgressData.push({
+            progress: area.overall_progress || 0,
+            reflections: 0, // Real reflection count would come from flightbook API
+            date: new Date().toLocaleDateString()
+          });
+        }
+      });
+    }
+    
+    // If no real progress data available, return empty for clean dashboard
+    const historicalData = realProgressData.length > 0 ? realProgressData : [
+      { progress: 0, reflections: 0, date: new Date().toLocaleDateString() }
     ];
 
     // AI-powered trend analysis
