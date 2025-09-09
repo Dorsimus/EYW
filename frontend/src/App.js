@@ -4341,19 +4341,7 @@ const AuthenticatedApp = () => {
     });
   };
 
-  // ENHANCED TASK MANAGEMENT FOR ADMIN PANEL
-  // Track converted tasks to prevent regeneration
-  const [convertedTasks, setConvertedTasks] = useState(() => {
-    try {
-      const saved = localStorage.getItem('convertedTasks');
-      const restored = saved ? new Set(JSON.parse(saved)) : new Set();
-      console.log('🔄 RESTORED CONVERTED TASKS:', [...restored]);
-      return restored;
-    } catch (error) {
-      console.error('Error restoring converted tasks:', error);
-      return new Set();
-    }
-  });
+
 
 
 
