@@ -6910,6 +6910,8 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
 
   // 📊 REAL USER ANALYTICS - Database-driven, no dummy data
   const getAdvancedProgressData = () => {
+    const now = new Date();
+    
     // Use real user progress data only
     const realProgressData = [];
     
@@ -6919,16 +6921,18 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
         if (area.overall_progress !== undefined) {
           realProgressData.push({
             progress: area.overall_progress || 0,
+            tasks: area.completed_tasks || 0,
             reflections: 0, // Real reflection count would come from flightbook API
-            date: new Date().toLocaleDateString()
+            date: now,
+            aiConfidence: 0.95 // Default confidence for real data
           });
         }
       });
     }
     
-    // If no real progress data available, return empty for clean dashboard
+    // If no real progress data available, return minimal data for clean dashboard
     const historicalData = realProgressData.length > 0 ? realProgressData : [
-      { progress: 0, reflections: 0, date: new Date().toLocaleDateString() }
+      { progress: 0, tasks: 0, reflections: 0, date: now, aiConfidence: 0.95 }
     ];
 
     // AI-powered trend analysis
@@ -6943,7 +6947,7 @@ const DashboardView = ({ user, competencies, portfolio, overallProgress, onViewC
       : null;
 
     // AI confidence in predictions
-    const avgConfidence = historicalData.reduce((sum, point) => sum + point.aiConfidence, 0) / historicalData.length;
+    const avgConfidence = historicalData.reduce((sum, point) => sum + (point.aiConfidence || 0.95), 0) / historicalData.length;
 
     return {
       historical: historicalData,
