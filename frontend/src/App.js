@@ -14183,6 +14183,9 @@ const AIInsightsSection = ({ getAIInsights, showSuccessMessage, showErrorMessage
   );
 };
 
+// Close AuthenticatedApp component
+};
+
 // Advanced Analytics & Insights Dashboard
 const AnalyticsDashboard = ({ competencies, portfolio, competencyTaskProgress, coreValueEntries }) => {
   const [analyticsView, setAnalyticsView] = useState('overview');
