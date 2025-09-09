@@ -466,6 +466,10 @@ const AuthenticatedApp = () => {
   const [isSubmittingCompletion, setIsSubmittingCompletion] = useState(false);
   const [completionSuccess, setCompletionSuccess] = useState(false);
   const [completionError, setCompletionError] = useState('');
+  
+  // 📎 EVIDENCE UPLOAD STATE - For document upload tasks
+  const [evidenceFile, setEvidenceFile] = useState(null);
+  const [evidenceDescription, setEvidenceDescription] = useState('');
 
   // Simple data persistence functions
   const saveDataWithBackup = (key, data) => {
