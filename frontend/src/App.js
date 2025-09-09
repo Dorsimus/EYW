@@ -5918,6 +5918,10 @@ const AuthenticatedApp = () => {
             setCompletionError={setCompletionError}
             handleCompleteTask={handleCompleteTask}
             handleUnCompleteTask={handleUnCompleteTask}
+            evidenceFile={evidenceFile}
+            setEvidenceFile={setEvidenceFile}
+            evidenceDescription={evidenceDescription}
+            setEvidenceDescription={setEvidenceDescription}
           />
         )}
         
