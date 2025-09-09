@@ -4094,44 +4094,7 @@ const AuthenticatedApp = () => {
     }
   };
 
-  // LOAD ALL TASKS FROM DATABASE - REPLACES HARDCODED EXTRACTION
-  // LOAD ALL TASKS FROM DATABASE - REPLACES 155 LINES OF HARDCODED EXTRACTION
-  const getAllTasksFromCompetencies = async (competenciesData) => {
-    console.log('🔧 getAllTasksFromCompetencies - LOADING FROM DATABASE');
-    
-    try {
-      // Load all tasks from database API
-      const response = await axios.get(`${API}/tasks`);
-      const databaseTasks = response.data;
-      
-      console.log(`✅ Loaded ${databaseTasks.length} tasks from database API`);
-      console.log('📋 Task types found:', [...new Set(databaseTasks.map(t => t.task_type))]);
-      
-      // Convert database tasks to frontend format
-      const allTasks = databaseTasks.map(task => ({
-        id: task.id,
-        title: task.title,
-        description: task.description,
-        task_type: task.task_type,
-        competency_area: task.competency_area,
-        sub_competency: task.sub_competency,
-        estimated_hours: task.estimated_hours || 1,
-        external_link: task.external_link,
-        instructions: task.instructions,
-        active: task.active !== false,
-        required: task.required !== false,
-        order: task.order || 1,
-        created_by: task.created_by || 'system'
-      }));
-      
-      console.log(`✅ Converted ${allTasks.length} database tasks to frontend format`);
-      return allTasks;
-      
-    } catch (error) {
-      console.error('❌ Error loading tasks from database:', error);
-      return []; // Return empty array instead of hardcoded fallback
-    }
-  };
+  // Task generation functionality moved to global scope above component
 
   // UPDATE CONVERTED TASK IN COMPETENCIES STRUCTURE
   const updateConvertedTaskInCompetencies = (taskId, convertedTaskData) => {
