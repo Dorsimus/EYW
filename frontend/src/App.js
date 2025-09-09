@@ -6708,9 +6708,6 @@ const AuthenticatedApp = () => {
   );
 };
 
-// Export AuthenticatedApp for use in ClerkApp.js
-export { AuthenticatedApp };
-
 // AdminLoginModal component removed - using Clerk authentication
 
 // Enhanced Dashboard View Component with AI-Powered Intelligence
