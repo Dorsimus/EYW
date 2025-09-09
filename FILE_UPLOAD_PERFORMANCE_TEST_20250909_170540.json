@@ -1,0 +1,44 @@
+{
+  "test_timestamp": "2025-09-09T17:05:40.078763",
+  "upload_test_results": [
+    {
+      "file_size_mb": 1,
+      "upload_time_seconds": 0.07,
+      "success": false,
+      "status_code": 403,
+      "throughput_mbps": 13.77,
+      "meets_requirements": false
+    },
+    {
+      "file_size_mb": 5,
+      "upload_time_seconds": 0.05,
+      "success": false,
+      "status_code": 403,
+      "throughput_mbps": 104.08,
+      "meets_requirements": false
+    },
+    {
+      "file_size_mb": 10,
+      "upload_time_seconds": 6.21,
+      "success": false,
+      "status_code": 403,
+      "throughput_mbps": 1.61,
+      "meets_requirements": false
+    }
+  ],
+  "performance_summary": {
+    "total_tests": 3,
+    "successful_uploads": 0,
+    "success_rate_percent": 0.0,
+    "requirements_met": 0,
+    "requirements_met_rate_percent": 0.0,
+    "average_throughput_mbps": 0,
+    "performance_grade": "NEEDS_IMPROVEMENT",
+    "production_ready": false,
+    "file_upload_requirements": {
+      "small_files_under_5s": true,
+      "medium_files_under_15s": false,
+      "large_files_under_60s": true
+    }
+  }
+}
