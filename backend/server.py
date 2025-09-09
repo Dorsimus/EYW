@@ -1015,13 +1015,34 @@ async def update_all_competency_progress(user_id: str):
                 upsert=True
             )
 
+# CORS Configuration with Production Security
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "").split(",") if os.getenv("ALLOWED_ORIGINS") else []
+PRODUCTION_MODE = os.getenv("PRODUCTION_MODE", "false").lower() == "true"
+
+# Validate CORS configuration for production
+if PRODUCTION_MODE:
+    if not ALLOWED_ORIGINS or "*" in ALLOWED_ORIGINS:
+        raise ValueError("PRODUCTION requires specific ALLOWED_ORIGINS - wildcard origins are not secure")
+    
+    # Use specific origins for production
+    cors_origins = ALLOWED_ORIGINS
+    logging.info(f"Production CORS configured for origins: {cors_origins}")
+else:
+    # Development mode - allow localhost and preview domains
+    cors_origins = [
+        "http://localhost:3000",
+        "https://localhost:3000", 
+        "https://prelaunch-check.preview.emergentagent.com"
+    ]
+    logging.info(f"Development CORS configured for origins: {cors_origins}")
+
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify exact origins
+    allow_origins=cors_origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["Authorization", "Content-Type"],
 )
 
 # User Management Routes
