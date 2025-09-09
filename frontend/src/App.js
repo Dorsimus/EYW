@@ -767,6 +767,12 @@ const AuthenticatedApp = () => {
         
         setLoading(false);
         console.log('Admin state restored from existing token');
+        
+        // Ensure loading state is cleared after async operations
+        setTimeout(() => {
+          setLoading(false);
+          console.log('🎯 Loading state cleared for UI rendering');
+        }, 2000);
       };
       
       loadAdminData();
