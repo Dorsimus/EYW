@@ -252,6 +252,20 @@ const AuthenticatedApp = () => {
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   
+  // ENHANCED TASK MANAGEMENT FOR ADMIN PANEL
+  // Track converted tasks to prevent regeneration
+  const [convertedTasks, setConvertedTasks] = useState(() => {
+    try {
+      const saved = localStorage.getItem('convertedTasks');
+      const restored = saved ? new Set(JSON.parse(saved)) : new Set();
+      console.log('🔄 RESTORED CONVERTED TASKS:', [...restored]);
+      return restored;
+    } catch (error) {
+      console.error('Error restoring converted tasks:', error);
+      return new Set();
+    }
+  });
+  
   // Production-ready flightbook API client
   const [flightbookAPIClient] = useState(() => new FlightbookAPIClient());
   const [migrationUtility] = useState(() => new FlightbookMigrationUtility(flightbookAPIClient));
