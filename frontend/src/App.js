@@ -6706,6 +6706,8 @@ const AuthenticatedApp = () => {
       )}
     </div>
   );
+};
+
 }; // Close AuthenticatedApp component
 
 // Enhanced Dashboard View Component with AI-Powered Intelligence
